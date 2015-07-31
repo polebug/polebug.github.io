@@ -103,7 +103,7 @@ a:hover {
 }
 #header {
   text-shadow: 0 0 1px #fff;
-  margin: 50px auto;
+  margin: 25px auto;
 }
 #header a {
   color: #999;
@@ -121,7 +121,7 @@ a:hover {
   font-weight: normal;
   font-size: 0.9em;
   line-height: 1;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 #header #main-nav {
   font-family: "Lato", Helvetica Neue, Helvetica, Arial, sans-serif;
