@@ -35,13 +35,13 @@ h6 {
   font-family: "Lato", Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 h1 {
-  font-size: 1.8em;
+  font-size: 1.3em;
 }
 h2 {
-  font-size: 1.5em;
+  font-size: 1.1em;
 }
 h3 {
-  font-size: 1.3em;
+  font-size: 0.9em;
 }
 a {
   text-decoration: none;
@@ -103,7 +103,7 @@ a:hover {
 }
 #header {
   text-shadow: 0 0 1px #fff;
-  margin: 25px auto;
+  margin: 50px auto;
 }
 #header a {
   color: #999;
@@ -114,12 +114,12 @@ a:hover {
 }
 #header h1 {
   font-weight: normal;
-  font-size: 1em;
+  font-size: 2em;
   line-height: 1;
 }
 #header h2 {
   font-weight: normal;
-  font-size: 0.9em;
+  font-size: 1em;
   line-height: 1;
   margin-top: 10px;
 }
@@ -132,11 +132,11 @@ a:hover {
 }
 #header #main-nav ul li {
   float: left;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 article {
-  -webkit-box-shadow: 1px 2px 3px #ddd;
-  box-shadow: 1px 2px 3px #ddd;
+  -webkit-box-shadow: 1px 2px 3px #999;
+  box-shadow: 1px 2px 3px #999;
   background: #fff;
 }
 article.page {
