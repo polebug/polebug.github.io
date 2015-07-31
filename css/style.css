@@ -121,7 +121,7 @@ a:hover {
   font-weight: normal;
   font-size: 0.9em;
   line-height: 1;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 #header #main-nav {
   font-family: "Lato", Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -132,7 +132,7 @@ a:hover {
 }
 #header #main-nav ul li {
   float: left;
-  margin-left: 30px;
+  margin-left: 20px;
 }
 article {
   -webkit-box-shadow: 1px 2px 3px #ddd;
