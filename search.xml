@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+    
+    <entry>
+      <title><![CDATA[hello world]]></title>
+      <url>http://polebug.github.io/2016/01/08/hello-world/</url>
+      <content type="html"><![CDATA[<p></p><h1>对于新主题的各种测试</h1><br>本站于8.5开始采用yelee主题，相关安装以及使用说明详见 <a href="http://moxfive.coding.me/yelee" target="_blank" rel="external">http://moxfive.coding.me/yelee</a><br>本文用于各种text，无实质性内容<br><a id="more"></a><p></p>
+<p></p><h2>代码高亮测试</h2><br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">hello</span> world</span><br></pre></td></tr></table></figure><p></p>
+<p></p><h2>引用测试</h2><p></p>
+<blockquote>
+<p>interesting</p>
+</blockquote>
+<p></p><h2>完成文章目录相关测试</h2><br>详见左侧的文章目录相关测试<p></p>
+<p></p><h1>说点啥</h1><br>这个主题真是太棒了，几乎完美<br>主要是三个方面做的很棒：1.风格，样式舒服； 2.作者教程写的很详细了，避免了以前改参数之后莫名error的情况。再次感谢一下；3.自由度高，包含了我想添加的一切东西，包括多说，百度分享，不蒜子统计，还有像文章目录这样东西；<br>总之，向作者比心~<p></p>
+<p>最后就是，终于有写题解的地方了（高亮也ok，万事俱备啦）<br>博客园那货就暂且扔了吧，最近老被别人翻出来，我都不敢写东西了2333</p>
+]]></content>
+    </entry>
+    
+  
+  
+</search>
