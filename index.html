@@ -11,7 +11,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="format-detection" content="telephone=no" />
-<meta name="author" content="null" />
+<meta name="author" content="polebug" />
 
 
     
@@ -103,7 +103,7 @@
             <img src="/img/avatar.png" class="animated zoomIn">
         </a>
         <hgroup>
-          <h1 class="header-author"><a href="/">null</a></h1>
+          <h1 class="header-author"><a href="/">polebug</a></h1>
         </hgroup>
 
         
@@ -195,7 +195,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"></ul>
+                        
                     </div>
                 </section>
                 
@@ -218,7 +218,7 @@
       <nav id="mobile-nav">
       <div class="overlay">
           <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">null</a></h1>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">polebug</a></h1>
       </div>
     <div class="intrude-less">
         <header id="header" class="inner">
@@ -226,7 +226,7 @@
                 <img src="/img/avatar.png" class="animated zoomIn">
             </a>
             <hgroup>
-              <h1 class="header-author"><a href="/" title="回到主页">null</a></h1>
+              <h1 class="header-author"><a href="/" title="回到主页">polebug</a></h1>
             </hgroup>
             
             <p class="header-subtitle">never feel sorry about your ambitions</p>
@@ -284,6 +284,8 @@
         
             <span class="ds-thread-count"  data-thread-key="2016/01/08/hello-world/" ></span>
         
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2016/01/08/hello-world/"></span>
         
     </a>
 
@@ -397,7 +399,7 @@
     
         <script>
             if ($(".left-col").is(":visible")) {
-                var duoshuoQuery = {short_name:"null"};
+                var duoshuoQuery = {short_name:"http://polebug1.duoshou.com/"};
                 (function() {
                     var d = document, s = d.createElement('script');
                     s.src = 'http://static.duoshuo.com/embed.js';
@@ -417,6 +419,22 @@
         </script>
     
 
+    
+        <script id="dsq-count-scr" src="//null.disqus.com/count.js" async></script>
+        <script>
+            if ($(".left-col").is(":visible")) {
+                var $disqusCount = $(".disqus-comment-count");
+                $disqusCount.bind("DOMNodeInserted", function(e) {
+                    var num = $(this).text().replace(/[^0-9]/ig,"");
+                    if (num > 0) {
+                        $(this).siblings(".count-comment").text(num);
+                    }
+                    $(this).remove();
+                })
+            } else {
+                $(".disqus-comment-count").remove();
+            }
+        </script>
      
 
 
