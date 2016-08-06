@@ -285,8 +285,6 @@
             <span class="ds-thread-count"  data-thread-key="2016/01/08/hello-world/" ></span>
         
         
-            <span class="disqus-comment-count" data-disqus-identifier="2016/01/08/hello-world/"></span>
-        
     </a>
 
     </div>
@@ -419,22 +417,6 @@
         </script>
     
 
-    
-        <script id="dsq-count-scr" src="//null.disqus.com/count.js" async></script>
-        <script>
-            if ($(".left-col").is(":visible")) {
-                var $disqusCount = $(".disqus-comment-count");
-                $disqusCount.bind("DOMNodeInserted", function(e) {
-                    var num = $(this).text().replace(/[^0-9]/ig,"");
-                    if (num > 0) {
-                        $(this).siblings(".count-comment").text(num);
-                    }
-                    $(this).remove();
-                })
-            } else {
-                $(".disqus-comment-count").remove();
-            }
-        </script>
      
 
 
