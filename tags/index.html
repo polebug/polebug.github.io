@@ -191,7 +191,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/思维/">思维</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/贪心/">贪心</a></li></ul>
                     </div>
                 </section>
                 
@@ -326,7 +326,7 @@
 <p class="count"></p>
 
 <div class="tags">
-    
+    <a href="/tags/思维/" style="font-size: 16px; color: #808080">思维</a> <a href="/tags/贪心/" style="font-size: 16px; color: #808080">贪心</a>
 </div>
 <style>
     .category-list li{
@@ -425,7 +425,7 @@
     <div id="comment-box" ></div>
     <div class="ds-thread" id="ds-thread" data-thread-key="tags/index.html" data-title="tags" data-url="http://polebug.github.io/tags/index.html"></div>
     <script>
-        var duoshuoQuery = {short_name:"http://polebug1.duoshou.com/"};
+        var duoshuoQuery = {short_name:"polebug1"};
         var loadComment = function(){
             var d = document, s = d.createElement('script');
             s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
@@ -565,23 +565,6 @@ MathJax.Hub.Queue(function() {
         }
     
 </script>
-
-    <script>
-        var originTitle = document.title;
-        var titleTime;
-        document.addEventListener("visibilitychange", function() {
-            if (document.hidden) {
-                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
-                clearTimeout(titleTime);
-            }
-            else {
-                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
-                titleTime = setTimeout(function() {
-                    document.title = originTitle;
-                }, 2000);
-            }
-        })
-    </script>
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
