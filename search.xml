@@ -4,9 +4,24 @@
   
     
     <entry>
-      <title><![CDATA[python学习笔记（一）]]></title>
+      <title><![CDATA[python学习笔记（一）：基础语法]]></title>
       <url>http://polebug.github.io/2016/10/13/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-      <content type="html"></content>
+      <content type="html"><![CDATA[<p>装了python2.7，去图书馆借了python入门经典，暂且简单写下学习笔记，以供自己回忆</p>
+<p></p><h2>python中数字的使用</h2><p></p>
+<p></p><h3>变量</h3><br> <li>变量类型<br>int,float,string就不说了<br>这里注意下面几种类型的使用：<a id="more"></a><br>　　<code>long</code>：长整型(不是long long)，最长的数字的长度取决于计算机有多大的内存；<br>　　<code>list</code> ：功能类似于数组，用[]表示，里面的值可以改变；<br>　　<code>tuple</code>：用()表示，里面的值不可以改变；<br>　　<code>dictionary</code>：可列出已经配对的键和值；<br>(查看变量类型，可用type()查看)<br></li><p></p>
+<li>支持强制转换变量类型，例如float(2)；</li>
+
+<p></p><h4>变量命名</h4><p></p>
+<li>python对于变量名的限制：不能用数字开头，不能过长，不能包括特殊符号(除下划线)；</li><br><li>对于变量命名的特殊点：大多数情况下变量名全部是小写。若不想变量的值被修改，才把变量名全部大写，作为一个常量；<br></li>
+
+
+<p></p><h3>数学运算</h3><br>基本运算没见过的就是：floor除法的符号为//，求幂的符号为**；<br>运算优先级以及比较问题就不说了<p></p>
+<p></p><h2>python中string的使用</h2><p></p>
+<p><li>字符串创建，用’ ‘或者” “都可以进行赋值</li></p>
+<p></p><h4>字符串有关的函数使用：</h4><br>　　<code>len()</code>：返回字符串长度；<br>　　<code>.upper()</code>：全部转换成大写；<br>　　<code>.lower()</code>：全部转换成小写；<br>　　<code>.capitalize()</code>：把首字母转换成大写，其余转换成小写；<br>　　<code>.title()</code>：把首字母以及每个空格或者标点符号后的字母转换成大写，其余字母转换成小写；<br>　　<code>is_alpha()</code>：检查一个字符串是否全由字母组成；<br>注：使用这些函数之后，字符串自身的值并未发生改变<p></p>
+<p></p><h4>字符串的运算</h4><p></p>
+<p><li>加法：</li></p>
+]]></content>
     </entry>
     
     <entry>
