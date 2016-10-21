@@ -16,21 +16,18 @@
 
 
 <meta name="description" content="装了python2.7，去图书馆借了python入门经典，暂且简单写下学习笔记，以供自己回忆
-python中数字的使用
-变量 变量类型int,float,string就不说了这里注意下面几种类型的使用：">
+python中数字的使用 变量类型int,float,string就不说了这里注意下面几种类型的使用：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python学习笔记（一）：基础语法">
 <meta property="og:url" content="http://polebug.github.io/2016/10/13/python学习笔记（一）/index.html">
 <meta property="og:site_name" content="polebug">
 <meta property="og:description" content="装了python2.7，去图书馆借了python入门经典，暂且简单写下学习笔记，以供自己回忆
-python中数字的使用
-变量 变量类型int,float,string就不说了这里注意下面几种类型的使用：">
-<meta property="og:updated_time" content="2016-10-20T14:00:23.290Z">
+python中数字的使用 变量类型int,float,string就不说了这里注意下面几种类型的使用：">
+<meta property="og:updated_time" content="2016-10-21T11:14:27.363Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python学习笔记（一）：基础语法">
 <meta name="twitter:description" content="装了python2.7，去图书馆借了python入门经典，暂且简单写下学习笔记，以供自己回忆
-python中数字的使用
-变量 变量类型int,float,string就不说了这里注意下面几种类型的使用：">
+python中数字的使用 变量类型int,float,string就不说了这里注意下面几种类型的使用：">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -298,20 +295,16 @@ python中数字的使用
       
           
         <p>装了python2.7，去图书馆借了python入门经典，暂且简单写下学习笔记，以供自己回忆</p>
-<p></p><h2>python中数字的使用</h2><p></p>
-<p></p><h3>变量</h3><br> <li>变量类型<br>int,float,string就不说了<br>这里注意下面几种类型的使用：<a id="more"></a><br>　　<code>long</code>：长整型(不是long long)，最长的数字的长度取决于计算机有多大的内存；<br>　　<code>list</code> ：功能类似于数组，用[]表示，里面的值可以改变；<br>　　<code>tuple</code>：用()表示，里面的值不可以改变；<br>　　<code>dictionary</code>：可列出已经配对的键和值；<br>(查看变量类型，可用type()查看)<br></li><p></p>
-<li>支持强制转换变量类型，例如float(2)；</li>
+<h2>python中数字的使用</h2><br> <h3>变量类型</h3><br>int,float,string就不说了<br>这里注意下面几种类型的使用：<a id="more"></a><br>　　<code>long</code>：长整型(不是long long)，最长的数字的长度取决于计算机有多大的内存；<br>　　<code>list</code> ：功能类似于数组，用[]表示，里面的值可以改变；<br>　　<code>tuple</code>：用()表示，里面的值不可以改变；<br>　　<code>dictionary</code>：可列出已经配对的键和值；<br>(查看变量类型，可用type()查看)<br><br><li>支持强制转换变量类型，例如float(2)；</li><br><br><h3>变量命名</h3><br><li>python对于变量名的限制：不能用数字开头，不能过长，不能包括特殊符号(除下划线)；</li><br><li>对于变量命名的特殊点：大多数情况下变量名全部是小写。若不想变量的值被修改，才把变量名全部大写，作为一个常量；<br></li><br><h3>数学运算</h3><br>基本运算没见过的就是：floor除法的符号为//，求幂的符号为**；<br>运算优先级以及比较问题就不说了<br><br><h2>python中string的使用</h2>
 
-<p></p><h4>变量命名</h4><p></p>
-<li>python对于变量名的限制：不能用数字开头，不能过长，不能包括特殊符号(除下划线)；</li><br><li>对于变量命名的特殊点：大多数情况下变量名全部是小写。若不想变量的值被修改，才把变量名全部大写，作为一个常量；<br></li>
+<li>字符串创建，用’ ‘或者” “都可以进行赋值</li><br><li>识别大小写和空格</li>
 
-
-<p></p><h3>数学运算</h3><br>基本运算没见过的就是：floor除法的符号为//，求幂的符号为**；<br>运算优先级以及比较问题就不说了<p></p>
-<p></p><h2>python中string的使用</h2><p></p>
-<p><li>字符串创建，用’ ‘或者” “都可以进行赋值</li></p>
-<p></p><h4>字符串有关的函数使用：</h4><br>　　<code>len()</code>：返回字符串长度；<br>　　<code>.upper()</code>：全部转换成大写；<br>　　<code>.lower()</code>：全部转换成小写；<br>　　<code>.capitalize()</code>：把首字母转换成大写，其余转换成小写；<br>　　<code>.title()</code>：把首字母以及每个空格或者标点符号后的字母转换成大写，其余字母转换成小写；<br>　　<code>is_alpha()</code>：检查一个字符串是否全由字母组成；<br>注：使用这些函数之后，字符串自身的值并未发生改变<p></p>
-<p></p><h4>字符串的运算</h4><p></p>
-<p><li>加法：</li></p>
+<p></p><h3>字符串有关的函数使用：</h3><br>　　<code>len()</code>：返回字符串长度；<br>　　<code>.upper()</code>：全部转换成大写；<br>　　<code>.lower()</code>：全部转换成小写；<br>　　<code>.capitalize()</code>：把首字母转换成大写，其余转换成小写；<br>　　<code>.title()</code>：把首字母以及每个空格或者标点符号后的字母转换成大写，其余字母转换成小写；<br>　　<code>is_alpha()</code>：检查一个字符串是否全由字母组成；<br>　　<code>.strip()</code>：<br>　　　　1.删除字符串开头和结尾的所有空格；<br>　　　　2.删除指定的字符，例如：.strip(‘*’)；<br>　　　　3.rstrip()只删除开头的字符；.lstrip()只删除结尾的字符；<br>　　<code>.count(‘   ‘)</code>：返回一个字符串在另一个字符串中出现的次数；<br>　　<code>.find(‘   ‘)</code>：返回某个字符串第一次出现的位置，若没有找到返回-1；<br>　　<code>.replace(‘string1’, ‘string2’)</code>：将string1替换为string2；<br>注：使用这些函数之后，字符串自身的值并未发生改变<p></p>
+<p></p><h3>字符串的运算：</h3><p></p>
+<p><li>加法： (string) + (string)<br>　　　　(string) + “   “ +(string)</li></p>
+<p><li>乘法： (string)*(int)<br>　　　　其中int得是非负整数</li></p>
+<p><li>不存在减法和除法运算</li></p>
+<p>　　　</p>
 
       
     </div>
@@ -338,7 +331,7 @@ python中数字的使用
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">python中数字的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.1.</span> <span class="toc-text">变量命名</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">数学运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">python中string的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">2.0.1.</span> <span class="toc-text">字符串有关的函数使用：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">2.0.2.</span> <span class="toc-text">字符串的运算</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">python中数字的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">变量类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">变量命名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.3.</span> <span class="toc-text">数学运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">python中string的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">2.1.</span> <span class="toc-text">字符串有关的函数使用：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">2.2.</span> <span class="toc-text">字符串的运算：</span></a></li></ol></li></ol>
         
     </div>
     <style>
