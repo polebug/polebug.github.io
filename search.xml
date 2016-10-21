@@ -5,7 +5,7 @@
     
     <entry>
       <title><![CDATA[python学习笔记（一）：基础语法]]></title>
-      <url>http://polebug.github.io/2016/10/13/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</url>
+      <url>http://polebug.github.io/2016/10/21/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</url>
       <content type="html"><![CDATA[<p>装了python2.7，去图书馆借了python入门经典，暂且简单写下学习笔记，以供自己回忆</p>
 <h2>python中数字的使用</h2><br> <h3>变量类型</h3><br>int,float,string就不说了<br>这里注意下面几种类型的使用：<a id="more"></a><br>　　<code>long</code>：长整型(不是long long)，最长的数字的长度取决于计算机有多大的内存；<br>　　<code>list</code> ：功能类似于数组，用[]表示，里面的值可以改变；<br>　　<code>tuple</code>：用()表示，里面的值不可以改变；<br>　　<code>dictionary</code>：可列出已经配对的键和值；<br>(查看变量类型，可用type()查看)<br><br><li>支持强制转换变量类型，例如float(2)；</li><br><br><h3>变量命名</h3><br><li>python对于变量名的限制：不能用数字开头，不能过长，不能包括特殊符号(除下划线)；</li><br><li>对于变量命名的特殊点：大多数情况下变量名全部是小写。若不想变量的值被修改，才把变量名全部大写，作为一个常量；<br></li><br><h3>数学运算</h3><br>基本运算没见过的就是：floor除法的符号为//，求幂的符号为**；<br>运算优先级以及比较问题就不说了<br><br><h2>python中string的使用</h2>
 
