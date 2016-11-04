@@ -4,8 +4,14 @@
   
     
     <entry>
+      <title><![CDATA[Python Learning（三）：Image Processing with Matplotlib]]></title>
+      <url>http://polebug.github.io/2016/11/04/Python-Learning%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AImage-Processing-with-Matplotlib/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Python：Module Install Issues ]]></title>
-      <url>http://polebug.github.io/2016/11/04/python%EF%BC%9Amodule%E5%AE%89%E8%A3%85/</url>
+      <url>http://polebug.github.io/2016/11/04/Python%EF%BC%9AModule%20Install%20Issues/</url>
       <content type="html"><![CDATA[<p>Python里的Module安装过程总有一些奇怪的坑，在此整理一下，以供再遇到此类问题参看<br>（当然如果这篇文章有人看的话，希望能对你有所帮助~）<br>目前碰到的主要是以下几种：<br>　　0.使用PyCharm<br>　　1.easy_install<br>　　2.pip<br>　　3.matplotlib<br><a id="more"></a><br>注：<br>　　安装之前，先添加C:\python27,C:\python27\scripts到PATH里；</p>
 <p></p><h2>0.使用PyCharm</h2><br>一直觉得无论是用交互式(python shell)，还是用文本编写(sublime text等)然后命令行run都非常的麻烦。之后被膜法师安利了一波PyCharm，确实是个好用的IDE，如果有学校邮箱还可以申请专业版免费。<br>附上学生版注册的网址 ：<a href="https://www.jetbrains.com/shop/eform/students" target="_blank" rel="external">https://www.jetbrains.com/shop/eform/students</a><br>然后再注册一个JB的账号即可<br>(一本正经的上个图~)<br><img src="http://7x2wrf.com1.z0.glb.clouddn.com/pycharm.png" alt="原图"><p></p>
 <p>//settings - Editor - color&amp;fonts - fonts 可更改代码风格(scheme),字体(primary font)<br>//各种方面都满分！</p>
@@ -23,14 +29,14 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Python学习笔记（二）：基本图像处理]]></title>
-      <url>http://polebug.github.io/2016/11/03/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%9F%BA%E6%9C%AC%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/</url>
+      <title><![CDATA[Python Learing（二）：Image Processing with PIL]]></title>
+      <url>http://polebug.github.io/2016/11/03/Python-Learning%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9AImage-Processing-with-PIL/</url>
       <content type="html"></content>
     </entry>
     
     <entry>
-      <title><![CDATA[Python学习笔记（一）：基础语法]]></title>
-      <url>http://polebug.github.io/2016/10/21/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</url>
+      <title><![CDATA[Python Learing（一）：Basic Grammar]]></title>
+      <url>http://polebug.github.io/2016/10/21/Python-Learing%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9ABasic-Grammer/</url>
       <content type="html"><![CDATA[<p>装了python2.7，去图书馆借了python入门经典，暂且简单写下学习笔记，以供自己回忆<br>学习笔记（一）主要是基础语法部分：<br>　　1.python中数字以及字符串的使用;<br>　　2.输入与输出语句;<br>　　3.逻辑用语;<br>　　4.循环语句;<br>　　5.列表以及字典的使用;<br>　　6.函数的调用;<br><a id="more"></a></p>
 <p>以下为学习笔记（一）正文：</p>
 <h2>python中数字的使用</h2><br> <h3>变量类型</h3><br>int,float,string就不说了<br>这里注意下面几种类型的使用：<br>　　<code>long</code>：长整型(不是long long)，最长的数字的长度取决于计算机有多大的内存；<br>　　<code>list</code> ：功能类似于数组，用[]表示，里面的值可以改变；<br>　　<code>tuple</code>：用()表示，里面的值不可以改变；<br>　　<code>dictionary</code>：可列出已经配对的键和值；<br>(查看变量类型，可用type()查看)<br><br><li>支持强制转换变量类型，例如float(2)；</li><br><br><h3>变量命名</h3><br><li>python对于变量名的限制：不能用数字开头，不能过长，不能包括特殊符号(除下划线)；<br></li><li>对于变量命名的特殊点：大多数情况下变量名全部是小写。若不想变量的值被修改，才把变量名全部大写，作为一个常量；<br></li><br><br><h3>数学运算</h3><br>基本运算没见过的就是：floor除法的符号为//，求幂的符号为**；<br>运算优先级以及比较问题就不说了<br><br><h2>python中string的使用</h2>
