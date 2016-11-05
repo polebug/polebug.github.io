@@ -4,12 +4,6 @@
   
     
     <entry>
-      <title><![CDATA[Python Learning（三）：Image Processing with Matplotlib]]></title>
-      <url>http://polebug.github.io/2016/11/04/Python-Learning%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AImage-Processing-with-Matplotlib/</url>
-      <content type="html"></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[Python：Module Install Issues ]]></title>
       <url>http://polebug.github.io/2016/11/04/Python%EF%BC%9AModule%20Install%20Issues/</url>
       <content type="html"><![CDATA[<p>Python里的Module安装过程总有一些奇怪的坑，在此整理一下，以供再遇到此类问题参看<br>（当然如果这篇文章有人看的话，希望能对你有所帮助~）<br>目前碰到的主要是以下几种：<br>　　0.使用PyCharm<br>　　1.easy_install<br>　　2.pip<br>　　3.matplotlib<br><a id="more"></a><br>注：<br>　　安装之前，先添加C:\python27,C:\python27\scripts到PATH里；</p>
@@ -29,9 +23,10 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Python Learing（二）：Image Processing with PIL]]></title>
-      <url>http://polebug.github.io/2016/11/03/Python-Learning%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9AImage-Processing-with-PIL/</url>
-      <content type="html"></content>
+      <title><![CDATA[Python Learing（二）：Basic Image Processing]]></title>
+      <url>http://polebug.github.io/2016/11/03/Python-Learning%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9ABasic-Image-Processing/</url>
+      <content type="html"><![CDATA[<p>Basic image processing 主要用了以下几种模块：<br>0.PIL (Python Image Library)<br>1.NumPy<br>2.Matplotlib<br>3.SciPy<br><a id="more"></a></p>
+]]></content>
     </entry>
     
     <entry>
