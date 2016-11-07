@@ -6,9 +6,9 @@
     <entry>
       <title><![CDATA[Python Learing（二）：Basic Image Processing]]></title>
       <url>http://polebug.github.io/2016/11/05/Python-Learning%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9ABasic-Image-Processing/</url>
-      <content type="html"><![CDATA[<p>&lt;写在前面&gt;<br>Basic image processing 的内容主要是：<br>0.如何画曲线图，散点图，直方图以及如何调整这些图像的参数；<br>1.（以简单的曲线图为例）如何使用子图，多个数据集，自定义图形外观，标题，标签，交互式标注，图例；<br>2.简单的图像处理：转换格式，调整尺寸，旋转，复制粘贴图像区域，在图像上绘制点线；<br>3.灰度变换与直方图均衡化；<br>4.图像主成分分析(PCA: Principal Component Analysis)；<br>5.高斯模糊；<br>6.计算导数图像；<br>7.形态学操作：计数与度量功能；<br>8.图像去噪；</p>
-<p>以上内容主要用了以下几种模块：<br>0.PIL (Python Image Library)<br>1.NumPy<br>2.Matplotlib<br>3.SciPy<br><a id="more"></a></p>
-<p>　　其实写这篇文章的时候，我一直在纠结是分模块整理好一些呢，还是将各种模块的功能集于同一个对象进行描述。一开始是尝试着分模块整理的，整理了一段时间发现这样做并不有效，而且提取的实际意义并不大。于是改成同一个对象，如何用python的模板画，这样的方式进行编写。希望之后自己能做一些亦可赛艇的东西丫~</p>
+      <content type="html"><![CDATA[<p>&lt;写在前面&gt;<br>Basic image processing 的内容主要是：<br>　　0.如何画曲线图，散点图，直方图以及如何调整这些图像的参数；<br>　　1.（以简单的曲线图为例）如何使用子图，多个数据集，自定义图形外观，标题，标签，交互式标注，图例；<br>　　2.简单的图像处理：转换格式，调整尺寸，旋转，复制粘贴图像区域，在图像上绘制点线；<br>　　3.灰度变换与直方图均衡化；<br>　　4.图像主成分分析(PCA: Principal Component Analysis)；<br>　　5.高斯模糊；<br>　　6.计算导数图像；<br>　　7.形态学操作：计数与度量功能；<br>　　8.图像去噪；<br><a id="more"></a></p>
+<p>以上内容主要用了以下几种模块：<br>　　0.PIL (Python Image Library)<br>　　1.NumPy<br>　　2.Matplotlib<br>　　3.SciPy</p>
+<p>其实写这篇文章的时候，我一直在纠结是分模块整理好一些呢，还是将各种模块的功能集于同一个对象进行描述。一开始是尝试着分模块整理的，整理了一段时间发现这样做并不有效，而且提取的实际意义并不大。于是改成同一个对象，如何用python的模板画，这样的方式进行编写。希望之后自己能做一些亦可赛艇的东西丫~</p>
 <p>&lt;以下是正文&gt;</p>
 ]]></content>
     </entry>
