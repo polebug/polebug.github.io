@@ -15,16 +15,16 @@
 
 
 
-<meta name="description" content="裸算法系列">
-<meta property="og:type" content="article">
-<meta property="og:title" content="对于RMQ问题的ST算法的理解及运用">
-<meta property="og:url" content="http://polebug.github.io/2016/08/13/对于RMQ问题的理解及运用/index.html">
+<meta name="description" content="never feel sorry about your ambitions">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SomeMarks">
+<meta property="og:url" content="http://polebug.github.io/SomeMarks/index.html">
 <meta property="og:site_name" content="polebug">
-<meta property="og:description" content="裸算法系列">
-<meta property="og:updated_time" content="2016-08-14T02:59:06.000Z">
+<meta property="og:description" content="never feel sorry about your ambitions">
+<meta property="og:updated_time" content="2016-11-16T06:41:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="对于RMQ问题的ST算法的理解及运用">
-<meta name="twitter:description" content="裸算法系列">
+<meta name="twitter:title" content="SomeMarks">
+<meta name="twitter:description" content="never feel sorry about your ambitions">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -56,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>对于RMQ问题的ST算法的理解及运用 | polebug</title>
+<title>SomeMarks | polebug</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -66,7 +66,7 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: true,
+        isPost: false,
         isArchive: false,
         isTag: false,
         isCategory: false,
@@ -263,11 +263,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="[layout]-对于RMQ问题的理解及运用" class="article article-type-[layout]" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/08/13/对于RMQ问题的理解及运用/" class="article-date">
-      <time datetime="2016-08-13T15:53:03.000Z" itemprop="datePublished">2016-08-13</time>
+      <a href="/SomeMarks/index.html" class="article-date">
+      <time datetime="2016-11-16T06:41:37.000Z" itemprop="datePublished">2016-11-16</time>
 </a>
 
 
@@ -282,7 +282,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      对于RMQ问题的ST算法的理解及运用
+      SomeMarks
     </h1>
   
 
@@ -292,10 +292,6 @@
         
 
         
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RMQ问题/">RMQ问题</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ST算法/">ST算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区间上的操作/">区间上的操作</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/模板/">模板</a></li></ul>
-    </div>
-
         <div class="clearfix"></div>
       </div>
       
@@ -303,10 +299,26 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>裸算法系列<br><a id="more"></a></p>
-<p></p><h1>Problem Description</h1><br>&nbsp;&nbsp;&nbsp;&nbsp;RMQ (Range Minimum/Maximun Query),即区间最值问题；<p></p>
-<p></p><h1>Algorithm</h1><br>ST (Sparse Table,稀疏表) Algorithm,O(nlogn)预处理,O(1)查询；<p></p>
+              <style>
+    .article-meta { display: none; }
+    #container .article .article-title { padding-right: 0; }
+    .article-header {
+        padding: 0;
+        padding-top: 26px;
+        border-left: none;
+        text-align: center;
+    }
+    .article-header:hover { border-left: none; }
+    .article-title { font-size: 1.6em }
+    .article-entry hr { margin: 0;}
+    .article-meta,
+    #container .article-info-post.article-info { display: none;}
+    #container .article .article-title { padding: 0; }
+</style>
 
+
+          
+        
       
     </div>
     
@@ -315,48 +327,8 @@
     
 
 
-    <nav id="article-nav">
-        
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/08/14/HDOJ-5726-GCD-16多校day1-1004/">
-                    HDOJ 5726 GCD (16多校day1 1004)
-                </a>
-            </div>
-        
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/08/13/位运算理解及运用-未填完/">
-                    位运算理解及运用(未填完)
-                </a>
-            </div>
-        
-    </nav>
-
   
 </article>
-
-    <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
-        
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">Algorithm</span></a></li></ol>
-        
-    </div>
-    <style>
-        .left-col .switch-btn,
-        .left-col .switch-area {
-            display: none;
-        }
-        .toc-level-6 i,
-        .toc-level-6 ol {
-            display: none !important;
-        }
-    </style>
-
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
-
-    <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
-    </script>
 
 
 
@@ -374,7 +346,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"对于RMQ问题的ST算法的理解及运用　| polebug　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"SomeMarks　| polebug　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -390,7 +362,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2016/08/13/对于RMQ问题的理解及运用/" data-title="对于RMQ问题的ST算法的理解及运用" data-url="http://polebug.github.io/2016/08/13/对于RMQ问题的理解及运用/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="SomeMarks/index.html" data-title="SomeMarks" data-url="http://polebug.github.io/SomeMarks/index.html"></div>
     <script>
         var duoshuoQuery = {short_name:"polebug1"};
         var loadComment = function(){
@@ -408,26 +380,6 @@
 </div>
     
 
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/2016/08/14/HDOJ-5726-GCD-16多校day1-1004/" title="上一篇: HDOJ 5726 GCD (16多校day1 1004)">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
-
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-
-        
-            <a href="/2016/08/13/位运算理解及运用-未填完/" title="下一篇: 位运算理解及运用(未填完)">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/05/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/04/Python：Module Install Issues/">Python：Module Install Issues </a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/21/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/14/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/位运算理解及运用-未填完/">位运算理解及运用(未填完)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
 
 
 
