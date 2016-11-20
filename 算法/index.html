@@ -15,18 +15,16 @@
 
 
 
-<meta name="description" content="Python里的Module安装过程总有一些奇怪的坑，在此整理一下，以供再遇到此类问题参看（当然如果这篇文章有人看的话，希望能对你有所帮助~）目前碰到的主要是以下几种：　　0.使用PyCharm　　1.easy_install　　2.pip　　3.matplotlib">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Python：Module Install Issues ">
-<meta property="og:url" content="http://polebug.github.io/2016/11/04/Python：Module Install Issues/index.html">
+<meta name="description" content="never feel sorry about your ambitions">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Algorithm">
+<meta property="og:url" content="http://polebug.github.io/算法/index.html">
 <meta property="og:site_name" content="polebug">
-<meta property="og:description" content="Python里的Module安装过程总有一些奇怪的坑，在此整理一下，以供再遇到此类问题参看（当然如果这篇文章有人看的话，希望能对你有所帮助~）目前碰到的主要是以下几种：　　0.使用PyCharm　　1.easy_install　　2.pip　　3.matplotlib">
-<meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/pycharm.png">
-<meta property="og:updated_time" content="2016-11-16T09:13:30.000Z">
+<meta property="og:description" content="never feel sorry about your ambitions">
+<meta property="og:updated_time" content="2016-11-16T08:58:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python：Module Install Issues ">
-<meta name="twitter:description" content="Python里的Module安装过程总有一些奇怪的坑，在此整理一下，以供再遇到此类问题参看（当然如果这篇文章有人看的话，希望能对你有所帮助~）目前碰到的主要是以下几种：　　0.使用PyCharm　　1.easy_install　　2.pip　　3.matplotlib">
-<meta name="twitter:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/pycharm.png">
+<meta name="twitter:title" content="Algorithm">
+<meta name="twitter:description" content="never feel sorry about your ambitions">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -58,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Python：Module Install Issues  | polebug</title>
+<title>Algorithm | polebug</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -68,7 +66,7 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: true,
+        isPost: false,
         isArchive: false,
         isTag: false,
         isCategory: false,
@@ -261,11 +259,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="[layout]-Python：Module Install Issues" class="article article-type-[layout]" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/11/04/Python：Module Install Issues/" class="article-date">
-      <time datetime="2016-11-04T06:47:02.000Z" itemprop="datePublished">2016-11-04</time>
+      <a href="/算法/index.html" class="article-date">
+      <time datetime="2016-11-16T08:58:19.000Z" itemprop="datePublished">2016-11-16</time>
 </a>
 
 
@@ -280,7 +278,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Python：Module Install Issues 
+      Algorithm
     </h1>
   
 
@@ -288,16 +286,8 @@
       
       <div class="article-info article-info-post">
         
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
-    </div>
-
 
         
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-    </div>
-
         <div class="clearfix"></div>
       </div>
       
@@ -305,20 +295,26 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>Python里的Module安装过程总有一些奇怪的坑，在此整理一下，以供再遇到此类问题参看<br>（当然如果这篇文章有人看的话，希望能对你有所帮助~）<br>目前碰到的主要是以下几种：<br>　　0.使用PyCharm<br>　　1.easy_install<br>　　2.pip<br>　　3.matplotlib<br><a id="more"></a><br>注：<br>　　安装之前，先添加C:\python27,C:\python27\scripts到PATH里；</p>
-<p></p><h2>0.使用PyCharm</h2><br>一直觉得无论是用交互式(python shell)，还是用文本编写(sublime text等)然后命令行run都非常的麻烦。之后被膜法师安利了一波PyCharm，确实是个好用的IDE，如果有学校邮箱还可以申请专业版免费。<br>附上学生版注册的网址 ：<a href="https://www.jetbrains.com/shop/eform/students" target="_blank" rel="external">https://www.jetbrains.com/shop/eform/students</a><br>然后再注册一个JB的账号即可<br>(一本正经的上个图~)<br><img src="http://7x2wrf.com1.z0.glb.clouddn.com/pycharm.png" alt="原图"><p></p>
-<p>//settings - Editor - color&amp;fonts - fonts 可更改代码风格(scheme),字体(primary font)<br>//各种方面都满分！</p>
-<p></p><h2>1.easy_install</h2><br>easy_install类似与pip,用于装各种module;<br>安装方法：<br>　　打包 <a href="https://bootstrap.pypa.io/ez_setup.py" target="_blank" rel="external">https://bootstrap.pypa.io/ez_setup.py</a> 的代码<br>　　在本地创建.py文件，用命令行打开它：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python ez_setup<span class="selector-class">.py</span>                      <span class="comment">//即安装setuptools</span></div></pre></td></tr></table></figure><p></p>
-<p>需要装module时，输入语句：(以redis为例)</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">easy_install</span> redis</div></pre></td></tr></table></figure>
-<p></p><h2>2.pip</h2><p></p>
-<p><li>pip的安装方法有很多种：<br>(1).使用easy_install进行安装：<br>C:\python27\Scripts\easy_install.exe pip</li></p>
-<p>(2).从<a href="https://bootstrap.pypa.io/get-pip.py" target="_blank" rel="external">https://bootstrap.pypa.io/get-pip.py</a> 打包源码，创建.py文件，用命令行打开之后<br><figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">python </span><span class="built_in">get-pip.py</span> <span class="string">install</span></div></pre></td></tr></table></figure></p>
-<p>(3)从官网下载 <a href="https://pypi.python.org/pypi/pip#downloads" target="_blank" rel="external">https://pypi.python.org/pypi/pip#downloads</a><br>解压到文件夹之后，从cmd进入<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python setup<span class="selector-class">.py</span> install</div></pre></td></tr></table></figure></p>
-<p>//亲测第一种方法是最有效最可靠的<br>//被pip安装坑了很久，一直报出奇怪的错误，如果安装姿势不对，建议把文件夹里的pip文件都删掉，然后重新安装<br>//如果用pip install很慢，建议：在Lib\site-packages\pip修改cmdoptions.py文件中的index_url,将default中的地址改为国内的镜像站，如 <a href="https://pypi.mirrors.ustc.edu.cn/simple" target="_blank" rel="external">https://pypi.mirrors.ustc.edu.cn/simple</a></p>
-<p><li>pip使用</li><br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip <span class="keyword">install</span> redis</div></pre></td></tr></table></figure></p>
-<p></p><h2>Matplotlib</h2><br>安装Matplotlib，直接使用pip是最方便的，或者<a href="http://jaist.dl.sourceforge.net/project/matplotlib/matplotlib/matplotlib-1.3.1/matplotlib-1.3.1.win32-py2.7.exe" target="_blank" rel="external">官网</a>下载，都可以<br>关于Matplotlib依赖的安装，建议看<a href="http://www.cnblogs.com/fantacity/p/4282078.html" target="_blank" rel="external">这篇文章</a><br>//Matplotlib依赖的安装基本没啥坑，可以卡心的画图了~<p></p>
+              <style>
+    .article-meta { display: none; }
+    #container .article .article-title { padding-right: 0; }
+    .article-header {
+        padding: 0;
+        padding-top: 26px;
+        border-left: none;
+        text-align: center;
+    }
+    .article-header:hover { border-left: none; }
+    .article-title { font-size: 1.6em }
+    .article-entry hr { margin: 0;}
+    .article-meta,
+    #container .article-info-post.article-info { display: none;}
+    #container .article .article-title { padding: 0; }
+</style>
 
+
+          
+        
       
     </div>
     
@@ -327,48 +323,8 @@
     
 
 
-    <nav id="article-nav">
-        
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/11/05/Python-Learning（二）：Basic-Image-Processing/">
-                    Python Learing（二）：Basic Image Processing 1
-                </a>
-            </div>
-        
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/10/21/Python-Learing（一）：Basic-Grammer/">
-                    Python Learing（一）：Basic Grammar
-                </a>
-            </div>
-        
-    </nav>
-
   
 </article>
-
-    <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
-        
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">0.使用PyCharm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">1.easy_install</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">2.pip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">Matplotlib</span></a></li></ol>
-        
-    </div>
-    <style>
-        .left-col .switch-btn,
-        .left-col .switch-area {
-            display: none;
-        }
-        .toc-level-6 i,
-        .toc-level-6 ol {
-            display: none !important;
-        }
-    </style>
-
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
-
-    <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
-    </script>
 
 
 
@@ -386,7 +342,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Python：Module Install Issues 　| polebug　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Algorithm　| polebug　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -402,7 +358,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2016/11/04/Python：Module Install Issues/" data-title="Python：Module Install Issues " data-url="http://polebug.github.io/2016/11/04/Python：Module Install Issues/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="算法/index.html" data-title="Algorithm" data-url="http://polebug.github.io/算法/index.html"></div>
     <script>
         var duoshuoQuery = {short_name:"polebug1"};
         var loadComment = function(){
@@ -420,26 +376,6 @@
 </div>
     
 
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/2016/11/05/Python-Learning（二）：Basic-Image-Processing/" title="上一篇: Python Learing（二）：Basic Image Processing 1">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
-
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-
-        
-            <a href="/2016/10/21/Python-Learing（一）：Basic-Grammer/" title="下一篇: Python Learing（一）：Basic Grammar">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/05/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/04/Python：Module Install Issues/">Python：Module Install Issues </a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/21/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/14/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/位运算理解及运用-未填完/">位运算理解及运用(未填完)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
 
 
 
