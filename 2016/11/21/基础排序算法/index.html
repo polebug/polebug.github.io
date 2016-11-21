@@ -15,21 +15,19 @@
 
 
 
-<meta name="description" content="若有错误的地方，欢迎指正
-题意&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;突然想想写这题的题解，发现老刘赛后没放出来….不过还好我有随手收藏题的习惯，当时截了图，原题如图所示">
+<meta name="description" content="&amp;lt;写在前面&amp;gt;    今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。正文最前面是今天讲的插入排序，下面是根据难易程度整理的其它基础排序算法，感兴趣的童鞋接着往下看～
+&amp;lt;正文&amp;gt;基础排序算法如下： &amp;nbs">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2016多校前的热身赛 1002 Circle Problem">
-<meta property="og:url" content="http://polebug.github.io/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/index.html">
+<meta property="og:title" content="基础排序算法">
+<meta property="og:url" content="http://polebug.github.io/2016/11/21/基础排序算法/index.html">
 <meta property="og:site_name" content="polebug">
-<meta property="og:description" content="若有错误的地方，欢迎指正
-题意&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;突然想想写这题的题解，发现老刘赛后没放出来….不过还好我有随手收藏题的习惯，当时截了图，原题如图所示">
-<meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ%E5%9B%BE%E7%89%8720160815003825.png">
-<meta property="og:updated_time" content="2016-11-20T04:19:58.000Z">
+<meta property="og:description" content="&amp;lt;写在前面&amp;gt;    今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。正文最前面是今天讲的插入排序，下面是根据难易程度整理的其它基础排序算法，感兴趣的童鞋接着往下看～
+&amp;lt;正文&amp;gt;基础排序算法如下： &amp;nbs">
+<meta property="og:updated_time" content="2016-11-21T13:59:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2016多校前的热身赛 1002 Circle Problem">
-<meta name="twitter:description" content="若有错误的地方，欢迎指正
-题意&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;突然想想写这题的题解，发现老刘赛后没放出来….不过还好我有随手收藏题的习惯，当时截了图，原题如图所示">
-<meta name="twitter:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ%E5%9B%BE%E7%89%8720160815003825.png">
+<meta name="twitter:title" content="基础排序算法">
+<meta name="twitter:description" content="&amp;lt;写在前面&amp;gt;    今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。正文最前面是今天讲的插入排序，下面是根据难易程度整理的其它基础排序算法，感兴趣的童鞋接着往下看～
+&amp;lt;正文&amp;gt;基础排序算法如下： &amp;nbs">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -61,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>2016多校前的热身赛 1002 Circle Problem | polebug</title>
+<title>基础排序算法 | polebug</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -270,11 +268,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="[layout]-2016多校前的热身赛-1002-Circle-Problem" class="article article-type-[layout]" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="[layout]-基础排序算法" class="article article-type-[layout]" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/" class="article-date">
-      <time datetime="2016-08-14T16:58:56.000Z" itemprop="datePublished">2016-08-15</time>
+      <a href="/2016/11/21/基础排序算法/" class="article-date">
+      <time datetime="2016-11-21T03:24:43.000Z" itemprop="datePublished">2016-11-21</time>
 </a>
 
 
@@ -289,7 +287,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      2016多校前的热身赛 1002 Circle Problem
+      基础排序算法
     </h1>
   
 
@@ -304,7 +302,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/平几/">平几</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/概率问题/">概率问题</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/随机化/">随机化</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -314,13 +312,28 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>若有错误的地方，欢迎指正</p>
-<p></p><h2>题意</h2><br>&nbsp;&nbsp;&nbsp;&nbsp;突然想想写这题的题解，发现老刘赛后没放出来….不过还好我有随手收藏题的习惯，当时截了图，原题如图所示<br><a id="more"></a><br>&nbsp;&nbsp;&nbsp;&nbsp;（看着有点丑…<br><img src="http://7x2wrf.com1.z0.glb.clouddn.com/QQ%E5%9B%BE%E7%89%8720160815003825.png" alt="原图"><br>&nbsp;&nbsp;&nbsp;&nbsp;题意：给出n个点的坐标，问是否存在一个圆，满足n/3个点都在这个圆上；<p></p>
-<p></p><h2>题解</h2><br>&nbsp;&nbsp;&nbsp;&nbsp;思路：显然，枚举三个点，找到一个圆，然后逐一验证是否满足题意的做法会超时。那么：<br>&nbsp;&nbsp;&nbsp;&nbsp;1.考虑优化枚举点的复杂度：假设存在满足题意的圆，那么1/3的点在这个圆上。由于三点确定一个圆，那么找到这个圆的概率为1/3 x 1/3 x 1/3；理论上，随机找三个点有1/27的概率找到这个圆，保险起见我们考虑找500次左右。<br>&nbsp;&nbsp;&nbsp;&nbsp;2.已知三个点的坐标求解圆的方程：推导详见<a href="http://blog.sina.com.cn/s/blog_9d6efbb301018nzh.html" target="_blank" rel="external">此博客</a>，简单的说是消参，对于局部式子设变量求解；<br>&nbsp;&nbsp;&nbsp;&nbsp;3.逐一验证剩余的点即可；<br>&nbsp;&nbsp;&nbsp;&nbsp;4.细节：对于浮点数，取绝对值用fabs；验证点到圆心的距离时，比较精度为1e5，根据提交情况进行调整即可；<p></p>
-<p></p><h2>相关算法</h2><p></p>
-<p></p><h3>随机化</h3><br>算是学习了一下，用起来很简单：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdlib&gt;</span></span></div><div class="line"><span class="meta">#inlcude<span class="meta-string">&lt;ctime&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	srand(time(<span class="number">0</span>));</div><div class="line">	<span class="keyword">int</span> x=rand()%n+<span class="number">1</span>;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
-<p></p><h2>代码如下</h2><br>亲测AC<p></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;ctime&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdlib&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="keyword">double</span> x[<span class="number">30001</span>],y[<span class="number">30001</span>];</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	freopen(<span class="string">"data.txt"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</div><div class="line">	</div><div class="line">	<span class="keyword">int</span> T,n;</div><div class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;T);</div><div class="line">	<span class="keyword">while</span>(T--)&#123;</div><div class="line">	    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</div><div class="line">	    <span class="built_in">memset</span>(x,<span class="number">0</span>,<span class="keyword">sizeof</span>(x));</div><div class="line">	    <span class="built_in">memset</span>(y,<span class="number">0</span>,<span class="keyword">sizeof</span>(y));</div><div class="line">	    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) <span class="built_in">scanf</span>(<span class="string">"%lf%lf"</span>,&amp;x[i],&amp;y[i]);</div><div class="line">	    srand(time(<span class="number">0</span>));</div><div class="line">	    <span class="keyword">int</span> flag=<span class="number">0</span>;</div><div class="line">	    </div><div class="line">	    <span class="keyword">for</span>(<span class="keyword">int</span> t=<span class="number">1</span>;t&lt;=<span class="number">500</span>;t++)&#123;</div><div class="line">	    	<span class="keyword">int</span> i=rand()%n+<span class="number">1</span>;</div><div class="line">			<span class="keyword">int</span> j=rand()%n+<span class="number">1</span>;</div><div class="line">			<span class="keyword">int</span> k=rand()%n+<span class="number">1</span>;</div><div class="line">		    <span class="keyword">double</span> a=<span class="number">2</span>*(x[j]-x[i]);</div><div class="line">		    <span class="keyword">double</span> b=<span class="number">2</span>*(y[j]-y[i]);</div><div class="line">		    <span class="keyword">double</span> c=x[j]*x[j]+y[j]*y[j]-x[i]*x[i]-y[i]*y[i];</div><div class="line">		    <span class="keyword">double</span> d=<span class="number">2</span>*(x[k]-x[j]);</div><div class="line">		    <span class="keyword">double</span> e=<span class="number">2</span>*(y[k]-y[j]);</div><div class="line">		    <span class="keyword">double</span> f=x[k]*x[k]+y[k]*y[k]-x[j]*x[j]-y[j]*y[j];</div><div class="line">		    <span class="keyword">double</span> x0=(b*f-e*c)/(b*d-e*a);</div><div class="line">		    <span class="keyword">double</span> y0=(d*c-a*f)/(b*d-e*a);</div><div class="line">		    <span class="keyword">double</span> r=<span class="built_in">sqrt</span>((x0-x[i])*(x0-x[i])+(y0-y[i])*(y0-y[i]));</div><div class="line">			<span class="keyword">int</span> tot=<span class="number">0</span>;</div><div class="line">	        </div><div class="line">	        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</div><div class="line">	        	<span class="keyword">double</span> d2=<span class="built_in">sqrt</span>((x[i] - x0) * (x[i] - x0) + (y[i] - y0) * (y[i] - y0));</div><div class="line">	        	<span class="keyword">if</span>(<span class="built_in">abs</span>(d2 - r) &lt;= <span class="number">1e-5</span>) tot++;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">int</span> judge=n/<span class="number">3</span>;</div><div class="line">			<span class="keyword">if</span>(judge&lt;=tot)&#123;</div><div class="line">				flag=<span class="number">1</span>;</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			&#125;</div><div class="line">	    &#125;</div><div class="line">	    <span class="keyword">if</span>(flag) <span class="built_in">printf</span>(<span class="string">"YOUGE\n"</span>); <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"NIUGE\n"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <p>&lt;写在前面&gt;<br>    今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。<br>其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。正文最前面是今天讲的插入排序，下面是根据难易程度整理的其它基础排序算法，感兴趣的童鞋接着往下看～</p>
+<p>&lt;正文&gt;<br>基础排序算法如下：<br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>0.Insertion Sort</b><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>1.STL：Sort</b><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>2.Bubble Sort</b><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>3.Bucket Sort</b><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>4.Selection Sort</b><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>5.Quick Sort</b>（不使用sort函数)<br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>6.Heap Sort</b><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>7.Merge Sort</b><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>8.Shell Sort</b><br>提个建议：如果有看不懂的地方，可以带入一个值，手动模拟代码执行的过程，帮助理解～</p>
+<a id="more"></a>
+<h2> 插入排序 Insertion Sort </h2><br>原理：(实现将数组由小到大排序)<br>&nbsp;&nbsp;&nbsp;&nbsp;1.将数都放在a[]数组里，遍历a[]。取出当前遍历到的数key,令key暂时为a[i]；<br>&nbsp;&nbsp;&nbsp;&nbsp;2.为了将key放到正确的位置，需将key与a[]前面的数进行比较，直到找到a[j]，满足key小于a[j]，并将key放在a[j]的后面，即令a[j+1]=key。于此同时，需把比key大的数往后移一位，即a[j+1]=a[j];<br>（由大到小排序，同理）<br>时间复杂度: O(n2)<br><br>附上代码：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> InsertionSort(<span class="built_in">int</span> *a, <span class="built_in">int</span> len)&#123;</div><div class="line">	<span class="keyword">for</span> (<span class="built_in">int</span> i=<span class="number">1</span>; i&lt;len; i++)&#123;</div><div class="line">		<span class="built_in">int</span> <span class="built_in">key</span> = a[i];</div><div class="line">		<span class="built_in">int</span> j = i<span class="number">-1</span>;</div><div class="line">		<span class="keyword">while</span> (j&gt;=<span class="number">0</span> &amp;&amp; a[j]&gt;<span class="built_in">key</span>)&#123; <span class="comment">//直到找到比key小的数，于此同时将比key大的数都往后移一位         </span></div><div class="line">			a[j+<span class="number">1</span>] = a[j];</div><div class="line">			j--;</div><div class="line">		&#125;</div><div class="line">		a[j+<span class="number">1</span>] = <span class="built_in">key</span>;		  <span class="comment">//跳出while即找到了比key小的数a[j]，那么将key插入到a[j]后面</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br><h2> STL中Sort的调用</h2><br>stl是c++自带的库，里面有一些已经定义的函数，加入头文件之后直接进行调用即可，非常方便；sort函数正是如此，内涵的代码可见下文。<br>时间复杂度：O(nlogn)<br><br>用法（附上代码）<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span>				<span class="comment">//头文件                   </span></span></div><div class="line"><span class="keyword">int</span> a[n];</div><div class="line">sort(a,a+n);					<span class="comment">//默认从小到大</span></div></pre></td></tr></table></figure><br><br>注意：<br>&nbsp;&nbsp;&nbsp;&nbsp;1.sort默认从a[0]开始排序，以a[n-1]结尾，n为长度；<br>&nbsp;&nbsp;&nbsp;&nbsp;2.char数组，double数组，longlong数组等，也可以使用sort排序；<br><br><h2> 冒泡排序 Bubble Sort </h2><br>原理：（从小到大排序）<br>&nbsp;&nbsp;&nbsp;&nbsp;冒泡排序的原理很简单，就是两重循环比较大小，不停的交换相邻两位数；<br>时间复杂度：O(n2)<br><br>附上代码：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">BubbleSort</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> len)</span></span>&#123;        </div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;len;j++)&#123;            </div><div class="line">			<span class="keyword">if</span>(a[i]&gt;a[j])&#123;</div><div class="line">				<span class="keyword">int</span> temp=a[i];                </div><div class="line">				a[i]=a[j];</div><div class="line">				a[j]=temp;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br><h2> 桶排 Bucket Sort </h2><br>原理：<br>&nbsp;&nbsp;&nbsp;&nbsp;1.不同于别的排序算法，桶排是基于数组下标实现的排序；最大的区别在于存储数组中的数据时，我们用数组下标存入，用数组的值记录数量；<br>&nbsp;&nbsp;&nbsp;&nbsp;2.举个栗子：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们需读入数组的数据为，5，1，2，1，5，2，3<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存储时我们将第一个数字5,存到a[5]++;以此类推<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输出时，for(int i=Min_Number;i&lt;=Max_Number;i++) 输出所存储的数；<br><br>代码如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">BucketSort</span><span class="params">(<span class="keyword">int</span> len)</span></span>&#123;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</div><div class="line">		<span class="built_in">cin</span>&gt;&gt;x;</div><div class="line">		a[x]++;	<span class="comment">//关键：用数组下标存数据，用数组的值统计个数</span></div><div class="line">		<span class="keyword">if</span>(x&lt;Min_Number) Min_Number=x;</div><div class="line">		<span class="keyword">if</span>(x&gt;Max_Number) Max_Number=x;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=Min_Number;i&lt;=Max_Number;i++)&#123;</div><div class="line">		<span class="keyword">if</span>(!a[i])&#123;</div><div class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=a[i];j++) <span class="built_in">cout</span>&lt;&lt;a[j]&lt;&lt;<span class="string">" "</span>;                   </div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br>注意：<br>&nbsp;&nbsp;&nbsp;&nbsp;由桶排的原理的原理可知，桶排适用于数据范围小，而且有较多重复数据的数组排序；对于数据范围大的排序，还需离散化；<br><br><h2> 选择排序 Selection Sort</h2><br>原理：<br>&nbsp;&nbsp;&nbsp;&nbsp;1.在未排序的数组中找到最小的元素，将其存在数组的起始位置；<br>&nbsp;&nbsp;&nbsp;&nbsp;2.从剩下的未排序的元素中继续寻找最小的元素，放在已排序数组的末尾；<br>时间复杂度：O(n2)<br><br>代码如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Selection_Sort</span><span class="params">(<span class="keyword">int</span> *a)</span></span>&#123;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</div><div class="line">		<span class="keyword">int</span> Min=i;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;len;i++)&#123;</div><div class="line">			<span class="keyword">if</span>(a[j]&lt;a[Min]) Min=j;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(Min!=i)&#123;</div><div class="line">			<span class="keyword">int</span> temp=a[Min];</div><div class="line">			a[Min]=a[i];</div><div class="line">			a[i]=temp;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br><h2> 快速排序 Quick Sort</h2><br><h2> 堆排 Heap Sort</h2><br><h2> 归并排序 Merge Sort</h2><br><h2> 希尔排序 Shell Sort</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       
     </div>
@@ -329,13 +342,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></p>
+        <p><span>本文标题:</span><a href="/2016/11/21/基础排序算法/">基础排序算法</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">polebug</a></p>
-        <p><span>发布时间:</span>2016-08-15, 00:58:56</p>
-        <p><span>最后更新:</span>2016-11-20, 12:19:58</p>
+        <p><span>发布时间:</span>2016-11-21, 11:24:43</p>
+        <p><span>最后更新:</span>2016-11-21, 21:59:37</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/" title="2016多校前的热身赛 1002 Circle Problem">http://polebug.github.io/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://polebug.github.io/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/11/21/基础排序算法/" title="基础排序算法">http://polebug.github.io/2016/11/21/基础排序算法/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://polebug.github.io/2016/11/21/基础排序算法/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -347,16 +360,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/10/21/Python-Learing（一）：Basic-Grammer/">
-                    Python Learing（一）：Basic Grammar
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/08/14/HDOJ-5726-GCD-16多校day1-1004/">
-                    HDOJ 5726 GCD (16多校day1 1004)
+                <a href="/2016/11/20/Python-Learning（三）：Web-Scraping-with-Python-1/">
+                    Python Learning（三）：Web Scraping with Python 1
                 </a>
             </div>
         
@@ -368,7 +375,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">题意</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">题解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">相关算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.1.</span> <span class="toc-text">随机化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">代码如下</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text"> 插入排序 Insertion Sort </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text"> STL中Sort的调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text"> 冒泡排序 Bubble Sort </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text"> 桶排 Bucket Sort </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">5.</span> <span class="toc-text"> 选择排序 Selection Sort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">6.</span> <span class="toc-text"> 快速排序 Quick Sort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">7.</span> <span class="toc-text"> 堆排 Heap Sort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">8.</span> <span class="toc-text"> 归并排序 Merge Sort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">9.</span> <span class="toc-text"> 希尔排序 Shell Sort</span></a></li></ol>
         
     </div>
     <style>
@@ -404,7 +411,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"2016多校前的热身赛 1002 Circle Problem　| polebug　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"基础排序算法　| polebug　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -420,7 +427,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2016/08/15/2016多校前的热身赛-1002-Circle-Problem/" data-title="2016多校前的热身赛 1002 Circle Problem" data-url="http://polebug.github.io/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/11/21/基础排序算法/" data-title="基础排序算法" data-url="http://polebug.github.io/2016/11/21/基础排序算法/"></div>
     <script>
         var duoshuoQuery = {short_name:"polebug1"};
         var loadComment = function(){
@@ -443,15 +450,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/10/21/Python-Learing（一）：Basic-Grammer/" title="上一篇: Python Learing（一）：Basic Grammar">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/08/14/HDOJ-5726-GCD-16多校day1-1004/" title="下一篇: HDOJ 5726 GCD (16多校day1 1004)">
+            <a href="/2016/11/20/Python-Learning（三）：Web-Scraping-with-Python-1/" title="下一篇: Python Learning（三）：Web Scraping with Python 1">
                 <i class="fa fa-angle-right"></i>
             </a>
         
