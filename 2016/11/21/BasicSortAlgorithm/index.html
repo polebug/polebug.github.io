@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://polebug.github.io/2016/11/21/BasicSortAlgorithm/index.html">
 <meta property="og:site_name" content="polebug">
 <meta property="og:description" content="&amp;lt;写在前面&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;正文最前面">
-<meta property="og:updated_time" content="2016-11-24T05:57:02.000Z">
+<meta property="og:updated_time" content="2016-11-24T06:09:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础排序算法">
 <meta name="twitter:description" content="&amp;lt;写在前面&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;正文最前面">
@@ -314,7 +314,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">BucketSort</span><span class="params">(<span class="keyword">int</span> len)</span></span>&#123;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</div><div class="line">		<span class="built_in">cin</span>&gt;&gt;x;</div><div class="line">		a[x]++;				<span class="comment">//关键：用数组下标存数据，用数组的值统计个数</span></div><div class="line">		<span class="keyword">if</span>(x&lt;Min_Number) Min_Number=x;</div><div class="line">		<span class="keyword">if</span>(x&gt;Max_Number) Max_Number=x;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=Min_Number;i&lt;=Max_Number;i++)&#123;</div><div class="line">		<span class="keyword">if</span>(!a[i])&#123;</div><div class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=a[i];j++) <span class="built_in">cout</span>&lt;&lt;a[j]&lt;&lt;<span class="string">" "</span>;                   </div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3>注意</h3><br>&nbsp;&nbsp;&nbsp;&nbsp;由桶排的原理的原理可知，桶排适用于数据范围小，而且有较多重复数据的数组排序；对于数据范围大的排序，还需离散化；<br><br><h2> 选择排序 Selection Sort</h2><br><h3>原理</h3><br>&nbsp;&nbsp;&nbsp;&nbsp;1.在未排序的数组中找到最小的元素，将其存在数组的起始位置；<br>&nbsp;&nbsp;&nbsp;&nbsp;2.从剩下的未排序的元素中继续寻找最小的元素，放在已排序数组的末尾；<br><br><code>时间复杂度 O(n2)</code><br><br><h3>代码实现</h3>
 
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Selection_Sort</span><span class="params">(<span class="keyword">int</span> *a)</span></span>&#123;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</div><div class="line">		<span class="keyword">int</span> Min=i;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;len;j++)&#123;</div><div class="line">			<span class="keyword">if</span>(a[j]&lt;a[Min]) Min=j;      </div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(Min!=i)&#123;</div><div class="line">			<span class="keyword">int</span> temp=a[Min];</div><div class="line">			a[Min]=a[i];</div><div class="line">			a[i]=temp;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Selection_Sort</span><span class="params">(<span class="keyword">int</span> *a)</span></span>&#123;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</div><div class="line">		<span class="keyword">int</span> Min=i;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;len;j++)&#123;</div><div class="line">			<span class="keyword">if</span>(a[j]&lt;a[Min]) Min=j;      </div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p></p><h2> 快速排序 Quick Sort</h2><p></p>
 <p></p><h3>原理</h3><br>&nbsp;&nbsp;&nbsp;&nbsp;1.快排基于分治的思想，先找到中间的数a[mid],将比a[mid]大的数和比a[mid]小的数进行交换；<br>&nbsp;&nbsp;&nbsp;&nbsp;2.二分区间，重复上述过程；<p></p>
 <p><code>时间复杂度 O(nlogn)</code></p>
@@ -347,7 +347,7 @@
         <p><span>本文标题:</span><a href="/2016/11/21/BasicSortAlgorithm/">基础排序算法</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">polebug</a></p>
         <p><span>发布时间:</span>2016-11-21, 11:24:43</p>
-        <p><span>最后更新:</span>2016-11-24, 13:57:02</p>
+        <p><span>最后更新:</span>2016-11-24, 14:09:27</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/11/21/BasicSortAlgorithm/" title="基础排序算法">http://polebug.github.io/2016/11/21/BasicSortAlgorithm/</a>
             <span class="copy-path" data-clipboard-text="原文: http://polebug.github.io/2016/11/21/BasicSortAlgorithm/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -362,10 +362,16 @@
 
     <nav id="article-nav">
         
-        
-            <div id="article-nav-older" class="article-nav-title">
+            <div id="article-nav-newer" class="article-nav-title">
                 <a href="/2016/11/21/基础排序算法/">
                     基础排序算法
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/11/20/Python-Learning（三）：Web-Scraping-with-Python-1/">
+                    Python Learning（三）：Web Scraping with Python 1
                 </a>
             </div>
         
@@ -452,19 +458,21 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2016/11/21/基础排序算法/" title="上一篇: 基础排序算法">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/11/21/基础排序算法/" title="下一篇: 基础排序算法">
+            <a href="/2016/11/20/Python-Learning（三）：Web-Scraping-with-Python-1/" title="下一篇: Python Learning（三）：Web Scraping with Python 1">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/BasicSortAlgorithm/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/基础排序算法/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/Python-Learning（三）：Web-Scraping-with-Python-1/">Python Learning（三）：Web Scraping with Python 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/05/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/04/Python：Module Install Issues/">Python：Module Install Issues </a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/21/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/14/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/位运算理解及运用-未填完/">位运算理解及运用(未填完)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/基础排序算法/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/BasicSortAlgorithm/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/Python-Learning（三）：Web-Scraping-with-Python-1/">Python Learning（三）：Web Scraping with Python 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/05/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/04/Python：Module Install Issues/">Python：Module Install Issues </a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/21/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/14/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/位运算理解及运用-未填完/">位运算理解及运用(未填完)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
 
 
 
