@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="polebug">
 <meta property="og:description" content="&amp;lt;写在前面&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;最近在看《Web Scraping with Python》，看了各种代码，觉得收获颇多，在此整理。就我而言，我认为想要学会自己写爬虫，首先要学会相关modules的用法，所以第一篇介绍如何写爬虫的文章主要是整理一下相关modules的用法
 &amp;lt;正文&amp;gt;介绍相关基础modules如下：&amp;nbsp;&amp;nbsp;&amp;nbsp">
-<meta property="og:updated_time" content="2016-11-21T11:21:58.000Z">
+<meta property="og:updated_time" content="2016-11-23T07:08:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python Learning（三）：Web Scraping with Python 1">
 <meta name="twitter:description" content="&amp;lt;写在前面&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;最近在看《Web Scraping with Python》，看了各种代码，觉得收获颇多，在此整理。就我而言，我认为想要学会自己写爬虫，首先要学会相关modules的用法，所以第一篇介绍如何写爬虫的文章主要是整理一下相关modules的用法
@@ -309,7 +309,8 @@
       
           
         <p>&lt;写在前面&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;最近在看《Web Scraping with Python》，看了各种代码，觉得收获颇多，在此整理。就我而言，我认为想要学会自己写爬虫，首先要学会相关modules的用法，所以第一篇介绍如何写爬虫的文章主要是整理一下相关modules的用法</p>
-<p>&lt;正文&gt;<br>介绍相关基础modules如下：<br>&nbsp;&nbsp;&nbsp;&nbsp;<b>1.urllib</b><br>&nbsp;&nbsp;&nbsp;&nbsp;<b>2.BeautifulSoup</b><br>介绍基础框架：<b>Scrapy框架</b><br><a id="more"></a><br>(留坑)</p>
+<p>&lt;正文&gt;<br>介绍相关基础modules如下：<br>&nbsp;&nbsp;&nbsp;&nbsp;<b>1.urllib</b><br>&nbsp;&nbsp;&nbsp;&nbsp;<b>2.BeautifulSoup</b><br>介绍基础框架：<b>Scrapy框架</b><br><a id="more"></a></p>
+<p></p><h2>Urllib2使用</h2><br>&nbsp;&nbsp;&nbsp;&nbsp;<p></p>
 
       
     </div>
@@ -321,7 +322,7 @@
         <p><span>本文标题:</span><a href="/2016/11/20/Python-Learning（三）：Web-Scraping-with-Python-1/">Python Learning（三）：Web Scraping with Python 1</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">polebug</a></p>
         <p><span>发布时间:</span>2016-11-20, 21:47:14</p>
-        <p><span>最后更新:</span>2016-11-21, 19:21:58</p>
+        <p><span>最后更新:</span>2016-11-23, 15:08:43</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/11/20/Python-Learning（三）：Web-Scraping-with-Python-1/" title="Python Learning（三）：Web Scraping with Python 1">http://polebug.github.io/2016/11/20/Python-Learning（三）：Web-Scraping-with-Python-1/</a>
             <span class="copy-path" data-clipboard-text="原文: http://polebug.github.io/2016/11/20/Python-Learning（三）：Web-Scraping-with-Python-1/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -337,7 +338,7 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/11/21/BasicSortAlgorithm/">
+                <a href="/2016/11/21/基础排序算法/">
                     基础排序算法
                 </a>
             </div>
@@ -357,7 +358,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">Urllib2使用</span></a></li></ol>
         
     </div>
     <style>
@@ -432,7 +433,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/11/21/BasicSortAlgorithm/" title="上一篇: 基础排序算法">
+            <a href="/2016/11/21/基础排序算法/" title="上一篇: 基础排序算法">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -446,7 +447,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/BasicSortAlgorithm/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/Python-Learning（三）：Web-Scraping-with-Python-1/">Python Learning（三）：Web Scraping with Python 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/05/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/04/Python：Module Install Issues/">Python：Module Install Issues </a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/21/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/14/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/位运算理解及运用-未填完/">位运算理解及运用(未填完)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/BasicSortAlgorithm/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/基础排序算法/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/Python-Learning（三）：Web-Scraping-with-Python-1/">Python Learning（三）：Web Scraping with Python 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/05/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/04/Python：Module Install Issues/">Python：Module Install Issues </a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/21/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/14/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/位运算理解及运用-未填完/">位运算理解及运用(未填完)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
 
 
 

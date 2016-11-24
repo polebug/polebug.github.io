@@ -18,10 +18,10 @@
 <meta name="description" content="&amp;lt;写在前面&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;正文最前面">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基础排序算法">
-<meta property="og:url" content="http://polebug.github.io/2016/11/21/BasicSortAlgorithm/index.html">
+<meta property="og:url" content="http://polebug.github.io/2016/11/21/基础排序算法/index.html">
 <meta property="og:site_name" content="polebug">
 <meta property="og:description" content="&amp;lt;写在前面&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;正文最前面">
-<meta property="og:updated_time" content="2016-11-24T05:57:02.000Z">
+<meta property="og:updated_time" content="2016-11-23T06:04:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础排序算法">
 <meta name="twitter:description" content="&amp;lt;写在前面&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;正文最前面">
@@ -261,10 +261,10 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="[layout]-BasicSortAlgorithm" class="article article-type-[layout]" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="[layout]-基础排序算法" class="article article-type-[layout]" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/11/21/BasicSortAlgorithm/" class="article-date">
+      <a href="/2016/11/21/基础排序算法/" class="article-date">
       <time datetime="2016-11-21T03:24:43.000Z" itemprop="datePublished">2016-11-21</time>
 </a>
 
@@ -309,7 +309,7 @@
 <p>&lt;正文&gt;<br>基础排序算法如下：<code>(默认由小到大排序)</code><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>0.Insertion Sort</b><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>1.STL: Sort</b><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>2.Bubble Sort</b><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>3.Bucket Sort</b><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>4.Selection Sort</b><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>5.Quick Sort</b>（不使用sort函数)<br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>6.STL: Priority_Queue</b><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>7.Heap Sort</b><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>8.Merge Sort</b><br> &nbsp;&nbsp;&nbsp;&nbsp;   <b>9.Shell Sort</b><br>提个建议：（亲测好用）<br>&nbsp;&nbsp;&nbsp;&nbsp;1.如果有看不懂的地方，可以带入一个值，手动模拟代码执行的过程，帮助理解～<br>&nbsp;&nbsp;&nbsp;&nbsp;2.如果编译器支持跟踪变量是极好的，如果不支持，建议手动输出中间变量；如想在过程中，查看当前a[]的排序情况，可以在中间for(int i=0;i&lt;len;i++) cout&lt;&lt;a[i]&lt;&lt;” “;通过这种方式进行debug或理解；</p>
 <a id="more"></a>
 <p></p><h2> 插入排序 Insertion Sort </h2><p></p>
-<h3>原理</h3><br>&nbsp;&nbsp;&nbsp;&nbsp;1.将数都放在a[]数组里，遍历a[]。取出当前遍历到的数key,令key暂时为a[i]；<br>&nbsp;&nbsp;&nbsp;&nbsp;2.为了将key放到正确的位置，需将key与a[]前面的数进行比较，直到找到a[j]，满足key小于a[j]，并将key放在a[j]的后面，即令a[j+1]=key。于此同时，需把比key大的数往后移一位，即a[j+1]=a[j];<br><br><code>时间复杂度 O(n2)</code><br><br><h3>代码实现</h3><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">InsertionSort</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> len)</span></span>&#123;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;len; i++)&#123;</div><div class="line">		<span class="keyword">int</span> key = a[i];</div><div class="line">		<span class="keyword">int</span> j = i<span class="number">-1</span>;</div><div class="line">		<span class="keyword">while</span> (j&gt;=<span class="number">0</span> &amp;&amp; a[j]&gt;key)&#123; <span class="comment">//直到找到比key小的数，于此同时将比key大的数都往后移一位         </span></div><div class="line">			a[j+<span class="number">1</span>] = a[j];</div><div class="line">			j--;</div><div class="line">		&#125;</div><div class="line">		a[j+<span class="number">1</span>] = key;		  <span class="comment">//跳出while即找到了比key小的数a[j]，那么将key插入到a[j]后面</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br><h2> STL中Sort的调用</h2><br><h3>原理</h3><br>stl是c++自带的库，里面有一些已经定义的函数，加入头文件之后直接进行调用即可，非常方便；sort函数正是如此，内涵的代码可见下文。<br><br><code>时间复杂度 O(nlogn)</code><br><br><h3>代码实现</h3><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span>				<span class="comment">//头文件                   </span></span></div><div class="line"><span class="keyword">int</span> a[n];</div><div class="line">sort(a,a+n);					<span class="comment">//默认从小到大</span></div></pre></td></tr></table></figure><br><br>注意：<br>&nbsp;&nbsp;&nbsp;&nbsp;1.sort默认从a[0]开始排序，以a[n-1]结尾，n为长度；<br>&nbsp;&nbsp;&nbsp;&nbsp;2.char数组，double数组，longlong数组等，也可以使用sort排序；<br><br><h2> 冒泡排序 Bubble Sort </h2><br><h3>原理</h3><br>&nbsp;&nbsp;&nbsp;&nbsp;看过一些关于冒泡排序原理的解释，很多是说相邻两位数进行比较。但是就过程而言，并非如此；例如：3 4 2 1 ，这个数列，第一次外层循环结束之后的顺序显然是1 4 3 2，这一个结果是由 -&gt; 2 4 3 1 （2和3交换）-&gt; 1 4 3 2 （1和2交换）实现的。所以，个人认为应该将原理解释成，与最近的比a[i]小的数进行交换；（而外层循环i是固定的，如例子中，后面满足条件的数都是与第一个数交换）<br><br><code>时间复杂度 O(n2)</code><br><br><h3>代码实现</h3><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">BubbleSort</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> len)</span></span>&#123;        </div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;len;j++)&#123;            </div><div class="line">			<span class="keyword">if</span>(a[i]&gt;a[j])&#123;</div><div class="line">				<span class="keyword">int</span> temp=a[i];                </div><div class="line">				a[i]=a[j];</div><div class="line">				a[j]=temp;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br><h2> 桶排 Bucket Sort </h2><br><h3>原理</h3><br>&nbsp;&nbsp;&nbsp;&nbsp;1.不同于别的排序算法，桶排是基于数组下标实现的排序；最大的区别在于存储数组中的数据时，我们用数组下标存入，用数组的值记录数量；<br>&nbsp;&nbsp;&nbsp;&nbsp;2.举个栗子：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们需读入数组的数据为，5，1，2，1，5，2，3<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存储时我们将第一个数字5,存到a[5]++;以此类推<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输出时，for(int i=Min_Number;i&lt;=Max_Number;i++)输出所存储的数；<br><br><h3>代码实现</h3>
+<h3>原理</h3><br>&nbsp;&nbsp;&nbsp;&nbsp;1.将数都放在a[]数组里，遍历a[]。取出当前遍历到的数key,令key暂时为a[i]；<br>&nbsp;&nbsp;&nbsp;&nbsp;2.为了将key放到正确的位置，需将key与a[]前面的数进行比较，直到找到a[j]，满足key小于a[j]，并将key放在a[j]的后面，即令a[j+1]=key。于此同时，需把比key大的数往后移一位，即a[j+1]=a[j];<br><br><code>时间复杂度 O(n2)</code><br><br><h3>代码实现</h3><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">InsertionSort</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> len)</span></span>&#123;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;len; i++)&#123;</div><div class="line">		<span class="keyword">int</span> key = a[i];</div><div class="line">		<span class="keyword">int</span> j = i<span class="number">-1</span>;</div><div class="line">		<span class="keyword">while</span> (j&gt;=<span class="number">0</span> &amp;&amp; a[j]&gt;key)&#123; <span class="comment">//直到找到比key小的数，于此同时将比key大的数都往后移一位         </span></div><div class="line">			a[j+<span class="number">1</span>] = a[j];</div><div class="line">			j--;</div><div class="line">		&#125;</div><div class="line">		a[j+<span class="number">1</span>] = key;		  <span class="comment">//跳出while即找到了比key小的数a[j]，那么将key插入到a[j]后面</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br><h2> STL中Sort的调用</h2><br><h3>原理</h3><br>stl是c++自带的库，里面有一些已经定义的函数，加入头文件之后直接进行调用即可，非常方便；sort函数正是如此，内涵的代码可见下文。<br><br><code>时间复杂度 O(nlogn)</code><br><br><h3>代码实现</h3><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span>				<span class="comment">//头文件                   </span></span></div><div class="line"><span class="keyword">int</span> a[n];</div><div class="line">sort(a,a+n);					<span class="comment">//默认从小到大</span></div></pre></td></tr></table></figure><br><br>注意：<br>&nbsp;&nbsp;&nbsp;&nbsp;1.sort默认从a[0]开始排序，以a[n-1]结尾，n为长度；<br>&nbsp;&nbsp;&nbsp;&nbsp;2.char数组，double数组，longlong数组等，也可以使用sort排序；<br><br><h2> 冒泡排序 Bubble Sort </h2><br><h3>原理</h3><br>&nbsp;&nbsp;&nbsp;&nbsp;看过一些关于冒泡排序原理的解释，很多是说相邻两位数进行比较。但是就过程而言，并非如此；例如：3 4 2 1 ，这个数列，第一次外层循环结束之后的顺序显然是1 4 3 2，这一个结果是由 -&gt; 2 4 3 1 -&gt; 1 4 3 2 实现的。所以，个人认为应该将原理解释成，与最近的比a[i]小的数进行交换；<br><br><code>时间复杂度 O(n2)</code><br><br><h3>代码实现</h3><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">BubbleSort</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> len)</span></span>&#123;        </div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;len;j++)&#123;            </div><div class="line">			<span class="keyword">if</span>(a[i]&gt;a[j])&#123;</div><div class="line">				<span class="keyword">int</span> temp=a[i];                </div><div class="line">				a[i]=a[j];</div><div class="line">				a[j]=temp;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br><h2> 桶排 Bucket Sort </h2><br><h3>原理</h3><br>&nbsp;&nbsp;&nbsp;&nbsp;1.不同于别的排序算法，桶排是基于数组下标实现的排序；最大的区别在于存储数组中的数据时，我们用数组下标存入，用数组的值记录数量；<br>&nbsp;&nbsp;&nbsp;&nbsp;2.举个栗子：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们需读入数组的数据为，5，1，2，1，5，2，3<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存储时我们将第一个数字5,存到a[5]++;以此类推<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输出时，for(int i=Min_Number;i&lt;=Max_Number;i++)输出所存储的数；<br><br><h3>代码实现</h3>
 
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">BucketSort</span><span class="params">(<span class="keyword">int</span> len)</span></span>&#123;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</div><div class="line">		<span class="built_in">cin</span>&gt;&gt;x;</div><div class="line">		a[x]++;				<span class="comment">//关键：用数组下标存数据，用数组的值统计个数</span></div><div class="line">		<span class="keyword">if</span>(x&lt;Min_Number) Min_Number=x;</div><div class="line">		<span class="keyword">if</span>(x&gt;Max_Number) Max_Number=x;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=Min_Number;i&lt;=Max_Number;i++)&#123;</div><div class="line">		<span class="keyword">if</span>(!a[i])&#123;</div><div class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=a[i];j++) <span class="built_in">cout</span>&lt;&lt;a[j]&lt;&lt;<span class="string">" "</span>;                   </div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3>注意</h3><br>&nbsp;&nbsp;&nbsp;&nbsp;由桶排的原理的原理可知，桶排适用于数据范围小，而且有较多重复数据的数组排序；对于数据范围大的排序，还需离散化；<br><br><h2> 选择排序 Selection Sort</h2><br><h3>原理</h3><br>&nbsp;&nbsp;&nbsp;&nbsp;1.在未排序的数组中找到最小的元素，将其存在数组的起始位置；<br>&nbsp;&nbsp;&nbsp;&nbsp;2.从剩下的未排序的元素中继续寻找最小的元素，放在已排序数组的末尾；<br><br><code>时间复杂度 O(n2)</code><br><br><h3>代码实现</h3>
@@ -344,13 +344,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/11/21/BasicSortAlgorithm/">基础排序算法</a></p>
+        <p><span>本文标题:</span><a href="/2016/11/21/基础排序算法/">基础排序算法</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">polebug</a></p>
         <p><span>发布时间:</span>2016-11-21, 11:24:43</p>
-        <p><span>最后更新:</span>2016-11-24, 13:57:02</p>
+        <p><span>最后更新:</span>2016-11-23, 14:04:10</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/11/21/BasicSortAlgorithm/" title="基础排序算法">http://polebug.github.io/2016/11/21/BasicSortAlgorithm/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://polebug.github.io/2016/11/21/BasicSortAlgorithm/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/11/21/基础排序算法/" title="基础排序算法">http://polebug.github.io/2016/11/21/基础排序算法/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://polebug.github.io/2016/11/21/基础排序算法/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -362,10 +362,16 @@
 
     <nav id="article-nav">
         
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/11/21/BasicSortAlgorithm/">
+                    基础排序算法
+                </a>
+            </div>
+        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/11/21/基础排序算法/">
-                    基础排序算法
+                <a href="/2016/11/20/Python-Learning（三）：Web-Scraping-with-Python-1/">
+                    Python Learning（三）：Web Scraping with Python 1
                 </a>
             </div>
         
@@ -429,7 +435,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2016/11/21/BasicSortAlgorithm/" data-title="基础排序算法" data-url="http://polebug.github.io/2016/11/21/BasicSortAlgorithm/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/11/21/基础排序算法/" data-title="基础排序算法" data-url="http://polebug.github.io/2016/11/21/基础排序算法/"></div>
     <script>
         var duoshuoQuery = {short_name:"polebug1"};
         var loadComment = function(){
@@ -452,13 +458,15 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2016/11/21/BasicSortAlgorithm/" title="上一篇: 基础排序算法">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/11/21/基础排序算法/" title="下一篇: 基础排序算法">
+            <a href="/2016/11/20/Python-Learning（三）：Web-Scraping-with-Python-1/" title="下一篇: Python Learning（三）：Web Scraping with Python 1">
                 <i class="fa fa-angle-right"></i>
             </a>
         
