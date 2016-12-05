@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://polebug.github.io/2016/11/21/BasicSortAlgorithm/index.html">
 <meta property="og:site_name" content="polebug">
 <meta property="og:description" content="&amp;lt;写在前面&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;正文最前面">
-<meta property="og:updated_time" content="2016-12-05T08:36:32.000Z">
+<meta property="og:updated_time" content="2016-12-05T13:41:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础排序算法">
 <meta name="twitter:description" content="&amp;lt;写在前面&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;正文最前面">
@@ -390,8 +390,8 @@ sort(a,a+n);                    <span class="comment">//默认从小到大      
             i++,j--;
         }    
     }
-    <span class="keyword">if</span>(i&lt;r) <span class="keyword">sort</span>(i,r);
-    <span class="keyword">if</span>(<span class="keyword">l</span>&lt;j) <span class="keyword">sort</span>(<span class="keyword">l</span>,j);
+    <span class="keyword">if</span>(i&lt;r) Quicksort(i,r);
+    <span class="keyword">if</span>(<span class="keyword">l</span>&lt;j) Quicksort(<span class="keyword">l</span>,j);
 }
 </code></pre><p></p><h2> 优先队列 Priority_Queue (STL) </h2><p></p>
 <h3>原理</h3><br>Priority_Queue同样属于STL库中，是一种特殊的queue.<br><h3>用法</h3>
@@ -459,7 +459,7 @@ priority_queue &lt;<span class="keyword">int</span>, <span class="built_in">vect
         <p><span>本文标题:</span><a href="/2016/11/21/BasicSortAlgorithm/">基础排序算法</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">polebug</a></p>
         <p><span>发布时间:</span>2016-11-21, 11:24:43</p>
-        <p><span>最后更新:</span>2016-12-05, 16:36:32</p>
+        <p><span>最后更新:</span>2016-12-05, 21:41:32</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/11/21/BasicSortAlgorithm/" title="基础排序算法">http://polebug.github.io/2016/11/21/BasicSortAlgorithm/</a>
             <span class="copy-path" data-clipboard-text="原文: http://polebug.github.io/2016/11/21/BasicSortAlgorithm/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
