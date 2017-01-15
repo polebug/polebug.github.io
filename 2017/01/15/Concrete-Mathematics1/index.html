@@ -15,19 +15,16 @@
 
 
 
-<meta name="description" content="相关文章python学习笔记（一）：基础语法Python： Module Install IssuesPython Learning（二）：Basic Image Processing 1
-所看过的书籍《python入门经典》《Python计算机视觉》《Python网络数据采集》">
-<meta property="og:type" content="website">
-<meta property="og:title" content="python">
-<meta property="og:url" content="http://polebug.github.io/Python/index.html">
+<meta name="description" content="第一章看着难度还是很友好的，算是在这个大坑中填了微小的一块。仔细看了推导，能领会作者的意思并对递归问题有了一些新的认识。　　主要说了三个经典递归问题，河内塔和平面上的直线这两个问题相对简单明了。第三个问题是约瑟夫问题，就这个问题作者延伸的讲了几种递归思想，个人觉得很赞。    (BTW：其实写之前想参考一些别人写的笔记，发现能参考的东西太少了，很多是未填完的坑，实在觉得可惜，希望自己能坚持写完">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于具体数学第一章（递归问题）的笔记和思考">
+<meta property="og:url" content="http://polebug.github.io/2017/01/15/Concrete-Mathematics1/index.html">
 <meta property="og:site_name" content="polebug">
-<meta property="og:description" content="相关文章python学习笔记（一）：基础语法Python： Module Install IssuesPython Learning（二）：Basic Image Processing 1
-所看过的书籍《python入门经典》《Python计算机视觉》《Python网络数据采集》">
-<meta property="og:updated_time" content="2016-11-16T06:39:16.000Z">
+<meta property="og:description" content="第一章看着难度还是很友好的，算是在这个大坑中填了微小的一块。仔细看了推导，能领会作者的意思并对递归问题有了一些新的认识。　　主要说了三个经典递归问题，河内塔和平面上的直线这两个问题相对简单明了。第三个问题是约瑟夫问题，就这个问题作者延伸的讲了几种递归思想，个人觉得很赞。    (BTW：其实写之前想参考一些别人写的笔记，发现能参考的东西太少了，很多是未填完的坑，实在觉得可惜，希望自己能坚持写完">
+<meta property="og:updated_time" content="2017-01-15T17:01:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python">
-<meta name="twitter:description" content="相关文章python学习笔记（一）：基础语法Python： Module Install IssuesPython Learning（二）：Basic Image Processing 1
-所看过的书籍《python入门经典》《Python计算机视觉》《Python网络数据采集》">
+<meta name="twitter:title" content="关于具体数学第一章（递归问题）的笔记和思考">
+<meta name="twitter:description" content="第一章看着难度还是很友好的，算是在这个大坑中填了微小的一块。仔细看了推导，能领会作者的意思并对递归问题有了一些新的认识。　　主要说了三个经典递归问题，河内塔和平面上的直线这两个问题相对简单明了。第三个问题是约瑟夫问题，就这个问题作者延伸的讲了几种递归思想，个人觉得很赞。    (BTW：其实写之前想参考一些别人写的笔记，发现能参考的东西太少了，很多是未填完的坑，实在觉得可惜，希望自己能坚持写完">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -59,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>python | polebug</title>
+<title>关于具体数学第一章（递归问题）的笔记和思考 | polebug</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -69,7 +66,7 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
+        isPost: true,
         isArchive: false,
         isTag: false,
         isCategory: false,
@@ -264,11 +261,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="[layout]-Concrete-Mathematics1" class="article article-type-[layout]" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/Python/index.html" class="article-date">
-      <time datetime="2016-10-21T11:54:43.000Z" itemprop="datePublished">2016-10-21</time>
+      <a href="/2017/01/15/Concrete-Mathematics1/" class="article-date">
+      <time datetime="2017-01-15T02:52:37.000Z" itemprop="datePublished">2017-01-15</time>
 </a>
 
 
@@ -283,7 +280,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      python
+      关于具体数学第一章（递归问题）的笔记和思考
     </h1>
   
 
@@ -291,8 +288,16 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/具体数学/">具体数学</a>
+    </div>
+
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/">math</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/具体数学/">具体数学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/递归/">递归</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -300,27 +305,12 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <style>
-    .article-meta { display: none; }
-    #container .article .article-title { padding-right: 0; }
-    .article-header {
-        padding: 0;
-        padding-top: 26px;
-        border-left: none;
-        text-align: center;
-    }
-    .article-header:hover { border-left: none; }
-    .article-title { font-size: 1.6em }
-    .article-entry hr { margin: 0;}
-    .article-meta,
-    #container .article-info-post.article-info { display: none;}
-    #container .article .article-title { padding: 0; }
-</style>
-
-
-          
-        <p><li>相关文章</li><br><a href="http://polebug.github.io/2016/10/21/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/">python学习笔记（一）：基础语法</a><br><a href="https://polebug.github.io/2016/11/04/Python：Module%20Install%20Issues/">Python： Module Install Issues</a><br><a href="https://polebug.github.io/2016/11/05/Python-Learning（二）：Basic-Image-Processing/">Python Learning（二）：Basic Image Processing 1</a></p>
-<p><li>所看过的书籍</li><br>《python入门经典》<br>《Python计算机视觉》<br>《Python网络数据采集》</p>
+        <p>　　第一章看着难度还是很友好的，算是在这个大坑中填了微小的一块。仔细看了推导，能领会作者的意思并对递归问题有了一些新的认识。<br>　　主要说了三个经典递归问题，河内塔和平面上的直线这两个问题相对简单明了。第三个问题是约瑟夫问题，就这个问题作者延伸的讲了几种递归思想，个人觉得很赞。<br>    (BTW：其实写之前想参考一些别人写的笔记，发现能参考的东西太少了，很多是未填完的坑，实在觉得可惜，希望自己能坚持写完)</p>
+<p><b>目录：<br>　　0.递归问题的两种常用解法：数学归纳法和成套方法<br>　　1.河内塔问题和平面上的直线问题的递归推导<br>　　2.约瑟夫问题的几种递归推导<br></b><br>（以下是正文）<br><a id="more"></a></p>
+<p></p><h2>数学归纳法</h2><br>主要步骤：<br>　　0.对于实际问题，首先引入适当的记号。<br>　　1.对于n=1，命题成立；<br>　　2.假设命题对于n成立(n ∈ N*)，证明在此命题对于n+1成立；<p></p>
+<p>作者在这三个问题中都用到了数学归纳法，所用方法也是一样的：<br>　　首先研究小数据的情况；而对于一般情况，思考整个过程并推理出当前状态和前一个状态之间的关系，猜测递归式以及递归解；对于数学表达式求出封闭形式并用数学归纳法进行证明；</p>
+<p></p><h2>成套方法</h2><br>　　第一次接触成套方法，体会就是：名字很奇怪，思想很奇妙233333333 :)<br>　　作者在讲约瑟夫问题的推广时提到了这个方法，用以求出递归的封闭形式。<br>　　例如约瑟夫问题的推广：<br>　　　　存在数列的递归式是f(1)=a,f(2n)=2f(n)+b,f(2n+1)=2f(n)+c;<br>　　　　对于n取小范围的数据，我们可以知道f(n)可以表示成依赖于a,b,c的值。把f(n)对a,b,c,的依存关系分离开来看，我们可以把它表示成形式：f(n)=A(n)a+B(n)b+C(n)c；<br>　　　　对于f(n)而言，A(n),B(n),C(n)是固定不变的，那我们可以根据小范围数据来确定（或进行猜测）它们的值或表达式；<br>　　<br>　　个人感觉，成套方法是一种逆推的过程，为什么这样说呢？我们知道对于一个确定的数列f(n)，常数a,b,c是固定的；而A(n),B(n),C(n)本身也是固定的（这些函数与a,b,c无关，也就不随数列而变化）；那么，我们当然也可以根据a,b,c来确定f(n);<p></p>
+<p></p><h2>河内塔问题</h2><br>　　河内塔问题(The Tower of Hanoi)这个问题描述倒是不陌生(当然因为英译缘故也有翻译成汉诺塔的)。最初我学习这个问题的时候，是在高中学习递归算法的时候接触到的，但是学习的角度有所差别。当时学习的重点是塔的移动途径问题，没有关注移动次数上的关系(在这里第一次思考这个问题的递归关系，算是对于熟悉的河内塔问题有了新的认识)。<br>　　简单的说一下问题描述：有3个柱子，n个圆盘，目的是要整个塔移到另一根柱子上，每次移动一个圆盘并且在移动过程中较大的圆盘不能放在较小圆盘上面。<br>　　推导：（数学归纳法）<p></p>
 
       
     </div>
@@ -328,10 +318,59 @@
   </div>
   
     
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/01/15/Concrete-Mathematics1/">关于具体数学第一章（递归问题）的笔记和思考</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">polebug</a></p>
+        <p><span>发布时间:</span>2017-01-15, 10:52:37</p>
+        <p><span>最后更新:</span>2017-01-16, 01:01:08</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/01/15/Concrete-Mathematics1/" title="关于具体数学第一章（递归问题）的笔记和思考">http://polebug.github.io/2017/01/15/Concrete-Mathematics1/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://polebug.github.io/2017/01/15/Concrete-Mathematics1/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
 
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/12/04/About-Python2.7-Module-Error/">
+                    About Python2.7 Module Error
+                </a>
+            </div>
+        
+    </nav>
 
   
 </article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">数学归纳法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">成套方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">河内塔问题</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-6 i,
+        .toc-level-6 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
 
 
 
@@ -349,7 +388,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"python　| polebug　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"关于具体数学第一章（递归问题）的笔记和思考　| polebug　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -365,7 +404,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="Python/index.html" data-title="python" data-url="http://polebug.github.io/Python/index.html"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2017/01/15/Concrete-Mathematics1/" data-title="关于具体数学第一章（递归问题）的笔记和思考" data-url="http://polebug.github.io/2017/01/15/Concrete-Mathematics1/"></div>
     <script>
         var duoshuoQuery = {short_name:"polebug1"};
         var loadComment = function(){
@@ -383,6 +422,24 @@
 </div>
     
 
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/12/04/About-Python2.7-Module-Error/" title="下一篇: About Python2.7 Module Error">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/01/15/Concrete-Mathematics1/">关于具体数学第一章（递归问题）的笔记和思考</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/04/About-Python2.7-Module-Error/">About Python2.7 Module Error</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/Python-Web-Scraping（一）：用两种方式模拟web登入/">Python Web Scraping（一）：模拟web登入</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/BasicSortAlgorithm/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/05/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/04/Python：Module Install Issues/">Python：Module Install Issues </a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/21/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/14/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/位运算理解及运用-未填完/">位运算理解及运用(未填完)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
 
 
 
