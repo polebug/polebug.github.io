@@ -18,14 +18,14 @@
 <meta name="description" content="第二章内容略多，个人感觉难度的话，是从易到难。但是作者写的过程都很清晰，慢慢啃也是美滋滋 233333333 :D
 目录：　　0.和式的表示　　1.解递归式　　2.单个和式的处理　　3.多重和式的处理　　4.一般性的方法　　5.有限微积分和无限微积分（以下是正文）">
 <meta property="og:type" content="article">
-<meta property="og:title" content="具体数学第二章（和式）笔记">
+<meta property="og:title" content="Concrete Mathematics 2 ：Sums">
 <meta property="og:url" content="http://polebug.github.io/2017/01/17/Concrete-Mathematics2/index.html">
 <meta property="og:site_name" content="polebug">
 <meta property="og:description" content="第二章内容略多，个人感觉难度的话，是从易到难。但是作者写的过程都很清晰，慢慢啃也是美滋滋 233333333 :D
 目录：　　0.和式的表示　　1.解递归式　　2.单个和式的处理　　3.多重和式的处理　　4.一般性的方法　　5.有限微积分和无限微积分（以下是正文）">
-<meta property="og:updated_time" content="2017-01-26T14:04:59.000Z">
+<meta property="og:updated_time" content="2017-01-26T14:23:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="具体数学第二章（和式）笔记">
+<meta name="twitter:title" content="Concrete Mathematics 2 ：Sums">
 <meta name="twitter:description" content="第二章内容略多，个人感觉难度的话，是从易到难。但是作者写的过程都很清晰，慢慢啃也是美滋滋 233333333 :D
 目录：　　0.和式的表示　　1.解递归式　　2.单个和式的处理　　3.多重和式的处理　　4.一般性的方法　　5.有限微积分和无限微积分（以下是正文）">
 
@@ -59,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>具体数学第二章（和式）笔记 | polebug</title>
+<title>Concrete Mathematics 2 ：Sums | polebug</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -193,7 +193,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMQ问题/">RMQ问题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ST算法/">ST算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebScraping/">WebScraping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gcd/">gcd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/image-processing/">image processing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/language-learning/">language learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/二分/">二分</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/位运算/">位运算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/具体数学/">具体数学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区间上的操作/">区间上的操作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/和式/">和式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/平几/">平几</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思维/">思维</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/概率问题/">概率问题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/模板/">模板</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/贪心/">贪心</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/递归/">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随机化/">随机化</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMQ问题/">RMQ问题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ST算法/">ST算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebScraping/">WebScraping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gcd/">gcd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/image-processing/">image processing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/language-learning/">language learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/二分/">二分</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/位运算/">位运算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/具体数学/">具体数学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区间上的操作/">区间上的操作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/和式/">和式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/平几/">平几</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思维/">思维</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数论/">数论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/概率问题/">概率问题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/模板/">模板</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/贪心/">贪心</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/递归/">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随机化/">随机化</a></li></ul>
                     </div>
                 </section>
                 
@@ -283,7 +283,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      具体数学第二章（和式）笔记
+      Concrete Mathematics 2 ：Sums
     </h1>
   
 
@@ -401,11 +401,11 @@
 <p>$\sum_{a}^{b}{g(x)\delta x} = f(a) - f(a) = 0 $</p>
 <p>如果b&gt;a,那么：</p>
 <p>$\sum_{a}^{b}{g(x)\delta x} = \sum_{k=a}^{b-1}{g(k)} $</p>
-<p>$=\sum_{a&lt;=k&lts;b}{f(x+1) - f(x)} = (f(a+1) - f(a)) + (f(a+2) - f(a+1)) + … + (f(b-1) - f(b-2)) + (f(b) - f(b-1)) $</p>
+<p>$=\sum_{a&lt;=k&lt;b}{f(x+1) - f(x)} = (f(a+1) - f(a)) + (f(a+2) - f(a+1)) + … + (f(b-1) - f(b-2)) + (f(b) - f(b-1)) $</p>
 <p>$=f(b) - f(a) $</p>
 <p>微积分和定积分的完美联系！是吧 :D</p>
 <p>5.<b>用公式求解和式</b>：<br>求解和式是以上公式的用武之地。用上这些公式，我们可以开心的求解一些和式～<br>举个例子🌰：</p>
-<p>$\sum_{0&lt;=k&lts;n}{k^{\underline{m}}} = [\frac{k^{\underline{m+1}}}{m+1}]_{0}^{n} = \frac{n^{\underline{m+1}}}{m+1} $</p>
+<p>$\sum_{0&lt;=k&lt;n}{k^{\underline{m}}} = [\frac{k^{\underline{m+1}}}{m+1}]_{0}^{n} = \frac{n^{\underline{m+1}}}{m+1} $</p>
 <p>这个部分就不多说了～</p>
 <p>6.<b>求解无限微积分和有限微积分</b>：<br>通过以上推导，我们粗略的知道微积分和定积分之间的相似性，求解定积分时我们常使用<b>分部求和</b>的法则，在微积分中同样适用；<br>公式如下：</p>
 <p>$D(uv) = uDv + vDu $</p>
@@ -420,12 +420,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/01/17/Concrete-Mathematics2/">具体数学第二章（和式）笔记</a></p>
+        <p><span>本文标题:</span><a href="/2017/01/17/Concrete-Mathematics2/">Concrete Mathematics 2 ：Sums</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">polebug</a></p>
         <p><span>发布时间:</span>2017-01-17, 15:59:54</p>
-        <p><span>最后更新:</span>2017-01-26, 22:04:59</p>
+        <p><span>最后更新:</span>2017-01-26, 22:23:53</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/01/17/Concrete-Mathematics2/" title="具体数学第二章（和式）笔记">http://polebug.github.io/2017/01/17/Concrete-Mathematics2/</a>
+            <span>原始链接:</span><a class="post-url" href="/2017/01/17/Concrete-Mathematics2/" title="Concrete Mathematics 2 ：Sums">http://polebug.github.io/2017/01/17/Concrete-Mathematics2/</a>
             <span class="copy-path" data-clipboard-text="原文: http://polebug.github.io/2017/01/17/Concrete-Mathematics2/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -447,7 +447,7 @@
         
             <div id="article-nav-older" class="article-nav-title">
                 <a href="/2017/01/15/Concrete-Mathematics1/">
-                    具体数学第一章（递归问题）笔记
+                    Concrete Mathematics 1 ：Recurrent
                 </a>
             </div>
         
@@ -495,7 +495,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"具体数学第二章（和式）笔记　| polebug　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Concrete Mathematics 2 ：Sums　| polebug　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -511,7 +511,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2017/01/17/Concrete-Mathematics2/" data-title="具体数学第二章（和式）笔记" data-url="http://polebug.github.io/2017/01/17/Concrete-Mathematics2/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2017/01/17/Concrete-Mathematics2/" data-title="Concrete Mathematics 2 ：Sums" data-url="http://polebug.github.io/2017/01/17/Concrete-Mathematics2/"></div>
     <script>
         var duoshuoQuery = {short_name:"polebug1"};
         var loadComment = function(){
@@ -542,13 +542,13 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/01/15/Concrete-Mathematics1/" title="下一篇: 具体数学第一章（递归问题）笔记">
+            <a href="/2017/01/15/Concrete-Mathematics1/" title="下一篇: Concrete Mathematics 1 ：Recurrent">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/01/24/markdown1/">markdown语法所踩的坑（备忘/持续更）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/17/Concrete-Mathematics2/">具体数学第二章（和式）笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/15/Concrete-Mathematics1/">具体数学第一章（递归问题）笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/04/About-Python2.7-Module-Error/">About Python2.7 Module Error</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/Python-Web-Scraping（一）：用两种方式模拟web登入/">Python Web Scraping（一）：模拟web登入</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/BasicSortAlgorithm/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/05/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/04/Python：Module Install Issues/">Python：Module Install Issues </a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/21/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/14/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/位运算理解及运用-未填完/">位运算理解及运用(未填完)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/Concrete-Mathematics4/">Concrete Mathematics 4 ：Number Theory</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/24/markdown1/">markdown语法所踩的坑（备忘/持续更）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/17/Concrete-Mathematics2/">Concrete Mathematics 2 ：Sums</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/15/Concrete-Mathematics1/">Concrete Mathematics 1 ：Recurrent</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/04/About-Python2.7-Module-Error/">About Python2.7 Module Error</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/Python-Web-Scraping（一）：用两种方式模拟web登入/">Python Web Scraping（一）：模拟web登入</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/BasicSortAlgorithm/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/05/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/04/Python：Module Install Issues/">Python：Module Install Issues </a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/21/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/14/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/位运算理解及运用-未填完/">位运算理解及运用(未填完)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
 
 
 
