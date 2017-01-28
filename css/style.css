@@ -2145,9 +2145,12 @@ aside.comment-bar:active {
   color: #fff;
 }
 .article-entry .highlight pre {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 0;
+  padding-right: 0;
   border: none;
   margin: 0;
-  padding: 0;
 }
 .article-entry .highlight table {
   margin: 0;
@@ -2182,6 +2185,7 @@ aside.comment-bar:active {
   text-shadow: none;
 }
 .article-entry .highlight .line {
+  line-height: 15px;
   font-size: 15px;
   height: 15px;
 }
