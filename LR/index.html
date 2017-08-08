@@ -16,19 +16,17 @@
 
 
 
-<meta name="description" content="注释：实现用的是python/LR原理参考Andew Ng的&amp;lt;目录&amp;gt;　　1.二元LR原理　　2.多元LR原理　　3.裸LR的代码实现(梯度上升)　　4.用sklearn库实现模型，并进行训练和正确率预测　　5.Logistic回归模型的具体应用：纳税评估问题　　6.以及一些扯淡　　7">
+<meta name="description" content="注释：实现用的是python/LR原理参考Andew Ng的&amp;lt;目录&amp;gt;　　1.二元LR原理　　2.多元LR原理　　3.裸LR的代码实现(梯度上升)　　4.用sklearn库实现模型，并进行训练和正确率预测　　5.Logistic回归模型的具体应用：纳税评估问题　　6.以及一些扯淡">
 <meta name="keywords" content="python,Logistic,sklearn,ML">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Logistic回归分析法的原理&#x2F;代码实现&#x2F;应用">
 <meta property="og:url" content="https://polebug.github.io/LR/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="注释：实现用的是python/LR原理参考Andew Ng的&amp;lt;目录&amp;gt;　　1.二元LR原理　　2.多元LR原理　　3.裸LR的代码实现(梯度上升)　　4.用sklearn库实现模型，并进行训练和正确率预测　　5.Logistic回归模型的具体应用：纳税评估问题　　6.以及一些扯淡　　7">
-<meta property="og:image" content="https://polebug.github.io/_source/纳税评估.docx">
-<meta property="og:updated_time" content="2017-08-06T07:11:41.000Z">
+<meta property="og:description" content="注释：实现用的是python/LR原理参考Andew Ng的&amp;lt;目录&amp;gt;　　1.二元LR原理　　2.多元LR原理　　3.裸LR的代码实现(梯度上升)　　4.用sklearn库实现模型，并进行训练和正确率预测　　5.Logistic回归模型的具体应用：纳税评估问题　　6.以及一些扯淡">
+<meta property="og:updated_time" content="2017-08-08T07:00:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Logistic回归分析法的原理&#x2F;代码实现&#x2F;应用">
-<meta name="twitter:description" content="注释：实现用的是python/LR原理参考Andew Ng的&amp;lt;目录&amp;gt;　　1.二元LR原理　　2.多元LR原理　　3.裸LR的代码实现(梯度上升)　　4.用sklearn库实现模型，并进行训练和正确率预测　　5.Logistic回归模型的具体应用：纳税评估问题　　6.以及一些扯淡　　7">
-<meta name="twitter:image" content="https://polebug.github.io/_source/纳税评估.docx">
+<meta name="twitter:description" content="注释：实现用的是python/LR原理参考Andew Ng的&amp;lt;目录&amp;gt;　　1.二元LR原理　　2.多元LR原理　　3.裸LR的代码实现(梯度上升)　　4.用sklearn库实现模型，并进行训练和正确率预测　　5.Logistic回归模型的具体应用：纳税评估问题　　6.以及一些扯淡">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -236,13 +234,13 @@
       
           
         <blockquote>
-<p>注释：实现用的是python/LR原理参考Andew Ng的<br><b>&lt;目录&gt;<br>　　1.二元LR原理<br>　　2.多元LR原理<br>　　3.裸LR的代码实现(梯度上升)<br>　　4.用sklearn库实现模型，并进行训练和正确率预测<br>　　5.Logistic回归模型的具体应用：纳税评估问题<br>　　6.以及一些扯淡<br>　　7<br></b><br><a id="more"></a></p>
+<p>注释：实现用的是python/LR原理参考Andew Ng的<br><b>&lt;目录&gt;<br>　　1.二元LR原理<br>　　2.多元LR原理<br>　　3.裸LR的代码实现(梯度上升)<br>　　4.用sklearn库实现模型，并进行训练和正确率预测<br>　　5.Logistic回归模型的具体应用：纳税评估问题<br>　　6.以及一些扯淡<br></b><br><a id="more"></a></p>
 <h2>二元Logistic Regression原理</h2><br><h2>多元Logistic Regression原理</h2><br><h2>裸Logistic Regression的代码实现</h2><br><h2>sklearn库中的Logistic Regression模型</h2><br><h2>Logistic回归模型的具体应用：纳税评估问题</h2>
 
 </blockquote>
 <hr>
-<p><b>一些扯淡</b><br>暑假集训Day1，感觉还是蛮赤鸡。刚开始用的Fisher判别法，后面发现此方法精度太低，而且参考文献少，轮子也少(立个flag：有空也整理一下Fisher判别法)。然后顶着ddl支配的恐惧改用了LR，妹想到正确率到了99.7%，于是开始愉快的写论文（2333333333<br>集训Day1还是有很多惊喜的地方的，比如，没想到老师在之后几天的随口点评中安利了一下Logistic回归，再比如某天上午花了1h敲LR裸算法，花了1.5h来Debug，完成了之后发现有sklearn这种神奇的库，仿佛开启了新世界大门（2333333333…据说matlab工具箱也有内置的算法，可以研究研究<br>后天Day2～继续蛤啤～<br><img src="/_source/纳税评估.docx" alt="doc"></p>
-
+<p><b>一些扯淡</b><br>暑假集训Day1，感觉还是蛮赤鸡。刚开始用的Fisher判别法，后面发现此方法精度太低，而且参考文献少，轮子也少(立个flag：有空也整理一下Fisher判别法)。然后顶着ddl支配的恐惧改用了LR，妹想到正确率到了99.7%，于是开始愉快的写论文（2333333333<br>集训Day1还是有很多惊喜的地方的，比如，没想到老师在之后几天的随口点评中安利了一下Logistic回归，再比如某天上午花了1h敲LR裸算法，花了1.5h来Debug，完成了之后发现有sklearn这种神奇的库，仿佛开启了新世界大门（2333333333…据说matlab工具箱也有内置的算法，可以研究研究<br>后天Day2～继续蛤啤～</p>
+<p></p>
       
     </div>
     
@@ -253,7 +251,7 @@
         <p><span>本文标题:</span><a href="/LR/">Logistic回归分析法的原理/代码实现/应用</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">polebug</a></p>
         <p><span>发布时间:</span>2017-08-05, 11:03:52</p>
-        <p><span>最后更新:</span>2017-08-06, 15:11:41</p>
+        <p><span>最后更新:</span>2017-08-08, 15:00:05</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/LR/" title="Logistic回归分析法的原理/代码实现/应用">https://polebug.github.io/LR/</a>
             <span class="copy-path" data-clipboard-text="原文: https://polebug.github.io/LR/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
