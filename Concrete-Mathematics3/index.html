@@ -13,6 +13,10 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="author" content="polebug" />
 
+<!-- 加载gitment的css和js文件 -->
+<link rel="stylesheet" href="/css/gitment.css"> 
+<script src="/js/gitment.js"></script>
+
 
 
 <meta name="description" content="本来打算先看自己比较熟悉的数论(后一章)，之后发现作者在说后面章节的内容时会涉及到前面讲过的内容。还是乖乖按照顺序看呗～顺便…除夕快乐～鸡年快乐啦～ 言归正传，这一章讲整值函数，与本书的重点：离散数学紧密相关。这一章主要围绕低和顶函数展开研究，内容主要是：0.底函数和顶函数的介绍以及相关应用1.研究底函数和顶函数的递归式和和式2.mod (以下正文)">
@@ -313,6 +317,23 @@
 
 
     
+
+<div id="gitment"></div>
+<!-- 主页不要加载gitment -->
+
+<script>
+var gitment = new Gitment({
+  owner: 'polebug',
+  repo: 'polebug.github.io',
+  oauth: {
+    client_id: 'ce0ec393e83b9afdd9b6',
+    client_secret: '70cf9f7944bf22d405c59b6a50a6b15c6cbcd68c',
+  },
+})
+gitment.render('gitment')
+</script>
+ 
+
 
 
 

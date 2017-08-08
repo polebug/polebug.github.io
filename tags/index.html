@@ -13,6 +13,10 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="author" content="polebug" />
 
+<!-- 加载gitment的css和js文件 -->
+<link rel="stylesheet" href="/css/gitment.css"> 
+<script src="/js/gitment.js"></script>
+
 
 
 <meta property="og:type" content="website">
@@ -320,6 +324,23 @@
 
 
     
+
+<div id="gitment"></div>
+<!-- 主页不要加载gitment -->
+
+<script>
+var gitment = new Gitment({
+  owner: 'polebug',
+  repo: 'polebug.github.io',
+  oauth: {
+    client_id: 'ce0ec393e83b9afdd9b6',
+    client_secret: '70cf9f7944bf22d405c59b6a50a6b15c6cbcd68c',
+  },
+})
+gitment.render('gitment')
+</script>
+ 
+
 
 
 

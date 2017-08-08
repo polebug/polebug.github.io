@@ -13,6 +13,10 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="author" content="polebug" />
 
+<!-- 加载gitment的css和js文件 -->
+<link rel="stylesheet" href="/css/gitment.css"> 
+<script src="/js/gitment.js"></script>
+
 
 
 <meta name="description" content="注释：实现用的是python/LR原理参考Andew Ng的&amp;lt;目录&amp;gt;　　1.二元LR原理　　2.多元LR原理　　3.裸LR的代码实现(梯度上升)　　4.用sklearn库实现模型，并进行训练和正确率预测　　5.Logistic回归模型的具体应用：纳税评估问题　　6.以及一些扯淡　　7">
@@ -307,6 +311,23 @@
 
 
     
+
+<div id="gitment"></div>
+<!-- 主页不要加载gitment -->
+
+<script>
+var gitment = new Gitment({
+  owner: 'polebug',
+  repo: 'polebug.github.io',
+  oauth: {
+    client_id: 'ce0ec393e83b9afdd9b6',
+    client_secret: '70cf9f7944bf22d405c59b6a50a6b15c6cbcd68c',
+  },
+})
+gitment.render('gitment')
+</script>
+ 
+
 
 
 

@@ -13,6 +13,10 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="author" content="polebug" />
 
+<!-- 加载gitment的css和js文件 -->
+<link rel="stylesheet" href="/css/gitment.css"> 
+<script src="/js/gitment.js"></script>
+
 
 
 <meta name="description" content="题意&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;题目传送门&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;题意：有n个盒子，每个盒子最多装下一个球。用a[i]表示每个盒子中球的状态。现在给出m个区间，可以在给出的区间任意改变a[i]的顺序。询问能否使a[i]等于b[i]。">
@@ -309,6 +313,23 @@
 
 
     
+
+<div id="gitment"></div>
+<!-- 主页不要加载gitment -->
+
+<script>
+var gitment = new Gitment({
+  owner: 'polebug',
+  repo: 'polebug.github.io',
+  oauth: {
+    client_id: 'ce0ec393e83b9afdd9b6',
+    client_secret: '70cf9f7944bf22d405c59b6a50a6b15c6cbcd68c',
+  },
+})
+gitment.render('gitment')
+</script>
+ 
+
 
 
 
