@@ -14,18 +14,16 @@
 <meta name="author" content="polebug" />
 
 
+    
+    
 
-<meta name="description" content="(长期更) 16/11/20:from urllib.request import urlopenTry to use the following: from urllib2 import Request            from urllib2 import urlopen      For Python2.7,we use urllib -&amp;gt; urllib2, request -&amp;">
-<meta name="keywords" content="python">
-<meta property="og:type" content="article">
-<meta property="og:title" content="About Python2.7 Module Error">
-<meta property="og:url" content="https://polebug.github.io/About-Python2.7-Module-Error/index.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="polebug | 瞎折腾">
+<meta property="og:url" content="https://polebug.github.io/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="(长期更) 16/11/20:from urllib.request import urlopenTry to use the following: from urllib2 import Request            from urllib2 import urlopen      For Python2.7,we use urllib -&amp;gt; urllib2, request -&amp;">
-<meta property="og:updated_time" content="2016-12-05T08:46:22.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="About Python2.7 Module Error">
-<meta name="twitter:description" content="(长期更) 16/11/20:from urllib.request import urlopenTry to use the following: from urllib2 import Request            from urllib2 import urlopen      For Python2.7,we use urllib -&amp;gt; urllib2, request -&amp;">
+<meta name="twitter:title" content="polebug | 瞎折腾">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -50,7 +48,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>About Python2.7 Module Error | polebug | 瞎折腾</title>
+<title>polebug | 瞎折腾</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -59,8 +57,8 @@
     var yiliaConfig = {
         fancybox: true,
         animate: false,
-        isHome: false,
-        isPost: true,
+        isHome: true,
+        isPost: false,
         isArchive: false,
         isTag: false,
         isCategory: false,
@@ -192,11 +190,13 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="[layout]-About-Python2.7-Module-Error" class="article article-type-[layout]" itemscope itemprop="blogPost">
+      <div class="body-wrap">
+  
+    <article id="[layout]-sklearn-LR" class="article article-type-[layout]" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/About-Python2.7-Module-Error/" class="article-date">
-      <time datetime="2016-12-04T13:27:09.000Z" itemprop="datePublished">2016-12-04</time>
+      <a href="/sklearn-LR/" class="article-date">
+      <time datetime="2017-08-05T03:03:52.000Z" itemprop="datePublished">2017-08-05</time>
 </a>
 
 
@@ -210,139 +210,386 @@
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      About Python2.7 Module Error
+    <h1 itemprop="name">
+      <a class="article-title" href="/sklearn-LR/">sklearn-LR</a>
     </h1>
   
 
       </header>
       
-      <div class="article-info article-info-post">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
         
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
+      
     </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
 
 
+
+
+
+
+
+
+
+  
+    <article id="[layout]-darknet-yolo" class="article article-type-[layout]" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/darknet-yolo/" class="article-date">
+      <time datetime="2017-04-30T16:50:15.000Z" itemprop="datePublished">2017-05-01</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-    </div>
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/darknet-yolo/">yolo-darknet的配置问题(MacOS/CPU only)</a>
+    </h1>
+  
 
-        <div class="clearfix"></div>
-      </div>
+      </header>
       
     
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>(长期更)</p>
-<p>16/11/20:<br><code>from urllib.request import urlopen</code><br>Try to use the following:</p>
-<pre><code>from urllib2 import Request           
-from urllib2 import urlopen     
-</code></pre><p>For Python2.7,we use urllib -&gt; urllib2, request -&gt; Request<br><a id="more"></a></p>
-<p>16/12/04:<br><code>from urllib import parse</code><br>If you want urlparse using Python2.7, try to use the following:</p>
-<pre><code>from urlparse import urlparse  
-</code></pre>
+              <p>最近需要用上yolo，没有找到好的训练方式，想试试darknet。<br>然后因为坑爹的官网文档 + mac下相关问题的解决方法太少，于是找了一晚上的错（哭</p>
+<h3>相关环境 </h3><br>MacOS<br>无CUDA(CPU only)<br>OpenCV 2.4<br>
+          
       
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/yolo-darknet/">yolo-darknet</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/darknet/">darknet</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yolo/">yolo</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/darknet-yolo/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
     </div>
     
   </div>
   
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="[layout]-markdown1" class="article article-type-[layout]" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/markdown1/" class="article-date">
+      <time datetime="2017-01-24T03:32:51.000Z" itemprop="datePublished">2017-01-24</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
     
-    <div class="copyright">
-        <p><span>本文标题:</span><a href="/About-Python2.7-Module-Error/">About Python2.7 Module Error</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">polebug</a></p>
-        <p><span>发布时间:</span>2016-12-04, 21:27:09</p>
-        <p><span>最后更新:</span>2016-12-05, 16:46:22</p>
-        <p>
-            <span>原始链接:</span><a class="post-url" href="/About-Python2.7-Module-Error/" title="About Python2.7 Module Error">https://polebug.github.io/About-Python2.7-Module-Error/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://polebug.github.io/About-Python2.7-Module-Error/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
-            <script> var clipboard = new Clipboard('.copy-path'); </script>
-        </p>
-        <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
-        </p>
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/markdown1/">markdown语法所踩的坑（备忘/持续更）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>细数来写markdown时踩的坑也算有些，在此备忘；<br>(长期更)<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/杂记/">杂记</a>
     </div>
 
 
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/markdown/">markdown</a></li></ul>
+    </div>
 
-    <nav id="article-nav">
-        
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/Concrete-Mathematics1/">
-                    Concrete Mathematics 1 ：Recurrent
-                </a>
-            </div>
-        
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/BasicSortAlgorithm/">
-                    基础排序算法
-                </a>
-            </div>
-        
-    </nav>
-
+      
+        <p class="article-more-link">
+          <a href="/markdown1/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
   
 </article>
 
-    <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
-        
-            
-        
+
+
+
+
+
+
+
+
+  
+    <article id="[layout]-2016多校前的热身赛-1002-Circle-Problem" class="article article-type-[layout]" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016多校前的热身赛-1002-Circle-Problem/" class="article-date">
+      <time datetime="2016-08-14T16:58:56.000Z" itemprop="datePublished">2016-08-15</time>
+</a>
+
+
     </div>
-    <style>
-        .left-col .switch-btn,
-        .left-col .switch-area {
-            display: none;
-        }
-        .toc-level-6 i,
-        .toc-level-6 ol {
-            display: none !important;
-        }
-    </style>
-
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
-
-    <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
-    </script>
-
-
-
-
-
+  
+  <div class="article-inner">
     
-
-
-
-
-    <div class="scroll" id="post-nav-button">
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
-            <a href="/Concrete-Mathematics1/" title="上一篇: Concrete Mathematics 1 ：Recurrent">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a>
+    </h1>
+  
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-
-        
-            <a href="/BasicSortAlgorithm/" title="下一篇: 基础排序算法">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>若有错误的地方，欢迎指正</p>
+<p></p><h2>题意</h2><br>&nbsp;&nbsp;&nbsp;&nbsp;突然想想写这题的题解，发现老刘赛后没放出来….不过还好我有随手收藏题的习惯，当时截了图，原题如图所示<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/LR/">Logistic回归分析法的原理/代码实现/应用</a></li><li class="post-list-item"><a class="post-list-link" href="/darknet-yolo/">yolo-darknet的配置问题(MacOS/CPU only)</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics3/">Concrete Mathematics 3 ：Integer Functions</a></li><li class="post-list-item"><a class="post-list-link" href="/markdown1/">markdown语法所踩的坑（备忘/持续更）</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics2/">Concrete Mathematics 2 ：Sums</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics1/">Concrete Mathematics 1 ：Recurrent</a></li><li class="post-list-item"><a class="post-list-link" href="/About-Python2.7-Module-Error/">About Python2.7 Module Error</a></li><li class="post-list-item"><a class="post-list-link" href="/BasicSortAlgorithm/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/平几/">平几</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/概率问题/">概率问题</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/随机化/">随机化</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016多校前的热身赛-1002-Circle-Problem/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
 
 
 
 
-    <script>
+
+
+
+
+
+  
+    <article id="[layout]-对于RMQ问题的理解及运用" class="article article-type-[layout]" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/对于RMQ问题的理解及运用/" class="article-date">
+      <time datetime="2016-08-13T15:53:03.000Z" itemprop="datePublished">2016-08-13</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
-    </script>
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>裸算法系列<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RMQ问题/">RMQ问题</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ST算法/">ST算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区间上的操作/">区间上的操作</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/模板/">模板</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/对于RMQ问题的理解及运用/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="[layout]-HDOJ-5821-Ball-16多校day8-1001" class="article article-type-[layout]" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/HDOJ-5821-Ball-16多校day8-1001/" class="article-date">
+      <time datetime="2016-08-13T12:19:26.000Z" itemprop="datePublished">2016-08-13</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p></p><h2>题意</h2><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://acm.hdu.edu.cn/showproblem.php?pid=5821" target="_blank" rel="external">题目传送门</a><br>&nbsp;&nbsp;&nbsp;&nbsp;题意：有n个盒子，每个盒子最多装下一个球。用a[i]表示每个盒子中球的状态。现在给出m个区间，可以在给出的区间任意改变a[i]的顺序。询问能否使a[i]等于b[i]。<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/思维/">思维</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/贪心/">贪心</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/HDOJ-5821-Ball-16多校day8-1001/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+  
 </div>
       
 <footer id="footer">

@@ -15,17 +15,17 @@
 
 
 
-<meta name="description" content="(长期更) 16/11/20:from urllib.request import urlopenTry to use the following: from urllib2 import Request            from urllib2 import urlopen      For Python2.7,we use urllib -&amp;gt; urllib2, request -&amp;">
-<meta name="keywords" content="python">
+<meta name="description" content="最近需要用上yolo，没有找到好的训练方式，想试试darknet。然后因为坑爹的官网文档 + mac下相关问题的解决方法太少，于是找了一晚上的错（哭 相关环境 MacOS无CUDA(CPU only)OpenCV 2.4">
+<meta name="keywords" content="yolo,darknet">
 <meta property="og:type" content="article">
-<meta property="og:title" content="About Python2.7 Module Error">
-<meta property="og:url" content="https://polebug.github.io/About-Python2.7-Module-Error/index.html">
+<meta property="og:title" content="yolo-darknet的配置问题(MacOS&#x2F;CPU only)">
+<meta property="og:url" content="https://polebug.github.io/darknet-yolo/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="(长期更) 16/11/20:from urllib.request import urlopenTry to use the following: from urllib2 import Request            from urllib2 import urlopen      For Python2.7,we use urllib -&amp;gt; urllib2, request -&amp;">
-<meta property="og:updated_time" content="2016-12-05T08:46:22.000Z">
+<meta property="og:description" content="最近需要用上yolo，没有找到好的训练方式，想试试darknet。然后因为坑爹的官网文档 + mac下相关问题的解决方法太少，于是找了一晚上的错（哭 相关环境 MacOS无CUDA(CPU only)OpenCV 2.4">
+<meta property="og:updated_time" content="2017-05-04T12:02:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="About Python2.7 Module Error">
-<meta name="twitter:description" content="(长期更) 16/11/20:from urllib.request import urlopenTry to use the following: from urllib2 import Request            from urllib2 import urlopen      For Python2.7,we use urllib -&amp;gt; urllib2, request -&amp;">
+<meta name="twitter:title" content="yolo-darknet的配置问题(MacOS&#x2F;CPU only)">
+<meta name="twitter:description" content="最近需要用上yolo，没有找到好的训练方式，想试试darknet。然后因为坑爹的官网文档 + mac下相关问题的解决方法太少，于是找了一晚上的错（哭 相关环境 MacOS无CUDA(CPU only)OpenCV 2.4">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -50,7 +50,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>About Python2.7 Module Error | polebug | 瞎折腾</title>
+<title>yolo-darknet的配置问题(MacOS/CPU only) | polebug | 瞎折腾</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -192,11 +192,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="[layout]-About-Python2.7-Module-Error" class="article article-type-[layout]" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="[layout]-darknet-yolo" class="article article-type-[layout]" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/About-Python2.7-Module-Error/" class="article-date">
-      <time datetime="2016-12-04T13:27:09.000Z" itemprop="datePublished">2016-12-04</time>
+      <a href="/darknet-yolo/" class="article-date">
+      <time datetime="2017-04-30T16:50:15.000Z" itemprop="datePublished">2017-05-01</time>
 </a>
 
 
@@ -211,7 +211,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      About Python2.7 Module Error
+      yolo-darknet的配置问题(MacOS/CPU only)
     </h1>
   
 
@@ -220,13 +220,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
+    <a class="article-category-link" href="/categories/yolo-darknet/">yolo-darknet</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/darknet/">darknet</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yolo/">yolo</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -236,14 +236,34 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>(长期更)</p>
-<p>16/11/20:<br><code>from urllib.request import urlopen</code><br>Try to use the following:</p>
-<pre><code>from urllib2 import Request           
-from urllib2 import urlopen     
-</code></pre><p>For Python2.7,we use urllib -&gt; urllib2, request -&gt; Request<br><a id="more"></a></p>
-<p>16/12/04:<br><code>from urllib import parse</code><br>If you want urlparse using Python2.7, try to use the following:</p>
-<pre><code>from urlparse import urlparse  
-</code></pre>
+        <p>最近需要用上yolo，没有找到好的训练方式，想试试darknet。<br>然后因为坑爹的官网文档 + mac下相关问题的解决方法太少，于是找了一晚上的错（哭</p>
+<h3>相关环境 </h3><br>MacOS<br>无CUDA(CPU only)<br>OpenCV 2.4<br><a id="more"></a><br><h3>安装 </h3><br>根据<a href="https://pjreddie.com/darknet/install/" target="_blank" rel="external">官网</a>文档进行安装<br><br><h3>配置问题 </h3>
+
+<p><b>0.Makefile的基本配置</b><br>根据系统环境:<br>GPU=0<br>CUDA=0<br>OPENCV=1<br>DEBUG=0</p>
+<p>重新 make 即可</p>
+<hr>
+<p><b>1.测试opencv报错</b><br>执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./darknet imtest data/eagle.jpg</div></pre></td></tr></table></figure></p>
+<p>报错</p>
+<p>尝试在python中, &gt;&gt;&gt; import cv2<br>报错:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Traceback (most recent call last):</div><div class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</div><div class="line">ImportError: No module named cv2</div></pre></td></tr></table></figure></p>
+<p>site-packages路径设置问题<br>输入命令:<br>export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH</p>
+<hr>
+<p><b>2.Segmentation fault: 11</b><br>按照<a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="external">官网上使用yolo</a>的步骤，执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./darknet detect cfg/yolo.cfg yolo.weights data/dog.jpg</div></pre></td></tr></table></figure></p>
+<p>输出:</p>
+<blockquote>
+<p>layer     filters    size              input                output<br>   0 conv     32  3 x 3 / 1   608 x 608 x   3   -&gt;   608 x 608 x  32<br>   1 max          2 x 2 / 2   608 x 608 x  32   -&gt;   304 x 304 x  32<br>   2 conv     64  3 x 3 / 1   304 x 304 x  32   -&gt;   304 x 304 x  64<br>   3 max          2 x 2 / 2   304 x 304 x  64   -&gt;   152 x 152 x  64<br>   4 conv    128  3 x 3 / 1   152 x 152 x  64   -&gt;   152 x 152 x 128<br>   5 conv     64  1 x 1 / 1   152 x 152 x 128   -&gt;   152 x 152 x  64<br>   6 conv    128  3 x 3 / 1   152 x 152 x  64   -&gt;   152 x 152 x 128<br>   7 max          2 x 2 / 2   152 x 152 x 128   -&gt;    76 x  76 x 128<br>   8 conv    256  3 x 3 / 1    76 x  76 x 128   -&gt;    76 x  76 x 256<br>   9 conv    128  1 x 1 / 1    76 x  76 x 256   -&gt;    76 x  76 x 128<br>  10 conv    256  3 x 3 / 1    76 x  76 x 128   -&gt;    76 x  76 x 256<br>  11 max          2 x 2 / 2    76 x  76 x 256   -&gt;    38 x  38 x 256<br>  12 conv    512  3 x 3 / 1    38 x  38 x 256   -&gt;    38 x  38 x 512<br>  13 conv    256  1 x 1 / 1    38 x  38 x 512   -&gt;    38 x  38 x 256<br>  14 conv    512  3 x 3 / 1    38 x  38 x 256   -&gt;    38 x  38 x 512<br>  15 conv    256  1 x 1 / 1    38 x  38 x 512   -&gt;    38 x  38 x 256<br>  16 conv    512  3 x 3 / 1    38 x  38 x 256   -&gt;    38 x  38 x 512<br>  17 max          2 x 2 / 2    38 x  38 x 512   -&gt;    19 x  19 x 512<br>  18 conv   1024  3 x 3 / 1    19 x  19 x 512   -&gt;    19 x  19 x1024<br>  19 conv    512  1 x 1 / 1    19 x  19 x1024   -&gt;    19 x  19 x 512<br>  20 conv   1024  3 x 3 / 1    19 x  19 x 512   -&gt;    19 x  19 x1024<br>  21 conv    512  1 x 1 / 1    19 x  19 x1024   -&gt;    19 x  19 x 512<br>  22 conv   1024  3 x 3 / 1    19 x  19 x 512   -&gt;    19 x  19 x1024<br>  23 conv   1024  3 x 3 / 1    19 x  19 x1024   -&gt;    19 x  19 x1024<br>  24 conv   1024  3 x 3 / 1    19 x  19 x1024   -&gt;    19 x  19 x1024<br>  25 route  16<br>  26 conv     64  1 x 1 / 1    38 x  38 x 512   -&gt;    38 x  38 x  64<br>  27 reorg              / 2    38 x  38 x  64   -&gt;    19 x  19 x 256<br>  28 route  27 24<br>  29 conv   1024  3 x 3 / 1    19 x  19 x1280   -&gt;    19 x  19 x1024<br>  30 conv    425  1 x 1 / 1    19 x  19 x1024   -&gt;    19 x  19 x 425<br>  31 detection<br>Loading weights from yolo.weights…Done!<br>data/dog.jpg: Predicted in 12.558990 seconds.<br>dog: 82%<br>truck: 65%<br>bicycle: 85%<br>Segmentation fault: 11</p>
+</blockquote>
+<p><b>报错: <code>Segmentation fault: 11</code> 并且在目录中未出现已识别的图片</b></p>
+<p><b>解决办法:</b></p>
+<p><b>2.1更改Makefile:</b><br>将opencv部分修改为如下代码:(分别修改COMMON/LDFLAGS)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ifeq ($(OPENCV), 1) </div><div class="line">COMMON+= -DOPENCV -I/usr/local/include</div><div class="line">CFLAGS+= -DOPENCV</div><div class="line">LDFLAGS+= `pkg-config --libs opencv` -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc</div><div class="line">COMMON+= `pkg-config --cflags opencv` </div><div class="line">endif</div></pre></td></tr></table></figure></p>
+<p>save<br>make</p>
+<p><b>2.2用官网提供的另一种命令方式:</b><br>注意到一个很坑的地方,<a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="external"></a></p>
+<blockquote>
+<p>The detect command is shorthand for a more general version of the command. It is equivalent to the command:<br>./darknet detector test cfg/coco.data cfg/yolo.cfg yolo.weights data/dog.jpg</p>
+</blockquote>
+<p>晚上在我试过各种各样解决segmentation fault 11的方法，快要崩溃的时候，试了这个所谓的等价的命令，发现成功了<br>(我:???????有一万句mmp要说</p>
+<hr>
+<p>以上<br>如有错误，欢迎指正</p>
+
       
     </div>
     
@@ -251,13 +271,13 @@ from urllib2 import urlopen
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/About-Python2.7-Module-Error/">About Python2.7 Module Error</a></p>
+        <p><span>本文标题:</span><a href="/darknet-yolo/">yolo-darknet的配置问题(MacOS/CPU only)</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">polebug</a></p>
-        <p><span>发布时间:</span>2016-12-04, 21:27:09</p>
-        <p><span>最后更新:</span>2016-12-05, 16:46:22</p>
+        <p><span>发布时间:</span>2017-05-01, 00:50:15</p>
+        <p><span>最后更新:</span>2017-05-04, 20:02:27</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/About-Python2.7-Module-Error/" title="About Python2.7 Module Error">https://polebug.github.io/About-Python2.7-Module-Error/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://polebug.github.io/About-Python2.7-Module-Error/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/darknet-yolo/" title="yolo-darknet的配置问题(MacOS/CPU only)">https://polebug.github.io/darknet-yolo/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://polebug.github.io/darknet-yolo/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -270,15 +290,15 @@ from urllib2 import urlopen
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/Concrete-Mathematics1/">
-                    Concrete Mathematics 1 ：Recurrent
+                <a href="/sklearn-LR/">
+                    sklearn-LR
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/BasicSortAlgorithm/">
-                    基础排序算法
+                <a href="/markdown1/">
+                    markdown语法所踩的坑（备忘/持续更）
                 </a>
             </div>
         
@@ -290,7 +310,7 @@ from urllib2 import urlopen
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">相关环境 </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">安装 </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">配置问题 </span></a></li></ol>
         
     </div>
     <style>
@@ -321,7 +341,7 @@ from urllib2 import urlopen
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/Concrete-Mathematics1/" title="上一篇: Concrete Mathematics 1 ：Recurrent">
+            <a href="/sklearn-LR/" title="上一篇: sklearn-LR">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -329,13 +349,13 @@ from urllib2 import urlopen
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/BasicSortAlgorithm/" title="下一篇: 基础排序算法">
+            <a href="/markdown1/" title="下一篇: markdown语法所踩的坑（备忘/持续更）">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/LR/">Logistic回归分析法的原理/代码实现/应用</a></li><li class="post-list-item"><a class="post-list-link" href="/darknet-yolo/">yolo-darknet的配置问题(MacOS/CPU only)</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics3/">Concrete Mathematics 3 ：Integer Functions</a></li><li class="post-list-item"><a class="post-list-link" href="/markdown1/">markdown语法所踩的坑（备忘/持续更）</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics2/">Concrete Mathematics 2 ：Sums</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics1/">Concrete Mathematics 1 ：Recurrent</a></li><li class="post-list-item"><a class="post-list-link" href="/About-Python2.7-Module-Error/">About Python2.7 Module Error</a></li><li class="post-list-item"><a class="post-list-link" href="/BasicSortAlgorithm/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/sklearn-LR/">sklearn-LR</a></li><li class="post-list-item"><a class="post-list-link" href="/darknet-yolo/">yolo-darknet的配置问题(MacOS/CPU only)</a></li><li class="post-list-item"><a class="post-list-link" href="/markdown1/">markdown语法所踩的坑（备忘/持续更）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
 
 
 
