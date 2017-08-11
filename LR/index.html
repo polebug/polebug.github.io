@@ -16,23 +16,23 @@
 
 
 
-<meta name="description" content="注：实现用的是 python / LR 原理参考 Andrew Ng 的 cs229感谢 JerryLead 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删如有错误，欢迎指正  &amp;lt;目录&amp;gt;　　1.二元 LR 原理　　2.多元 LR 原理　　3.裸 LR 的代码实现(梯度上升)　　4.用 sklearn 库实现模型，并进行训练和正确率预测">
+<meta name="description" content="注：实现用的是 python / LR 原理参考 Andrew Ng 的 cs229感谢 JerryLead 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删如有错误，欢迎指正  &amp;lt;目录&amp;gt;　　1.二元 LR 原理　　2.多元 LR 原理　　3.裸 LR 的代码实现 (梯度下降/二元/多元/预测结果/正确率统计)　　4.调用 sklearn 库里的 LR 模型 (训练/">
 <meta name="keywords" content="python,Logistic,sklearn,ML">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Logistic 回归分析法的原理&#x2F;代码实现&#x2F;应用">
+<meta property="og:title" content="Logistic 回归分析法的原理和代码实现">
 <meta property="og:url" content="https://polebug.github.io/LR/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="注：实现用的是 python / LR 原理参考 Andrew Ng 的 cs229感谢 JerryLead 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删如有错误，欢迎指正  &amp;lt;目录&amp;gt;　　1.二元 LR 原理　　2.多元 LR 原理　　3.裸 LR 的代码实现(梯度上升)　　4.用 sklearn 库实现模型，并进行训练和正确率预测">
+<meta property="og:description" content="注：实现用的是 python / LR 原理参考 Andrew Ng 的 cs229感谢 JerryLead 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删如有错误，欢迎指正  &amp;lt;目录&amp;gt;　　1.二元 LR 原理　　2.多元 LR 原理　　3.裸 LR 的代码实现 (梯度下降/二元/多元/预测结果/正确率统计)　　4.调用 sklearn 库里的 LR 模型 (训练/">
 <meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170810-0@2x.png">
 <meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170810-1@2x.png">
 <meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170810-2@2x.png">
 <meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-0@2x.png">
 <meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-1@2x.png">
 <meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-2@2x.png">
-<meta property="og:updated_time" content="2017-08-11T06:30:12.000Z">
+<meta property="og:updated_time" content="2017-08-11T06:35:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Logistic 回归分析法的原理&#x2F;代码实现&#x2F;应用">
-<meta name="twitter:description" content="注：实现用的是 python / LR 原理参考 Andrew Ng 的 cs229感谢 JerryLead 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删如有错误，欢迎指正  &amp;lt;目录&amp;gt;　　1.二元 LR 原理　　2.多元 LR 原理　　3.裸 LR 的代码实现(梯度上升)　　4.用 sklearn 库实现模型，并进行训练和正确率预测">
+<meta name="twitter:title" content="Logistic 回归分析法的原理和代码实现">
+<meta name="twitter:description" content="注：实现用的是 python / LR 原理参考 Andrew Ng 的 cs229感谢 JerryLead 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删如有错误，欢迎指正  &amp;lt;目录&amp;gt;　　1.二元 LR 原理　　2.多元 LR 原理　　3.裸 LR 的代码实现 (梯度下降/二元/多元/预测结果/正确率统计)　　4.调用 sklearn 库里的 LR 模型 (训练/">
 <meta name="twitter:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170810-0@2x.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -58,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Logistic 回归分析法的原理/代码实现/应用 | polebug | 瞎折腾</title>
+<title>Logistic 回归分析法的原理和代码实现 | polebug | 瞎折腾</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -219,7 +219,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Logistic 回归分析法的原理/代码实现/应用
+      Logistic 回归分析法的原理和代码实现
     </h1>
   
 
@@ -243,7 +243,7 @@
         <blockquote>
 <p>注：<br>实现用的是 python / LR 原理参考 Andrew Ng 的 cs229<br>感谢 <a href="http://www.cnblogs.com/jerrylead/archive/2012/05/08/2489725.html" target="_blank" rel="external">JerryLead</a> 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删<br>如有错误，欢迎指正</p>
 </blockquote>
-<p><b>&lt;目录&gt;<br>　　1.二元 LR 原理<br>　　2.多元 LR 原理<br>　　3.裸 LR 的代码实现(梯度上升)<br>　　4.用 sklearn 库实现模型，并进行训练和正确率预测<br></b><br><a id="more"></a></p>
+<p><b>&lt;目录&gt;<br>　　1.二元 LR 原理<br>　　2.多元 LR 原理<br>　　3.裸 LR 的代码实现 (梯度下降/二元/多元/预测结果/正确率统计)<br>　　4.调用 sklearn 库里的 LR 模型 (训练/预测结果/正确率统计)<br></b><br><a id="more"></a></p>
 <h2>二元 Logistic Regression 原理</h2>
 
 <p></p><h3>一些符号的解释</h3><br>$ h_θ(x) $ - 一个分类函数，表示的是自变量 x 为某个值时，y = 1 的概率<br>$ g(x) $ - 一个常用的 S 形逻辑函数<br>J(θ) - 代价函数<p></p>
@@ -290,12 +290,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/LR/">Logistic 回归分析法的原理/代码实现/应用</a></p>
+        <p><span>本文标题:</span><a href="/LR/">Logistic 回归分析法的原理和代码实现</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">polebug</a></p>
         <p><span>发布时间:</span>2017-08-05, 11:03:52</p>
-        <p><span>最后更新:</span>2017-08-11, 14:30:12</p>
+        <p><span>最后更新:</span>2017-08-11, 14:35:19</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/LR/" title="Logistic 回归分析法的原理/代码实现/应用">https://polebug.github.io/LR/</a>
+            <span>原始链接:</span><a class="post-url" href="/LR/" title="Logistic 回归分析法的原理和代码实现">https://polebug.github.io/LR/</a>
             <span class="copy-path" data-clipboard-text="原文: https://polebug.github.io/LR/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -367,7 +367,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/LR/">Logistic 回归分析法的原理/代码实现/应用</a></li><li class="post-list-item"><a class="post-list-link" href="/darknet-yolo/">yolo-darknet的配置问题(MacOS/CPU only)</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics3/">Concrete Mathematics 3 ：Integer Functions</a></li><li class="post-list-item"><a class="post-list-link" href="/markdown1/">markdown语法所踩的坑（备忘/持续更）</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics2/">Concrete Mathematics 2 ：Sums</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics1/">Concrete Mathematics 1 ：Recurrent</a></li><li class="post-list-item"><a class="post-list-link" href="/About-Python2.7-Module-Error/">About Python2.7 Module Error</a></li><li class="post-list-item"><a class="post-list-link" href="/BasicSortAlgorithm/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/LR/">Logistic 回归分析法的原理和代码实现</a></li><li class="post-list-item"><a class="post-list-link" href="/darknet-yolo/">yolo-darknet的配置问题(MacOS/CPU only)</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics3/">Concrete Mathematics 3 ：Integer Functions</a></li><li class="post-list-item"><a class="post-list-link" href="/markdown1/">markdown语法所踩的坑（备忘/持续更）</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics2/">Concrete Mathematics 2 ：Sums</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics1/">Concrete Mathematics 1 ：Recurrent</a></li><li class="post-list-item"><a class="post-list-link" href="/About-Python2.7-Module-Error/">About Python2.7 Module Error</a></li><li class="post-list-item"><a class="post-list-link" href="/BasicSortAlgorithm/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
 
 
 

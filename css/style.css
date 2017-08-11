@@ -118,7 +118,7 @@ button::-moz-focus-inner {
   padding: 0;
 }
 html {
-  font-size: 12px;
+  font-size: 14px;
 }
 body {
   font-family: "Lucida Grande", Verdana, "Helvetica Neue", Arial, "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
@@ -552,7 +552,7 @@ a {
   text-align: center;
   margin: 13px 0;
   font-family: Times, Georgia, serif;
-  font-size: 26px;
+  font-size: 28px;
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
   -ms-transition: 0.3s;
@@ -572,8 +572,8 @@ a {
   display: block;
   border: 5px solid #fff;
   border-radius: 50%;
-  width: 124px;
-  height: 124px;
+  width: 126px;
+  height: 126px;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
@@ -751,13 +751,13 @@ a {
   font-family: Arial;
 }
 #header .header-nav .social a {
-  width: 33px;
-  height: 33px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   margin: 0 2px 6px;
   vertical-align: middle;
-  font-size: 21.78px;
-  line-height: 33px;
+  font-size: 23.1px;
+  line-height: 35px;
   text-align: center;
   color: #fff;
   background: #6f7170;
@@ -1205,7 +1205,7 @@ color
   color: #999;
   position: relative;
   margin-right: 10px;
-  font: 12px FontAwesome;
+  font: 14px FontAwesome;
 }
 .archive-article-inner .article-meta .article-category:before {
   float: left;
@@ -1683,7 +1683,7 @@ li:hover {
   bottom: 1em;
   left: 0;
   margin-left: 0;
-  padding: 6px 10px 10px 58px;
+  padding: 6px 10px 10px 54px;
   border-radius: 2.8%;
   overflow: auto;
 }
@@ -2048,7 +2048,7 @@ aside.comment-bar:active {
   color: #999;
   position: relative;
   margin-right: 10px;
-  font: 12px FontAwesome;
+  font: 14px FontAwesome;
 }
 .archive-article-inner .article-meta .article-category:before {
   float: left;
@@ -2081,14 +2081,14 @@ aside.comment-bar:active {
 }
 .article-entry pre,
 .article-entry .highlight {
-  background: rgba(0,0,0,0.67);
+  background: rgba(32,34,37,0.85);
   margin: auto;
   padding: 0.35em 1.5em;
   border-style: solid;
   border-color: #ddd;
   border-width: 1px;
   overflow: auto;
-  color: #eaeaea;
+  color: #c5c8c6;
   line-height: 1.3rem;
 }
 .article-entry .highlight .gutter pre,
@@ -2105,7 +2105,7 @@ aside.comment-bar:active {
   text-shadow: none;
   padding: 0;
   background: none;
-  color: #eaeaea;
+  color: #c5c8c6;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
@@ -2161,7 +2161,7 @@ aside.comment-bar:active {
   border-style: solid;
   border-color: #ddd;
   border-width: 1px 0;
-  background: rgba(0,0,0,0.67);
+  background: rgba(32,34,37,0.85);
   padding: 15px 20px 15px 0;
 }
 .article-entry .gist .gist-file {
@@ -2187,7 +2187,7 @@ aside.comment-bar:active {
   border: none;
 }
 .article-entry .gist .gist-file .gist-meta {
-  background: rgba(0,0,0,0.67);
+  background: rgba(32,34,37,0.85);
   color: #969896;
   font: 0.85em "Lucida Grande", Verdana, "Helvetica Neue", Arial;
   text-shadow: 0 0;
@@ -2229,7 +2229,7 @@ pre .html .doctype,
 pre .css .id,
 pre .css .class,
 pre .css .pseudo {
-  color: #d54e53;
+  color: #c66;
 }
 pre .number,
 pre .preprocessor,
@@ -2237,12 +2237,12 @@ pre .built_in,
 pre .literal,
 pre .params,
 pre .constant {
-  color: #e78c45;
+  color: #de935f;
 }
 pre .class,
 pre .ruby .class .title,
 pre .css .rules .attribute {
-  color: #b9ca4a;
+  color: #b5bd68;
 }
 pre .string,
 pre .value,
@@ -2250,10 +2250,10 @@ pre .inheritance,
 pre .header,
 pre .ruby .symbol,
 pre .xml .cdata {
-  color: #b9ca4a;
+  color: #b5bd68;
 }
 pre .css .hexcolor {
-  color: #70c0b1;
+  color: #8abeb7;
 }
 pre .function,
 pre .python .decorator,
@@ -2263,11 +2263,11 @@ pre .ruby .title .keyword,
 pre .perl .sub,
 pre .javascript .title,
 pre .coffeescript .title {
-  color: #7aa6da;
+  color: #81a2be;
 }
 pre .keyword,
 pre .javascript .function {
-  color: #c397d8;
+  color: #b294bb;
 }
 #footer {
   font-size: 0.8rem;
@@ -2773,7 +2773,7 @@ pre .javascript .function {
 .article-category::before {
   float: left;
   color: #999;
-  font: 12px FontAwesome;
+  font: 14px FontAwesome;
   margin-right: 5px;
   margin-top: 0.333333333333333rem;
 }
@@ -2790,7 +2790,7 @@ pre .javascript .function {
 .article-pop-out:before {
   color: #999;
   content: "\f08d";
-  font: 12px FontAwesome;
+  font: 14px FontAwesome;
   float: left;
   margin-right: 5px;
   margin-top: 0.333333333333333rem;
