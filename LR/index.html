@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-0@2x.png">
 <meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-1@2x.png">
 <meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-2@2x.png">
-<meta property="og:updated_time" content="2017-08-11T06:35:19.000Z">
+<meta property="og:updated_time" content="2017-08-11T06:58:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Logistic 回归分析法的原理和代码实现">
 <meta name="twitter:description" content="注：实现用的是 python / LR 原理参考 Andrew Ng 的 cs229感谢 JerryLead 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删如有错误，欢迎指正  &amp;lt;目录&amp;gt;　　1.二元 LR 原理　　2.多元 LR 原理　　3.裸 LR 的代码实现 (梯度下降/二元/多元/预测结果/正确率统计)　　4.调用 sklearn 库里的 LR 模型 (训练/">
@@ -266,7 +266,7 @@
 <p>对于多分类问题，实际上就是多个二元分类问题。<br><b>首先</b>，我们将多个类中的某一类标记为正向类，将其他所有类标记为负向类，这个模型记作 $ h_{\theta}^{(1)}(x) $；<br>类似地，选择另外一类记为正向类，其他所有类记为负向类，得到模型 $ h_{\theta}^{(2)}(x) $；<br>依次类推，最终得到 $ h_{\theta}^{(i)}(x) = P (y = i | x ; \theta) $，其中 i = 1,2,3,…；<br><b>然后</b>，训练所有的逻辑回归分类机；<br><b>最后</b>，在预测时，对于一个新的 x 值，选择最大的 $ h_{\theta}^{(i)}(x) $；</p>
 <hr>
 <p>下面以分成三类为例进行说明。如图所示。<br><img src="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170810-2@2x.png" width="300" height="230"><br>其中，三角形表示 y = 1，方块表示 y = 2，叉表示 y = 3；</p>
-<p>从三角形开始，我们将类型 1 设定为正向类，类型 2 和 3 设定为负向类，得到 $ h_{\theta}^{(1)}(x) $；<br>依次类推，得到 $ h_{\theta}^{(2)}(x) $，$ h_{\theta}^{(3)}(x) $ ；<br>将模型进行训练，得到相关权重 $ \theta^{T} $；<br>如图所示；<br><img src="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-0@2x.png" width="210" height="180"> <img src="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-1@2x.png" width="210" height="180"> <img src="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-2@2x.png" width="210" height="180"><br>最后将新的特征值进行预测，输入 Max($ h_{\theta}^{(i)}(x) $)；</p>
+<p>从三角形开始，我们将类型 1 设定为正向类，类型 2 和 3 设定为负向类，得到 $ h_{\theta}^{(1)}(x) $；<br>依次类推，得到 $ h_{\theta}^{(2)}(x) $，$ h_{\theta}^{(3)}(x) $ ；<br>将模型进行训练，得到相关权重 $ \theta^{T} $；<br>如图所示；<br><img src="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-0@2x.png" width="210" height="180"> <img src="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-1@2x.png" width="210" height="180"> <img src="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-2@2x.png" width="210" height="180"><br>最后将新的特征值进行预测，输出 Max($ h_{\theta}^{(i)}(x) $)；</p>
 <p></p><h2>裸 Logistic Regression 的代码实现</h2><br>自己敲了一遍，然后发现有个大佬写的比我全面很多，所以这里还是不贴自己的代码了（orz<p></p>
 <blockquote>
 <p><a href="https://github.com/ccc013/CodingPractise/blob/master/Python/MachineLearning/LogisticRegressionPractise.py" target="_blank" rel="external">二元 Logistic Regression 实现</a> (梯度下降/预测结果/统计准确率)<br><a href="https://github.com/ccc013/CodingPractise/blob/master/Python/MachineLearning/mulLogisticRegressionPractise.py" target="_blank" rel="external">多元 Logistic Regression 实现</a> (梯度下降/预测结果/统计准确率)</p>
@@ -293,7 +293,7 @@
         <p><span>本文标题:</span><a href="/LR/">Logistic 回归分析法的原理和代码实现</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">polebug</a></p>
         <p><span>发布时间:</span>2017-08-05, 11:03:52</p>
-        <p><span>最后更新:</span>2017-08-11, 14:35:19</p>
+        <p><span>最后更新:</span>2017-08-11, 14:58:34</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/LR/" title="Logistic 回归分析法的原理和代码实现">https://polebug.github.io/LR/</a>
             <span class="copy-path" data-clipboard-text="原文: https://polebug.github.io/LR/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -307,6 +307,12 @@
 
 
     <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/translation01/">
+                    翻译 1 st：3 mistakes to avoid when learning to code in Python
+                </a>
+            </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
@@ -355,7 +361,9 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/translation01/" title="上一篇: 翻译 1 st：3 mistakes to avoid when learning to code in Python">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
@@ -367,7 +375,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/LR/">Logistic 回归分析法的原理和代码实现</a></li><li class="post-list-item"><a class="post-list-link" href="/darknet-yolo/">yolo-darknet的配置问题(MacOS/CPU only)</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics3/">Concrete Mathematics 3 ：Integer Functions</a></li><li class="post-list-item"><a class="post-list-link" href="/markdown1/">markdown语法所踩的坑（备忘/持续更）</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics2/">Concrete Mathematics 2 ：Sums</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics1/">Concrete Mathematics 1 ：Recurrent</a></li><li class="post-list-item"><a class="post-list-link" href="/About-Python2.7-Module-Error/">About Python2.7 Module Error</a></li><li class="post-list-item"><a class="post-list-link" href="/BasicSortAlgorithm/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/translation01/">翻译 1 st：3 mistakes to avoid when learning to code in Python</a></li><li class="post-list-item"><a class="post-list-link" href="/LR/">Logistic 回归分析法的原理和代码实现</a></li><li class="post-list-item"><a class="post-list-link" href="/darknet-yolo/">yolo-darknet的配置问题(MacOS/CPU only)</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics3/">Concrete Mathematics 3 ：Integer Functions</a></li><li class="post-list-item"><a class="post-list-link" href="/markdown1/">markdown语法所踩的坑（备忘/持续更）</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics2/">Concrete Mathematics 2 ：Sums</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics1/">Concrete Mathematics 1 ：Recurrent</a></li><li class="post-list-item"><a class="post-list-link" href="/About-Python2.7-Module-Error/">About Python2.7 Module Error</a></li><li class="post-list-item"><a class="post-list-link" href="/BasicSortAlgorithm/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
 
 
 

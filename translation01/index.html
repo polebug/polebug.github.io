@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="polebug" />
+
+
+
+
+<meta name="description" content="刚加入 LCTT ，第一次翻译文章，没有什么经验，如有错误，欢迎指正同步发在 LCTT 的 github 上文末是初次翻译的体会  (以下是译文)  学习用 python 编码时要避免的 3 个错误   这些错误会造成很麻烦的问题，需要数小时才能解决">
+<meta name="keywords" content="python,翻译">
+<meta property="og:type" content="article">
+<meta property="og:title" content="翻译 1 st：3 mistakes to avoid when learning to code in Python">
+<meta property="og:url" content="https://polebug.github.io/translation01/index.html">
+<meta property="og:site_name" content="polebug | 瞎折腾">
+<meta property="og:description" content="刚加入 LCTT ，第一次翻译文章，没有什么经验，如有错误，欢迎指正同步发在 LCTT 的 github 上文末是初次翻译的体会  (以下是译文)  学习用 python 编码时要避免的 3 个错误   这些错误会造成很麻烦的问题，需要数小时才能解决">
+<meta property="og:image" content="https://opensource.com/sites/default/files/styles/image-full-size/public/images/life/blocks_building.png?itok=q0_Wo8Tr">
+<meta property="og:updated_time" content="2017-08-15T16:44:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="翻译 1 st：3 mistakes to avoid when learning to code in Python">
+<meta name="twitter:description" content="刚加入 LCTT ，第一次翻译文章，没有什么经验，如有错误，欢迎指正同步发在 LCTT 的 github 上文末是初次翻译的体会  (以下是译文)  学习用 python 编码时要避免的 3 个错误   这些错误会造成很麻烦的问题，需要数小时才能解决">
+<meta name="twitter:image" content="https://opensource.com/sites/default/files/styles/image-full-size/public/images/life/blocks_building.png?itok=q0_Wo8Tr">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>翻译 1 st：3 mistakes to avoid when learning to code in Python | polebug | 瞎折腾</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?14c066cbe78d0932820007c0a7919224";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">polebug</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/archives/">all</a></li>
+                        
+                            <li><a href="/tags/">tags</a></li>
+                        
+                            <li><a href="/others/">others</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/polebug" title="GitHub"></a>
+                            
+                                <a class="fa 网易云音乐" href="http://music.163.com/#/user/home?id=82740910" title="网易云音乐"></a>
+                            
+                                <a class="fa Twitter" href="https://twitter.com/polebug" title="Twitter"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">polebug</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">polebug</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">all</a></li>
+                
+                    <li><a href="/tags/">tags</a></li>
+                
+                    <li><a href="/others/">others</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/polebug" title="GitHub"></a>
+                            
+                                <a class="fa 网易云音乐" target="_blank" href="http://music.163.com/#/user/home?id=82740910" title="网易云音乐"></a>
+                            
+                                <a class="fa Twitter" target="_blank" href="https://twitter.com/polebug" title="Twitter"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="[layout]-translation01" class="article article-type-[layout]" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/translation01/" class="article-date">
+      <time datetime="2017-08-15T13:54:43.000Z" itemprop="datePublished">2017-08-15</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      翻译 1 st：3 mistakes to avoid when learning to code in Python
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/翻译/">翻译</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <blockquote>
+<p>刚加入 LCTT ，第一次翻译文章，没有什么经验，如有错误，欢迎指正<br>同步发在 <a href="https://github.com/LCTT/TranslateProject" target="_blank" rel="external">LCTT 的 github</a> 上<br>文末是初次翻译的体会</p>
+</blockquote>
+<p>(以下是译文)</p>
+<hr>
+<h2>学习用 python 编码时要避免的 3 个错误 </h2>
+
+<p><b>这些错误会造成很麻烦的问题，需要数小时才能解决</b><br><a id="more"></a></p>
+<p><img src="https://opensource.com/sites/default/files/styles/image-full-size/public/images/life/blocks_building.png?itok=q0_Wo8Tr" alt="学习用 python 编码时要避免的 3 个错误" title="3 mistakes to avoid when learning to code in Python">  图片来源： opensource.com</p>
+<p>当你做错事时，承认错误并不是一件容易的事，但是犯错是任何学习过程中的一部分，无论是学习走路，还是学习一种新的编程语言，比如 Python。</p>
+<p>为了让初学 Python 的程序员避免犯同样的错误，以下列出了我学习 Python 时犯的三种错误。这些错误要么是我长期以来犯的，要么是造成了需要几个小时解决的麻烦。</p>
+<p>年轻人可要注意了，这些错误是会浪费一下午的！</p>
+<h3>1.可变数据类型作为函数定义中的默认参数</h3>
+
+<p>这似乎是对的？你写了一些功能，比如，搜索当前页面上的链接，并选择将其附加到另一个提供的列表中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">search_for_links</span><span class="params">(page, add_to=[])</span>:</span></div><div class="line">    new_links = page.search_for_links()</div><div class="line">    add_to.extend(new_links)</div><div class="line">    <span class="keyword">return</span> add_to</div></pre></td></tr></table></figure>
+<p>从表面看，这像是十分正常的 Python 代码，事实上它也是，而且是有用的。但是，这里有个问题。如果我们提供了 <strong>add_to</strong> 参数的列表，它将按照我们预期的那样工作。但是，如果我们让它使用默认值，将会发生奥妙重重的事情。</p>
+<p>试试下面的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fn</span><span class="params">(var1, var2=[])</span>:</span></div><div class="line">    var2.append(var1)</div><div class="line">    <span class="keyword">print</span> var2</div><div class="line"> </div><div class="line">fn(<span class="number">3</span>)</div><div class="line">fn(<span class="number">4</span>)</div><div class="line">fn(<span class="number">5</span>)</div></pre></td></tr></table></figure>
+<p>可能你认为我们将看到：</p>
+<p><strong><a href="http://www.google.com/" target="_blank" rel="external">3</a><br><a href="http://www.bbc.co.uk/" target="_blank" rel="external">5</a></strong></p>
+<p>但实际上，我们看到的却是：</p>
+<p><strong>[3]<br>[3, 4]<br>[3, 4, 5]</strong></p>
+<p>你看吧，每次都是输入相同大小的列表，输出为什么会是这样？在 Python 中，当我们编写这样的函数时，这个列表被实例化为函数定义的一部分。当函数运行时，它并不是每次都被实例化。这意味着，这个函数会一直使用完全相同的列表对象，除非我们提供一个新的对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fn(3, [4])</div></pre></td></tr></table></figure>
+<p><strong>[4, 3]</strong></p>
+<p>答案正如我们所想的那样。要想得到这种结果，正确的方法是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def fn(var1, var2=None):</div><div class="line">    if not var2:</div><div class="line">        var2 = []</div><div class="line">    var2.append(var1)</div></pre></td></tr></table></figure>
+<p>或是在第一个例子中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">def search_for_links(page, add_to=None):</div><div class="line">    if not add_to:</div><div class="line">        add_to = []</div><div class="line">    new_links = page.search_for_links()</div><div class="line">    add_to.extend(new_links)</div><div class="line">    return add_to</div></pre></td></tr></table></figure>
+<p>这将在模块加载的时候移走实例，以便每次运行函数时都会发生列表实例化。请注意，对于不可变数据类型，比如<a href="https://docs.python.org/2/library/functions.html?highlight=tuple#tuple" target="_blank" rel="external"><strong>元组</strong></a>，<a href="https://docs.python.org/2/library/string.html" target="_blank" rel="external"><strong>字符串</strong></a>，<a href="https://docs.python.org/2/library/functions.html#int" target="_blank" rel="external"><strong>整型</strong></a>，是不需要考虑这种情况的。这意味着，像下面这样的代码是非常可行的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">def func(message=&quot;my message&quot;):</div><div class="line">    print message</div></pre></td></tr></table></figure>
+<h3>2.可变数据类型作为类变量</h3>
+
+<p>这和上面提到的最后一个错误很相像。思考以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">class URLCatcher(object):</div><div class="line">    urls = []</div><div class="line"> </div><div class="line">    def add_url(self, url):</div><div class="line">        self.urls.append(url)</div></pre></td></tr></table></figure>
+<p>这段代码看起来非常正常。我们有一个储存 URL 的对象。当我们调用 add_url 模块时，它会添加一个给定的 URL 到存储中。看起来非常正确吧？让我们看看实际是怎样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">a = URLCatcher()</div><div class="line">a.add_url(&apos;http://www.google.&apos;)</div><div class="line">b = URLCatcher()</div><div class="line">b.add_url(&apos;http://www.bbc.co.&apos;)</div></pre></td></tr></table></figure>
+<p><strong>b.urls<br>[‘<a href="http://www.google.com/" target="_blank" rel="external">http://www.google.com</a>‘, ‘<a href="http://www.bbc.co.uk/" target="_blank" rel="external">http://www.bbc.co.uk</a>‘]</strong></p>
+<p><strong>a.urls<br>[‘<a href="http://www.google.com/" target="_blank" rel="external">http://www.google.com</a>‘, ‘<a href="http://www.bbc.co.uk/" target="_blank" rel="external">http://www.bbc.co.uk</a>‘]</strong></p>
+<p>等等，怎么回事？！我们想的不是这样啊。我们实例化了两个单独的对象 <strong>a</strong> 和 <strong>b</strong>。把一个 URL 给了 <strong>a</strong>，另一个给了 <strong>b</strong>。这两个对象怎么会都有这两个 URL 呢？</p>
+<p>这和第一个错例是同样的问题。创建类定义时，URL 列表将被实例化。该类所有的实例使用相同的列表。在有些时候这种情况是有用的，但大多数时候你并不想这样做。你希望每个对象有一个单独的仓库储存。为此，我们修改代码为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class URLCatcher(object):</div><div class="line">    def __init__(self):</div><div class="line">        self.urls = []</div><div class="line"> </div><div class="line">    def add_url(self, url):</div><div class="line">        self.urls.append(url)</div></pre></td></tr></table></figure>
+<p>现在，当创建对象时，URL 列表被实例化。当我们实例化两个单独的对象时，它们将分别使用两个单独的列表。</p>
+<h3>3.可变的分配错误</h3>
+
+<p>这个问题困扰了我一段时间。让我们做出一些改变，并使用另一种可变数据类型 - <a href="https://docs.python.org/2/library/stdtypes.html?highlight=dict#dict" target="_blank" rel="external"><strong>字典</strong></a>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a = &#123;&apos;1&apos;: &quot;one&quot;, &apos;2&apos;: &apos;two&apos;&#125;</div></pre></td></tr></table></figure>
+<p>现在，假设我们想把这个字典用在别的地方，且保持它的初始数据完整。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">b = a</div><div class="line"> </div><div class="line">b[&apos;3&apos;] = &apos;three&apos;</div></pre></td></tr></table></figure>
+<p>简单吧？<br>现在，让我们看看原来那个我们不想改变的字典 <strong>a</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;&apos;1&apos;: &quot;one&quot;, &apos;2&apos;: &apos;two&apos;, &apos;3&apos;: &apos;three&apos;&#125;</div></pre></td></tr></table></figure>
+<p>哇等一下，我们再看看 <strong>b</strong>？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;&apos;1&apos;: &quot;one&quot;, &apos;2&apos;: &apos;two&apos;, &apos;3&apos;: &apos;three&apos;&#125;</div></pre></td></tr></table></figure>
+<p>等等，什么？有点乱…让我们回想一下，看看其他不可变类型在这种情况下会发生什么，例如一个<strong>元组</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">c = (2, 3)</div><div class="line">d = c</div><div class="line">d = (4, 5)</div></pre></td></tr></table></figure>
+<p>现在 <strong>c</strong> 是：<br><strong>(2, 3)</strong></p>
+<p>而 <strong>d</strong> 是：<br><strong>(4, 5)</strong></p>
+<p>这个函数结果如我们所料。那么，在之前的例子中到底发生了什么？当使用可变类型时，我们得到了某些东西，这一过程的行为有点像 <strong>C</strong> 的一个指针。在上面的代码中，我们令 <strong>b = a</strong>，我们真正想要的是：<strong>b</strong> 成为 <strong>a</strong> 的一个引用。他们都指向 Python 内存中的同一个对象。听起来有些熟悉？那是因为这个问题与先前的相似。其实，这个帖子应该被称为「可变引发的麻烦」。</p>
+<p>列表也会发生同样的事吗？是的。那么我们如何解决呢？这必须非常小心。如果我们真的需要复制一个列表进行处理，我们可以这样做：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">b = a[:]</div></pre></td></tr></table></figure>
+<p>这将通过复制列表中的每个对象的引用，并且把它放在一个新的列表中。但是要注意：如果列表中的每个对象都是可变的，我们将再次获得这些引用，而不是完整的副本。</p>
+<p>假设在一张纸上列清单。在原来的例子中相当于，A 某和 B 某正在看着同一张纸。如果有个人修改了这个清单，两个人都将看到相同的变化。当我们复制引用时，每个人现在有了他们自己的清单。但是，我们假设这个清单包括寻找食物的地方。如果「冰箱」是列表中的第一个，即使它被复制，两个列表中的条目也都指向同一个冰箱。所以，如果冰箱被 A 修改，吃掉了里面的大蛋糕，B 也将看到这个蛋糕的消失。这里没有简单的方法解决它。只要你记住它，并编写代码的时候，使用不会造成这个问题的方式。</p>
+<p>字典以相同的方式工作，并且你可以通过以下代价高的方式创建副本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">b = a.copy()</div></pre></td></tr></table></figure>
+<p>再次说明，这只会创建一个新的字典，指向原来存在的相同的条目。因此，如果我们有两个相同的列表，并且我们修改一个字典 a 的一个键指向的可变对象，那么在字典 b 中也将看到这些变化。</p>
+<p>可变数据类型的麻烦在于它们的强大。以上都不是实际中的问题；它们是一些要注意防止的问题。在第三个项目中提出的代价高的复制操作在 99% 的时候是没有必要的。你的程序或许应该被改改，为了这些副本不在首要的地方被需要。</p>
+<p>编程快乐！在评论中可以随时提问。</p>
+<hr>
+<p>作者简介：</p>
+<p>Pete Savage - Peter 是一位充满激情的开源爱好者，在过去十年里一直在推广和使用开源产品。他从 Ubuntu 社区开始，在许多不同的领域自愿参与音频制作领域的研究工作。在职业经历方面，他起初作为公司的系统管理员，大部分时间在管理和建立数据中心，之后在 Red Hat 担任 CloudForms 产品的主要 Quailty 工程师。</p>
+<hr>
+<p>via: <a href="https://opensource.com/article/17/6/3-things-i-did-wrong-learning-python" target="_blank" rel="external">https://opensource.com/article/17/6/3-things-i-did-wrong-learning-python</a></p>
+<p>作者：<a href="https://opensource.com/users/psav" target="_blank" rel="external">Pete Savage </a><br>译者：<a href="https://github.com/polebug" target="_blank" rel="external">polebug</a><br>校对：<a href="https://github.com/校对者ID" target="_blank" rel="external">校对者ID</a></p>
+<hr>
+<p>一些体会：<br>第一次翻译的经历还是非常开心的。虽然是一篇比较浅显的文章，还是花了半个下午的时间翻译，然后花了半个晚上的时间修改。提交 PR 的时候，觉得炒鸡开心。组长说，能看出我的用心。突然蜜汁感动。回宿舍的路上，嘴角都是上扬的（2333333<br>其实之前一直特别梦想着能够去翻译一些文字，觉得静下心来做翻译是一件很棒的事情。但是一直没有机会，或者说是没有平台渠道，更多的是没有遇到志同道合的人。所以加入 LCTT 真的是一件很开心的事情！<br>第一次翻译技术文章，怎么说呢，能马上看懂，但是翻译成大家好理解的文字不是一件简单的事。经验不足，还是希望别人多多指正。以后也要安排每周抽时间翻译文章~感觉在翻译过程中也想明白了很多东西~加油~</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/translation01/">翻译 1 st：3 mistakes to avoid when learning to code in Python</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">polebug</a></p>
+        <p><span>发布时间:</span>2017-08-15, 21:54:43</p>
+        <p><span>最后更新:</span>2017-08-16, 00:44:28</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/translation01/" title="翻译 1 st：3 mistakes to avoid when learning to code in Python">https://polebug.github.io/translation01/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://polebug.github.io/translation01/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/LR/">
+                    Logistic 回归分析法的原理和代码实现
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">学习用 python 编码时要避免的 3 个错误 </span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">1.可变数据类型作为函数定义中的默认参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">2.可变数据类型作为类变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.3.</span> <span class="toc-text">3.可变的分配错误</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-6 i,
+        .toc-level-6 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+
+
+    
+
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/LR/" title="下一篇: Logistic 回归分析法的原理和代码实现">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/translation01/">翻译 1 st：3 mistakes to avoid when learning to code in Python</a></li><li class="post-list-item"><a class="post-list-link" href="/LR/">Logistic 回归分析法的原理和代码实现</a></li><li class="post-list-item"><a class="post-list-link" href="/darknet-yolo/">yolo-darknet的配置问题(MacOS/CPU only)</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics3/">Concrete Mathematics 3 ：Integer Functions</a></li><li class="post-list-item"><a class="post-list-link" href="/markdown1/">markdown语法所踩的坑（备忘/持续更）</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics2/">Concrete Mathematics 2 ：Sums</a></li><li class="post-list-item"><a class="post-list-link" href="/Concrete-Mathematics1/">Concrete Mathematics 1 ：Recurrent</a></li><li class="post-list-item"><a class="post-list-link" href="/About-Python2.7-Module-Error/">About Python2.7 Module Error</a></li><li class="post-list-item"><a class="post-list-link" href="/BasicSortAlgorithm/">基础排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a></li><li class="post-list-item"><a class="post-list-link" href="/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a></li><li class="post-list-item"><a class="post-list-link" href="/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a></li><li class="post-list-item"><a class="post-list-link" href="/对于RMQ问题的理解及运用/">对于RMQ问题的ST算法的理解及运用</a></li><li class="post-list-item"><a class="post-list-link" href="/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      
+<footer id="footer">
+
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 polebug
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+             post: ".article-entry a[href], .copyright a[href]", 
+            
+            
+            
+            
+            
+            
+            
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
