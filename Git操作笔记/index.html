@@ -16,17 +16,17 @@
 
 
 
-<meta name="description" content="题意&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;题目传送门&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;题意：有n个盒子，每个盒子最多装下一个球。用a[i]表示每个盒子中球的状态。现在给出m个区间，可以在给出的区间任意改变a[i]的顺序。询问能否使a[i]等于b[i]。">
-<meta name="keywords" content="贪心,思维">
+<meta name="description" content="前言：  近期较多接触到 github，遇到各种问题，在此记下持续更新如果你觉得我的姿势还不够优雅，欢迎指教  &amp;lt;目录&amp;gt;1.fork 项目后，与原项目进行同步">
+<meta name="keywords" content="git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HDOJ 5821 Ball (16多校day8 1001)">
-<meta property="og:url" content="https://polebug.github.io/HDOJ-5821-Ball-16多校day8-1001/index.html">
+<meta property="og:title" content="Git操作笔记">
+<meta property="og:url" content="https://polebug.github.io/Git操作笔记/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="题意&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;题目传送门&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;题意：有n个盒子，每个盒子最多装下一个球。用a[i]表示每个盒子中球的状态。现在给出m个区间，可以在给出的区间任意改变a[i]的顺序。询问能否使a[i]等于b[i]。">
-<meta property="og:updated_time" content="2016-11-20T04:22:52.000Z">
+<meta property="og:description" content="前言：  近期较多接触到 github，遇到各种问题，在此记下持续更新如果你觉得我的姿势还不够优雅，欢迎指教  &amp;lt;目录&amp;gt;1.fork 项目后，与原项目进行同步">
+<meta property="og:updated_time" content="2017-08-28T04:39:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HDOJ 5821 Ball (16多校day8 1001)">
-<meta name="twitter:description" content="题意&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;题目传送门&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;题意：有n个盒子，每个盒子最多装下一个球。用a[i]表示每个盒子中球的状态。现在给出m个区间，可以在给出的区间任意改变a[i]的顺序。询问能否使a[i]等于b[i]。">
+<meta name="twitter:title" content="Git操作笔记">
+<meta name="twitter:description" content="前言：  近期较多接触到 github，遇到各种问题，在此记下持续更新如果你觉得我的姿势还不够优雅，欢迎指教  &amp;lt;目录&amp;gt;1.fork 项目后，与原项目进行同步">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -51,7 +51,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>HDOJ 5821 Ball (16多校day8 1001) | polebug | 瞎折腾</title>
+<title>Git操作笔记 | polebug | 瞎折腾</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -193,11 +193,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="[layout]-HDOJ-5821-Ball-16多校day8-1001" class="article article-type-[layout]" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="[layout]-Git操作笔记" class="article article-type-[layout]" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/HDOJ-5821-Ball-16多校day8-1001/" class="article-date">
-      <time datetime="2016-08-13T12:19:26.000Z" itemprop="datePublished">2016-08-13</time>
+      <a href="/Git操作笔记/" class="article-date">
+      <time datetime="2017-08-28T03:12:20.000Z" itemprop="datePublished">2017-08-28</time>
 </a>
 
 
@@ -212,7 +212,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      HDOJ 5821 Ball (16多校day8 1001)
+      Git操作笔记
     </h1>
   
 
@@ -220,14 +220,10 @@
       
       <div class="article-info article-info-post">
         
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/算法/">算法</a>
-    </div>
-
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/思维/">思维</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/贪心/">贪心</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -237,13 +233,17 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p></p><h2>题意</h2><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://acm.hdu.edu.cn/showproblem.php?pid=5821" target="_blank" rel="external">题目传送门</a><br>&nbsp;&nbsp;&nbsp;&nbsp;题意：有n个盒子，每个盒子最多装下一个球。用a[i]表示每个盒子中球的状态。现在给出m个区间，可以在给出的区间任意改变a[i]的顺序。询问能否使a[i]等于b[i]。<br><a id="more"></a><p></p>
-<p></p><h2>题解</h2><br>&nbsp;&nbsp;&nbsp;&nbsp;看了<a href="http://bestcoder.hdu.edu.cn/blog/" target="_blank" rel="external">官方题解</a>才知道是贪心，觉得很巧妙，在此胡口一波。<p></p>
-<p></p><h3>下标原理</h3><br>&nbsp;&nbsp;&nbsp;&nbsp;要使a[i]等于b[i]，球的颜色是一个很大的干扰。然而，对于同色球而言，（例如有4个全为红色的球），标记为1,2,3,4.从a[i]到b[i]一定存在一种方案，使得这个顺序不发生改变。也就是说，同色球可以处理成若干个不同色球。<br>&nbsp;&nbsp;&nbsp;&nbsp;对于整个a[i]而言，即有n个不同色球。<p></p>
-<p></p><h3>贪心的实现</h3><br>&nbsp;&nbsp;&nbsp;&nbsp;首先，分别将a[i],b[i]标记为1.2.3…n；根据a[i],b[i]球的状态进行sort排序（即是否有球以及球的颜色）；<br>&nbsp;&nbsp;&nbsp;&nbsp;其次，对a[i]重编号：进行逐一对比，若a[i]和b[i]的状态相同，则令c[a[i]标记]=b[i]标记；（c[i]即为a[i]重编号后的标记）<br>&nbsp;&nbsp;&nbsp;&nbsp;最后，在给出的区间进行sort排序。验证c[i]是否等于b[i]，即c[i]是否满足1.2.3…n;<p></p>
-<p></p><h2>代码如下</h2><br>亲测AC<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">#include&lt;cstdio&gt;</div><div class="line">#include&lt;cstring&gt;</div><div class="line">#include&lt;iostream&gt;</div><div class="line">#include&lt;algorithm&gt;</div><div class="line">#define N 100000+10</div><div class="line">using namespace std;</div><div class="line">int n,m;</div><div class="line">int c[N];</div><div class="line">pair &lt;int ,int&gt; A[N],B[N];</div><div class="line"></div><div class="line">int main()&#123;</div><div class="line">    int T;</div><div class="line">	scanf(&quot;%d&quot;,&amp;T);</div><div class="line">    while(T--)&#123;</div><div class="line">        scanf(&quot;%d%d&quot;,&amp;n,&amp;m);</div><div class="line">        </div><div class="line">        for(int i=1;i&lt;=n;++i)&#123;</div><div class="line">            int x;</div><div class="line">            scanf(&quot;%d&quot;,&amp;x);</div><div class="line">            A[i].first=x;</div><div class="line">            A[i].second=i; </div><div class="line">        &#125;</div><div class="line">        sort(A+1,A+1+n);</div><div class="line">        </div><div class="line">        for(int i=1;i&lt;=n;++i)&#123;</div><div class="line">            int x;</div><div class="line">            scanf(&quot;%d&quot;,&amp;x);</div><div class="line">            B[i].first=x;</div><div class="line">            B[i].second=i;</div><div class="line">        &#125;</div><div class="line">        sort(B+1,B+1+n);//将a[i],b[i]编号并排序 </div><div class="line">        </div><div class="line">        bool flag=1;</div><div class="line">        for(int i=1;i&lt;=n &amp;&amp; flag;++i)</div><div class="line">            if(A[i].first!=B[i].first) flag=0;</div><div class="line">            else c[A[i].second]=B[i].second;</div><div class="line"></div><div class="line">        //将a[i]重编号</div><div class="line"></div><div class="line">        while(m--)&#123;</div><div class="line">            int x,y;</div><div class="line">            scanf(&quot;%d%d&quot;,&amp;x,&amp;y);</div><div class="line">            sort(c+x,c+y+1);</div><div class="line">        &#125;//在给定的区间排序 </div><div class="line">        </div><div class="line">        for(int i=1;i&lt;=n &amp;&amp; flag;++i)</div><div class="line">            if(c[i]!=i) flag=0;</div><div class="line">        //验证最后的标号是否满足1.2.3...n </div><div class="line">            </div><div class="line">        if(flag) printf(&quot;Yes\n&quot;);</div><div class="line">        else printf(&quot;No\n&quot;);</div><div class="line">    &#125;</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;多校渐入尾声，晚上翻了翻各种多校敲的代码，自觉多校虽难但同样受益匪浅。（希望不是最后一次多校啊啊啊）最近想整理多校题,BC,CF代码，写写题解<br>&nbsp;&nbsp;&nbsp;&nbsp;重新开始写题解，其中一个原因是自己不想把所敲的代码扔的到处都是，最后不知所云；另一个原因是，我最近意识到自己思考题目以及赛后对于题解的利用有问题。我记得我上次问帅副题目，总是问这个算法具体是啥样的啊怎么敲啊，结果帅副说你首先要明白这样做为什么是对的，再去想如何实现。之后想了想，确实有道理。</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;最后，以上若有不对的地方，欢迎指正。</p>
+        <p>前言：</p>
+<blockquote>
+<p>近期较多接触到 github，遇到各种问题，在此记下<br>持续更新<br>如果你觉得我的姿势还不够优雅，欢迎指教</p>
+</blockquote>
+<p><b>&lt;目录&gt;</b><br>1.fork 项目后，与原项目进行同步</p>
+<a id="more"></a>
+<p></p><h2>fork 项目后，与原项目进行同步</h2><br>如何优雅的解决？<p></p>
+<hr>
+<p>简单的说就是把原项目和 fork 到自己仓库下的项目都 clone 到本地，由此建立连接。然后 fetch 原项目的更新到本地，合并更新，最后 push 到 github 仓库。</p>
+<p>比如，我 fork 了 LCTT 的翻译项目到我的仓库 (polebug)，现在需要与 LCTT 的项目同步：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">clone 自己仓库下的项目</div><div class="line">$ git clone https://github.com/polebug/TranslationProject.git</div><div class="line">  </div><div class="line">$ cd ~/TranslationProject</div><div class="line">  </div><div class="line">clone 原项目，自定义为 upstream</div><div class="line">$ git remote add upstream https://github.com/LCTT/TranslationProject.git</div><div class="line">  </div><div class="line">$ git remote -v </div><div class="line">  </div><div class="line">fetch 原项目更新的内容</div><div class="line">$ git fetch upstream</div><div class="line">  </div><div class="line">merge</div><div class="line">$ git checkout master</div><div class="line">$ git merge upstream/master</div><div class="line">  </div><div class="line">push</div><div class="line">$ git push -u origin master</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -252,13 +252,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a></p>
+        <p><span>本文标题:</span><a href="/Git操作笔记/">Git操作笔记</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">polebug</a></p>
-        <p><span>发布时间:</span>2016-08-13, 20:19:26</p>
-        <p><span>最后更新:</span>2016-11-20, 12:22:52</p>
+        <p><span>发布时间:</span>2017-08-28, 11:12:20</p>
+        <p><span>最后更新:</span>2017-08-28, 12:39:04</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/HDOJ-5821-Ball-16多校day8-1001/" title="HDOJ 5821 Ball (16多校day8 1001)">https://polebug.github.io/HDOJ-5821-Ball-16多校day8-1001/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://polebug.github.io/HDOJ-5821-Ball-16多校day8-1001/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/Git操作笔记/" title="Git操作笔记">https://polebug.github.io/Git操作笔记/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://polebug.github.io/Git操作笔记/　　作者: polebug" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -270,12 +270,12 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/对于RMQ问题的理解及运用/">
-                    对于RMQ问题的ST算法的理解及运用
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/translation01/">
+                    翻译 1 st：3 mistakes to avoid when learning to code in Python
                 </a>
             </div>
-        
         
     </nav>
 
@@ -285,7 +285,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">题意</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">2.1.</span> <span class="toc-text">下标原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">2.2.</span> <span class="toc-text">贪心的实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">代码如下</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">fork 项目后，与原项目进行同步</span></a></li></ol>
         
     </div>
     <style>
@@ -317,15 +317,15 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/对于RMQ问题的理解及运用/" title="上一篇: 对于RMQ问题的ST算法的理解及运用">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/translation01/" title="下一篇: 翻译 1 st：3 mistakes to avoid when learning to code in Python">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
     </div>
 
