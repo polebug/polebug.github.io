@@ -13,23 +13,105 @@
   <body>
   	
     <main class="main">
-      <article class="post">
-  <div class="post-title">
-    <h2 class="title">HDOJ 5726 GCD (16多校day1 1004)</h2>
+      <section>
+  <div class="tile is-ancestor">
+    <div class="tile is-vertical">
+
+    	<div class="tile is-parent is-10">
+
+    	  <div class="tile is-child">
+    		<header>
+<nav class="navbar has-shadow is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+<!--navbar-->
+
+  <div class="container">
+  	<div class="navbar-menu">
+  	  <div class="navbar-start">
+  	  	<a class="navbar-item" href="/">
+	  	<img src="http://7x2wrf.com1.z0.glb.clouddn.com/favicon.png" width="30" height="50"></a>
+	  	<a class="navbar-item" href="/"><strong>[Polebug | start]</strong></a>
+	  	<a class="navbar-item" href="/AboutMe"><span class="icon is-small"><i class="fas fa-angle-down"></i></span><span> ABOUT </span></a>
+  	  </div>
+  	
+  	  <div class="navbar-end">		
+		
+		<a class="navbar-item" href="/">
+  	  	  <span class="icon is-small"><i class="fas fa-home"></i></span> <span> &nbsp;Home </span>
+  	  	</a>
+		
+  	  	<div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+          	 Find
+          </a>
+          <div class="navbar-dropdown is-boxed">
+           
+              
+            
+          </div>
+        </div>
+
+		<a class="navbar-item" href="#">
+  	  	  Skills
+  	  	</a>
+		
+		<div class="navbar-item">
+		  <div class="field is-grouped">
+		  	<a class="button is-primary navbar-item" href="#">
+  	  	      <span class="icon is-small"><i class="fas fa-rss"></i></span> <span> &nbsp;Contact</span>
+  	  	    </a>
+		  </div>
+		</div>	
+  	  </div>
+  	</div>
   </div>
-   <div class="post-meta">
-    <span class="post-time">2016-08-14</span>
-  </div>
-  <div class="post-content">
-    <p>若有错误的地方，欢迎指正</p>
+</nav>
+</header>
+    	  </div>
+		
+    	  <div class="tile is-parent is-vertical is-10" style="padding:30px">
+    	    <article class="tile is-child hero-body">
+			
+    		  <div class="title is-size-4 has-text-centered">
+    		    	HDOJ 5726 GCD (16多校day1 1004)
+    		   </div>
+
+    		   <nav class="level">
+      		      <div class="level-left">
+      		  	    <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
+  				      <ul>
+
+    				    <li><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li></ul></li>
+    				    <li>&nbsp;<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMQ问题/">RMQ问题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gcd/">gcd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/二分/">二分</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区间上的操作/">区间上的操作</a></li></ul></li>			
+  				      </ul>
+				    </nav>     		  	
+      		      </div>
+
+      		      <div class="level-right">
+      		  	    <div class="level-item date">
+				    <p class="is-right is-size-7">
+				    2016-08-14</p>
+				    </div>
+      		      </div>
+
+      		    </nav>
+    		    <hr />
+
+				<div class="content is-size-7">
+					<p><p>若有错误的地方，欢迎指正</p>
 <p></p><h2>题意</h2><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://acm.hdu.edu.cn/showproblem.php?pid=5726" target="_blank" rel="external">题目传送门</a><br>&nbsp;&nbsp;&nbsp;&nbsp;题意：给出n个数，做m次询问。对于所给区间，找出[l,r]的gcd(最大公约数)，求出1~n中，区间的gcd与之相等的区间个数。<br><a id="more"></a><p></p>
 <p></p><h2>题解</h2><br>思路：<br>&nbsp;&nbsp;&nbsp;&nbsp;首先根据数据范围，对于区间的gcd值的维护，考虑线段树或RMQ；<br>&nbsp;&nbsp;&nbsp;&nbsp;然后，对于所有区间的gcd，我们需要预处理出来。具体实现：考虑枚举左端点，二分区间（注意gcd值单调），算出以这个点为左端点的区间有哪些gcd值，用map记录下相同gcd的区间个数；<p></p>
 <p></p><h2>相关算法参考</h2><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://polebug.science/2016/08/13/%E5%AF%B9%E4%BA%8ERMQ%E9%97%AE%E9%A2%98%E7%9A%84%E7%90%86%E8%A7%A3%E5%8F%8A%E8%BF%90%E7%94%A8/" target="_blank" rel="external">RMQ算法的ST算法</a><br>&nbsp;&nbsp;&nbsp;&nbsp;二分<p></p>
 <p></p><h2>代码</h2><br>亲测AC<p></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">#include&lt;cstdio&gt;</div><div class="line">#include&lt;cstring&gt;</div><div class="line">#include&lt;iostream&gt;</div><div class="line">#include&lt;algorithm&gt;</div><div class="line">#include&lt;map&gt;</div><div class="line">using namespace std;</div><div class="line">const int Maxn=100000+10;</div><div class="line">map &lt;int , long long&gt; Q;</div><div class="line">int dp[Maxn][20],a[Maxn],T,n,m;</div><div class="line"></div><div class="line">int gcd(int a,int b)&#123;</div><div class="line">	return b == 0 ? a : gcd(b,a%b); </div><div class="line">&#125;</div><div class="line"></div><div class="line">void RMQ(int n)&#123; //用RMQ维护区间gcd值； </div><div class="line">	for(int i=1;i&lt;=n;i++) dp[i][0]=a[i];</div><div class="line">	for(int j=1;(1&lt;&lt;j)&lt;=n;j++)</div><div class="line">	    for(int i=1;i+(1&lt;&lt;j)-1&lt;=n;i++) </div><div class="line">		dp[i][j]=gcd(dp[i][j-1],dp[i+(1&lt;&lt;(j-1))][j-1]);</div><div class="line">&#125;</div><div class="line"></div><div class="line">int query(int l,int r)&#123;//询问区间gcd值； </div><div class="line">	int tmp=0;</div><div class="line">	while((1&lt;&lt;(tmp+1))&lt;=r-l+1) tmp++;</div><div class="line">	return gcd(dp[l][tmp],dp[r-(1&lt;&lt;tmp)+1][tmp]);</div><div class="line">&#125; </div><div class="line"></div><div class="line">void solve()&#123; //二分区间预处理； </div><div class="line">	for(int i=1;i&lt;=n;i++)&#123;</div><div class="line">		int j=i;</div><div class="line">		while(j&lt;=n)&#123;</div><div class="line">			int l=j,r=n,sum;</div><div class="line">			int x=query(i,j);</div><div class="line">			</div><div class="line">			while(r&gt;=l)&#123;</div><div class="line">				int mid=(l+r)&gt;&gt;1;</div><div class="line">				if(query(i,mid) == x)&#123;</div><div class="line">					sum=mid;</div><div class="line">					l=mid+1;</div><div class="line">				&#125;</div><div class="line">				else r=mid-1;</div><div class="line">			&#125;</div><div class="line">			Q[x]+=sum-j+1;//记录下以x为gcd值的区间个数 </div><div class="line">			j=sum+1;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">int main()&#123;</div><div class="line">	//freopen(&quot;data.txt&quot;,&quot;r&quot;,stdin);</div><div class="line">	scanf(&quot;%d&quot;,&amp;T);</div><div class="line">	for(int k=1;k&lt;=T;k++)&#123;</div><div class="line">		scanf(&quot;%d&quot;,&amp;n);</div><div class="line">		for(int i=1;i&lt;=n;i++) scanf(&quot;%d&quot;,&amp;a[i]);</div><div class="line">		Q.clear();</div><div class="line">		memset(dp,0,sizeof(dp));</div><div class="line">		</div><div class="line">		RMQ(n);</div><div class="line">		solve();	</div><div class="line">		</div><div class="line">	    scanf(&quot;%d&quot;,&amp;m);</div><div class="line">	    printf(&quot;Case #%d:\n&quot;,k);</div><div class="line">	    for(int i=1;i&lt;=m;i++)&#123;</div><div class="line">	    	int l,r;</div><div class="line">			scanf(&quot;%d%d&quot;,&amp;l,&amp;r);</div><div class="line">			printf(&quot;%d %I64d\n&quot;,query(l,r),Q[query(l,r)]);</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
+</p>
+				</div>
+			  
+    		  </article>	
+    		</div>
+    	</div>
+    </div>
   </div>
-</article>
+</section>
     </main>
   </body>
 </html>

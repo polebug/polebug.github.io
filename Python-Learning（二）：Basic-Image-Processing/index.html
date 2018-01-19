@@ -13,15 +13,91 @@
   <body>
   	
     <main class="main">
-      <article class="post">
-  <div class="post-title">
-    <h2 class="title">Python Learing（二）：Basic Image Processing 1</h2>
+      <section>
+  <div class="tile is-ancestor">
+    <div class="tile is-vertical">
+
+    	<div class="tile is-parent is-10">
+
+    	  <div class="tile is-child">
+    		<header>
+<nav class="navbar has-shadow is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+<!--navbar-->
+
+  <div class="container">
+  	<div class="navbar-menu">
+  	  <div class="navbar-start">
+  	  	<a class="navbar-item" href="/">
+	  	<img src="http://7x2wrf.com1.z0.glb.clouddn.com/favicon.png" width="30" height="50"></a>
+	  	<a class="navbar-item" href="/"><strong>[Polebug | start]</strong></a>
+	  	<a class="navbar-item" href="/AboutMe"><span class="icon is-small"><i class="fas fa-angle-down"></i></span><span> ABOUT </span></a>
+  	  </div>
+  	
+  	  <div class="navbar-end">		
+		
+		<a class="navbar-item" href="/">
+  	  	  <span class="icon is-small"><i class="fas fa-home"></i></span> <span> &nbsp;Home </span>
+  	  	</a>
+		
+  	  	<div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+          	 Find
+          </a>
+          <div class="navbar-dropdown is-boxed">
+           
+              
+            
+          </div>
+        </div>
+
+		<a class="navbar-item" href="#">
+  	  	  Skills
+  	  	</a>
+		
+		<div class="navbar-item">
+		  <div class="field is-grouped">
+		  	<a class="button is-primary navbar-item" href="#">
+  	  	      <span class="icon is-small"><i class="fas fa-rss"></i></span> <span> &nbsp;Contact</span>
+  	  	    </a>
+		  </div>
+		</div>	
+  	  </div>
+  	</div>
   </div>
-   <div class="post-meta">
-    <span class="post-time">2016-11-05</span>
-  </div>
-  <div class="post-content">
-    <p><b>&lt;写在前面&gt;</b><br>Basic image processing 1：<br>　　<b>0.（以简单的曲线图为例）对于生成的图自定义外观，使用子图，多个数据集，标题，标签，交互式标注，图例；</b><br>　　<b>1.生成散点图，直方图；</b><br>　　<b>2.简单的图像处理：转换格式，调整尺寸，旋转，复制粘贴图像区域，在图像上绘制点线；</b><br><a id="more"></a></p>
+</nav>
+</header>
+    	  </div>
+		
+    	  <div class="tile is-parent is-vertical is-10" style="padding:30px">
+    	    <article class="tile is-child hero-body">
+			
+    		  <div class="title is-size-4 has-text-centered">
+    		    	Python Learing（二）：Basic Image Processing 1
+    		   </div>
+
+    		   <nav class="level">
+      		      <div class="level-left">
+      		  	    <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
+  				      <ul>
+
+    				    <li><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li></ul></li>
+    				    <li>&nbsp;<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/image-processing/">image processing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/language-learning/">language learning</a></li></ul></li>			
+  				      </ul>
+				    </nav>     		  	
+      		      </div>
+
+      		      <div class="level-right">
+      		  	    <div class="level-item date">
+				    <p class="is-right is-size-7">
+				    2016-11-05</p>
+				    </div>
+      		      </div>
+
+      		    </nav>
+    		    <hr />
+
+				<div class="content is-size-7">
+					<p><p><b>&lt;写在前面&gt;</b><br>Basic image processing 1：<br>　　<b>0.（以简单的曲线图为例）对于生成的图自定义外观，使用子图，多个数据集，标题，标签，交互式标注，图例；</b><br>　　<b>1.生成散点图，直方图；</b><br>　　<b>2.简单的图像处理：转换格式，调整尺寸，旋转，复制粘贴图像区域，在图像上绘制点线；</b><br><a id="more"></a></p>
 <p>以上内容主要用了以下几种模块：<br>　　<b>0.PIL </b>(Python Image Library<br>　　<b>1.NumPy</b><br>　　<b>2.Matplotlib</b><br>　　<b>3.SciPy</b><br>无法安装的话，参考<a href="http://polebug.github.io/2016/11/04/Python%EF%BC%9AModule%20Install%20Issues/">这篇文章</a></p>
 <p>其实写这篇文章的时候，我一直在纠结是分模块整理好一些呢，还是将各种模块的功能集于同一个对象进行描述。一开始是尝试着分模块整理的，整理了一段时间发现这样做并不有效，而且提取的实际意义并不大。于是改成同一个对象，如何用python的模板画，这样的方式进行编写。希望之后自己能做一些亦可赛艇的东西丫~ </p>
 <p><b>&lt;以下是正文&gt;</b></p>
@@ -32,9 +108,15 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</div><div class="line"></div><div class="line"><span class="comment">#转换格式</span></div><div class="line">im2.save(<span class="string">'/python test/image_test/a.jpg'</span>, <span class="string">'jpeg'</span>)</div><div class="line"></div><div class="line"><span class="comment">#调整尺寸</span></div><div class="line">out = pil_im.resize((<span class="number">100</span>, <span class="number">100</span>))</div><div class="line"></div><div class="line"><span class="comment">#旋转（默认逆时针）</span></div><div class="line">out = pil_im.rotate(<span class="number">45</span>)</div><div class="line"></div><div class="line"><span class="comment">#复制粘贴</span></div><div class="line">a = (<span class="number">100</span>, <span class="number">100</span>, <span class="number">400</span>, <span class="number">400</span>)</div><div class="line">region = pil_im.crop(a)</div><div class="line"></div><div class="line">pil_im.paste(region, a)</div></pre></td></tr></table></figure>
 <p></p><h3>在图像上绘制点线</h3><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</div><div class="line"><span class="keyword">from</span> pylab <span class="keyword">import</span> *</div><div class="line"></div><div class="line">im = array(Image.open(<span class="string">'night2.jpg'</span>))</div><div class="line">imshow(im)</div><div class="line">x = [<span class="number">100</span>, <span class="number">100</span>, <span class="number">400</span>, <span class="number">400</span>, <span class="number">20</span>, <span class="number">60</span>]                    <span class="comment">#选取任意个数的点</span></div><div class="line">y = [<span class="number">200</span>, <span class="number">500</span>, <span class="number">200</span>, <span class="number">500</span>, <span class="number">30</span>, <span class="number">30</span>]</div><div class="line">plot(x, y , <span class="string">'r-^'</span>)</div><div class="line">plot(x[:<span class="number">5</span>], y[:<span class="number">5</span>])                              <span class="comment">#按顺序，依次连接前5个点</span></div><div class="line">show()</div></pre></td></tr></table></figure><p></p>
 <p><img src="http://7x2wrf.com1.z0.glb.clouddn.com/night.png?imageView/2/3/w/400/h/400/q/90" alt="原图"></p>
-
+</p>
+				</div>
+			  
+    		  </article>	
+    		</div>
+    	</div>
+    </div>
   </div>
-</article>
+</section>
     </main>
   </body>
 </html>

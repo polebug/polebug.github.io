@@ -13,15 +13,91 @@
   <body>
   	
     <main class="main">
-      <article class="post">
-  <div class="post-title">
-    <h2 class="title">Git操作笔记</h2>
+      <section>
+  <div class="tile is-ancestor">
+    <div class="tile is-vertical">
+
+    	<div class="tile is-parent is-10">
+
+    	  <div class="tile is-child">
+    		<header>
+<nav class="navbar has-shadow is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+<!--navbar-->
+
+  <div class="container">
+  	<div class="navbar-menu">
+  	  <div class="navbar-start">
+  	  	<a class="navbar-item" href="/">
+	  	<img src="http://7x2wrf.com1.z0.glb.clouddn.com/favicon.png" width="30" height="50"></a>
+	  	<a class="navbar-item" href="/"><strong>[Polebug | start]</strong></a>
+	  	<a class="navbar-item" href="/AboutMe"><span class="icon is-small"><i class="fas fa-angle-down"></i></span><span> ABOUT </span></a>
+  	  </div>
+  	
+  	  <div class="navbar-end">		
+		
+		<a class="navbar-item" href="/">
+  	  	  <span class="icon is-small"><i class="fas fa-home"></i></span> <span> &nbsp;Home </span>
+  	  	</a>
+		
+  	  	<div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+          	 Find
+          </a>
+          <div class="navbar-dropdown is-boxed">
+           
+              
+            
+          </div>
+        </div>
+
+		<a class="navbar-item" href="#">
+  	  	  Skills
+  	  	</a>
+		
+		<div class="navbar-item">
+		  <div class="field is-grouped">
+		  	<a class="button is-primary navbar-item" href="#">
+  	  	      <span class="icon is-small"><i class="fas fa-rss"></i></span> <span> &nbsp;Contact</span>
+  	  	    </a>
+		  </div>
+		</div>	
+  	  </div>
+  	</div>
   </div>
-   <div class="post-meta">
-    <span class="post-time">2017-08-28</span>
-  </div>
-  <div class="post-content">
-    <p>前言：</p>
+</nav>
+</header>
+    	  </div>
+		
+    	  <div class="tile is-parent is-vertical is-10" style="padding:30px">
+    	    <article class="tile is-child hero-body">
+			
+    		  <div class="title is-size-4 has-text-centered">
+    		    	Git操作笔记
+    		   </div>
+
+    		   <nav class="level">
+      		      <div class="level-left">
+      		  	    <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
+  				      <ul>
+
+    				    <li></li>
+    				    <li>&nbsp;<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li></ul></li>			
+  				      </ul>
+				    </nav>     		  	
+      		      </div>
+
+      		      <div class="level-right">
+      		  	    <div class="level-item date">
+				    <p class="is-right is-size-7">
+				    2017-08-28</p>
+				    </div>
+      		      </div>
+
+      		    </nav>
+    		    <hr />
+
+				<div class="content is-size-7">
+					<p><p>前言：</p>
 <blockquote>
 <p>近期较多接触到 github，遇到各种问题，在此记下<br>持续更新<br>如果你觉得我的姿势还不够优雅，欢迎指教</p>
 </blockquote>
@@ -32,9 +108,15 @@
 <p>简单的说就是把原项目和 fork 到自己仓库下的项目都 clone 到本地，由此建立连接。然后 fetch 原项目的更新到本地，合并更新，最后 push 到 github 仓库。</p>
 <p>比如，我 fork 了 LCTT 的翻译项目到我的仓库 (polebug)，现在需要与 LCTT 的项目同步：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">clone 自己仓库下的项目</div><div class="line">$ git clone https://github.com/polebug/TranslationProject.git</div><div class="line">  </div><div class="line">$ cd ~/TranslationProject</div><div class="line">  </div><div class="line">clone 原项目，自定义为 upstream</div><div class="line">$ git remote add upstream https://github.com/LCTT/TranslationProject.git</div><div class="line">  </div><div class="line">$ git remote -v </div><div class="line">  </div><div class="line">fetch 原项目更新的内容</div><div class="line">$ git fetch upstream</div><div class="line">  </div><div class="line">merge</div><div class="line">$ git checkout master</div><div class="line">$ git merge upstream/master</div><div class="line">  </div><div class="line">push</div><div class="line">$ git push -u origin master</div></pre></td></tr></table></figure>
-
+</p>
+				</div>
+			  
+    		  </article>	
+    		</div>
+    	</div>
+    </div>
   </div>
-</article>
+</section>
     </main>
   </body>
 </html>

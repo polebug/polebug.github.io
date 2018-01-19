@@ -13,15 +13,91 @@
   <body>
   	
     <main class="main">
-      <article class="post">
-  <div class="post-title">
-    <h2 class="title">Python Learing（一）：Basic Grammar</h2>
+      <section>
+  <div class="tile is-ancestor">
+    <div class="tile is-vertical">
+
+    	<div class="tile is-parent is-10">
+
+    	  <div class="tile is-child">
+    		<header>
+<nav class="navbar has-shadow is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+<!--navbar-->
+
+  <div class="container">
+  	<div class="navbar-menu">
+  	  <div class="navbar-start">
+  	  	<a class="navbar-item" href="/">
+	  	<img src="http://7x2wrf.com1.z0.glb.clouddn.com/favicon.png" width="30" height="50"></a>
+	  	<a class="navbar-item" href="/"><strong>[Polebug | start]</strong></a>
+	  	<a class="navbar-item" href="/AboutMe"><span class="icon is-small"><i class="fas fa-angle-down"></i></span><span> ABOUT </span></a>
+  	  </div>
+  	
+  	  <div class="navbar-end">		
+		
+		<a class="navbar-item" href="/">
+  	  	  <span class="icon is-small"><i class="fas fa-home"></i></span> <span> &nbsp;Home </span>
+  	  	</a>
+		
+  	  	<div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+          	 Find
+          </a>
+          <div class="navbar-dropdown is-boxed">
+           
+              
+            
+          </div>
+        </div>
+
+		<a class="navbar-item" href="#">
+  	  	  Skills
+  	  	</a>
+		
+		<div class="navbar-item">
+		  <div class="field is-grouped">
+		  	<a class="button is-primary navbar-item" href="#">
+  	  	      <span class="icon is-small"><i class="fas fa-rss"></i></span> <span> &nbsp;Contact</span>
+  	  	    </a>
+		  </div>
+		</div>	
+  	  </div>
+  	</div>
   </div>
-   <div class="post-meta">
-    <span class="post-time">2016-10-21</span>
-  </div>
-  <div class="post-content">
-    <p>装了python2.7，去图书馆借了python入门经典，暂且简单写下学习笔记，以供自己回忆<br>学习笔记（一）主要是基础语法部分：<br>　　1.python中数字以及字符串的使用;<br>　　2.输入与输出语句;<br>　　3.逻辑用语;<br>　　4.循环语句;<br>　　5.列表以及字典的使用;<br>　　6.函数的调用;<br><a id="more"></a></p>
+</nav>
+</header>
+    	  </div>
+		
+    	  <div class="tile is-parent is-vertical is-10" style="padding:30px">
+    	    <article class="tile is-child hero-body">
+			
+    		  <div class="title is-size-4 has-text-centered">
+    		    	Python Learing（一）：Basic Grammar
+    		   </div>
+
+    		   <nav class="level">
+      		      <div class="level-left">
+      		  	    <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
+  				      <ul>
+
+    				    <li><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li></ul></li>
+    				    <li>&nbsp;<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/language-learning/">language learning</a></li></ul></li>			
+  				      </ul>
+				    </nav>     		  	
+      		      </div>
+
+      		      <div class="level-right">
+      		  	    <div class="level-item date">
+				    <p class="is-right is-size-7">
+				    2016-10-21</p>
+				    </div>
+      		      </div>
+
+      		    </nav>
+    		    <hr />
+
+				<div class="content is-size-7">
+					<p><p>装了python2.7，去图书馆借了python入门经典，暂且简单写下学习笔记，以供自己回忆<br>学习笔记（一）主要是基础语法部分：<br>　　1.python中数字以及字符串的使用;<br>　　2.输入与输出语句;<br>　　3.逻辑用语;<br>　　4.循环语句;<br>　　5.列表以及字典的使用;<br>　　6.函数的调用;<br><a id="more"></a></p>
 <p>以下为学习笔记（一）正文：</p>
 <h2>python中数字的使用</h2><br> <h3>变量类型</h3><br>int,float,string就不说了<br>这里注意下面几种类型的使用：<br>　　<code>long</code>：长整型(不是long long)，最长的数字的长度取决于计算机有多大的内存；<br>　　<code>list</code> ：功能类似于数组，用[]表示，里面的值可以改变；<br>　　<code>tuple</code>：用()表示，里面的值不可以改变；<br>　　<code>dictionary</code>：可列出已经配对的键和值；<br>(查看变量类型，可用type()查看)<br><br><li>支持强制转换变量类型，例如float(2)；</li><br><br><h3>变量命名</h3><br><li>python对于变量名的限制：不能用数字开头，不能过长，不能包括特殊符号(除下划线)；<br></li><li>对于变量命名的特殊点：大多数情况下变量名全部是小写。若不想变量的值被修改，才把变量名全部大写，作为一个常量；<br></li><br><br><h3>数学运算</h3><br>基本运算没见过的就是：floor除法的符号为//，求幂的符号为**；<br>运算优先级以及比较问题就不说了<br><br><h2>python中string的使用</h2>
 
@@ -42,9 +118,15 @@
 <p><li>注意一下缩进问题</li></p>
 <p><li>用and,not,or进行逻辑关系的判断<br>(单引号和双引号的问题并不用太注意)</li></p>
 <p>基础语法就学习到这里~<br>(我会继续补充和完善的~如果有错误，欢迎指正)</p>
-
+</p>
+				</div>
+			  
+    		  </article>	
+    		</div>
+    	</div>
+    </div>
   </div>
-</article>
+</section>
     </main>
   </body>
 </html>

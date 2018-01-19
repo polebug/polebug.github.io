@@ -13,22 +13,104 @@
   <body>
   	
     <main class="main">
-      <article class="post">
-  <div class="post-title">
-    <h2 class="title">markdown语法所踩的坑（备忘/持续更）</h2>
+      <section>
+  <div class="tile is-ancestor">
+    <div class="tile is-vertical">
+
+    	<div class="tile is-parent is-10">
+
+    	  <div class="tile is-child">
+    		<header>
+<nav class="navbar has-shadow is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+<!--navbar-->
+
+  <div class="container">
+  	<div class="navbar-menu">
+  	  <div class="navbar-start">
+  	  	<a class="navbar-item" href="/">
+	  	<img src="http://7x2wrf.com1.z0.glb.clouddn.com/favicon.png" width="30" height="50"></a>
+	  	<a class="navbar-item" href="/"><strong>[Polebug | start]</strong></a>
+	  	<a class="navbar-item" href="/AboutMe"><span class="icon is-small"><i class="fas fa-angle-down"></i></span><span> ABOUT </span></a>
+  	  </div>
+  	
+  	  <div class="navbar-end">		
+		
+		<a class="navbar-item" href="/">
+  	  	  <span class="icon is-small"><i class="fas fa-home"></i></span> <span> &nbsp;Home </span>
+  	  	</a>
+		
+  	  	<div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+          	 Find
+          </a>
+          <div class="navbar-dropdown is-boxed">
+           
+              
+            
+          </div>
+        </div>
+
+		<a class="navbar-item" href="#">
+  	  	  Skills
+  	  	</a>
+		
+		<div class="navbar-item">
+		  <div class="field is-grouped">
+		  	<a class="button is-primary navbar-item" href="#">
+  	  	      <span class="icon is-small"><i class="fas fa-rss"></i></span> <span> &nbsp;Contact</span>
+  	  	    </a>
+		  </div>
+		</div>	
+  	  </div>
+  	</div>
   </div>
-   <div class="post-meta">
-    <span class="post-time">2017-01-24</span>
-  </div>
-  <div class="post-content">
-    <p>细数来写markdown时踩的坑也算有些，在此备忘；<br>(长期更)<br><a id="more"></a></p>
+</nav>
+</header>
+    	  </div>
+		
+    	  <div class="tile is-parent is-vertical is-10" style="padding:30px">
+    	    <article class="tile is-child hero-body">
+			
+    		  <div class="title is-size-4 has-text-centered">
+    		    	markdown语法所踩的坑（备忘/持续更）
+    		   </div>
+
+    		   <nav class="level">
+      		      <div class="level-left">
+      		  	    <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
+  				      <ul>
+
+    				    <li><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a></li></ul></li>
+    				    <li>&nbsp;<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li></ul></li>			
+  				      </ul>
+				    </nav>     		  	
+      		      </div>
+
+      		      <div class="level-right">
+      		  	    <div class="level-item date">
+				    <p class="is-right is-size-7">
+				    2017-01-24</p>
+				    </div>
+      		      </div>
+
+      		    </nav>
+    		    <hr />
+
+				<div class="content is-size-7">
+					<p><p>细数来写markdown时踩的坑也算有些，在此备忘；<br>(长期更)<br><a id="more"></a></p>
 <p>17/1/23:<br><b>数学公式显示问题</b><br>之前在公式编辑器上写了公式，复制Tex过去+头尾$并在主题的配置文件里将mathjax设置为true，发现毫无卵用。然后以为是写主题的作者的锅，尝试使用hexo-math插件，依旧是毫无卵用(WTF)。<br>幸好在众多解释中看到<a href="http://heimingx.cn/2016/06/09/markdown-mathjax/" target="_blank" rel="external">这篇文章</a>，发现确实是转义的问题；<br>：）</p>
 <p>16/xx/xx:<br><b>mac下如何优雅的打出前置空格</b><br>markdown前置对齐属性实在不适合码字，还是段落分明的排版更让人清清爽爽，win下可用自带输入法轻松转换为全角+空格；<br>macOS实在不想用<code> &nmdp; </code>瞎自己的眼的话，推荐搜狗拼音；<br>：）</p>
 <p>17/1/25:</p>
 <p><b>markdown中小于号的转义问题</b><br>下午码字的时候遇到单个小于号无法转义问题，最后用html转义字符串 &amp;lt 表示即可；而小于等于号没有此问题；</p>
-
+</p>
+				</div>
+			  
+    		  </article>	
+    		</div>
+    	</div>
+    </div>
   </div>
-</article>
+</section>
     </main>
   </body>
 </html>

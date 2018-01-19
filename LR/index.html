@@ -13,15 +13,91 @@
   <body>
   	
     <main class="main">
-      <article class="post">
-  <div class="post-title">
-    <h2 class="title">Logistic 回归分析法的原理和代码实现</h2>
+      <section>
+  <div class="tile is-ancestor">
+    <div class="tile is-vertical">
+
+    	<div class="tile is-parent is-10">
+
+    	  <div class="tile is-child">
+    		<header>
+<nav class="navbar has-shadow is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+<!--navbar-->
+
+  <div class="container">
+  	<div class="navbar-menu">
+  	  <div class="navbar-start">
+  	  	<a class="navbar-item" href="/">
+	  	<img src="http://7x2wrf.com1.z0.glb.clouddn.com/favicon.png" width="30" height="50"></a>
+	  	<a class="navbar-item" href="/"><strong>[Polebug | start]</strong></a>
+	  	<a class="navbar-item" href="/AboutMe"><span class="icon is-small"><i class="fas fa-angle-down"></i></span><span> ABOUT </span></a>
+  	  </div>
+  	
+  	  <div class="navbar-end">		
+		
+		<a class="navbar-item" href="/">
+  	  	  <span class="icon is-small"><i class="fas fa-home"></i></span> <span> &nbsp;Home </span>
+  	  	</a>
+		
+  	  	<div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+          	 Find
+          </a>
+          <div class="navbar-dropdown is-boxed">
+           
+              
+            
+          </div>
+        </div>
+
+		<a class="navbar-item" href="#">
+  	  	  Skills
+  	  	</a>
+		
+		<div class="navbar-item">
+		  <div class="field is-grouped">
+		  	<a class="button is-primary navbar-item" href="#">
+  	  	      <span class="icon is-small"><i class="fas fa-rss"></i></span> <span> &nbsp;Contact</span>
+  	  	    </a>
+		  </div>
+		</div>	
+  	  </div>
+  	</div>
   </div>
-   <div class="post-meta">
-    <span class="post-time">2017-08-05</span>
-  </div>
-  <div class="post-content">
-    <blockquote>
+</nav>
+</header>
+    	  </div>
+		
+    	  <div class="tile is-parent is-vertical is-10" style="padding:30px">
+    	    <article class="tile is-child hero-body">
+			
+    		  <div class="title is-size-4 has-text-centered">
+    		    	Logistic 回归分析法的原理和代码实现
+    		   </div>
+
+    		   <nav class="level">
+      		      <div class="level-left">
+      		  	    <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
+  				      <ul>
+
+    				    <li></li>
+    				    <li>&nbsp;<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ML/">ML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sklearn/">sklearn</a></li></ul></li>			
+  				      </ul>
+				    </nav>     		  	
+      		      </div>
+
+      		      <div class="level-right">
+      		  	    <div class="level-item date">
+				    <p class="is-right is-size-7">
+				    2017-08-05</p>
+				    </div>
+      		      </div>
+
+      		    </nav>
+    		    <hr />
+
+				<div class="content is-size-7">
+					<p><blockquote>
 <p>注：<br>实现用的是 python / LR 原理参考 Andrew Ng 的 cs229<br>感谢 <a href="http://www.cnblogs.com/jerrylead/archive/2012/05/08/2489725.html" target="_blank" rel="external">JerryLead</a> 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删<br>如有错误，欢迎指正</p>
 </blockquote>
 <p><b>&lt;目录&gt;<br>　　1.二元 LR 原理<br>　　2.多元 LR 原理<br>　　3.裸 LR 的代码实现 (梯度下降/二元/多元/预测结果/正确率统计)<br>　　4.调用 sklearn 库里的 LR 模型 (训练/预测结果/正确率统计)<br></b><br><a id="more"></a></p>
@@ -63,9 +139,15 @@
 <p>　　　　　　　　　　　　　　　　　　　　　　　　<b>验证集的正确率</b><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">log_predict = log_clf.predict(test_data) == test_label</div><div class="line"><span class="keyword">print</span> log_predict.mean()</div></pre></td></tr></table></figure></p>
 <hr>
 <p>　　　　　　　　　　　　　　　　　　　　　　　　<b>完整代码</b><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># coding = utf-8</span></div><div class="line"><span class="comment">#sklearn库的调用  </span></div><div class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</div><div class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> logistic_regression_path</div><div class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</div><div class="line"><span class="comment">#用pandas库读取.csv文件的数据</span></div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </div><div class="line">    </div><div class="line"><span class="comment">#数据读取</span></div><div class="line">data = pd.read_csv(<span class="string">'data.csv'</span>)  </div><div class="line">    </div><div class="line"><span class="comment">#数据处理，假设第一第二第三列的数据为各个特征，第四列为分的类型(分成三类，分别为123)  </span></div><div class="line">train, test = train_test_split(data, test_size=<span class="number">0.6</span>, random_state=<span class="number">1</span>)</div><div class="line">Index = data.columns</div><div class="line">train_label = train[Index[<span class="number">4</span>]] </div><div class="line">test_label = test[Index[<span class="number">4</span>]] </div><div class="line">visial_data = train</div><div class="line"><span class="comment">#利用布尔索引把训练集归类</span></div><div class="line">first_kind = visial_data[visial_data[Index[<span class="number">4</span>]] == <span class="number">1</span>]</div><div class="line">second_kind = visial_data[visial_data[Index[<span class="number">4</span>]] == <span class="number">2</span>]</div><div class="line">third_kind = visial_data[visial_data[Index[<span class="number">4</span>]] == <span class="number">3</span>]</div><div class="line">  </div><div class="line"><span class="comment">#调用sklearn中的LR  </span></div><div class="line">log_clf = LogisticRegression(multi_class=<span class="string">'ovr'</span>)</div><div class="line">log_clf.fit(train,train_label)</div><div class="line">log_predict = log_clf.predict(test)==test_label</div><div class="line">  </div><div class="line"><span class="comment">#输出  </span></div><div class="line"><span class="keyword">print</span> log_predict.mean()</div><div class="line"><span class="keyword">print</span> log_clf.coef_</div><div class="line"><span class="keyword">print</span> log_clf.intercept_</div></pre></td></tr></table></figure></p>
-
+</p>
+				</div>
+			  
+    		  </article>	
+    		</div>
+    	</div>
+    </div>
   </div>
-</article>
+</section>
     </main>
   </body>
 </html>
