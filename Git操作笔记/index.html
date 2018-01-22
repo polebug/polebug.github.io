@@ -7,13 +7,15 @@
   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   	<script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
-  	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/styles/zenburn.min.css">
+  	<link rel="stylesheet" href="/plugins/highlight/styles/github.css">
 
   </head>
 
   <body>
   	
     <main class="main">
+       <script src="/plugins/highlight/highlight.pack.js"></script>
+       <script>hljs.initHighlightingOnLoad();</script>
       <section>
   <div class="tile is-ancestor">
     <div class="tile is-vertical">
@@ -29,7 +31,7 @@
   	<div class="navbar-menu">
   	  <div class="navbar-start">
   	  	<a class="navbar-item" href="/">
-	  	<img src="http://7x2wrf.com1.z0.glb.clouddn.com/favicon.png" width="30" height="50"></a>
+	  	<img src="/logo.png" width="30" height="50"></a>
 	  	<a class="navbar-item" href="/"><strong>[Polebug | start]</strong></a>
 	  	<a class="navbar-item" href="/AboutMe"><span class="icon is-small"><i class="fas fa-angle-down"></i></span><span> ABOUT </span></a>
   	  </div>
@@ -116,7 +118,7 @@
 <hr>
 <p>简单的说就是把原项目和 fork 到自己仓库下的项目都 clone 到本地，由此建立连接。然后 fetch 原项目的更新到本地，合并更新，最后 push 到 github 仓库。</p>
 <p>比如，我 fork 了 LCTT 的翻译项目到我的仓库 (polebug)，现在需要与 LCTT 的项目同步：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">clone 自己仓库下的项目</div><div class="line">$ git clone https://github.com/polebug/TranslationProject.git</div><div class="line">  </div><div class="line">$ cd ~/TranslationProject</div><div class="line">  </div><div class="line">clone 原项目，自定义为 upstream</div><div class="line">$ git remote add upstream https://github.com/LCTT/TranslationProject.git</div><div class="line">  </div><div class="line">$ git remote -v </div><div class="line">  </div><div class="line">fetch 原项目更新的内容</div><div class="line">$ git fetch upstream</div><div class="line">  </div><div class="line">merge</div><div class="line">$ git checkout master</div><div class="line">$ git merge upstream/master</div><div class="line">  </div><div class="line">push</div><div class="line">$ git push -u origin master</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">clone 自己仓库下的项目</div><div class="line">$ git clone https://github.com/polebug/TranslationProject.git</div><div class="line">  </div><div class="line">$ cd ~/TranslationProject</div><div class="line">  </div><div class="line">clone 原项目，自定义为 upstream</div><div class="line">$ git remote add upstream https://github.com/LCTT/TranslationProject.git</div><div class="line">  </div><div class="line">$ git remote -v </div><div class="line">  </div><div class="line">fetch 原项目更新的内容</div><div class="line">$ git fetch upstream</div><div class="line">  </div><div class="line">merge</div><div class="line">$ git checkout master</div><div class="line">$ git merge upstream/master</div><div class="line">  </div><div class="line">push</div><div class="line">$ git push -u origin master</div></pre></td></tr></table></figure>
 </p>
 				</div>
 			  
