@@ -7,15 +7,24 @@
   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   	<script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
-  	<link rel="stylesheet" href="/plugins/highlight/styles/github.css">
-
+  	<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/monokai-sublime.min.css">
+    
   </head>
 
   <body>
   	
     <main class="main">
-       <script src="/plugins/highlight/highlight.pack.js"></script>
-       <script>hljs.initHighlightingOnLoad();</script>
+      <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+      <script src="/plugins/highlight/highlight.pack.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+      <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+      <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+      });
+      </script>
       <section>
   <div class="tile is-ancestor">
     <div class="tile is-vertical">
@@ -141,15 +150,63 @@
 </blockquote>
 <p></p><h2>sklearn 库中的 Logistic Regression 模型</h2><br>（第一次用 sklearn 库，感觉不错～<p></p>
 <hr>
-<p>　　　　　　　　　　　　　　　　　　　　　　　　<b>将数据集分为训练集和检验集</b><br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</div><div class="line">train, test = train_test_split(data, test_size=<span class="number">0.4</span>, random_state=<span class="number">0</span>)</div></pre></td></tr></table></figure></p>
+<p>　　　　　　　　　　　　　　　　　　　　　　　　<b>将数据集分为训练集和检验集</b></p>
+<pre><code class="python">from sklearn.model_selection import train_test_split
+train, test = train_test_split(data, test_size=0.4, random_state=0)
+</code></pre>
 <p>其中，train是训练集，test是检验集，data是所有的样本，test_size指的是检验集在样本中的占比；<br>random_state是随机数种子，其实就是该随机数的编号，在需要重复试验的时候，保证得到一组一样的随机数。但如果填的是0或者不填，每次结果都会不一样；</p>
 <hr>
-<p>　　　　　　　　　　　　　　　　　　　　　　　　<b>sklearn库中的LR的使用</b><br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#所需的库</span></div><div class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> logistic_regression_path</div><div class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> logisticRegression</div><div class="line"><span class="comment">#调用</span></div><div class="line">log_clf = logisticRegression(multi_class = <span class="string">'ovr'</span>)</div><div class="line">log_clf.fit(train_data,train_label)</div><div class="line"><span class="comment">#输出权重</span></div><div class="line"><span class="keyword">print</span> log_clf.coef_</div><div class="line"><span class="keyword">print</span> log_clf.intercept_</div></pre></td></tr></table></figure></p>
+<p>　　　　　　　　　　　　　　　　　　　　　　　　<b>sklearn库中的LR的使用</b></p>
+<pre><code class="python">#所需的库
+from sklearn.linear_model import logistic_regression_path
+from sklearn.linear_model import logisticRegression
+#调用
+log_clf = logisticRegression(multi_class = &#39;ovr&#39;)
+log_clf.fit(train_data,train_label)
+#输出权重
+print log_clf.coef_
+print log_clf.intercept_
+</code></pre>
 <p>其中.coef_是各项因素的权重，.intercept_指的是截距<br>确切的说，对于公式 $ h_{\theta}(x) = w_{0} + w_{1}x_{1} + w_{2}x_{2} + … $<br>log_clf.coef_ 为 矩阵 $ [w_{1}, w_{2}, … ] $<br>log_clf.intercept_ 为数列 $ [w_{0}] $</p>
 <hr>
-<p>　　　　　　　　　　　　　　　　　　　　　　　　<b>验证集的正确率</b><br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">log_predict = log_clf.predict(test_data) == test_label</div><div class="line"><span class="keyword">print</span> log_predict.mean()</div></pre></td></tr></table></figure></p>
+<p>　　　　　　　　　　　　　　　　　　　　　　　　<b>验证集的正确率</b></p>
+<pre><code class="python">log_predict = log_clf.predict(test_data) == test_label
+print log_predict.mean()
+</code></pre>
 <hr>
-<p>　　　　　　　　　　　　　　　　　　　　　　　　<b>完整代码</b><br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># coding = utf-8</span></div><div class="line"><span class="comment">#sklearn库的调用  </span></div><div class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</div><div class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> logistic_regression_path</div><div class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</div><div class="line"><span class="comment">#用pandas库读取.csv文件的数据</span></div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </div><div class="line">    </div><div class="line"><span class="comment">#数据读取</span></div><div class="line">data = pd.read_csv(<span class="string">'data.csv'</span>)  </div><div class="line">    </div><div class="line"><span class="comment">#数据处理，假设第一第二第三列的数据为各个特征，第四列为分的类型(分成三类，分别为123)  </span></div><div class="line">train, test = train_test_split(data, test_size=<span class="number">0.6</span>, random_state=<span class="number">1</span>)</div><div class="line">Index = data.columns</div><div class="line">train_label = train[Index[<span class="number">4</span>]] </div><div class="line">test_label = test[Index[<span class="number">4</span>]] </div><div class="line">visial_data = train</div><div class="line"><span class="comment">#利用布尔索引把训练集归类</span></div><div class="line">first_kind = visial_data[visial_data[Index[<span class="number">4</span>]] == <span class="number">1</span>]</div><div class="line">second_kind = visial_data[visial_data[Index[<span class="number">4</span>]] == <span class="number">2</span>]</div><div class="line">third_kind = visial_data[visial_data[Index[<span class="number">4</span>]] == <span class="number">3</span>]</div><div class="line">  </div><div class="line"><span class="comment">#调用sklearn中的LR  </span></div><div class="line">log_clf = LogisticRegression(multi_class=<span class="string">'ovr'</span>)</div><div class="line">log_clf.fit(train,train_label)</div><div class="line">log_predict = log_clf.predict(test)==test_label</div><div class="line">  </div><div class="line"><span class="comment">#输出  </span></div><div class="line"><span class="keyword">print</span> log_predict.mean()</div><div class="line"><span class="keyword">print</span> log_clf.coef_</div><div class="line"><span class="keyword">print</span> log_clf.intercept_</div></pre></td></tr></table></figure></p>
+<p>　　　　　　　　　　　　　　　　　　　　　　　　<b>完整代码</b></p>
+<pre><code class="python"># coding = utf-8
+#sklearn库的调用  
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import logistic_regression_path
+from sklearn.linear_model import LogisticRegression
+#用pandas库读取.csv文件的数据
+import pandas as pd 
+
+#数据读取
+data = pd.read_csv(&#39;data.csv&#39;)  
+
+#数据处理，假设第一第二第三列的数据为各个特征，第四列为分的类型(分成三类，分别为123)  
+train, test = train_test_split(data, test_size=0.6, random_state=1)
+Index = data.columns
+train_label = train[Index[4]] 
+test_label = test[Index[4]] 
+visial_data = train
+#利用布尔索引把训练集归类
+first_kind = visial_data[visial_data[Index[4]] == 1]
+second_kind = visial_data[visial_data[Index[4]] == 2]
+third_kind = visial_data[visial_data[Index[4]] == 3]
+
+#调用sklearn中的LR  
+log_clf = LogisticRegression(multi_class=&#39;ovr&#39;)
+log_clf.fit(train,train_label)
+log_predict = log_clf.predict(test)==test_label
+
+#输出  
+print log_predict.mean()
+print log_clf.coef_
+print log_clf.intercept_
+</code></pre>
 </p>
 				</div>
 			  
