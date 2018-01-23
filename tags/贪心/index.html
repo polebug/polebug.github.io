@@ -32,41 +32,44 @@
   	  <div class="tile is-parent is-10">
   	  	<div class="tile is-child">
   	  	  <header>
-<nav class="navbar has-shadow is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+<nav class="navbar is-dark is-fixed-top is-transparent">
 <!--navbar-->
+  <div class="navbar-brand">
+  	  <a class="navbar-item" href="/">
+	  <img src="/logo.png" width="30" height="50"></a>
+	  <a class="navbar-item" href="/"><strong>[Polebug | start]</strong></a>
 
-  <div class="container">
-  	<div class="navbar-menu">
-  	  <div class="navbar-start">
-  	  	<a class="navbar-item" href="/">
-	  	<img src="/logo.png" width="30" height="50"></a>
-	  	<a class="navbar-item" href="/"><strong>[Polebug | start]</strong></a>
-	  	<a class="navbar-item" href="/AboutMe"><span class="icon is-small"><i class="fas fa-angle-down"></i></span><span> ABOUT </span></a>
-  	  </div>
-  	
-  	  <div class="navbar-end">		
-		
-		<a class="navbar-item" href="/">
-  	  	  <span class="icon is-small"><i class="fas fa-home"></i></span> <span> &nbsp;Home </span>
-  	  	</a>
-		
-  	  	<div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">
-          	 Find
-          </a>
-          <div class="navbar-dropdown is-boxed">         
-  			  	
-              <a href="/" class="navbar-item">Home</a>
-              	
-              <a href="/archives" class="navbar-item">Archive</a>
-              	
-              <a href="/Life" class="navbar-item">Life</a>
-              
-          </div>
-        </div>
+  	<div class="navbar-burger burger" data-target="navbarExampleTransparentExample">		
+  	  <span></span>
+  	  <span></span>
+  	  <span></span>
+  	</div>
+  </div>
 
+  <div id="navbarExampleTransparentExample" class="navbar-menu">
+    <div class="navbar-start">
+	  <a class="navbar-item" href="/AboutMe"><span class="icon is-small"><i class="fas fa-angle-down"></i></span><span> ABOUT </span></a>
+    </div>
+
+	<div class="navbar-end">			
+	  <a class="navbar-item" href="/">
+  	    <span class="icon is-small"><i class="fas fa-home"></i></span> <span> &nbsp;Home </span>
+  	  </a>
+		
+  	  <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          Find
+        </a>
+        <div class="navbar-dropdown is-boxed">         
+  	    	
+          <a href="/" class="navbar-item">Home</a>
+        	
+          <a href="/archives" class="navbar-item">Archive</a>
+        	
+          <a href="/Life" class="navbar-item">Life</a>
         
-  	  </div>
+        </div>
+      </div>    
   	</div>
   </div>
 </nav>
@@ -120,7 +123,7 @@
   <div class="container">
     <div class="content has-text-centered">
       <p>
-        Last updated : Tuesday, January 23rd 2018, 12:19:14 pm by <strong>polebug</strong>
+        Last updated : Tuesday, January 23rd 2018, 6:05:48 pm by <strong>polebug</strong>
       </p>
       <p>      
         <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
