@@ -27,11 +27,12 @@
       </script>
       <section>
   <div class="tile is-ancestor">
-  	<div class="tile is-vertical">
+    <div class="tile is-vertical">
 
-  	  <div class="tile is-parent is-10">
-  	  	<div class="tile is-child">
-  	  	  <header>
+    	<div class="tile is-parent is-10">
+
+    	  <div class="tile is-child">
+    		<header>
 <nav class="navbar is-dark is-fixed-top is-transparent">
 <!--navbar-->
   <div class="navbar-brand">
@@ -77,82 +78,27 @@
   </div>
 </nav>
 </header>
-  	  	</div>
+    	  </div>
+		
+    	  <div class="tile is-parent is-vertical is-10" style="padding:30px">
+    	    <article class="tile is-child hero-body">
+			
+    		  <div class="title is-size-4 has-text-centered">
+    		    	Python 正则表达式 [不完全记录]
+    		   </div>
 
-		<div class="tile is-parent is-vertical is-9" style="padding:30px">
-		  <div class="tile is-child hero-body">
-		    <div class="tile is-vertical box">
+				<div class="content is-size-7">
+					<p><p></p><p>由于最近在用 Django 写 return0.io 的服务端，开始碰到很多匹配问题。顺手在这里开个坑，记录所用到的正则表达式。</p><p></p>
+<p><table class="table is-bordered"><br>    <thead><br>        <tr><br>            <th>语法</th><br>            <th>说明</th><br>            <th>表达式实例</th><br>            <th>匹配到的字符串</th><br>        </tr><br>    </thead><br>    <tbody><br>        <tr><br>            <th>.</th><br>            <th>匹配任意字符 (除”\n”以外)</th><br>            <th></th><br>            <th></th><br>        </tr><br>        <tr><br>            <th>\</th><br>            <th>转义字符，能使后一个字符改变原来的意思</th><br>            <th>a\b </th><br>            <th>a\b </th><br>        </tr><br>        <tr><br>            <th><em></em></th><br>            <th>匹配前一个字符n次 (n&gt;=0)</th><br>            <th>abcd</th><br>            <th>abc 或者 abcddddd(…)</th><br>        </tr><br>        <a id="more"></a><br>        <tr><br>            <th>+</th><br>            <th>匹配前一个字符n次 (n&gt;=1)</th><br>            <th>abcd+</th><br>            <th>abcd 或者 abcddddd(…)</th><br>        </tr><br>        <tr><br>            <th>?</th><br>            <th>匹配前一个字符0次或者1次</th><br>            <th>abcd?</th><br>            <th>abc 或者 abcd</th><br>        </tr><br>    </tbody><br></table><br><!--more--></p>
+</p>
+				</div>
 			  
-    	      
-    		  
-    		    
-		  	      
-		  	      <div class="title is-size-4">2018</div>
-		  	      	    
-		  	    
-		        
-		        <div class="is-vertical is-size-7">          
-		          <nav class="level">		        	
-		        	<div class="level-left">
-		        	  <li><a href="/About-hexo-page/">如何在 Hexo 创建一个独立页面</a></li>
-		        	</div>
-		        	<div class="level-right">
-		              <span class="date">2018-01-26</span>
-		        	</div>
-		          </nav>   	              
-  	            </div>	  	            	    
-		      
-    		  
-    		    
-		        
-		        <div class="is-vertical is-size-7">          
-		          <nav class="level">		        	
-		        	<div class="level-left">
-		        	  <li><a href="/About-hexo-theme-bulxo/">About hexo-theme-bulxo</a></li>
-		        	</div>
-		        	<div class="level-right">
-		              <span class="date">2018-01-22</span>
-		        	</div>
-		          </nav>   	              
-  	            </div>	  	            	    
-		      
-		    </div>
-		    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-  
-  
-  <ul class="pagination-list">
-    <li> 
-     <span class="page-number current">1</span>
-    </li> 
-  </ul>
-</nav>
-
-
-
-		  </div>
-		</div>	
-  	  </div>
-  	</div>
-  </div>
-
-</section>
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <p>
-        Last updated : Saturday, February 3rd 2018, 11:34:47 pm by <strong>polebug</strong>
-      </p>
-      <p>      
-        <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
-        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-        is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
-      </p>
-      <p>
-        Powered by <a href="https://hexo.io/">Hexo</a>. Theme - <a href="https://github.com/polebug/hexo-theme-bulxo"><strong>bulxo</strong></a>
-      </p>
+    		  </article>	
+    		</div>
+    	</div>
     </div>
   </div>
-</footer>
+</section>
     </main>
   </body>
 </html>
