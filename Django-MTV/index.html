@@ -84,7 +84,7 @@
     	    <article class="tile is-child hero-body">
 			
     		  <div class="title is-size-4 has-text-centered">
-    		    	Python 正则表达式 [不完全记录]
+    		    	如何理解 Django 框架
     		   </div>
 			
 			   
@@ -93,8 +93,8 @@
       		  	    <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
   				      <ul>
 
-    				    <li><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li></ul></li>
-    				    <li>&nbsp;<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pyhon/">Pyhon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a></li></ul></li>			
+    				    <li></li>
+    				    <li>&nbsp;<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MTV/">MTV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li></ul></li>			
   				      </ul>
 				    </nav>     		  	
       		      </div>
@@ -102,7 +102,7 @@
       		      <div class="level-right">
       		  	    <div class="level-item date">
 				    <p class="is-right is-size-7">
-				    2018-02-03</p>
+				    2018-03-01</p>
 				    </div>
       		      </div>
 
@@ -110,49 +110,39 @@
     		    <hr />
 				
 				<div class="content is-size-7">
-					<p>由于最近在用 Django 写 return0.io 的服务端，开始碰到很多匹配问题。顺手在这里开个坑，记录所用到的正则表达式。<br><a id="more"></a></p>
-<table>
-<thead>
-<tr>
-<th>语法</th>
-<th>说明</th>
-<th>表达式实例</th>
-<th>匹配到的字符串 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> .</td>
-<td>匹配任意字符 (除”\n”以外)</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td> \</td>
-<td>转义字符，能使后一个字符改变原来的意思</td>
-<td>a\\b</td>
-<td>a\b </td>
-</tr>
-<tr>
-<td> *</td>
-<td>匹配前一个字符n次 (n&gt;=0)</td>
-<td>abcd*</td>
-<td>abc 或者 abcddddd(…) </td>
-</tr>
-<tr>
-<td> +</td>
-<td>匹配前一个字符n次 (n&gt;=1)</td>
-<td>abcd+</td>
-<td>abcd 或者 abcddddd(…) </td>
-</tr>
-<tr>
-<td> ?</td>
-<td>匹配前一个字符0次或者1次</td>
-<td>abcd?</td>
-<td>abc 或者 abcd </td>
-</tr>
-</tbody>
-</table>
+					<blockquote>
+<p>初用 Django 做开发，对于其总体设计有了初步的认识，在此稍作整理，如有错误欢迎指正</p>
+</blockquote>
+<p>在谈及 Django 的设计模式之前，先简单的谈谈 MVC 与 MTV 模式：</p>
+<h2 id="MVC-模式-Model-View-Controller"><a href="#MVC-模式-Model-View-Controller" class="headerlink" title="MVC 模式 (Model - View - Controller)"></a>MVC 模式 (Model - View - Controller)</h2><ul>
+<li><strong>Model</strong> : 模型，数据存取层</li>
+<li><strong>View</strong> ：视图，处理数据显示的部分</li>
+<li><strong>Controller</strong> ：控制器，也是业务逻辑层，是程序中处理用户交互的部分，通常控制器负责从视图 (View) 读取数据，并向模型 (Model) 发送数据</li>
+</ul>
+<a id="more"></a>
+<p>最简易的 MVC 模式的工作流程大体是这样的：(单向通信)</p>
+<p>用户对界面 (View) 进行操作 -&gt; View 传送指令到控制器 (Controller) -&gt; Controller 完成业务逻辑，要求模型 (Model) 处理数据 -&gt; Model 将新的数据发送回 View -&gt; 用户看到反馈</p>
+<h2 id="MTV-模式-Model-Template-View"><a href="#MTV-模式-Model-Template-View" class="headerlink" title="MTV 模式 (Model - Template - View)"></a>MTV 模式 (Model - Template - View)</h2><p>MTV 与 MVC 的区别在于 ：</p>
+<ul>
+<li><strong>Template</strong> ：模板，表现层，决定如何在页面中显示</li>
+<li><strong>View</strong> ：视图，业务逻辑层，包含存取 Model、调用 Template 的相关逻辑</li>
+</ul>
+<p>除此之外：</p>
+<ul>
+<li><strong>URL 分发器</strong> ：将 URL 的 request 分发给不同的 View 处理</li>
+</ul>
+<p>简易 MTV 模式的工作流程大体如下：</p>
+<p>用户对界面进行操作 -&gt; 服务端收到请求，并传送到 URL 分发器 -&gt; URL 分发器将每个 URL 的页面请求分发给不同的视图函数 (View) 处理 -&gt; View 调用相应的 Model 处理数据 以及 Template 引擎展现数据 -&gt; View 处理结束后返回一个 http 响应给 Web 服务端 -&gt; 用户看到反馈</p>
+<p>其实 MTV 模式和 MVC 模式的本质是一样的，只是在定义上略有点不同</p>
+<hr>
+<p>对于 Django 的设计模式而言，很明显它是遵循 MVC 模式的，但由于这里的 Controller (控制器) 的功能由 Django 框架自身实现，进而将模式转变为了 MTV，工作流程如下：</p>
+<p>用户操作</p>
+<p>-&gt; Web 服务端请求处理</p>
+<p>-&gt; 请求传送到 Django 框架 (相当于 Controller)，控制用户输入，进行 URL 匹配，用 URL 分发器将每个 URL 页面请求分发给合适的视图函数 (View)</p>
+<p>-&gt; 调用相应的 Model 和 Template 处理数据：Model 进行数据的存取，Template 进行数据的呈现</p>
+<p>-&gt; 在视图中，进行模式渲染，形成页面</p>
+<p>-&gt; 用户看到反馈</p>
+<p>对于 Django 的设计模式理解暂且如此。以上。<br>(如有更深的理解，随时更新 – flag)</p>
 
 				</div>
 			  
