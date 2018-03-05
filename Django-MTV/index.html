@@ -94,7 +94,7 @@
   				      <ul>
 
     				    <li></li>
-    				    <li>&nbsp;<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MTV/">MTV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li></ul></li>			
+    				    <li>&nbsp;<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCV/">MCV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MTV/">MTV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li></ul></li>			
   				      </ul>
 				    </nav>     		  	
       		      </div>
@@ -121,7 +121,12 @@
 </ul>
 <a id="more"></a>
 <p>最简易的 MVC 模式的工作流程大体是这样的：(单向通信)</p>
-<p>用户对界面 (View) 进行操作 -&gt; View 传送指令到控制器 (Controller) -&gt; Controller 完成业务逻辑，要求模型 (Model) 处理数据 -&gt; Model 将新的数据发送回 View -&gt; 用户看到反馈</p>
+<p>用户进行操作 </p>
+<p>-&gt; Web 服务端收到请求</p>
+<p>-&gt; 页面请求 传送指令到控制器 (Controller) </p>
+<p>-&gt; Controller 完成业务逻辑，调用模型 (Model) 处理数据 </p>
+<p>-&gt; Model 将新的数据发送回 View </p>
+<p>-&gt; 用户看到反馈</p>
 <h2 id="MTV-模式-Model-Template-View"><a href="#MTV-模式-Model-Template-View" class="headerlink" title="MTV 模式 (Model - Template - View)"></a>MTV 模式 (Model - Template - View)</h2><p>MTV 与 MVC 的区别在于 ：</p>
 <ul>
 <li><strong>Template</strong> ：模板，表现层，决定如何在页面中显示</li>
@@ -132,7 +137,12 @@
 <li><strong>URL 分发器</strong> ：将 URL 的 request 分发给不同的 View 处理</li>
 </ul>
 <p>简易 MTV 模式的工作流程大体如下：</p>
-<p>用户对界面进行操作 -&gt; 服务端收到请求，并传送到 URL 分发器 -&gt; URL 分发器将每个 URL 的页面请求分发给不同的视图函数 (View) 处理 -&gt; View 调用相应的 Model 处理数据 以及 Template 引擎展现数据 -&gt; View 处理结束后返回一个 http 响应给 Web 服务端 -&gt; 用户看到反馈</p>
+<p>用户对界面进行操作 </p>
+<p>-&gt; 服务端收到请求，并传送到 URL 分发器 </p>
+<p>-&gt; URL 分发器将每个 URL 的页面请求分发给不同的视图函数 (View) 处理</p>
+<p>-&gt; View 调用相应的 Model 处理数据 以及 Template 引擎展现数据 </p>
+<p>-&gt; View 处理结束后返回一个 http 响应给 Web 服务端 </p>
+<p>-&gt; 用户看到反馈</p>
 <p>其实 MTV 模式和 MVC 模式的本质是一样的，只是在定义上略有点不同</p>
 <hr>
 <p>对于 Django 的设计模式而言，很明显它是遵循 MVC 模式的，但由于这里的 Controller (控制器) 的功能由 Django 框架自身实现，进而将模式转变为了 MTV，工作流程如下：</p>
@@ -177,7 +187,7 @@
   <div class="container">
     <div class="content has-text-centered">
       <p>
-        Last updated : Monday, March 5th 2018, 8:50:39 pm by <strong>polebug</strong>
+        Last updated : Monday, March 5th 2018, 8:56:22 pm by <strong>polebug</strong>
       </p>
       <p>      
         <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
