@@ -85,7 +85,7 @@
     	    <article class="tile is-child hero-body">
 			
     		  <div class="title is-size-4 has-text-centered">
-    		    	WSGI 协议实现与 Python socket 编程补充说明
+    		    	关于 return0.io (一)
     		   </div>
 			
 			   
@@ -94,8 +94,8 @@
       		  	    <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
   				      <ul>
 
-    				    <li></li>
-    				    <li>&nbsp;<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WSGI/">WSGI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a></li></ul></li>			
+    				    <li><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/others/">others</a></li></ul></li>
+    				    <li>&nbsp;<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Djano/">Djano</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/return0-io/">return0.io</a></li></ul></li>			
   				      </ul>
 				    </nav>     		  	
       		      </div>
@@ -107,7 +107,7 @@
 					&nbsp;&nbsp;&nbsp;
       		  	    <div class="level-item date">
 				    <p class="is-right is-size-7">
-				    2017-11-06</p>
+				    2018-05-26</p>
 				    </div>
       		      </div>
 
@@ -115,25 +115,15 @@
     		    <hr />
 				
 				<div class="content is-size-7">
-					<blockquote>
-<p>偶然看到有人翻译的“一起写一个 web 服务器”系列<a href="http://python.jobbole.com/81524/" target="_blank" rel="external">[1]</a><a href="http://python.jobbole.com/81523/" target="_blank" rel="external">[2]</a><a href="http://python.jobbole.com/81820/" target="_blank" rel="external">[3]</a>，感觉挺不错的，这里做一些归纳和 Python socket 编程的补充说明。<br><a id="more"></a></p>
-</blockquote>
-<h2>WSGI 的工作原理</h2>
-
-<blockquote>
-<p>常见的 Web server 无法与 Web application(Flask, Django, Tornado) 直接通信，需要 WSGI server 作为桥梁。</p>
-</blockquote>
-<h3>WSGI 工作原理分为两方面</h3><br><b>服务器层: </b> 将来自 socket 的数据包解析为 http，调用 application，给应用提供环境信息 environ (包含 host, post, process模式, 客户端的 header, body 等)。同时给应用提供一个 start_response 的回调函数，主要在应用程序层进行响应信息处理。<br><br><b>应用程序层: </b> 在 server 提供的 start_response 生成 header, body, status，将这些信息返回给客户端。<br><br><h3>WSGI server 代码结构</h3><br>这部分我想根据 Web 服务器处理发给应用的请求的流程，来说说完整的 server 代码结构：<br><br><li>首先，服务器启动并加载一个由 Web 框架/应用提供的 application - <code>def set_app()</code></li><br><li>启动 WSGI server 服务，不停监听并获取 socket 数据 - <code>def serve_forever</code></li><br><li>处理请求：<code>def handle_one_request() </code><br>　　- 对 socket 数据包进行解析  <code>def parse_request()</code><br>　　- 创建 environ 字典，提供环境信息 <code>def get_environ()</code><br>　　- 提供 start_response 回调函数 <code>def start_response()</code><br>　　- 使用 environ 和 start_response 作为参数调用 application，并拿到返回的响应体<br>　　- 解析一次请求后，关闭 socket 端口，同时将 application 返回的数据返回至客户端 <code>def finish_response()</code><br></li><br><br><a href="https://gist.github.com/polebug/054c32c3104390c83b49e2279f1a3131" target="_blank" rel="external">完整服务器代码</a><br><br><h3>WSGI app 代码结构</h3><br>简单的说就是设置 status, header 等，通过 start_response 传给服务器，构造 http 响应<br><br>代码比较简单：<br><pre><code><br>def app(environ, start_response):<br>    status = ‘200 OK’<br>    response_headers = [(‘Content-Type’, ‘text/plain’)]<br>    start_response(status, response_headers)<br>    return [‘Hello world from a simple WSGI application!\n’]<br></code></pre><br><br><h2>补充：Python socket 编程</h2><br><br>&gt; 这里主要是对 WSGI_server 中所用的的 socket 模块进行补充<br><br>&gt; Socket 模块提供了标准的 BSD Socket API<br><br><h3>Socket 类型</h3><br>套接字格式：socket(family, type[,protocal]) 使用给定的套接族，套接字类型，协议编号（默认为0）来创建套接字<br><br><code>socket.AF_INET</code> - 用于服务器与服务器之间的网络通信<br><br><code>socket.SOCK_STREAM</code> - 基于 TCP 的流式 socket 通信<br><br><br><b>创建 TCP Socket: </b><br><code>sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</code><br><br><h3>Socket 函数</h3>
-
-<p>#<b>服务端 Socket 函数</b></p>
-<p><code>s.listen(backlog)</code> - 开始监听TCP传入连接，backlog指定在拒绝链接前，操作系统可以挂起的最大连接数，该值最少为1，大部分应用程序设为5就够用了</p>
-<p><code>s.bind(address)</code> - 将套接字绑定到地址，在AF_INET下，以tuple(host, port)的方式传入</p>
-<p>#<b>公共 Socket 函数</b></p>
-<p><code>s.getsockname()</code> - 返回套接字自己的地址，返回值通常是一个tuple(ipaddr, port)</p>
-<p><code>s.setsockopt(level,optname,value)</code> - 设置给定套接字选项的值。level 定义了哪个选项将被使用，通常情况下是 SOL_SOCKET。</p>
-<p><code>s.getfqdn</code> - 返回一个name对应的完全合格的域名。如果name被忽略，将会被解释为本地主机。</p>
-<hr>
-<p>可能将持续补充</p>
+					<p>失踪人口打卡 √ 水文 √<br>不讲啥技术，扯一些碎碎叨叨的东西<br><a id="more"></a><br>转眼六月，3月开学的时候挖了坑，在 <a href="http://return0.io" target="_blank" rel="external">return0.io</a> 搭一个爬开源项目的小站，大概是从三月底写到四月底，然后碰上设计 RESTful API 这个比较烦人的地方，外加各种课程开始课设考试，五月就基本没有什么输出。</p>
+<p>目前大概完成到 1/5，可以说是很慢了，还是希望填到七月份填完。目前只写完了首页/爬虫/自动化脚本这样，其余基本没有写，邮箱注册验证的话试了腾讯的企业级邮箱，挂了个脚本刷容易就崩了，网易的还不支持 .io 邮箱，所以很多事情都很蛋疼。</p>
+<p>目前只在每天爬 github 和 openhub，体验就是 github 的 api 写的真的是非常非常友好，openhub 的排序写的非常糟心，对于 latest 项目基本没有时间排序，而且 openhub 用户也比较少，相对比较烦躁。</p>
+<p>如果大家有什么推荐的开源项目网站，欢迎私我~</p>
+<p>以及我发现之前 github 的 trending 写的比较粗糙，最近两个月改善了一些，而且挂在 explore 上了，之前是在个偏僻的角落找到的。我写的算法和 github trending 有所不同。</p>
+<p>举个例子，比如 github trending 里的 this month 这个选择，排序是根据这个月中项目 stars 增长数。但其实我个人认为，最近很火的某个项目可能它这一周、或这一个月、或三个月的 stars 增长都很多，那么可能会重复出现这个项目。但其实我是想去尽可能的爬取最近出现的开源项目，所以我这里的排序是根据这个月创建的项目的 stars 数目。</p>
+<p>我设置了 All/Annual/Quarter/Month/Week 几种创建时间段，分别按 stars 和 forks 排序。这个你们可能先去这个 1/5 成品 <a href="http://return0.io" target="_blank" rel="external"> return0.io </a> 瞅瞅，我每天无聊会去翻翻，同时希望能帮助到更多的人。</p>
+<p>BTW, 因为国内没法备案 .io 的缘故，中途换过两次国外服务器，感觉 django 项目迁移起来有点鸡肋，可能是我姿势不对。</p>
+<p>以及，填坑愉快/考试周愉快/补番愉快~</p>
 
 				</div>
 			  
@@ -175,7 +165,7 @@
       </p>      
        
       <p>
-        Last updated : Saturday, May 26th 2018, 10:53:53 am by <strong>polebug</strong>
+        Last updated : Saturday, May 26th 2018, 10:53:54 am by <strong>polebug</strong>
       </p>
       <p>      
         <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
