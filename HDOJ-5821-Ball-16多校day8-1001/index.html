@@ -60,7 +60,7 @@
                     </span>
                 </div>
 
-                <p class="post_connect"><p></p><h2>题意</h2><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://acm.hdu.edu.cn/showproblem.php?pid=5821" target="_blank" rel="external">题目传送门</a><br>&nbsp;&nbsp;&nbsp;&nbsp;题意：有n个盒子，每个盒子最多装下一个球。用a[i]表示每个盒子中球的状态。现在给出m个区间，可以在给出的区间任意改变a[i]的顺序。询问能否使a[i]等于b[i]。<br><a id="more"></a><p></p>
+                <div class="post_connect"><p></p><h2>题意</h2><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://acm.hdu.edu.cn/showproblem.php?pid=5821" target="_blank" rel="external">题目传送门</a><br>&nbsp;&nbsp;&nbsp;&nbsp;题意：有n个盒子，每个盒子最多装下一个球。用a[i]表示每个盒子中球的状态。现在给出m个区间，可以在给出的区间任意改变a[i]的顺序。询问能否使a[i]等于b[i]。<br><a id="more"></a><p></p>
 <p></p><h2>题解</h2><br>&nbsp;&nbsp;&nbsp;&nbsp;看了<a href="http://bestcoder.hdu.edu.cn/blog/" target="_blank" rel="external">官方题解</a>才知道是贪心，觉得很巧妙，在此胡口一波。<p></p>
 <p></p><h3>下标原理</h3><br>&nbsp;&nbsp;&nbsp;&nbsp;要使a[i]等于b[i]，球的颜色是一个很大的干扰。然而，对于同色球而言，（例如有4个全为红色的球），标记为1,2,3,4.从a[i]到b[i]一定存在一种方案，使得这个顺序不发生改变。也就是说，同色球可以处理成若干个不同色球。<br>&nbsp;&nbsp;&nbsp;&nbsp;对于整个a[i]而言，即有n个不同色球。<p></p>
 <p></p><h3>贪心的实现</h3><br>&nbsp;&nbsp;&nbsp;&nbsp;首先，分别将a[i],b[i]标记为1.2.3…n；根据a[i],b[i]球的状态进行sort排序（即是否有球以及球的颜色）；<br>&nbsp;&nbsp;&nbsp;&nbsp;其次，对a[i]重编号：进行逐一对比，若a[i]和b[i]的状态相同，则令c[a[i]标记]=b[i]标记；（c[i]即为a[i]重编号后的标记）<br>&nbsp;&nbsp;&nbsp;&nbsp;最后，在给出的区间进行sort排序。验证c[i]是否等于b[i]，即c[i]是否满足1.2.3…n;<p></p>
@@ -121,7 +121,7 @@ int main(){
 }
 </code></pre><p>&nbsp;&nbsp;&nbsp;&nbsp;多校渐入尾声，晚上翻了翻各种多校敲的代码，自觉多校虽难但同样受益匪浅。（希望不是最后一次多校啊啊啊）最近想整理多校题,BC,CF代码，写写题解<br>&nbsp;&nbsp;&nbsp;&nbsp;重新开始写题解，其中一个原因是自己不想把所敲的代码扔的到处都是，最后不知所云；另一个原因是，我最近意识到自己思考题目以及赛后对于题解的利用有问题。我记得我上次问帅副题目，总是问这个算法具体是啥样的啊怎么敲啊，结果帅副说你首先要明白这样做为什么是对的，再去想如何实现。之后想了想，确实有道理。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;最后，以上若有不对的地方，欢迎指正。</p>
-</p>
+</div>
             </div>
             <div class="post_classes">
                 <div class="post_categories">
