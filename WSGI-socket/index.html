@@ -3,9 +3,7 @@
   <head>
   	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<title> [Polebug|next]  </title>
-  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  	<title> Polebug | start </title>
   	<script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
   	<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
     
@@ -26,96 +24,43 @@
       });
       </script>
       <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-      <section>
-  <div class="tile is-ancestor">
-    <div class="tile is-vertical">
-
-    	<div class="tile is-parent is-10">
-
-    	  <div class="tile is-child">
-    		<header>
-<nav class="navbar is-dark is-fixed-top is-transparent">
-<!--navbar-->
-  <div class="navbar-brand">
-  	  <a class="navbar-item" href="/">
-	  <img src="/logo.png" width="30" height="50"></a>
-	  <a class="navbar-item" href="/"><strong>[Polebug | start]</strong></a>
-
-  	<div class="navbar-burger burger" data-target="navbarExampleTransparentExample">		
-  	  <span></span>
-  	  <span></span>
-  	  <span></span>
-  	</div>
-  </div>
-
-  <div id="navbarExampleTransparentExample" class="navbar-menu">
-    <div class="navbar-start">
-	  <a class="navbar-item" href="/AboutMe"><span class="icon is-small"><i class="fas fa-angle-down"></i></span><span> ABOUT </span></a>
-    </div>
-
-	<div class="navbar-end">			
-	  <a class="navbar-item" href="/">
-  	    <span class="icon is-small"><i class="fas fa-home"></i></span> <span> &nbsp;Home </span>
-  	  </a>
-		
-  	  <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          Find
-        </a>
-        <div class="navbar-dropdown is-boxed ">         
-  	    	
-          <a href="/" class="navbar-item">Home</a>
-        	
-          <a href="/archives" class="navbar-item">Archive</a>
-        
+      <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Polebug | start</title>
+</head>
+</html>
+<header class="top-bar _fixed">
+    <div class="-container">
+        <div class="-main">
+            <div id="logo" class="logo-wrapper">
+                  <a href="/" class="logo">Polebug | start</a>
+            </div>
+            <nav class="navigation" role="navigation" aria-label="site
+            navigation">
+                <ol class="-list">
+                    
+                </ol>
+            </nav>
         </div>
-      </div>  
-
-      <a class="navbar-item" href="/leetcode"> Leetcode_list
-      </a>  
-
-      <a class="navbar-item" href="/return0"> Return0 </a>     
-  	</div>
-  </div>
-</nav>
+    </div>
 </header>
-    	  </div>
-		
-    	  <div class="tile is-parent is-vertical is-10" style="padding:30px">
-    	    <article class="tile is-child hero-body">
-			
-    		  <div class="title is-size-4 has-text-centered">
-    		    	WSGI 协议实现与 Python socket 编程补充说明
-    		   </div>
-			
-			   
-    		   <nav class="level">
-      		      <div class="level-left">
-      		  	    <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
-  				      <ul>
+</html>
 
-    				    <li></li>
-    				    <li>&nbsp;<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WSGI/">WSGI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a></li></ul></li>			
-  				      </ul>
-				    </nav>     		  	
-      		      </div>
+<section>
+    <div class="container1">
+        <div id="content">
+            <div id="mainbar" role="main">
+                <div class="post_about">
+                    <h1 class="post_title">WSGI 协议实现与 Python socket 编程补充说明</h1>
+                    <span class="post_time">
+                        2017-11-06
+                    </span>
+                </div>
 
-      		      <div class="level-right">
-      		        <span id="busuanzi_container_page_pv">
-   					<i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-					</span>
-					&nbsp;&nbsp;&nbsp;
-      		  	    <div class="level-item date">
-				    <p class="is-right is-size-7">
-				    2017-11-06</p>
-				    </div>
-      		      </div>
-
-      		    </nav>
-    		    <hr />
-				
-				<div class="content is-size-7">
-					<blockquote>
+                <p><blockquote>
 <p>偶然看到有人翻译的“一起写一个 web 服务器”系列<a href="http://python.jobbole.com/81524/" target="_blank" rel="external">[1]</a><a href="http://python.jobbole.com/81523/" target="_blank" rel="external">[2]</a><a href="http://python.jobbole.com/81820/" target="_blank" rel="external">[3]</a>，感觉挺不错的，这里做一些归纳和 Python socket 编程的补充说明。<br><a id="more"></a></p>
 </blockquote>
 <h2>WSGI 的工作原理</h2>
@@ -134,61 +79,67 @@
 <p><code>s.getfqdn</code> - 返回一个name对应的完全合格的域名。如果name被忽略，将会被解释为本地主机。</p>
 <hr>
 <p>可能将持续补充</p>
-
-				</div>
-			  
-    		  </article>	
-    		  
-<section class="comments" id="comments">
-    <div id="gitment_thread"></div>
-    <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-    <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-    <script>
-        var gitment = new Gitment({
-        	id: 'window.location.pathname',
-            owner: 'polebug',
-            repo: 'polebug.github.io',
-            oauth: {
-                client_id: 'ce0ec393e83b9afdd9b6',
-                client_secret: '70cf9f7944bf22d405c59b6a50a6b15c6cbcd68c',
-            },
-        })
-        gitment.render('comments')
-    </script>
-</section>
-
-    		</div>
-    	</div>
+</p>
+            </div>
+            <div class="post_classes">
+                <div class="post_categories">
+                    <h1>CATEGORIES</h1>
+                    
+                </div>
+            
+                <div class="post_tags">
+                    <h1>TAG</h1>
+                    <a class="tag-link" href="/tags/Python/">Python</a>  ,  <a class="tag-link" href="/tags/WEB/">WEB</a>  ,  <a class="tag-link" href="/tags/WSGI/">WSGI</a>  ,  <a class="tag-link" href="/tags/socket/">socket</a>
+                    
+                </div>	
+            </div>
+            
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Polebug | start</title>
+</head>
+</html>
+<section>
+<div class="sidebar">
+    <h1>MENU</h1>
+    <div class="sidebar_pages">
+        	
+            <li>
+                <a href="/algorithm" class="pages_name">Algorithm</a>
+            </li>
+        	
+            <li>
+                <a href="/web" class="pages_name">Web</a>
+            </li>
+        	
+            <li>
+                <a href="/golang" class="pages_name">Golang</a>
+            </li>
+        	
+            <li>
+                <a href="/anime" class="pages_name">番评</a>
+            </li>
+        	
+            <li>
+                <a href="/salty" class="pages_name">摸鱼</a>
+            </li>
+        	
+            <li>
+                <a href="/aboutme" class="pages_name">Find</a>
+            </li>
+        
     </div>
-  </div>
-</section>
-  
-
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <p>
-	  <i class="fas fa-user"></i><span id="busuanzi_container_site_uv"> 
-  	  <span id="busuanzi_value_site_uv"></span>人次</span>
-  	  &nbsp; | &nbsp;
-      <i class="fas fa-eye"></i> <span id="busuanzi_value_site_pv"></span>次
-      </p>      
-       
-      <p>
-        Last updated : Sunday, May 27th 2018, 11:02:18 am by <strong>polebug</strong>
-      </p>
-      <p>      
-        <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
-        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-        is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
-      </p>
-      <p>
-        Powered by <a href="https://hexo.io/">Hexo</a>. Theme - <a href="https://github.com/polebug/hexo-theme-bulxo"><strong>bulxo</strong></a>
-      </p>
+</div>
+<section>
+            
+        </div>
     </div>
-  </div>
-</footer>
-
+</section>
     </main>
   </body>
 </html>
+
+

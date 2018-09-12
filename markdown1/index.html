@@ -3,9 +3,7 @@
   <head>
   	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<title> [Polebug|next]  </title>
-  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  	<title> Polebug | start </title>
   	<script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
   	<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
     
@@ -26,155 +24,108 @@
       });
       </script>
       <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-      <section>
-  <div class="tile is-ancestor">
-    <div class="tile is-vertical">
-
-    	<div class="tile is-parent is-10">
-
-    	  <div class="tile is-child">
-    		<header>
-<nav class="navbar is-dark is-fixed-top is-transparent">
-<!--navbar-->
-  <div class="navbar-brand">
-  	  <a class="navbar-item" href="/">
-	  <img src="/logo.png" width="30" height="50"></a>
-	  <a class="navbar-item" href="/"><strong>[Polebug | start]</strong></a>
-
-  	<div class="navbar-burger burger" data-target="navbarExampleTransparentExample">		
-  	  <span></span>
-  	  <span></span>
-  	  <span></span>
-  	</div>
-  </div>
-
-  <div id="navbarExampleTransparentExample" class="navbar-menu">
-    <div class="navbar-start">
-	  <a class="navbar-item" href="/AboutMe"><span class="icon is-small"><i class="fas fa-angle-down"></i></span><span> ABOUT </span></a>
-    </div>
-
-	<div class="navbar-end">			
-	  <a class="navbar-item" href="/">
-  	    <span class="icon is-small"><i class="fas fa-home"></i></span> <span> &nbsp;Home </span>
-  	  </a>
-		
-  	  <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          Find
-        </a>
-        <div class="navbar-dropdown is-boxed ">         
-  	    	
-          <a href="/" class="navbar-item">Home</a>
-        	
-          <a href="/archives" class="navbar-item">Archive</a>
-        
+      <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Polebug | start</title>
+</head>
+</html>
+<header class="top-bar _fixed">
+    <div class="-container">
+        <div class="-main">
+            <div id="logo" class="logo-wrapper">
+                  <a href="/" class="logo">Polebug | start</a>
+            </div>
+            <nav class="navigation" role="navigation" aria-label="site
+            navigation">
+                <ol class="-list">
+                    
+                </ol>
+            </nav>
         </div>
-      </div>  
-
-      <a class="navbar-item" href="/leetcode"> Leetcode_list
-      </a>  
-
-      <a class="navbar-item" href="/return0"> Return0 </a>     
-  	</div>
-  </div>
-</nav>
+    </div>
 </header>
-    	  </div>
-		
-    	  <div class="tile is-parent is-vertical is-10" style="padding:30px">
-    	    <article class="tile is-child hero-body">
-			
-    		  <div class="title is-size-4 has-text-centered">
-    		    	markdown语法所踩的坑（备忘/持续更）
-    		   </div>
-			
-			   
-    		   <nav class="level">
-      		      <div class="level-left">
-      		  	    <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
-  				      <ul>
+</html>
 
-    				    <li><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a></li></ul></li>
-    				    <li>&nbsp;<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li></ul></li>			
-  				      </ul>
-				    </nav>     		  	
-      		      </div>
+<section>
+    <div class="container1">
+        <div id="content">
+            <div id="mainbar" role="main">
+                <div class="post_about">
+                    <h1 class="post_title">markdown语法所踩的坑（备忘/持续更）</h1>
+                    <span class="post_time">
+                        2017-01-24
+                    </span>
+                </div>
 
-      		      <div class="level-right">
-      		        <span id="busuanzi_container_page_pv">
-   					<i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-					</span>
-					&nbsp;&nbsp;&nbsp;
-      		  	    <div class="level-item date">
-				    <p class="is-right is-size-7">
-				    2017-01-24</p>
-				    </div>
-      		      </div>
-
-      		    </nav>
-    		    <hr />
-				
-				<div class="content is-size-7">
-					<p>细数来写markdown时踩的坑也算有些，在此备忘；<br>(长期更)<br><a id="more"></a></p>
+                <p><p>细数来写markdown时踩的坑也算有些，在此备忘；<br>(长期更)<br><a id="more"></a></p>
 <p>17/1/23:<br><b>数学公式显示问题</b><br>之前在公式编辑器上写了公式，复制Tex过去+头尾$并在主题的配置文件里将mathjax设置为true，发现毫无卵用。然后以为是写主题的作者的锅，尝试使用hexo-math插件，依旧是毫无卵用(WTF)。<br>幸好在众多解释中看到<a href="http://heimingx.cn/2016/06/09/markdown-mathjax/" target="_blank" rel="external">这篇文章</a>，发现确实是转义的问题；<br>：）</p>
 <p>16/xx/xx:<br><b>mac下如何优雅的打出前置空格</b><br>markdown前置对齐属性实在不适合码字，还是段落分明的排版更让人清清爽爽，win下可用自带输入法轻松转换为全角+空格；<br>macOS实在不想用<code> &nmdp; </code>瞎自己的眼的话，推荐搜狗拼音；<br>：）</p>
 <p>17/1/25:</p>
 <p><b>markdown中小于号的转义问题</b><br>下午码字的时候遇到单个小于号无法转义问题，最后用html转义字符串 &amp;lt 表示即可；而小于等于号没有此问题；</p>
-
-				</div>
-			  
-    		  </article>	
-    		  
-<section class="comments" id="comments">
-    <div id="gitment_thread"></div>
-    <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-    <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-    <script>
-        var gitment = new Gitment({
-        	id: 'window.location.pathname',
-            owner: 'polebug',
-            repo: 'polebug.github.io',
-            oauth: {
-                client_id: 'ce0ec393e83b9afdd9b6',
-                client_secret: '70cf9f7944bf22d405c59b6a50a6b15c6cbcd68c',
-            },
-        })
-        gitment.render('comments')
-    </script>
-</section>
-
-    		</div>
-    	</div>
+</p>
+            </div>
+            <div class="post_classes">
+                <div class="post_categories">
+                    <h1>CATEGORIES</h1>
+                    <a class="post_categories-link" href="/categories/杂记/">杂记</a>
+                </div>
+            
+                <div class="post_tags">
+                    <h1>TAG</h1>
+                    <a class="tag-link" href="/tags/markdown/">markdown</a>
+                    
+                </div>	
+            </div>
+            
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Polebug | start</title>
+</head>
+</html>
+<section>
+<div class="sidebar">
+    <h1>MENU</h1>
+    <div class="sidebar_pages">
+        	
+            <li>
+                <a href="/algorithm" class="pages_name">Algorithm</a>
+            </li>
+        	
+            <li>
+                <a href="/web" class="pages_name">Web</a>
+            </li>
+        	
+            <li>
+                <a href="/golang" class="pages_name">Golang</a>
+            </li>
+        	
+            <li>
+                <a href="/anime" class="pages_name">番评</a>
+            </li>
+        	
+            <li>
+                <a href="/salty" class="pages_name">摸鱼</a>
+            </li>
+        	
+            <li>
+                <a href="/aboutme" class="pages_name">Find</a>
+            </li>
+        
     </div>
-  </div>
-</section>
-  
-
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <p>
-	  <i class="fas fa-user"></i><span id="busuanzi_container_site_uv"> 
-  	  <span id="busuanzi_value_site_uv"></span>人次</span>
-  	  &nbsp; | &nbsp;
-      <i class="fas fa-eye"></i> <span id="busuanzi_value_site_pv"></span>次
-      </p>      
-       
-      <p>
-        Last updated : Sunday, May 27th 2018, 11:02:18 am by <strong>polebug</strong>
-      </p>
-      <p>      
-        <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
-        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-        is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
-      </p>
-      <p>
-        Powered by <a href="https://hexo.io/">Hexo</a>. Theme - <a href="https://github.com/polebug/hexo-theme-bulxo"><strong>bulxo</strong></a>
-      </p>
+</div>
+<section>
+            
+        </div>
     </div>
-  </div>
-</footer>
-
+</section>
     </main>
   </body>
 </html>
+
+
