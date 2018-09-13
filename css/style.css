@@ -17,6 +17,7 @@ body {
     color: #34495e;
     background: #fefefe;
     scroll-behavior: smooth;
+    height: 100%;
 }
 .top-bar {
     top: 0;
@@ -52,13 +53,6 @@ body {
 .top-bar .logo-wrapper .logo {
     font-size: 30px;
     font-family: "Chancery", cursive, LiSu, sans-serif;
-}
-.top-bar .-actions {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    padding-left: 48px;
-    height: 100%;
 }
 .top-bar .navigation {
     padding-left: 48px;
@@ -167,7 +161,7 @@ body.home-page .subheader, body.questions-page .subheader {
     border-bottom: 1px solid #e4e6e8;
 }
 h1 {
-    color: #003366;
+    color: #34495e;
     font-size: 18px;
     line-height: 2.5;
 }
@@ -223,7 +217,7 @@ h1 {
     margin: 25px;
 }
 .post_classes{
-    margin-right: 15px;
+    margin-right: 80px;
     margin-bottom: 40px;
     float: right;
 }
@@ -237,4 +231,28 @@ h1 {
 }
 .post_connect {
     margin-top: 10px; 
+}
+
+/* footer */
+.foot {
+    width: 100%;
+    display: flex;
+    bottom: 0;
+    position: fixed;
+    height: 50px;
+    background-color: #34495e;
+}
+.footer_about {
+    color: white;
+    margin-top: 15px;
+    margin-left: 170px;
+}
+.theme{
+    color: white;
+    margin-top: 15px;
+    margin-left: 230px;
+}
+.visit{
+    margin-top: 15px;
+    margin-left: 30px;
 }

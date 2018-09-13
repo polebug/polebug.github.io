@@ -54,53 +54,33 @@
         <div id="content">
             <div id="mainbar" role="main">
                 <div class="post_about">
-                    <h1 class="post_title">Git操作笔记</h1>
+                    <h1 class="post_title">Leetcode 泛刷题记录(9月)</h1>
                     <span class="post_time">
-                        2017-08-28
+                        2018-09-12
                     </span>
                 </div>
 
-                <div class="post_connect"><p>前言：</p>
-<blockquote>
-<p>近期较多接触到 github，遇到各种问题，在此记下<br>持续更新<br>如果你觉得我的姿势还不够优雅，欢迎指教</p>
-</blockquote>
-<p><b>&lt;目录&gt;</b><br>1.fork 项目后，与原项目进行同步</p>
-<a id="more"></a>
-<p></p><h2>fork 项目后，与原项目进行同步</h2><br>如何优雅的解决？<p></p>
-<hr>
-<p>简单的说就是把原项目和 fork 到自己仓库下的项目都 clone 到本地，由此建立连接。然后 fetch 原项目的更新到本地，合并更新，最后 push 到 github 仓库。</p>
-<p>比如，我 fork 了 LCTT 的翻译项目到我的仓库 (polebug)，现在需要与 LCTT 的项目同步：</p>
-<pre><code class="git">clone 自己仓库下的项目
-$ git clone https://github.com/polebug/TranslationProject.git
-
-$ cd ~/TranslationProject
-
-clone 原项目，自定义为 upstream
-$ git remote add upstream https://github.com/LCTT/TranslationProject.git
-
-$ git remote -v 
-
-fetch 原项目更新的内容
-$ git fetch upstream
-
-merge
-$ git checkout master
-$ git merge upstream/master
-
-push
-$ git push -u origin master
-</code></pre>
+                <div class="post_connect"><p>　　　<br>先说一些废话吧，好像又是消失了好一会，开学之后开始每天坚持刷一道 Leetcode，这个博客大概会一直更到新的月份开始 (flag)<br>　　　　<br>所有的题解都放在 github 上了,这里做个简单索引(顺便刷一下成就感 :)<br>  　　<br>(有的是按顺序刷，有的是按 tag 刷)<br>&nbsp;  </p>
+<p><li><a href="https://github.com/polebug/LeetCode/blob/master/List/Medium/002_Add_Two_Numbers.md" target="_blank" rel="external">002_Add_Two_Numbers</a></li></p>
+<p><li><a href="https://github.com/polebug/LeetCode/blob/master/Hash_Table/Medium/003_Longest_Substring_Without_Repeating_Characters.md" target="_blank" rel="external">003_Longest_Substring_Without_Repeating_Characters</a></li></p>
+<p><li><a href="https://github.com/polebug/LeetCode/blob/master/String/Medium/005_Longest_Palindromic_Substring.md" target="_blank" rel="external">005_Longest_Palindromic_Substring</a>  </li></p>
+<p><li><a href="https://github.com/polebug/LeetCode/blob/master/String/Medium/006_ZigZag_Conversion.md" target="_blank" rel="external">006_ZigZag_Conversion</a></li></p>
+<p><li><a href="https://github.com/polebug/LeetCode/blob/master/String/Medium/008_String_to_Integer_(atoi).md" target="_blank" rel="external">008_String_to<em>Integer</em>(atoi)</a></li></p>
+<p><li><a href="https://github.com/polebug/LeetCode/blob/master/Tree/Easy/100_Same_Tree.md" target="_blank" rel="external">100_Same_Tree</a></li></p>
+<p><li><a href="https://github.com/polebug/LeetCode/blob/master/Tree/Easy/101_Symmetric_Tree.md" target="_blank" rel="external">101_Symmetric_Tree</a></li></p>
+<p><li><a href="https://github.com/polebug/LeetCode/blob/master/Tree/Easy/107_Binary_Tree_Level_Order_Traversal_II.md" target="_blank" rel="external">107_Binary_Tree_Level_Order_Traversal_II</a></li></p>
+<p><li><a href="https://github.com/polebug/LeetCode/blob/master/Tree/Easy/110_Balanced_Binary_Tree.md" target="_blank" rel="external">110_Balanced_Binary_Tree</a></li></p>
 </div>
             </div>
             <div class="post_classes">
                 <div class="post_categories">
                     <h1>CATEGORIES</h1>
-                    
+                    <a class="post_categories-link" href="/categories/algorithm/">algorithm</a>
                 </div>
             
                 <div class="post_tags">
                     <h1>TAG</h1>
-                    <a class="tag-link" href="/tags/git/">git</a>
+                    <a class="tag-link" href="/tags/algorithm/">algorithm</a>  ,  <a class="tag-link" href="/tags/leetcode/">leetcode</a>
                     
                 </div>	
             </div>
@@ -158,7 +138,7 @@ $ git push -u origin master
 </html>
 <footer class="foot">
     <p class="footer_about">
-        Last updated : Thursday, September 13th 2018, 2:16:08 pm by <strong>Polebug</strong>
+        Last updated : Thursday, September 13th 2018, 2:16:09 pm by <strong>Polebug</strong>
     </p>
     <p class="theme">
         Hexo Theme - <a href="https://github.com/polebug/saruka/" style="color:white"><strong>saruka</strong></a>
