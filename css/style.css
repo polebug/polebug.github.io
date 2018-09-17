@@ -52,7 +52,7 @@ body {
 }
 .top-bar .logo-wrapper .logo {
     font-size: 30px;
-    font-family: "Chancery", cursive, LiSu, sans-serif;
+    font-style:italic;
 }
 .top-bar .navigation {
     padding-left: 48px;
@@ -242,13 +242,16 @@ h1 {
     color: white;
     margin-top: 15px;
     margin-left: 170px;
+    font-style:italic;
 }
 .theme{
     color: white;
     margin-top: 15px;
     margin-left: 230px;
+    font-style:italic;
 }
 .visit{
     margin-top: 15px;
     margin-left: 30px;
+    font-style:italic;
 }
