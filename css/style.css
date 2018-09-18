@@ -168,9 +168,8 @@ h1 {
     font-weight: normal;
 }
 .sidebar{
-    margin-top: 15px;
-    margin-right: 120px;
-    float: right;
+    margin-left: 80px;
+    float: left;
 }
 .tags , .sidebar_pages{
     line-height: 18px;
@@ -216,6 +215,7 @@ h1 {
     margin-left: 80px;
     margin-bottom: 40px;
     float: left;
+    
 }
 .post_categories{
     margin-right: 10px;
@@ -229,6 +229,9 @@ h1 {
     margin-top: 10px; 
 }
 
+.side{
+    display: table-cell;
+}
 /* footer */
 .foot {
     width: 100%;
