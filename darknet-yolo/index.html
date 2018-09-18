@@ -63,44 +63,107 @@
                     </span>
                 </div>
 
-                <div class="post_connect"><p>最近需要用上yolo，没有找到好的训练方式，想试试darknet。<br>然后因为坑爹的官网文档 + mac下相关问题的解决方法太少，于是找了一晚上的错（哭</p>
-<h3>相关环境 </h3><br>MacOS<br>无CUDA(CPU only)<br>OpenCV 2.4<br><a id="more"></a><br><h3>安装 </h3><br>根据<a href="https://pjreddie.com/darknet/install/" target="_blank" rel="external">官网</a>文档进行安装<br><br><h3>配置问题 </h3>
+                <div class="post_connect"><p>最近需要用上yolo，没有找到好的训练方式，想试试darknet。
+然后因为坑爹的官网文档 + mac下相关问题的解决方法太少，于是找了一晚上的错（哭</p>
+<h3>相关环境 </h3>
+MacOS
+无CUDA(CPU only)
+OpenCV 2.4
+<a id="more"></a>
+<h3>安装 </h3>
+根据<a href="https://pjreddie.com/darknet/install/" target="_blank" rel="external">官网</a>文档进行安装
 
-<p><b>0.Makefile的基本配置</b><br>根据系统环境:<br>GPU=0<br>CUDA=0<br>OPENCV=1<br>DEBUG=0</p>
+<h3>配置问题 </h3>
+
+<p><b>0.Makefile的基本配置</b>
+根据系统环境:
+GPU=0
+CUDA=0
+OPENCV=1
+DEBUG=0</p>
 <p>重新 make 即可</p>
 <hr>
-<p><b>1.测试opencv报错</b><br>执行</p>
+<p><b>1.测试opencv报错</b>
+执行</p>
 <pre><code>./darknet imtest data/eagle.jpg
 </code></pre><p>报错</p>
-<p>尝试在python中, &gt;&gt;&gt; import cv2<br>报错:</p>
+<p>尝试在python中, &gt;&gt;&gt; import cv2
+报错:</p>
 <pre><code>Traceback (most recent call last):
   File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
 ImportError: No module named cv2
-</code></pre><p>site-packages路径设置问题<br>输入命令:<br>export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH</p>
+</code></pre><p>site-packages路径设置问题
+输入命令:
+export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH</p>
 <hr>
-<p><b>2.Segmentation fault: 11</b><br>按照<a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="external">官网上使用yolo</a>的步骤，执行</p>
+<p><b>2.Segmentation fault: 11</b>
+按照<a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="external">官网上使用yolo</a>的步骤，执行</p>
 <pre><code>./darknet detect cfg/yolo.cfg yolo.weights data/dog.jpg
 </code></pre><p>输出:</p>
 <blockquote>
-<p>layer     filters    size              input                output<br>   0 conv     32  3 x 3 / 1   608 x 608 x   3   -&gt;   608 x 608 x  32<br>   1 max          2 x 2 / 2   608 x 608 x  32   -&gt;   304 x 304 x  32<br>   2 conv     64  3 x 3 / 1   304 x 304 x  32   -&gt;   304 x 304 x  64<br>   3 max          2 x 2 / 2   304 x 304 x  64   -&gt;   152 x 152 x  64<br>   4 conv    128  3 x 3 / 1   152 x 152 x  64   -&gt;   152 x 152 x 128<br>   5 conv     64  1 x 1 / 1   152 x 152 x 128   -&gt;   152 x 152 x  64<br>   6 conv    128  3 x 3 / 1   152 x 152 x  64   -&gt;   152 x 152 x 128<br>   7 max          2 x 2 / 2   152 x 152 x 128   -&gt;    76 x  76 x 128<br>   8 conv    256  3 x 3 / 1    76 x  76 x 128   -&gt;    76 x  76 x 256<br>   9 conv    128  1 x 1 / 1    76 x  76 x 256   -&gt;    76 x  76 x 128<br>  10 conv    256  3 x 3 / 1    76 x  76 x 128   -&gt;    76 x  76 x 256<br>  11 max          2 x 2 / 2    76 x  76 x 256   -&gt;    38 x  38 x 256<br>  12 conv    512  3 x 3 / 1    38 x  38 x 256   -&gt;    38 x  38 x 512<br>  13 conv    256  1 x 1 / 1    38 x  38 x 512   -&gt;    38 x  38 x 256<br>  14 conv    512  3 x 3 / 1    38 x  38 x 256   -&gt;    38 x  38 x 512<br>  15 conv    256  1 x 1 / 1    38 x  38 x 512   -&gt;    38 x  38 x 256<br>  16 conv    512  3 x 3 / 1    38 x  38 x 256   -&gt;    38 x  38 x 512<br>  17 max          2 x 2 / 2    38 x  38 x 512   -&gt;    19 x  19 x 512<br>  18 conv   1024  3 x 3 / 1    19 x  19 x 512   -&gt;    19 x  19 x1024<br>  19 conv    512  1 x 1 / 1    19 x  19 x1024   -&gt;    19 x  19 x 512<br>  20 conv   1024  3 x 3 / 1    19 x  19 x 512   -&gt;    19 x  19 x1024<br>  21 conv    512  1 x 1 / 1    19 x  19 x1024   -&gt;    19 x  19 x 512<br>  22 conv   1024  3 x 3 / 1    19 x  19 x 512   -&gt;    19 x  19 x1024<br>  23 conv   1024  3 x 3 / 1    19 x  19 x1024   -&gt;    19 x  19 x1024<br>  24 conv   1024  3 x 3 / 1    19 x  19 x1024   -&gt;    19 x  19 x1024<br>  25 route  16<br>  26 conv     64  1 x 1 / 1    38 x  38 x 512   -&gt;    38 x  38 x  64<br>  27 reorg              / 2    38 x  38 x  64   -&gt;    19 x  19 x 256<br>  28 route  27 24<br>  29 conv   1024  3 x 3 / 1    19 x  19 x1280   -&gt;    19 x  19 x1024<br>  30 conv    425  1 x 1 / 1    19 x  19 x1024   -&gt;    19 x  19 x 425<br>  31 detection<br>Loading weights from yolo.weights…Done!<br>data/dog.jpg: Predicted in 12.558990 seconds.<br>dog: 82%<br>truck: 65%<br>bicycle: 85%<br>Segmentation fault: 11</p>
+<p>layer     filters    size              input                output
+   0 conv     32  3 x 3 / 1   608 x 608 x   3   -&gt;   608 x 608 x  32
+   1 max          2 x 2 / 2   608 x 608 x  32   -&gt;   304 x 304 x  32
+   2 conv     64  3 x 3 / 1   304 x 304 x  32   -&gt;   304 x 304 x  64
+   3 max          2 x 2 / 2   304 x 304 x  64   -&gt;   152 x 152 x  64
+   4 conv    128  3 x 3 / 1   152 x 152 x  64   -&gt;   152 x 152 x 128
+   5 conv     64  1 x 1 / 1   152 x 152 x 128   -&gt;   152 x 152 x  64
+   6 conv    128  3 x 3 / 1   152 x 152 x  64   -&gt;   152 x 152 x 128
+   7 max          2 x 2 / 2   152 x 152 x 128   -&gt;    76 x  76 x 128
+   8 conv    256  3 x 3 / 1    76 x  76 x 128   -&gt;    76 x  76 x 256
+   9 conv    128  1 x 1 / 1    76 x  76 x 256   -&gt;    76 x  76 x 128
+  10 conv    256  3 x 3 / 1    76 x  76 x 128   -&gt;    76 x  76 x 256
+  11 max          2 x 2 / 2    76 x  76 x 256   -&gt;    38 x  38 x 256
+  12 conv    512  3 x 3 / 1    38 x  38 x 256   -&gt;    38 x  38 x 512
+  13 conv    256  1 x 1 / 1    38 x  38 x 512   -&gt;    38 x  38 x 256
+  14 conv    512  3 x 3 / 1    38 x  38 x 256   -&gt;    38 x  38 x 512
+  15 conv    256  1 x 1 / 1    38 x  38 x 512   -&gt;    38 x  38 x 256
+  16 conv    512  3 x 3 / 1    38 x  38 x 256   -&gt;    38 x  38 x 512
+  17 max          2 x 2 / 2    38 x  38 x 512   -&gt;    19 x  19 x 512
+  18 conv   1024  3 x 3 / 1    19 x  19 x 512   -&gt;    19 x  19 x1024
+  19 conv    512  1 x 1 / 1    19 x  19 x1024   -&gt;    19 x  19 x 512
+  20 conv   1024  3 x 3 / 1    19 x  19 x 512   -&gt;    19 x  19 x1024
+  21 conv    512  1 x 1 / 1    19 x  19 x1024   -&gt;    19 x  19 x 512
+  22 conv   1024  3 x 3 / 1    19 x  19 x 512   -&gt;    19 x  19 x1024
+  23 conv   1024  3 x 3 / 1    19 x  19 x1024   -&gt;    19 x  19 x1024
+  24 conv   1024  3 x 3 / 1    19 x  19 x1024   -&gt;    19 x  19 x1024
+  25 route  16
+  26 conv     64  1 x 1 / 1    38 x  38 x 512   -&gt;    38 x  38 x  64
+  27 reorg              / 2    38 x  38 x  64   -&gt;    19 x  19 x 256
+  28 route  27 24
+  29 conv   1024  3 x 3 / 1    19 x  19 x1280   -&gt;    19 x  19 x1024
+  30 conv    425  1 x 1 / 1    19 x  19 x1024   -&gt;    19 x  19 x 425
+  31 detection
+Loading weights from yolo.weights…Done!
+data/dog.jpg: Predicted in 12.558990 seconds.
+dog: 82%
+truck: 65%
+bicycle: 85%
+Segmentation fault: 11</p>
 </blockquote>
 <p><b>报错: <code>Segmentation fault: 11</code> 并且在目录中未出现已识别的图片</b></p>
 <p><b>解决办法:</b></p>
-<p><b>2.1更改Makefile:</b><br>将opencv部分修改为如下代码:(分别修改COMMON/LDFLAGS)</p>
+<p><b>2.1更改Makefile:</b>
+将opencv部分修改为如下代码:(分别修改COMMON/LDFLAGS)</p>
 <pre><code>ifeq ($(OPENCV), 1) 
 COMMON+= -DOPENCV -I/usr/local/include
 CFLAGS+= -DOPENCV
 LDFLAGS+= `pkg-config --libs opencv` -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc
 COMMON+= `pkg-config --cflags opencv` 
 endif
-</code></pre><p>save<br>make</p>
-<p><b>2.2用官网提供的另一种命令方式:</b><br>注意到一个很坑的地方,<a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="external"></a></p>
+</code></pre><p>save 
+make</p>
+<p><b>2.2用官网提供的另一种命令方式:</b>
+注意到一个很坑的地方,<a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="external"></a></p>
 <blockquote>
-<p>The detect command is shorthand for a more general version of the command. It is equivalent to the command:<br>./darknet detector test cfg/coco.data cfg/yolo.cfg yolo.weights data/dog.jpg</p>
+<p>The detect command is shorthand for a more general version of the command. It is equivalent to the command:
+./darknet detector test cfg/coco.data cfg/yolo.cfg yolo.weights data/dog.jpg</p>
 </blockquote>
-<p>晚上在我试过各种各样解决segmentation fault 11的方法，快要崩溃的时候，试了这个所谓的等价的命令，发现成功了<br>(我:???????有一万句mmp要说</p>
+<p>晚上在我试过各种各样解决segmentation fault 11的方法，快要崩溃的时候，试了这个所谓的等价的命令，发现成功了
+(我:???????有一万句mmp要说</p>
 <hr>
-<p>以上<br>如有错误，欢迎指正</p>
+<p>以上
+如有错误，欢迎指正</p>
 </div>
             </div>
             <div class="post_classes">
@@ -169,7 +232,7 @@ endif
 </html>
 <footer class="foot">
     <p class="footer_about">
-        Last updated : Tuesday, September 18th 2018, 11:44:33 am by <strong>Polebug</strong>
+        Last updated : Tuesday, September 18th 2018, 12:21:21 pm by <strong>Polebug</strong>
     </p>
     <p class="theme">
         Hexo Theme - <a href="https://github.com/polebug/saruka/" style="color:white"><strong>saruka</strong></a>

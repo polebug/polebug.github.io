@@ -64,21 +64,29 @@
                 </div>
 
                 <div class="post_connect"><p>写博客的时候，通常会有一个一般需要，想要自定义一个页面（例如404页面/AboutMe）。如果你使用的是 Hexo，其实也非常容易实现这一点。以 bulxo 主题为例进行说明：</p>
-<h2 id="1-修改导航"><a href="#1-修改导航" class="headerlink" title="1.修改导航"></a>1.修改导航</h2><p>首先考虑将页面入口挂在哪里的问题，如果想创建 404 这样的页面，可以忽略掉这一步。<br><a id="more"></a><br>就 bulxo 而言，有两种样式二选一：</p>
-<p><strong> (1).修改 _config.menu </strong><br>修改 theme/_config 下的 menu，添加 page_name 即可。与 menu 下的其他页面一起显示在 Find 下拉框中。</p>
-<p><strong> (2).修改 header.ejs </strong><br>要是想和 Home/Find 等一起挂在博客顶部的 navbar 上，可修改 theme/bulxo/layout/_partial/header.ejs，参照代码中的 navbar-item (或者类似 class) 标签修改即可。<br>以 bulxo 为例：</p>
+<h2 id="1-修改导航"><a href="#1-修改导航" class="headerlink" title="1.修改导航"></a>1.修改导航</h2><p>首先考虑将页面入口挂在哪里的问题，如果想创建 404 这样的页面，可以忽略掉这一步。
+<a id="more"></a>
+就 bulxo 而言，有两种样式二选一：</p>
+<p><strong> (1).修改 _config.menu </strong>
+修改 theme/_config 下的 menu，添加 page_name 即可。与 menu 下的其他页面一起显示在 Find 下拉框中。</p>
+<p><strong> (2).修改 header.ejs </strong>
+要是想和 Home/Find 等一起挂在博客顶部的 navbar 上，可修改 theme/bulxo/layout/_partial/header.ejs，参照代码中的 navbar-item (或者类似 class) 标签修改即可。
+以 bulxo 为例：</p>
 <pre><code>&lt;a class=&quot;navbar-item&quot; href=&quot;/page_name&quot;&gt; page_name &lt;/a&gt;
 </code></pre><p>要是想添加其他样式，可参考 <a href="bulma.io"> Bulma 官网</a> 文档。</p>
 <h2 id="2-创建页面"><a href="#2-创建页面" class="headerlink" title="2.创建页面"></a>2.创建页面</h2><p><strong> (1).先通过 Hexo 命令创建 page </strong>:</p>
 <pre><code>hexo new page &quot;page_name&quot;
-</code></pre><p><strong> (2).修改 source/page_name/index.md </strong><br>首先建议将 .md 改成 .html，保证样式正常渲染。<br>对于 index.html 的改写，这里也有两种方法二选一：</p>
+</code></pre><p><strong> (2).修改 source/page_name/index.md </strong>
+首先建议将 .md 改成 .html，保证样式正常渲染。
+对于 index.html 的改写，这里也有两种方法二选一：</p>
 <li>如果你想要一个完全空白的页面，在 index.html 最上方修改为：</li>
 
 <pre><code>---
 layout: false
 ---
 </code></pre><p>那么，theme 下的 page.ejs 就会失效。接着写上 html 代码即可，但是有一个不方便的地方就是 hexo 给的一系列函数没有办法使用（例如 post.date, post.tags 等），以及你需要从 head 开始写到 foot，也是挺麻烦的。</p>
-<p><li>为了避免重复劳动，这里推荐第二种方法：<strong>修改 theme 下的 page.ejs </strong> </li><br>找到 theme/bulxo/layout/page.ejs，这是一个定义 page 的文件，可以删除一些多余的代码，只留下 header 和 footer，这样可以得到一个只有顶部和底部样式的页面。(bulxo已改好)</p>
+<p><li>为了避免重复劳动，这里推荐第二种方法：<strong>修改 theme 下的 page.ejs </strong> </li>
+找到 theme/bulxo/layout/page.ejs，这是一个定义 page 的文件，可以删除一些多余的代码，只留下 header 和 footer，这样可以得到一个只有顶部和底部样式的页面。(bulxo已改好)</p>
 <p>对于 page_name/index.html，只需写入中间样式即可。</p>
 </div>
             </div>
@@ -148,7 +156,7 @@ layout: false
 </html>
 <footer class="foot">
     <p class="footer_about">
-        Last updated : Tuesday, September 18th 2018, 11:44:33 am by <strong>Polebug</strong>
+        Last updated : Tuesday, September 18th 2018, 12:21:21 pm by <strong>Polebug</strong>
     </p>
     <p class="theme">
         Hexo Theme - <a href="https://github.com/polebug/saruka/" style="color:white"><strong>saruka</strong></a>

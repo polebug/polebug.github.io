@@ -63,15 +63,71 @@
                     </span>
                 </div>
 
-                <div class="post_connect"><p>装了python2.7，去图书馆借了python入门经典，暂且简单写下学习笔记，以供自己回忆<br>学习笔记（一）主要是基础语法部分：<br>　　1.python中数字以及字符串的使用;<br>　　2.输入与输出语句;<br>　　3.逻辑用语;<br>　　4.循环语句;<br>　　5.列表以及字典的使用;<br>　　6.函数的调用;<br><a id="more"></a></p>
+                <div class="post_connect"><p>装了python2.7，去图书馆借了python入门经典，暂且简单写下学习笔记，以供自己回忆
+学习笔记（一）主要是基础语法部分：
+　　1.python中数字以及字符串的使用;
+　　2.输入与输出语句;
+　　3.逻辑用语;
+　　4.循环语句;
+　　5.列表以及字典的使用;
+　　6.函数的调用;
+<a id="more"></a></p>
 <p>以下为学习笔记（一）正文：</p>
-<h2>python中数字的使用</h2><br> <h3>变量类型</h3><br>int,float,string就不说了<br>这里注意下面几种类型的使用：<br>　　<code>long</code>：长整型(不是long long)，最长的数字的长度取决于计算机有多大的内存；<br>　　<code>list</code> ：功能类似于数组，用[]表示，里面的值可以改变；<br>　　<code>tuple</code>：用()表示，里面的值不可以改变；<br>　　<code>dictionary</code>：可列出已经配对的键和值；<br>(查看变量类型，可用type()查看)<br><br><li>支持强制转换变量类型，例如float(2)；</li><br><br><h3>变量命名</h3><br><li>python对于变量名的限制：不能用数字开头，不能过长，不能包括特殊符号(除下划线)；<br></li><li>对于变量命名的特殊点：大多数情况下变量名全部是小写。若不想变量的值被修改，才把变量名全部大写，作为一个常量；<br></li><br><br><h3>数学运算</h3><br>基本运算没见过的就是：floor除法的符号为//，求幂的符号为**；<br>运算优先级以及比较问题就不说了<br><br><h2>python中string的使用</h2>
+<h2>python中数字的使用</h2>
+ <h3>变量类型</h3>
+int,float,string就不说了
+这里注意下面几种类型的使用：
+　　<code>long</code>：长整型(不是long long)，最长的数字的长度取决于计算机有多大的内存；
+　　<code>list</code> ：功能类似于数组，用[]表示，里面的值可以改变；
+　　<code>tuple</code>：用()表示，里面的值不可以改变；
+　　<code>dictionary</code>：可列出已经配对的键和值；
+(查看变量类型，可用type()查看)
 
-<li>字符串创建，用‘   ’或者“   ”都可以进行赋值<br></li><li>识别大小写和空格</li>
+<li>支持强制转换变量类型，例如float(2)；</li>
 
-<p></p><h3>字符串有关的函数使用：</h3><br>　　<code>len()</code>：返回字符串长度；<br>　　<code>.upper()</code>：全部转换成大写；<br>　　<code>.lower()</code>：全部转换成小写；<br>　　<code>.capitalize()</code>：把首字母转换成大写，其余转换成小写；<br>　　<code>.title()</code>：把首字母以及每个空格或者标点符号后的字母转换成大写，其余字母转换成小写；<br>　　<code>is_alpha()</code>：检查一个字符串是否全由字母组成；<br>　　<code>.strip()</code>：<br>　　　　1.删除字符串开头和结尾的所有空格；<br>　　　　2.删除指定的字符，例如：.strip(‘*’)；<br>　　　　3.rstrip()只删除开头的字符；.lstrip()只删除结尾的字符；<br>　　<code>.count(‘   ‘)</code>：返回一个字符串在另一个字符串中出现的次数；<br>　　<code>.find(‘   ‘)</code>：返回某个字符串第一次出现的位置，若没有找到返回-1；<br>　　<code>.replace(‘string1’, ‘string2’)</code>：将string1替换为string2；<br>注：使用这些函数之后，字符串自身的值并未发生改变<p></p>
+<h3>变量命名</h3>
+<li>python对于变量名的限制：不能用数字开头，不能过长，不能包括特殊符号(除下划线)；
+</li><li>对于变量命名的特殊点：大多数情况下变量名全部是小写。若不想变量的值被修改，才把变量名全部大写，作为一个常量；
+</li>
+
+<h3>数学运算</h3>
+基本运算没见过的就是：floor除法的符号为//，求幂的符号为**；
+运算优先级以及比较问题就不说了
+
+<h2>python中string的使用</h2>
+
+<li>字符串创建，用‘   ’或者“   ”都可以进行赋值
+</li><li>识别大小写和空格</li>
+
+<p></p><h3>字符串有关的函数使用：</h3>
+　　<code>len()</code>：返回字符串长度；
+　　<code>.upper()</code>：全部转换成大写；
+　　<code>.lower()</code>：全部转换成小写；
+　　<code>.capitalize()</code>：把首字母转换成大写，其余转换成小写；
+　　<code>.title()</code>：把首字母以及每个空格或者标点符号后的字母转换成大写，其余字母转换成小写；
+　　<code>is_alpha()</code>：检查一个字符串是否全由字母组成；
+　　<code>.strip()</code>：
+　　　　1.删除字符串开头和结尾的所有空格；
+　　　　2.删除指定的字符，例如：.strip(‘*’)；
+　　　　3.rstrip()只删除开头的字符；.lstrip()只删除结尾的字符；
+　　<code>.count(‘   ‘)</code>：返回一个字符串在另一个字符串中出现的次数；
+　　<code>.find(‘   ‘)</code>：返回某个字符串第一次出现的位置，若没有找到返回-1；
+　　<code>.replace(‘string1’, ‘string2’)</code>：将string1替换为string2；
+注：使用这些函数之后，字符串自身的值并未发生改变<p></p>
 <p></p><h3>字符串的运算：</h3><p></p>
-<li>加法： (string) + (string)<br>　　　　(string) + “   “ +(string)<br></li><li>乘法： (string)*(int)<br>　　　　其中int得是非负整数<br></li><li>不存在减法和除法运算<br><br><h2>处理输入和输出</h2><br><h3>输入：</h3><br>　　<code>input()</code>：用于收集信息，不能接受没有引号括住的字符串；<br>　　<code>raw_input()</code>：用于收集任何非数字的信息，会把用户输入的任何内容都保存为一个字符串；<br>　　　　　　　　　raw_input()函数内还可以加入提示内容；<br>　　这个地方举个例子：<br><code>&gt;&gt;&gt; s = input()  //input的用法
+<li>加法： (string) + (string)
+　　　　(string) + “   “ +(string)
+</li><li>乘法： (string)*(int)
+　　　　其中int得是非负整数
+</li><li>不存在减法和除法运算
+
+<h2>处理输入和输出</h2>
+<h3>输入：</h3>
+　　<code>input()</code>：用于收集信息，不能接受没有引号括住的字符串；
+　　<code>raw_input()</code>：用于收集任何非数字的信息，会把用户输入的任何内容都保存为一个字符串；
+　　　　　　　　　raw_input()函数内还可以加入提示内容；
+　　这个地方举个例子：
+<code>&gt;&gt;&gt; s = input()  //input的用法
 &quot;hello world&quot;
 &gt;&gt;&gt; s
 &#39;hello world&#39;
@@ -79,13 +135,24 @@
 &gt;&gt;&gt; name = raw_input(&quot;What is your name?&quot;)  //raw_input()的用法
 What is your name : Polebug
 &gt;&gt;&gt; name
-Polebug</code><br><br>　　<code>import语句</code>：允许我们从用户获取信息且同时隐藏用户输入<br>　　举个例子：<br><code>&gt;&gt;&gt; from getpass import getpass
+Polebug</code>
+
+　　<code>import语句</code>：允许我们从用户获取信息且同时隐藏用户输入
+　　举个例子：
+<code>&gt;&gt;&gt; from getpass import getpass
 &gt;&gt;&gt; my_password = getpass()
 Password :
 &gt;&gt;&gt;my_password
-&#39;hello_world&#39;</code><br>　　其中，getpass()中可加提示语句。举个例子：<br><code>&gt;&gt;&gt; for getpass import getpass
+&#39;hello_world&#39;</code>
+　　其中，getpass()中可加提示语句。举个例子：
+<code>&gt;&gt;&gt; for getpass import getpass
 &gt;&gt;&gt; my_password = getpass(&quot;Password, please : &quot;)
-Password, please :</code><br>　　如果getpass()未添加提示语句，则默认输出”Password : “进行提示；<br><br><h3>输出：</h3><br>　　相比于c的输出语句printf(“%d”,…);python是使用{}来确定变量输出的位置；而对于多个{}并列使用时输出顺序，则是由{}的先后，或者是变量，或者是{}中的数字决定。分别举例：<br><code>&gt;&gt;&gt; Example1 = &quot;{},{}!&quot;
+Password, please :</code>
+　　如果getpass()未添加提示语句，则默认输出”Password : “进行提示；
+
+<h3>输出：</h3>
+　　相比于c的输出语句printf(“%d”,…);python是使用{}来确定变量输出的位置；而对于多个{}并列使用时输出顺序，则是由{}的先后，或者是变量，或者是{}中的数字决定。分别举例：
+<code>&gt;&gt;&gt; Example1 = &quot;{},{}!&quot;
 &gt;&gt;&gt; a = &quot;Hello&quot;
 &gt;&gt;&gt; b = &quot;world&quot;
 &gt;&gt;&gt; print Example1.format(a, b)
@@ -99,7 +166,14 @@ Hello, world!
 
 &gt;&gt;&gt; Example3 = &quot;{0}, {1}!&quot;
 &gt;&gt;&gt; print Example3.format(&#39;Hello&#39;, &#39;world&#39;)
-Hello, world!</code><br><br><h2>逻辑用语</h2><br></li><li>if,else以及elif唯一执行第一条为真的语句。<br>　注意一下末尾的冒号。<br></li><li>使用try/except避免错误：用try进行尝试，如果出现程序崩溃，执行except语句（同样需要冒号）<br></li><li><a color="#F92672">注意一下，python中逻辑语句以及循环语句，根据缩进判断执行到哪一句；</a><br></li>
+Hello, world!</code>
+
+<h2>逻辑用语</h2>
+</li><li>if,else以及elif唯一执行第一条为真的语句。
+　注意一下末尾的冒号。
+</li><li>使用try/except避免错误：用try进行尝试，如果出现程序崩溃，执行except语句（同样需要冒号）
+</li><li><a color="#F92672">注意一下，python中逻辑语句以及循环语句，根据缩进判断执行到哪一句；</a>
+</li>
 
 <p></p><h2>循环语句</h2><p></p>
 <pre><code>//同样支持break,continue语句，注意一下缩进
@@ -128,7 +202,8 @@ The number is : 3
 //while语句的使用,跟c++用起来差不多，随便举几个例子
 &gt;&gt;&gt; while True :
 &gt;&gt;&gt; while not Name.isdigit() :
-</code></pre><p></p><h2>python中列表的使用</h2><br>python中列表的作用以及操作和c++里的数组很相似，实现和逻辑方面都简单说一下<p></p>
+</code></pre><p></p><h2>python中列表的使用</h2>
+python中列表的作用以及操作和c++里的数组很相似，实现和逻辑方面都简单说一下<p></p>
 <pre><code>//创建列表
 &gt;&gt;&gt; List = []                                               //创建空列表
 &gt;&gt;&gt; List = [ 1, 2, 3, 4 ]                                   //创建包含有数字1,2,3,4的列表
@@ -209,7 +284,9 @@ False
 //判断不等于同理
 &gt;&gt;&gt; Number1 == Number2
 False
-</code></pre><p></p><h2>使用字典匹配键和值</h2><br>python中字典的功能有点像哈希表，但相比于c++实现的哈希映射，字典使用起来简单很多<br>字典的使用主要是以下几种：<p></p>
+</code></pre><p></p><h2>使用字典匹配键和值</h2>
+python中字典的功能有点像哈希表，但相比于c++实现的哈希映射，字典使用起来简单很多
+字典的使用主要是以下几种：<p></p>
 <pre><code>//创造字典
 &gt;&gt;&gt; states = {}                                                     //空字典
 &gt;&gt;&gt; states = {&quot;V&quot;: &quot;R&quot;, &quot;M&quot;: &quot;A&quot;}                                   //字符串匹配字符串
@@ -235,7 +312,8 @@ True
 &gt;&gt;&gt; states.values()
 
 //比较两个字典是否相等时，不根据特定的顺序进行比较
-</code></pre><p>注：如果字典中有两个键相同，但是值不同，查询键时返回最后一个匹配的值<br>举个例子：</p>
+</code></pre><p>注：如果字典中有两个键相同，但是值不同，查询键时返回最后一个匹配的值
+举个例子：</p>
 <pre><code>&gt;&gt;&gt; number = {1:2, 1:3}
 &gt;&gt;&gt; number [1]
 3
@@ -279,11 +357,14 @@ hello
 &gt;&gt;&gt; args (1,2,3)
 1
 (2, 3)
-</code></pre><p></p><h2>总结一些容易错误的细节</h2><br>主要是一些习惯问题<p></p>
+</code></pre><p></p><h2>总结一些容易错误的细节</h2>
+主要是一些习惯问题<p></p>
 <p><li> if , else, elif以及创建一个函数时语句末尾有冒号</li></p>
 <p><li>注意一下缩进问题</li></p>
-<p><li>用and,not,or进行逻辑关系的判断<br>(单引号和双引号的问题并不用太注意)</li></p>
-<p>基础语法就学习到这里~<br>(我会继续补充和完善的~如果有错误，欢迎指正)</p>
+<p><li>用and,not,or进行逻辑关系的判断
+(单引号和双引号的问题并不用太注意)</li></p>
+<p>基础语法就学习到这里~
+(我会继续补充和完善的~如果有错误，欢迎指正)</p>
 </div>
             </div>
             <div class="post_classes">
@@ -352,7 +433,7 @@ hello
 </html>
 <footer class="foot">
     <p class="footer_about">
-        Last updated : Tuesday, September 18th 2018, 11:44:33 am by <strong>Polebug</strong>
+        Last updated : Tuesday, September 18th 2018, 12:21:21 pm by <strong>Polebug</strong>
     </p>
     <p class="theme">
         Hexo Theme - <a href="https://github.com/polebug/saruka/" style="color:white"><strong>saruka</strong></a>

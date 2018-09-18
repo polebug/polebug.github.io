@@ -213,9 +213,9 @@ h1 {
     color: #A0A0A0;
 }
 .post_classes{
-    margin-right: 80px;
+    margin-left: 80px;
     margin-bottom: 40px;
-    float: right;
+    float: left;
 }
 .post_categories{
     margin-right: 10px;

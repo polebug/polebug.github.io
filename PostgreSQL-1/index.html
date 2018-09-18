@@ -64,9 +64,12 @@
                 </div>
 
                 <div class="post_connect"><blockquote>
-<p>这篇的话，我大概10月底翻完的，不知道为什么还没被校对好(emmmmmm…可能是翻的太烂，给校对造成很大困扰吧…)。选是 PostgreSQL 其中一个主要开发者的博文，翻译过程感觉这样的博文会有一些坑，写的也比较随意一点。不过写的还是不错的。PostgreSQL 发布之后反响也很好，希望这篇文章能对感兴趣的朋友起微小的作用<br>如有错误，欢迎指正<br><a id="more"></a></p>
+<p>这篇的话，我大概10月底翻完的，不知道为什么还没被校对好(emmmmmm…可能是翻的太烂，给校对造成很大困扰吧…)。选是 PostgreSQL 其中一个主要开发者的博文，翻译过程感觉这样的博文会有一些坑，写的也比较随意一点。不过写的还是不错的。PostgreSQL 发布之后反响也很好，希望这篇文章能对感兴趣的朋友起微小的作用
+如有错误，欢迎指正
+<a id="more"></a></p>
 </blockquote>
-<p>======<br>由于我刚刚提交了最后一个改进 PostgreSQL 11 哈希索引的补丁，并且大部分哈希索引的改进都致力于预计下周发布的 PostgreSQL 10，因此现在似乎是对过去 18 个月左右所做的工作进行简要回顾的好时机。在版本 10 之前，哈希索引在并发性能方面表现不佳，缺少预写日志记录，因此在宕机或复制时都是不安全的，并且还有其他二等公民。在 PostgreSQL 10 中，这在很大程度上被修复了。</p>
+<p>======
+由于我刚刚提交了最后一个改进 PostgreSQL 11 哈希索引的补丁，并且大部分哈希索引的改进都致力于预计下周发布的 PostgreSQL 10，因此现在似乎是对过去 18 个月左右所做的工作进行简要回顾的好时机。在版本 10 之前，哈希索引在并发性能方面表现不佳，缺少预写日志记录，因此在宕机或复制时都是不安全的，并且还有其他二等公民。在 PostgreSQL 10 中，这在很大程度上被修复了。</p>
 <p>虽然我参与了一些设计，但改进哈希索引的首要功劳来自我的同事 Amit Kapila，<a href="http://amitkapila16.blogspot.jp/2017/03/hash-indexes-are-faster-than-btree.html" target="_blank" rel="external">他在这个话题下的博客值得一读</a>。哈希索引的问题不仅在于没有人打算写预写日志记录的代码，还在于代码没有以某种方式进行结构化，使其可以添加实际上正常工作的预写日志记录。要拆分一个桶，系统将锁定已有的桶（使用一种十分低效的锁定机制），将半个元组移动到新的桶中，压缩已有的桶，然后松开锁。即使记录了个别更改，在错误的时刻发生崩溃也会使索引处于损坏状态。因此，Aimt 首先做的是重新设计锁定机制。<a href="https://git.postgresql.org/gitweb/?p=postgresql.git;a=commitdiff;h=6d46f4783efe457f74816a75173eb23ed8930020" target="_blank" rel="external">新的机制</a>在某种程度上允许扫描和拆分并行进行，并且允许稍后完成那些因报错或崩溃而被中断的拆分。一完成一系列漏洞的修复和一些重构工作，Aimt 就打了另一个补丁，<a href="https://git.postgresql.org/gitweb/?p=postgresql.git;a=commitdiff;h=c11453ce0aeaa377cbbcc9a3fc418acb94629330" target="_blank" rel="external">添加了支持哈希索引的预写日志记录</a>。</p>
 <p>与此同时，我们发现哈希索引已经错过了许多已应用于 B 树多年的相当明显的性能改进。因为哈希索引不支持预写日志记录，以及旧的锁定机制十分笨重，所以没有太多的动机去提升其他的性能。而这意味着如果哈希索引会成为一个非常有用的技术，那么需要做的事只是添加预写日志记录而已。PostgreSQL 索引存取方法的抽象层允许索引保留有关其信息的后端专用缓存，避免了重复查询索引本身来获取相关的元数据。B 树和 SQLite 的索引正在使用这种机制，但哈希索引没有，所以我的同事 Mithun Cy 写了一个补丁来<a href="https://git.postgresql.org/gitweb/?p=postgresql.git;a=commitdiff;h=293e24e507838733aba4748b514536af2d39d7f2" target="_blank" rel="external">使用此机制缓存哈希索引的元页</a>。同样，B 树索引有一个称为“单页回收”的优化，它巧妙地从索引页移除没用的索引指针，从而防止了大量索引膨胀，否则这将发生。我的同事 Ashutosh Sharma 打了一个补丁将<a href="https://git.postgresql.org/gitweb/?p=postgresql.git;a=commitdiff;h=6977b8b7f4dfb40896ff5e2175cad7fdbda862eb" target="_blank" rel="external">这个逻辑移植到哈希索引上</a>，也大大减少了索引的膨胀。最后，B 树索引<a href="https://git.postgresql.org/gitweb/?p=postgresql.git;a=commitdiff;h=7c75ef571579a3ad7a1d3ee909f11dba5e0b9440" target="_blank" rel="external">自 2006 年以来</a>就有了一个功能，可以避免重复锁定和解锁同一个索引页——所有元组都在页中一次性删除，然后一次返回一个。Ashutosh Sharma 也<a href="https://git.postgresql.org/gitweb/?p=postgresql.git;a=commitdiff;h=a507b86900f695aacc8d52b7d2cfcb65f58862a2" target="_blank" rel="external">将此逻辑移植到了哈希索引中</a>，但是由于缺少时间，这个优化没有在版本 10 中完成。在这个博客提到的所有内容中，这是唯一一个直到版本 11 才会出现的改进。</p>
 <p>关于哈希索引的工作有一个更有趣的地方是，很难确定行为是否真的正确。锁定行为的更改只可能在繁重的并发状态下失败，而预写日志记录中的错误可能仅在崩溃恢复的情况下显示出来。除此之外，在每种情况下，问题可能是微妙的。没有东西崩溃还不够；它们还必须在所有情况下产生正确的答案，并且这似乎很难去验证。为了协助这项工作，我的同事 Kuntal Ghosh 先后跟进了最初由 Heikki Linnakangas 和 Michael Paquier 开始的工作，并且制作了一个 WAL 一致性检查器，它不仅可以作为开发人员测试的专用补丁，还能真正<a href="https://git.postgresql.org/gitweb/?p=postgresql.git;a=commitdiff;h=7403561c0f6a8c62b79b6ddf0364ae6c01719068" target="_blank" rel="external">致力于 PostgreSQL</a>。在提交之前，我们对哈希索引的预写日志代码使用此工具进行了广泛的测试，并十分成功地查找到了一些漏洞。这个工具并不仅限于哈希索引，相反：它也可用于其他模块的预写日志记录代码，包括堆，当今的 AMS 索引，以及一些以后开发的其他东西。事实上，它已经成功地<a href="https://git.postgresql.org/gitweb/?p=postgresql.git;a=commitdiff;h=08bf6e529587e1e9075d013d859af2649c32a511" target="_blank" rel="external">在 BRIN 中找到了一个漏洞</a>。</p>
@@ -77,7 +80,10 @@
 <p>最后，我要感谢 Jeff Janes 和 Jesper Pedersen 为这个项目及其相关所做的宝贵的测试工作。这样一个规模适当的项目并不易得，以及有一群坚持不懈的测试人员，他们勇于打破任何废旧的东西的决心起了莫大的帮助。除了以上提到的人之外，其他人同样在测试，审查以及各种各样的日常帮助方面值得赞扬，其中包括 Andreas Seltenreich，Dilip Kumar，Tushar Ahuja，Alvaro Herrera，Micheal Paquier，Mark Kirkwood，Tom Lane，Kyotaro Horiguchi。谢谢你们，也同样感谢那些本该被提及却被我无意中忽略的所有朋友。</p>
 <hr>
 <p>via：<a href="https://rhaas.blogspot.jp/2017/09/postgresqls-hash-indexes-are-now-cool.html?showComment=1507079869582#c6521238465677174123" target="_blank" rel="external">https://rhaas.blogspot.jp/2017/09/postgresqls-hash-indexes-are-now-cool.html?showComment=1507079869582#c6521238465677174123</a></p>
-<p>作者：<a href="http://rhaas.blogspot.jp" target="_blank" rel="external">Robert Haas</a><br>译者：<a href="https://github.com/polebug" target="_blank" rel="external">polebug</a><br>校对：<br>本文由[LCTT]（<a href="https://github.com/LCTT/TranslateProject）原创编译，[Linux中国]（https://linux.cn/）荣誉推出" target="_blank" rel="external">https://github.com/LCTT/TranslateProject）原创编译，[Linux中国]（https://linux.cn/）荣誉推出</a></p>
+<p>作者：<a href="http://rhaas.blogspot.jp" target="_blank" rel="external">Robert Haas</a>
+译者：<a href="https://github.com/polebug" target="_blank" rel="external">polebug</a>
+校对：
+本文由[LCTT]（<a href="https://github.com/LCTT/TranslateProject）原创编译，[Linux中国]（https://linux.cn/）荣誉推出" target="_blank" rel="external">https://github.com/LCTT/TranslateProject）原创编译，[Linux中国]（https://linux.cn/）荣誉推出</a></p>
 </div>
             </div>
             <div class="post_classes">
@@ -146,7 +152,7 @@
 </html>
 <footer class="foot">
     <p class="footer_about">
-        Last updated : Tuesday, September 18th 2018, 11:44:33 am by <strong>Polebug</strong>
+        Last updated : Tuesday, September 18th 2018, 12:21:21 pm by <strong>Polebug</strong>
     </p>
     <p class="theme">
         Hexo Theme - <a href="https://github.com/polebug/saruka/" style="color:white"><strong>saruka</strong></a>
