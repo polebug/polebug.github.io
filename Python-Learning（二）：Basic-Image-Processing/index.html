@@ -63,8 +63,8 @@
                     </span>
                 </div>
 
-                <div class="post_connect"><p><b>&lt;写在前面&gt;</b>
-Basic image processing 1：
+                <div class="post_content"><p><b>&lt;写在前面&gt;</b></p>
+<p>Basic image processing 1：
 　　<b>0.（以简单的曲线图为例）对于生成的图自定义外观，使用子图，多个数据集，标题，标签，交互式标注，图例；</b>
 　　<b>1.生成散点图，直方图；</b>
 　　<b>2.简单的图像处理：转换格式，调整尺寸，旋转，复制粘贴图像区域，在图像上绘制点线；</b>
@@ -73,22 +73,25 @@ Basic image processing 1：
 　　<b>0.PIL </b>(Python Image Library
 　　<b>1.NumPy</b>
 　　<b>2.Matplotlib</b>
-　　<b>3.SciPy</b>
-无法安装的话，参考<a href="http://polebug.github.io/2016/11/04/Python%EF%BC%9AModule%20Install%20Issues/">这篇文章</a></p>
+　　<b>3.SciPy</b></p>
+<p>无法安装的话，参考<a href="http://polebug.github.io/2016/11/04/Python%EF%BC%9AModule%20Install%20Issues/">这篇文章</a></p>
 <p>其实写这篇文章的时候，我一直在纠结是分模块整理好一些呢，还是将各种模块的功能集于同一个对象进行描述。一开始是尝试着分模块整理的，整理了一段时间发现这样做并不有效，而且提取的实际意义并不大。于是改成同一个对象，如何用python的模板画，这样的方式进行编写。希望之后自己能做一些亦可赛艇的东西丫~ </p>
 <p><b>&lt;以下是正文&gt;</b></p>
 <h2>生成简单的曲线图，并进行基础处理</h2>
 <h3>生成简单的曲线图</h3>
-<code>python
+<pre><code>
 import matplotlib.pyplot as plt　　     #用matplotlib中的plt.plot画线
 import numpy as np　　　　　　　         #用numpy　　　　　　　　　
-x = np.linspace(0,2*np.pi, 50)         #np.linspace定义参数：将在[0,2π]区间生成包含50个元素的数组
+x = np.linspace(0,2<em>np.pi, 50)         #np.linspace定义参数：将在[0,2π]区间生成包含50个元素的数组
 y = np.sin(x)                          #使用np.sin()，生成一个正弦函数
 plt.plot(x, y)                         #使用plt.plot( , )画线 
-plt.show()</code>
+plt.show()<br></em></code></pre>
+
 生成了默认定义的sinx曲线 <img src="http://7x2wrf.com1.z0.glb.clouddn.com/sin1.png?imageView/2/3w/300/h/300/q/90" alt="原图">
 <h3>自定义外观</h3>
+
 参考官网：自定义外观的<a href="http://matplotlib.org/api/markers_api.html" target="_blank" rel="external">相关文章</a>
+
 例如：
 将上面的plt.plot语句改为
 
@@ -101,25 +104,27 @@ plt.show()</code>
 plt.plot(x, np.sin(x) , ‘r’, x, np.cos(x), ‘g’)
 
 <h3>使用子图</h3>
-使用 <b>plt.subplot(x, y, z)</b>：x定义横向长度为相对的1/x，y定义纵向长度为相对的1/y，z定义所在的是哪个区域
+使用 <b>plt.subplot(x, y, z)</b>：x定义横向长度为相对的1/x，y定义纵向长度为相对的1/y，z定义所在的是哪个区域<br>
 
-<code>python
+<pre><code>
 import matplotlib.pyplot as plt
 import numpy as np
 
-x = np.linspace(0, 2* np.pi, 50)
+x = np.linspace(0, 2 np.pi, 50)
 y = np.sin(x)
-plt.subplot(2 , 1, 1)  
-plt.plot(x, y)
+plt.subplot(2 , 1, 1)<br>plt.plot(x, y)
 
 z = np.cos(x)
 plt.subplot(2, 1 , 2)
 plt.plot(x, z)
-plt.show()</code>
+plt.show()
+</code></pre>
+
 <img src="http://7x2wrf.com1.z0.glb.clouddn.com/subplot.png?imageView/2/3/w/400/h/400/q/90" alt="原图">
 <h3>显示标题，标签，图例</h3>
-<code>python
-import matplotlib.pyplot as plt
+
+<pre>
+<code>import matplotlib.pyplot as plt
 import numpy as np
 
 x = np.linspace(0, 2*np.pi, 50)         
@@ -130,9 +135,12 @@ plt.plot(y, np.cos(x), &#39;g-^&#39;, label=&#39;Cos(x)&#39;)
 plt.xlabel(&#39;x&#39;)                                           #显示x标签
 plt.ylabel(&#39;y&#39;)
 plt.show()</code>
+</pre>
+
 <img src="http://7x2wrf.com1.z0.glb.clouddn.com/tap.png?imageView/2/3/w/400/h/400/q/90" alt="原图">
 
 <h3>使用交互式标注</h3>
+<pre>
 <code>python
 from PIL import Image
 from pylab import *
@@ -143,18 +151,22 @@ print &#39;Please click 1 point&#39;
 x = ginput(1)
 print &#39;you clicked: &#39;,x
 show()</code>
+</pre>
 
 <h2>生成直方图，散点图等基础图像</h2>
 <h3>直方图</h3>
+<pre>
 <code>python
 import matplotlib.pyplot as plt
 import numpy as np
 x = np.random.randn(1000)
 plt.hist(x, 50)                       #给hist()函数传入一个包含数据的数组，以及代表数据容器的个数
 plt.show()</code>
+</pre>
 <img src="http://7x2wrf.com1.z0.glb.clouddn.com/hist.png?imageView/2/3/w/400/h/400/q/90" alt="原图">
 <h3>散点图</h3>
 <h4>曲线波形图</h4>
+<pre>
 <code>python
 import matplotlib.pyplot as plt
 import numpy as np
@@ -163,7 +175,10 @@ x = np.linspace(0, 2 * np.pi, 50)
 y = np.sin(x)
 plt.scatter(x, y)
 plt.show()</code>
+</pre>
+
 <h4>彩色映射随机散点图</h4>
+<pre>
 <code>python
 import matplotlib.pyplot as plt
 import numpy as np
@@ -175,6 +190,7 @@ colour = np.random.rand(1000)
 plt.scatter(x, y, size, colour)
 plt.colorbar()
 plt.show()</code>
+</pre>
 <img src="http://7x2wrf.com1.z0.glb.clouddn.com/rand_color.png?imageView/2/3/w/400/h/400/q/90" alt="原图">
 
 <h2>简单图像处理</h2>
@@ -280,7 +296,7 @@ show()
 </html>
 <footer class="foot">
     <p class="footer_about">
-        Last updated : Tuesday, September 18th 2018, 8:16:59 pm by <strong>Polebug</strong>
+        Last updated : Wednesday, September 19th 2018, 9:32:05 pm by <strong>Polebug</strong>
     </p>
     <p class="theme">
         Hexo Theme - <a href="https://github.com/polebug/saruka/" style="color:white"><strong>saruka</strong></a>
