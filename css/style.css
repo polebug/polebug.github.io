@@ -225,7 +225,7 @@ h1 {
     margin-right: 10px;
 
 }
-.post_connect {
+.post_content {
     margin-top: 10px; 
 }
 
@@ -277,3 +277,25 @@ table td {
 table tbody tr:nth-child(2n) {
     background: rgba(158,188,226,0.12); 
 }
+blockquote {
+	border-left: 1px solid  #F48024;
+    background-color: #fafafb; 
+}
+blockquote p {
+    padding: 1em;
+}
+
+.post_content h1{
+    font-size: 1.8em;
+    border-bottom: 1px solid  #b6b9bb;
+    margin-bottom: 10px;
+}
+
+.post_content h2{
+    font-size: 1.5em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+
