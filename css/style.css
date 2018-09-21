@@ -39,7 +39,7 @@ body {
     min-width: auto;
 }
 .top-bar .-container {
-    margin: 0 150px;
+    margin: 0 10%;
 }
 .top-bar .-main {
     height: 100%;
@@ -52,79 +52,18 @@ body {
 }
 .top-bar .logo-wrapper .logo {
     font-size: 30px;
-    font-style:italic;
-}
-.top-bar .navigation {
-    padding-left: 48px;
-    padding-right: 30px;
-    font-size: 14px;
-    height: 100%;
-    max-width: 500px;
-    opacity: 1;
-    transform-origin: left center;
-    transition: opacity .3s ease-in,max-width .3s ease-in;
-    flex: 1 0 auto;
-}
-.top-bar .-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-flow: row nowrap;
-    height: 100%;
-}
-.top-bar #item {
-    display: inline-flex;
-    line-height: 1;
-}
-.top-bar .-link {
-    display: inline-flex;
-    align-items: center;
-    padding: 0 10px;
-    text-decoration: none;
-    white-space: nowrap;
-    position: relative;
-    transition: background-color cubic-bezier(.165, .84, .44, 1) .25s,border-bottom-color ease-in-out .25s;
+    font-style: italic;
 }
 
 a:hover { 
-
     color: #F48024;
     font-weight: normal;
 }
-.top-bar .searchbar {
-    max-width: 750px;
-}
-.top-bar .searchbar {
-    padding-left: 12px;
-    -webkit-flex: 1 1 auto;
-    flex: 1 1 auto;
-    max-width: 200px;
-    position: relative;
-}
-.top-bar input[type="text"] {
-    font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
-}
-.top-bar .searchbar input[type="text"].f-input {
-    border-width: 1px;
-}
-.top-bar .searchbar input[type="text"].f-input {
-    margin: 0;
-    height: 36px;
-    border-width: 1px;
-    border-color: #c8ccd0;
-    border-radius: 3px;
-    width: 100%;
-    font-size: 14px;
-    background-color: #FFF;
-    box-shadow: none;
-    color: #3b4045;
-}
-
 a {
     color: #34495e;
     text-decoration: none;
 }
+
 .container1 {
     margin-top: 40px;
 }
@@ -133,13 +72,13 @@ a {
 }
 #content {
     box-sizing: content-box;
-    margin: 0px 110px;
-    width: 1060px;
+    margin: 0px 10%;
+    width: 80%;
     background-color: #FFF;
 }
 #mainbar, .mainbar {
     float: left;
-    width: 700px;
+    width: 70%;
     margin: 15px 30px;
     height: 100%;
     margin-bottom: 150px;
@@ -147,6 +86,7 @@ a {
 .posts_list{
     font-size: 16px;
     margin-right: 20px;
+    width: 100%;
 }
 body.home-page .subheader, body.questions-page .subheader {
     margin-bottom: 0;
@@ -167,12 +107,10 @@ h1 {
     margin-bottom: 0;
     font-weight: normal;
 }
-.sidebar{
-    margin-left: 80px;
-    float: left;
-}
+
 .tags , .sidebar_pages{
-    line-height: 18px;
+    margin-left: 80px;
+    margin-bottom: 100%;
     float: left;
 }
 .pages_name{
@@ -200,33 +138,35 @@ h1 {
 /* post */
 .post_title {
     font-size: 25px;
+    width: 150%;
 }
 .post_about{
     list-style-type: none;
     margin: 1px 2px;
-    width: 800px;
+    width: 150%;
     display: inline-flex;
 }
 .post_time{
     margin: 25px;
     color: #A0A0A0;
+    width: 150%;
 }
 .post_classes{
     margin-left: 80px;
     margin-bottom: 40px;
     float: left;
-    
+    width: 150%;
 }
 .post_categories{
-    margin-right: 10px;
-
+    margin-left: 0px;
 }
 .post_tags{
-    margin-right: 10px;
+    margin-left: 0px;
 
 }
 .post_content {
     margin-top: 10px; 
+    width: 100%;
 }
 
 .side{
@@ -245,18 +185,18 @@ h1 {
 .footer_about {
     color: white;
     margin-top: 15px;
-    margin-left: 170px;
+    margin-left: 15%;
     font-style:italic;
 }
 .theme{
     color: white;
     margin-top: 15px;
-    margin-left: 230px;
+    margin-left: 10%;
     font-style:italic;
 }
 .visit{
     margin-top: 15px;
-    margin-left: 30px;
+    margin-left: 10%;
     font-style:italic;
 }
 table {
