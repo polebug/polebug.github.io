@@ -287,15 +287,33 @@ blockquote p {
 
 .post_content h1{
     font-size: 1.8em;
-    border-bottom: 1px solid  #b6b9bb;
-    margin-bottom: 10px;
+    border-bottom: 1px solid #b6b9bb;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .post_content h2{
     font-size: 1.5em;
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 10px;
 }
 
+.post_content hr{
+    color: #b6b9bb;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
 
+.post_content p{
+    margin-top: 15px;
+}
+
+.post_content strong{
+    padding: 3px;
+    margin: 3px;
+    background-color: #eeeff0;
+    border: 1px solid #A0A0A0;
+    border-radius: 15%;
+    font-weight: bold;
+}
 
