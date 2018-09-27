@@ -236,6 +236,13 @@ blockquote p {
     font-size: 1.5em;
     margin-top: 20px;
     margin-bottom: 10px;
+    font-weight: bold;
+}
+.post_content h3{
+    font-size: 1.2em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .post_content hr{
