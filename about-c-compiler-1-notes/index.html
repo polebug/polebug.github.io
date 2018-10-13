@@ -71,9 +71,9 @@
                 </div>
 
                 <div class="post_content"><blockquote>
-<p>词法分析器的作用: 扫描语句中的每个词法单元 (token)</p>
+<p>词法分析器: 逐字扫描语句中的每个字符，产生词法单元 (token)，用于语法分析。</p>
 </blockquote>
-<h1 id="词法单元"><a href="#词法单元" class="headerlink" title="词法单元"></a>词法单元</h1><p>要想让编译器知道每句话的意思，那么首先要让它先认识每个词素。  </p>
+<h1 id="0-词法单元"><a href="#0-词法单元" class="headerlink" title="0.词法单元"></a>0.词法单元</h1><p>要想让编译器知道每句话的意思，那么首先要让它先认识每个单词。  </p>
 <p>我们知道对于 C 语言编程来说，每个单词符号都有它不同的含义。例如：  </p>
 <pre><code>int main(){
     return 0;
@@ -89,12 +89,110 @@ return
 ;
 }
 </code></pre><p>有的是关键字，像 int main return<br>有的是界符，像 ( ) { ; }<br>有的是常数，像 0<br>除此之外，程序中还可能会出现运算符 &gt; &lt; =，以及标识符等等。</p>
-<p>总的来说，我们把 C 语言中的词素分为五类：<br>1.关键字，比如 int main using namespace if else for while 等，见文末附录<br>2.标识符，比如变量名，函数名，过程名，类名，常量名<br>3.常数<br>4.运算符 - + * / % ^ &gt;&gt; &lt;&lt;  等<br>5.界符 ; , {} () 等  </p>
+<p>总的来说，我们把 C 语言中的词素分为五类：<br>1.关键字，比如 int main using namespace if else for while 等<br>2.标识符，比如变量名，函数名，过程名，类名，常量名<br>3.常数<br>4.运算符 - + * / % ^ &gt;&gt; &lt;&lt;  等<br>5.界符 ; , {} () 等  </p>
 <h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>最后得到的结果输出，形如：</p>
-<pre><code>(单词类型， 单词的值)
-</code></pre><blockquote>
-<p>根据以上可知，词法分析器的任务是扫描单词并识别单词的类别</p>
+<pre><code>(行，列，单词类型， 单词的值)
+</code></pre><p>&nbsp;</p>
+<blockquote>
+<p>根据以上可知，词法分析器的任务是扫描单词并识别单词的类别。<br>那么词法分析器识别单词的原理是什么呢？主要是依据程序设计语言的词法规则描述。  </p>
 </blockquote>
+<h1 id="1-文法与词法规则"><a href="#1-文法与词法规则" class="headerlink" title="1.文法与词法规则"></a>1.文法与词法规则</h1><p>
+要理清楚识别单词的原理，首先要知道文法的相关概念。</p>
+<p>文法 G 定义为四元组 $(V_{N}, V_{T}, P, S)$ : $ V_{N} $ 为非终结符，  $ V_{T} $ 为终结符，P 为文法规则的集合， S 为识别符或开始符。  </p>
+<p>举个简单的🌰:  </p>
+<blockquote>
+<p>假定有一个串为 “abc123”，如何识别出这是一个标识符(变量名)呢？</p>
+</blockquote>
+<p>我们知道变量的命名规则：由字符、数字、’_’构成，且首字母不能为数字。  </p>
+<p>可以得到其中一种文法规则为： (不唯一)</p>
+<pre><code>G[S]:
+    S -&gt; PN | PM
+    P -&gt; NR | N
+    R -&gt; NR | MR | N | M
+    N -&gt; a|b|c|...|z|A|B|...|Z|_
+    M -&gt; 0|1|2|...|9|
+</code></pre><p>那么我们需要从 S 开始，根据以上词法规则，来尝试推导出这个串。若能推导出这个串，则说明这是一个标识符(也称为“句子”)。</p>
+<blockquote>
+<p>为了保证我们描述一个语言的词法规则不产生歧义，需要借助形式化或半形式化的描述工具。这里介绍正规文法、正规式(正则表达式)。    </p>
+</blockquote>
+<h1 id="2-正规文法、正规式-正则表达式"><a href="#2-正规文法、正规式-正则表达式" class="headerlink" title="2.正规文法、正规式(正则表达式)"></a>2.正规文法、正规式(正则表达式)</h1><p>简单说说概念：  </p>
+<p>(1).正规文法：也称为 3 型文法 G = $(V_{N}, V_{T}, P, S)$，P 中每一条规则都形如: A -&gt; aB 或 A -&gt; a，其中 A、B 属于非终结符，a 属于终结符集合的*闭包。  </p>
+<p>(2).正规式(正则表达式)：</p>
+<table>
+<thead>
+<tr>
+<th>正规式</th>
+<th>正规集</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> a</td>
+<td>{a}</td>
+</tr>
+<tr>
+<td> a&#124;b</td>
+<td>{a,b}</td>
+</tr>
+<tr>
+<td> ab</td>
+<td>{ab}</td>
+</tr>
+<tr>
+<td> (a&#124;b)(a&#124;b)</td>
+<td>{aa,ab,ba,bb}</td>
+</tr>
+<tr>
+<td> a*</td>
+<td>任意个 a 的串</td>
+</tr>
+<tr>
+<td> (a&#124;b)*</td>
+<td>所有 a,b 组成的串</td>
+</tr>
+</tbody>
+</table>
+<p>程序设计语言中的单词都能用正规式来定义，例如：  </p>
+<p>表示所有标识符的集合：  e = 字母(字母|数字)$^{*}$ </p>
+<p>表示无符号整数的集合：  e = (数字)(数字)$^{*}$</p>
+<p>&nbsp;</p>
+<p>PS：正规式和正规文法是可以相互转换的，这些集合同样能用正规文法来描述。</p>
+<p>正规式和正规文法使一个单词的描述更规范，且不产生歧义。</p>
+<p>&nbsp;</p>
+<blockquote>
+<p>我们知道了一些构词规律，并求出了这类单词的正规表达式或正规文法(例如，上面所说的标识符集合)，那么接下来，我们要如何识别出正规式所表示的这类集合呢？答案是有穷自动机。</p>
+</blockquote>
+<h1 id="4-有穷自动机"><a href="#4-有穷自动机" class="headerlink" title="4.有穷自动机"></a>4.有穷自动机</h1><h2 id="识别原理"><a href="#识别原理" class="headerlink" title="识别原理"></a>识别原理</h2><p>当运行一个有穷自动机时，该自动机的输入为当前扫描到的字符串上的一个字符，接着判断该有穷自动机是否能到达这个状态。若字符串上的字符皆能到达，那么该字符串为自动机所识别。</p>
+<h2 id="DFA-与-NFA"><a href="#DFA-与-NFA" class="headerlink" title="DFA 与 NFA"></a>DFA 与 NFA</h2><p>我们根据初态是否唯一将有穷自动机分为：确定的有穷自动机(DFA)和不确定的有穷自动机(NFA)。<br>定义的话，其实我是不想多说，这个知道就行：  </p>
+<pre><code>一个确定的有穷自动机 DFA 是五元组 (K，Σ，M，S，F)
+其中, K：有穷非空的状态集合；
+      Σ：有穷非空的输入字母表；
+      M：从K×Σ到K的映象。如果M(R，a)=Q，则输入字符为a时，当前状态R将转换到状态Q，Q成为下一当前状态；
+      S：是开始状态，S∈K；
+      F：是非空的终止状态集合，F∈K；
+</code></pre><p>而 NFA 与之相区别的是开始状态 S，它是一个非空初态集合，非唯一。</p>
+<p>我们根据正规文法或者正规式，画出状态转换图，接着再构造出有限自动机：</p>
+<p>例如：有正则文法：</p>
+<pre><code>G[Z]：Z ∷=Za｜Aa｜Bb        
+            A ∷=Ba｜Za｜a
+            B ∷=Ab｜Ba｜b
+</code></pre><p>状态转换图：
+<img src="/images/lexical.png" style="width:180px;height:150px;margin-right:20px;"></p>
+<p>得到 NFA：</p>
+<pre><code>NFA N=（{S，A，B，Z}，{a,b}，M，{S}，{Z}）,其中M：
+           M(S，a)={A}       M(S,b)={B}
+           M(A，a)={Z}       M(A,b)={B}
+           M(B,a)={A,B}      M(B,b)={Z}
+           M(Z,a)={A,Z}      M(Z,b)= Ø
+</code></pre><p>举例输入串为 t = babbabb</p>
+<p>若该串能被自动机所接受，那么次串满足以上文法，即可知其类别。</p>
+<p>最后所要做的就是编程实现一个有穷自动机即可。</p>
+<hr>
+<blockquote>
+<p>到此为止，词法分析器的原理就讲完了。如有错误，欢迎致电 polebugfly@gmail.com 或者 telegram @polebug</p>
+</blockquote>
+<p><strong>PS</strong>: 一开始，听老师讲文法讲正规式讲正则表达式讲自动机，容易感到枯燥，而且不知这些东西有何用。但仔细想想他们之间的关系，就会发现这些都是编译原理中的一环~    </p>
+<p>整理所有模块的代码之后在 github 开源。共勉。</p>
 </div>
             </div>
         </div>
@@ -179,7 +277,7 @@ return
 
 <footer class="foot">
     <p class="footer_about">
-        Last updated : Thursday, September 27th 2018, 8:26:09 pm by <strong>Polebug</strong>
+        Last updated : Saturday, October 13th 2018, 11:45:52 pm by <strong>Polebug</strong>
     </p>
     <p class="theme">
         Hexo Theme - <a href="/sakura/" style="color:white"><strong>sakura</strong></a>
