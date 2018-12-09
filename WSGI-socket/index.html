@@ -74,69 +74,53 @@
 <p>偶然看到有人翻译的“一起写一个 web 服务器”系列<a href="http://python.jobbole.com/81524/" target="_blank" rel="external">[1]</a><a href="http://python.jobbole.com/81523/" target="_blank" rel="external">[2]</a><a href="http://python.jobbole.com/81820/" target="_blank" rel="external">[3]</a>，感觉挺不错的，这里做一些归纳和 Python socket 编程的补充说明。
 <a id="more"></a></p>
 </blockquote>
-<h2>WSGI 的工作原理</h2>
+<h1>WSGI 的工作原理</h1>
 
 <blockquote>
 <p>常见的 Web server 无法与 Web application(Flask, Django, Tornado) 直接通信，需要 WSGI server 作为桥梁。</p>
 </blockquote>
-<h3>WSGI 工作原理分为两方面</h3>
-<b>服务器层: </b> 将来自 socket 的数据包解析为 http，调用 application，给应用提供环境信息 environ (包含 host, post, process模式, 客户端的 header, body 等)。同时给应用提供一个 start_response 的回调函数，主要在应用程序层进行响应信息处理。
-
-<b>应用程序层: </b> 在 server 提供的 start_response 生成 header, body, status，将这些信息返回给客户端。
-
-<h3>WSGI server 代码结构</h3>
+<h2>WSGI 工作原理分为两方面</h2>
+<h3>服务器层</h3> 
+将来自 socket 的数据包解析为 http，调用 application，给应用提供环境信息 environ (包含 host, post, process模式, 客户端的 header, body 等)。同时给应用提供一个 start_response 的回调函数，主要在应用程序层进行响应信息处理。<br>
+<h3>应用程序层</h3> 
+在 server 提供的 start_response 生成 header, body, status，将这些信息返回给客户端。<br>
+<h2>WSGI server 代码结构</h2>
 这部分我想根据 Web 服务器处理发给应用的请求的流程，来说说完整的 server 代码结构：
 
-<li>首先，服务器启动并加载一个由 Web 框架/应用提供的 application - <code>def set_app()</code></li>
-<li>启动 WSGI server 服务，不停监听并获取 socket 数据 - <code>def serve_forever</code></li>
-<li>处理请求：<code>def handle_one_request() </code>
-　　- 对 socket 数据包进行解析  <code>def parse_request()</code>
-　　- 创建 environ 字典，提供环境信息 <code>def get_environ()</code>
-　　- 提供 start_response 回调函数 <code>def start_response()</code>
-　　- 使用 environ 和 start_response 作为参数调用 application，并拿到返回的响应体
-　　- 解析一次请求后，关闭 socket 端口，同时将 application 返回的数据返回至客户端 <code>def finish_response()</code>
-</li>
+<li>首先，服务器启动并加载一个由 Web 框架/应用提供的 application - <strong>def set_app()</strong></li>
+<li>启动 WSGI server 服务，不停监听并获取 socket 数据 - <strong>def serve_forever</strong></li>
+<li>处理请求：<strong>def handle_one_request() </strong><br>　　- 对 socket 数据包进行解析  <strong>def parse_request()</strong><br>　　- 创建 environ 字典，提供环境信息 <strong>def get_environ()</strong><br>　　- 提供 start_response 回调函数 <strong>def start_response()</strong><br>　　- 使用 environ 和 start_response 作为参数调用 application，并拿到返回的响应体<br>　　- 解析一次请求后，关闭 socket 端口，同时将 application 返回的数据返回至客户端 <strong>def finish_response()</strong><br></li>
 
 <a href="https://gist.github.com/polebug/054c32c3104390c83b49e2279f1a3131" target="_blank" rel="external">完整服务器代码</a>
 
-<h3>WSGI app 代码结构</h3>
-简单的说就是设置 status, header 等，通过 start_response 传给服务器，构造 http 响应
+<h2>WSGI app 代码结构</h2>
 
-代码比较简单：
-<pre><code>
-def app(environ, start_response):
-    status = ‘200 OK’
-    response_headers = [(‘Content-Type’, ‘text/plain’)]
+<p>简单的说就是设置 status, header 等，通过 start_response 传给服务器，构造 http 响应</p>
+<p>代码比较简单：</p>
+<pre><code>def app(environ, start_response):
+    status = &#39;200 OK&#39;
+    response_headers = [(&#39;Content-Type&#39;, &#39;text/plain&#39;)]
     start_response(status, response_headers)
-    return [‘Hello world from a simple WSGI application!\n’]
-</code></pre>
+    return [&#39;Hello world from a simple WSGI application!\n&#39;]
+</code></pre><h1>补充：Python socket 编程</h1>
 
-<h2>补充：Python socket 编程</h2>
+<blockquote>
+<p>这里主要是对 WSGI_server 中所用的的 socket 模块进行补充<br>Socket 模块提供了标准的 BSD Socket API</p>
+</blockquote>
+<h2>Socket 类型</h2>
+套接字格式：socket(family, type[,protocal]) 使用给定的套接族，套接字类型，协议编号（默认为0）来创建套接字<br>
+<strong>socket.AF_INET</strong> : 用于服务器与服务器之间的网络通信<br>
+<strong>socket.SOCK_STREAM</strong> : 基于 TCP 的流式 socket 通信<br>
+<h2>创建 TCP Socket: </h2>
 
-&gt; 这里主要是对 WSGI_server 中所用的的 socket 模块进行补充
+<pre><code>sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+</code></pre><h2>Socket 函数</h2>
 
-&gt; Socket 模块提供了标准的 BSD Socket API
-
-<h3>Socket 类型</h3>
-套接字格式：socket(family, type[,protocal]) 使用给定的套接族，套接字类型，协议编号（默认为0）来创建套接字
-
-<code>socket.AF_INET</code> - 用于服务器与服务器之间的网络通信
-
-<code>socket.SOCK_STREAM</code> - 基于 TCP 的流式 socket 通信
-
-
-<b>创建 TCP Socket: </b>
-<code>sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</code>
-
-<h3>Socket 函数</h3>
-
-<p>#<b>服务端 Socket 函数</b></p>
-<p><code>s.listen(backlog)</code> - 开始监听TCP传入连接，backlog指定在拒绝链接前，操作系统可以挂起的最大连接数，该值最少为1，大部分应用程序设为5就够用了</p>
-<p><code>s.bind(address)</code> - 将套接字绑定到地址，在AF_INET下，以tuple(host, port)的方式传入</p>
-<p>#<b>公共 Socket 函数</b></p>
-<p><code>s.getsockname()</code> - 返回套接字自己的地址，返回值通常是一个tuple(ipaddr, port)</p>
-<p><code>s.setsockopt(level,optname,value)</code> - 设置给定套接字选项的值。level 定义了哪个选项将被使用，通常情况下是 SOL_SOCKET。</p>
-<p><code>s.getfqdn</code> - 返回一个name对应的完全合格的域名。如果name被忽略，将会被解释为本地主机。</p>
+<h3 id="服务端-Socket-函数"><a href="#服务端-Socket-函数" class="headerlink" title="服务端 Socket 函数"></a>服务端 Socket 函数</h3><p><strong>s.listen(backlog)</strong> - 开始监听TCP传入连接，backlog指定在拒绝链接前，操作系统可以挂起的最大连接数，该值最少为1，大部分应用程序设为5就够用了  </p>
+<p><strong>s.bind(address)</strong> - 将套接字绑定到地址，在AF_INET下，以tuple(host, port)的方式传入</p>
+<h3 id="公共-Socket-函数"><a href="#公共-Socket-函数" class="headerlink" title="公共 Socket 函数"></a>公共 Socket 函数</h3><p><strong>s.getsockname()</strong> - 返回套接字自己的地址，返回值通常是一个tuple(ipaddr, port)  </p>
+<p><strong>s.setsockopt(level,optname,value)</strong> - 设置给定套接字选项的值。level 定义了哪个选项将被使用，通常情况下是 SOL_SOCKET。   </p>
+<p><strong>s.getfqdn</strong> - 返回一个name对应的完全合格的域名。如果name被忽略，将会被解释为本地主机。</p>
 <hr>
 <p>可能将持续补充</p>
 </div>
@@ -223,7 +207,7 @@ def app(environ, start_response):
 
 <footer class="foot">
     <p class="footer_about">
-        Last updated : Tuesday, December 4th 2018, 2:07:48 pm by <strong>Polebug</strong>
+        Last updated : Monday, December 10th 2018, 12:05:02 am by <strong>Polebug</strong>
     </p>
     <p class="theme">
         Hexo Theme - <a href="/sakura/" style="color:white"><strong>sakura</strong></a>
