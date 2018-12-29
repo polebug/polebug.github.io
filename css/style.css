@@ -155,7 +155,7 @@ h1 {
     margin-left: 80px;
     margin-bottom: 40px;
     float: left;
-    width: 150%;
+    
 }
 .post_categories{
     margin-left: 0px;
@@ -168,7 +168,6 @@ h1 {
     margin-top: 10px; 
     width: 100%;
 }
-
 .side{
     display: table-cell;
 }
@@ -192,12 +191,12 @@ h1 {
     color: white;
     margin-top: 15px;
     margin-left: 10%;
-    font-style:italic;
+    font-style: italic;
 }
 .visit{
     margin-top: 15px;
     margin-left: 10%;
-    font-style:italic;
+    font-style: italic;
 }
 table {
     width: 100%; /*表格宽度*/
@@ -256,11 +255,11 @@ blockquote p {
 }
 
 .post_content strong{
-    padding: 3px;
+    padding: 1.6px;
     margin: 3px;
     background-color: #eeeff0;
     border: 1px solid #A0A0A0;
-    border-radius: 15%;
+    border-radius: 0%;
     font-weight: bold;
 }
 
