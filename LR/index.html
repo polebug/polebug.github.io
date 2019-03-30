@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-transform" />
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="format-detection" content="telephone=no,email=no,adress=no">
   <!-- Color theme for statusbar -->
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#000000">
   <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
-  <meta http-equiv="window-target" content="_top" />
+  <meta http-equiv="window-target" content="_top">
   
   
   <title>Logistic 回归分析法的原理和代码实现 | Hello, Polebug</title>
@@ -25,6 +25,7 @@
 <meta property="og:url" content="https://polebug.github.io/LR/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
 <meta property="og:description" content="注： 实现用的是 python / LR 原理参考 Andrew Ng 的 cs229 感谢 JerryLead 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删 如有错误，欢迎指正  &amp;lt;目录&amp;gt; 　　1.二元 LR 原理 　　2.多元 LR 原理 　　3.裸 LR 的代码实现 (梯度下降/二元/多元/预测结果/正确率统计) 　　4.调用 sklearn 库里的 LR">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170810-0@2x.png">
 <meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170810-1@2x.png">
 <meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170810-2@2x.png">
@@ -73,7 +74,7 @@
 
     <form class="search-form sidebar-form">
         <div class="input-group">
-            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <input type="text" class="search-form-input form-control" placeholder="Search">
             <span class="input-group-btn">
                 <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
             </span>
@@ -83,7 +84,7 @@
   <div class="ins-search-mask"></div>
   <div class="ins-search-container">
     <div class="ins-input-wrapper">
-      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech>
       <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="ins-section-wrapper">
@@ -169,13 +170,13 @@
 	
     <ul class="social-links">
     	
-        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
         
-        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
         
-        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle=tooltip data-placement=top><i class="icon icon-telegram"></i></a></li>
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle="tooltip" data-placement="top"><i class="icon icon-telegram"></i></a></li>
         
-        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
         
     </ul>
 
@@ -360,7 +361,7 @@
         <blockquote>
 <p>注：
 实现用的是 python / LR 原理参考 Andrew Ng 的 cs229
-感谢 <a href="http://www.cnblogs.com/jerrylead/archive/2012/05/08/2489725.html" target="_blank" rel="external">JerryLead</a> 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删
+感谢 <a href="http://www.cnblogs.com/jerrylead/archive/2012/05/08/2489725.html" target="_blank" rel="noopener">JerryLead</a> 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删
 如有错误，欢迎指正</p>
 </blockquote>
 <p><b>&lt;目录&gt;
@@ -417,7 +418,7 @@ $ J(\theta) = -\frac{1}{m} [\sum_{i=1}^{m}{ y_{i} log h_{\theta}(x_{i}) + (1 - y
 <h2>多元 Logistic Regression 原理</h2>
 
 <blockquote>
-<p>这一部分我觉得 <a href="http://www.cnblogs.com/jerrylead/archive/2012/05/08/2489725.html" target="_blank" rel="external">JerryLead</a> 大佬已经写的够浅显易懂了，举例的时候会引用一些他的图。</p>
+<p>这一部分我觉得 <a href="http://www.cnblogs.com/jerrylead/archive/2012/05/08/2489725.html" target="_blank" rel="noopener">JerryLead</a> 大佬已经写的够浅显易懂了，举例的时候会引用一些他的图。</p>
 </blockquote>
 <p>对于多分类问题，实际上就是多个二元分类问题。
 <b>首先</b>，我们将多个类中的某一类标记为正向类，将其他所有类标记为负向类，这个模型记作 $ h_{\theta}^{(1)}(x) $；
@@ -438,8 +439,8 @@ $ J(\theta) = -\frac{1}{m} [\sum_{i=1}^{m}{ y_{i} log h_{\theta}(x_{i}) + (1 - y
 <p></p><h2>裸 Logistic Regression 的代码实现</h2>
 自己敲了一遍，然后发现有个大佬写的比我全面很多，所以这里还是不贴自己的代码了（orz<p></p>
 <blockquote>
-<p><a href="https://github.com/ccc013/CodingPractise/blob/master/Python/MachineLearning/LogisticRegressionPractise.py" target="_blank" rel="external">二元 Logistic Regression 实现</a> (梯度下降/预测结果/统计准确率)
-<a href="https://github.com/ccc013/CodingPractise/blob/master/Python/MachineLearning/mulLogisticRegressionPractise.py" target="_blank" rel="external">多元 Logistic Regression 实现</a> (梯度下降/预测结果/统计准确率)</p>
+<p><a href="https://github.com/ccc013/CodingPractise/blob/master/Python/MachineLearning/LogisticRegressionPractise.py" target="_blank" rel="noopener">二元 Logistic Regression 实现</a> (梯度下降/预测结果/统计准确率)
+<a href="https://github.com/ccc013/CodingPractise/blob/master/Python/MachineLearning/mulLogisticRegressionPractise.py" target="_blank" rel="noopener">多元 Logistic Regression 实现</a> (梯度下降/预测结果/统计准确率)</p>
 </blockquote>
 <p></p><h2>sklearn 库中的 Logistic Regression 模型</h2>
 （第一次用 sklearn 库，感觉不错～<p></p>
@@ -504,6 +505,7 @@ log_predict = log_clf.predict(test)==test_label
 print log_predict.mean()
 print log_clf.coef_
 print log_clf.intercept_
+
 </code></pre>
 
       
@@ -529,7 +531,7 @@ print log_clf.intercept_
     <figure class="media">
       <div class="media-left">
         <a href="https://github.com/polebug" target="_blank" class="img-burn thumb-sm visible-lg">
-          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
         </a>
       </div>
       <!-- <div class="media-body">
@@ -591,13 +593,13 @@ print log_clf.intercept_
 	
     <ul class="social-links">
     	
-        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
         
-        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
         
-        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle=tooltip data-placement=top><i class="icon icon-telegram"></i></a></li>
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle="tooltip" data-placement="top"><i class="icon icon-telegram"></i></a></li>
         
-        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
         
     </ul>
 
@@ -612,8 +614,7 @@ print log_clf.intercept_
 <script>
 window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 </script>
-<script type="text/javascript" async
-src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({

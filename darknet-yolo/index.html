@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-transform" />
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="format-detection" content="telephone=no,email=no,adress=no">
   <!-- Color theme for statusbar -->
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#000000">
   <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
-  <meta http-equiv="window-target" content="_top" />
+  <meta http-equiv="window-target" content="_top">
   
   
   <title>yolo-darknet的配置问题(MacOS/CPU only) | Hello, Polebug</title>
@@ -25,6 +25,7 @@
 <meta property="og:url" content="https://polebug.github.io/darknet-yolo/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
 <meta property="og:description" content="最近需要用上yolo，没有找到好的训练方式，想试试darknet。然后因为坑爹的官网文档 + mac下相关问题的解决方法太少，于是找了一晚上的错（哭   相关环境  MacOS无CUDA(CPU only)OpenCV 2.4 安装  根据 官网 文档进行安装即可  配置问题   Makefile的基本配置  根据系统环境:GPU=0CUDA=0OPENCV=1DEBUG=0   重新 make">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-11-05T08:01:22.435Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="yolo-darknet的配置问题(MacOS&#x2F;CPU only)">
@@ -66,7 +67,7 @@
 
     <form class="search-form sidebar-form">
         <div class="input-group">
-            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <input type="text" class="search-form-input form-control" placeholder="Search">
             <span class="input-group-btn">
                 <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
             </span>
@@ -76,7 +77,7 @@
   <div class="ins-search-mask"></div>
   <div class="ins-search-container">
     <div class="ins-input-wrapper">
-      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech>
       <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="ins-section-wrapper">
@@ -162,13 +163,13 @@
 	
     <ul class="social-links">
     	
-        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
         
-        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
         
-        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle=tooltip data-placement=top><i class="icon icon-telegram"></i></a></li>
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle="tooltip" data-placement="top"><i class="icon icon-telegram"></i></a></li>
         
-        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
         
     </ul>
 
@@ -359,7 +360,7 @@
 <h2>相关环境 </h2>
 MacOS<br>无CUDA(CPU only)<br>OpenCV 2.4<br>
 <h2>安装 </h2>
-根据 <a href="https://pjreddie.com/darknet/install/" target="_blank" rel="external">官网</a> 文档进行安装即可
+根据 <a href="https://pjreddie.com/darknet/install/" target="_blank" rel="noopener">官网</a> 文档进行安装即可
 
 <h2>配置问题 </h2>
 
@@ -376,17 +377,18 @@ MacOS<br>无CUDA(CPU only)<br>OpenCV 2.4<br>
 <pre><code>./darknet imtest data/eagle.jpg
 </code></pre><p>报错  </p>
 <p>尝试在python中,   </p>
-<pre><code>&gt;&gt;&gt; import cv2
+<pre><code>&gt;&gt;&gt; import cv2  
 </code></pre><p>报错:  </p>
 <pre><code>Traceback (most recent call last):
   File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
 ImportError: No module named cv2
 </code></pre><p>site-packages路径设置问题<br>输入命令:   </p>
-<pre><code>export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+<pre><code>export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH    
 </code></pre><h2>2.Segmentation fault: 11</h2>
 
-<p>按照<a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="external">官网上使用yolo</a>的步骤，执行  </p>
+<p>按照<a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="noopener">官网上使用yolo</a>的步骤，执行  </p>
 <pre><code>./darknet detect cfg/yolo.cfg yolo.weights data/dog.jpg
+
 </code></pre><p>输出:   </p>
 <blockquote>
 <p>layer     filters    size              input                output
@@ -441,10 +443,10 @@ LDFLAGS+= `pkg-config --libs opencv` -L/usr/local/lib -lopencv_core -lopencv_hig
 COMMON+= `pkg-config --cflags opencv` 
 endif
 </code></pre><pre><code>save   
-make
+make  
 </code></pre><h3>2.用官网提供的另一种命令方式:</h3>
 
-<p>注意到一个很坑的地方,<a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="external"></a>  </p>
+<p>注意到一个很坑的地方,<a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="noopener"></a>  </p>
 <blockquote>
 <p>The detect command is shorthand for a more general version of the command. It is equivalent to the command:
 ./darknet detector test cfg/coco.data cfg/yolo.cfg yolo.weights data/dog.jpg</p>
@@ -477,7 +479,7 @@ make
     <figure class="media">
       <div class="media-left">
         <a href="https://github.com/polebug" target="_blank" class="img-burn thumb-sm visible-lg">
-          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
         </a>
       </div>
       <!-- <div class="media-body">
@@ -539,13 +541,13 @@ make
 	
     <ul class="social-links">
     	
-        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
         
-        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
         
-        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle=tooltip data-placement=top><i class="icon icon-telegram"></i></a></li>
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle="tooltip" data-placement="top"><i class="icon icon-telegram"></i></a></li>
         
-        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
         
     </ul>
 
@@ -560,8 +562,7 @@ make
 <script>
 window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 </script>
-<script type="text/javascript" async
-src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({

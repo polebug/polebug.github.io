@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-transform" />
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="format-detection" content="telephone=no,email=no,adress=no">
   <!-- Color theme for statusbar -->
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#000000">
   <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
-  <meta http-equiv="window-target" content="_top" />
+  <meta http-equiv="window-target" content="_top">
   
   
   <title>基础排序算法 | Hello, Polebug</title>
@@ -25,6 +25,7 @@
 <meta property="og:url" content="https://polebug.github.io/BasicSortAlgorithm/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
 <meta property="og:description" content="&amp;lt;写在前面&amp;gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;正文">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2016-12-05T13:41:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础排序算法">
@@ -66,7 +67,7 @@
 
     <form class="search-form sidebar-form">
         <div class="input-group">
-            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <input type="text" class="search-form-input form-control" placeholder="Search">
             <span class="input-group-btn">
                 <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
             </span>
@@ -76,7 +77,7 @@
   <div class="ins-search-mask"></div>
   <div class="ins-search-container">
     <div class="ins-input-wrapper">
-      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech>
       <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="ins-section-wrapper">
@@ -162,13 +163,13 @@
 	
     <ul class="social-links">
     	
-        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
         
-        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
         
-        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle=tooltip data-placement=top><i class="icon icon-telegram"></i></a></li>
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle="tooltip" data-placement="top"><i class="icon icon-telegram"></i></a></li>
         
-        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
         
     </ul>
 
@@ -600,7 +601,7 @@ priority_queue &lt;int, vector&lt;int&gt;, less&lt;int&gt; &gt; q; //自定义�
     <figure class="media">
       <div class="media-left">
         <a href="https://github.com/polebug" target="_blank" class="img-burn thumb-sm visible-lg">
-          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
         </a>
       </div>
       <!-- <div class="media-body">
@@ -662,13 +663,13 @@ priority_queue &lt;int, vector&lt;int&gt;, less&lt;int&gt; &gt; q; //自定义�
 	
     <ul class="social-links">
     	
-        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
         
-        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
         
-        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle=tooltip data-placement=top><i class="icon icon-telegram"></i></a></li>
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle="tooltip" data-placement="top"><i class="icon icon-telegram"></i></a></li>
         
-        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
         
     </ul>
 
@@ -683,8 +684,7 @@ priority_queue &lt;int, vector&lt;int&gt;, less&lt;int&gt; &gt; q; //自定义�
 <script>
 window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 </script>
-<script type="text/javascript" async
-src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({

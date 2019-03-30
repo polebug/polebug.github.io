@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-transform" />
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="format-detection" content="telephone=no,email=no,adress=no">
   <!-- Color theme for statusbar -->
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#000000">
   <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
-  <meta http-equiv="window-target" content="_top" />
+  <meta http-equiv="window-target" content="_top">
   
   
   <title>Concrete Mathematics 1 ：Recurrent | Hello, Polebug</title>
@@ -25,6 +25,7 @@
 <meta property="og:url" content="https://polebug.github.io/Concrete-Mathematics1/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
 <meta property="og:description" content="第一章看着难度还是很友好的，算是在这个大坑中填了微小的一块。仔细看了推导，能领会作者的意思并对递归问题有了一些新的认识。 主要说了三个经典递归问题，河内塔和平面上的直线这两个问题相对简单明了。第三个问题是约瑟夫问题，就这个问题作者延伸的讲了几种递归思想，个人觉得很赞。 (BTW：其实写之前想参考一些别人写的笔记，发现能参考的东西太少了，很多是未填完的坑，实在觉得可惜，希望自己能坚持写完) 目录：">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-01-26T14:23:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Concrete Mathematics 1 ：Recurrent">
@@ -66,7 +67,7 @@
 
     <form class="search-form sidebar-form">
         <div class="input-group">
-            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <input type="text" class="search-form-input form-control" placeholder="Search">
             <span class="input-group-btn">
                 <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
             </span>
@@ -76,7 +77,7 @@
   <div class="ins-search-mask"></div>
   <div class="ins-search-container">
     <div class="ins-input-wrapper">
-      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech>
       <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="ins-section-wrapper">
@@ -162,13 +163,13 @@
 	
     <ul class="social-links">
     	
-        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
         
-        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
         
-        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle=tooltip data-placement=top><i class="icon icon-telegram"></i></a></li>
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle="tooltip" data-placement="top"><i class="icon icon-telegram"></i></a></li>
         
-        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
         
     </ul>
 
@@ -414,7 +415,7 @@
 　　1.设J(n)是幸存者的号码。当n=1时，显然J(1)=1;当n&gt;1时，我们需要根据删人的过程找到当前状态与上一个状态之间的关系，那么我们简单的手动模拟一下一次完整的循环过程，发现对于奇数个<b>(2n+1)</b>，一次完整的循环过程结束之后，标记为1的人在标记为2n的人后面被删掉，再次得到了与有n个人开始的状态，但是它们的标记号码加倍并增加了1，猜测人数为<b>(2n+1)</b>时的递归式为:<b>J(2n+1)=2J(n)+1</b>;同理，猜测人数为<b>(2n)</b>时的递归式为:<b>J(2n)=2J(n)-1</b>;
 　　2.根据小范围数据进行列表，观察到数据略有些有趣（似乎是与2的幂有关）,我们令<b>n=2^m+l</b>，那么根据这个表，猜测递归解为:<b>J(2^m+l)=2l+1</b>;
 　　3.用<b>数学归纳法进行证明</b>即可；</p>
-<p>作者提供的第二种方法很有意思，首先得先观察到解与2的幂有关，研究n和J(n)的以2为基数的表示。假设n的二进制展开式是 $n=(b<em>mb</em>{m-1}…b_1b_0)_2$，分别用这种方式表示n,l,2l,2l+1(由于我还不太懂如何显示LaTeX，这里就不一一列出来毒害审美了233333333)，接着可以推出J(n)的二进制展开式，发现n的二进制展开式向左循环移动一位可以得到J(n)。</p>
+<p>作者提供的第二种方法很有意思，首先得先观察到解与2的幂有关，研究n和J(n)的以2为基数的表示。假设n的二进制展开式是 $n=(b_mb_{m-1}…b_1b_0)_2$，分别用这种方式表示n,l,2l,2l+1(由于我还不太懂如何显示LaTeX，这里就不一一列出来毒害审美了233333333)，接着可以推出J(n)的二进制展开式，发现n的二进制展开式向左循环移动一位可以得到J(n)。</p>
 <p>第三种方法是所谓的成套方法研究<b>约瑟夫问题的推广</b>。
 引入常数α，β，γ，试图求出其封闭形式;
 那么有递归式：J(1)=α,J(2n)=2J(n)+β,J(2n+1)=2J(n)+γ;
@@ -447,7 +448,7 @@
     <figure class="media">
       <div class="media-left">
         <a href="https://github.com/polebug" target="_blank" class="img-burn thumb-sm visible-lg">
-          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
         </a>
       </div>
       <!-- <div class="media-body">
@@ -509,13 +510,13 @@
 	
     <ul class="social-links">
     	
-        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
         
-        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
         
-        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle=tooltip data-placement=top><i class="icon icon-telegram"></i></a></li>
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle="tooltip" data-placement="top"><i class="icon icon-telegram"></i></a></li>
         
-        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
         
     </ul>
 
@@ -530,8 +531,7 @@
 <script>
 window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 </script>
-<script type="text/javascript" async
-src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-transform" />
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="format-detection" content="telephone=no,email=no,adress=no">
   <!-- Color theme for statusbar -->
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#000000">
   <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
-  <meta http-equiv="window-target" content="_top" />
+  <meta http-equiv="window-target" content="_top">
   
   
   <title>关于编译原理 - 词法分析器的原理 | Hello, Polebug</title>
@@ -25,6 +25,7 @@
 <meta property="og:url" content="https://polebug.github.io/about-c-compiler-1-notes/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
 <meta property="og:description" content="词法分析器: 逐字扫描语句中的每个字符，产生词法单元 (token)，用于语法分析。  0.词法单元要想让编译器知道每句话的意思，那么首先要让它先认识每个单词。   我们知道对于 C 语言编程来说，每个单词符号都有它不同的含义。例如：   int main(){     return 0; } 扫描得到的词素有 int main ( ) { return 0 ; } 有的是关键字，像 int">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://polebug.github.io/images/lexical.png">
 <meta property="og:updated_time" content="2018-11-19T14:51:45.446Z">
 <meta name="twitter:card" content="summary">
@@ -68,7 +69,7 @@
 
     <form class="search-form sidebar-form">
         <div class="input-group">
-            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <input type="text" class="search-form-input form-control" placeholder="Search">
             <span class="input-group-btn">
                 <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
             </span>
@@ -78,7 +79,7 @@
   <div class="ins-search-mask"></div>
   <div class="ins-search-container">
     <div class="ins-input-wrapper">
-      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech>
       <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="ins-section-wrapper">
@@ -164,13 +165,13 @@
 	
     <ul class="social-links">
     	
-        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
         
-        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
         
-        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle=tooltip data-placement=top><i class="icon icon-telegram"></i></a></li>
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle="tooltip" data-placement="top"><i class="icon icon-telegram"></i></a></li>
         
-        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
         
     </ul>
 
@@ -469,12 +470,13 @@ return
            M(A，a)={Z}       M(A,b)={B}
            M(B,a)={A,B}      M(B,b)={Z}
            M(Z,a)={A,Z}      M(Z,b)= Ø
+
 </code></pre><p>举例输入串为 t = babbabb</p>
 <p>若该串能被自动机所接受，那么次串满足以上文法，即可知其类别。</p>
 <p>最后所要做的就是编程实现一个有穷自动机即可。</p>
 <hr>
 <blockquote>
-<p>到此为止，词法分析器的原理就讲完了。如有错误，欢迎致电 polebugfly@gmail.com 或者 telegram @polebug</p>
+<p>到此为止，词法分析器的原理就讲完了。如有错误，欢迎致电 <a href="mailto:polebugfly@gmail.com" target="_blank" rel="noopener">polebugfly@gmail.com</a> 或者 telegram @polebug</p>
 </blockquote>
 <p><strong>PS</strong>: 一开始，听老师讲文法讲正规式讲正则表达式讲自动机，容易感到枯燥，而且不知这些东西有何用。但仔细想想他们之间的关系，就会发现这些都是编译原理中的一环~    </p>
 
@@ -501,7 +503,7 @@ return
     <figure class="media">
       <div class="media-left">
         <a href="https://github.com/polebug" target="_blank" class="img-burn thumb-sm visible-lg">
-          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
         </a>
       </div>
       <!-- <div class="media-body">
@@ -563,13 +565,13 @@ return
 	
     <ul class="social-links">
     	
-        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
         
-        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
         
-        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle=tooltip data-placement=top><i class="icon icon-telegram"></i></a></li>
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle="tooltip" data-placement="top"><i class="icon icon-telegram"></i></a></li>
         
-        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
         
     </ul>
 
@@ -584,8 +586,7 @@ return
 <script>
 window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 </script>
-<script type="text/javascript" async
-src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
