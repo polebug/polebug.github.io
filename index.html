@@ -1,282 +1,1459 @@
 <!DOCTYPE html>
-<html>
-  <head>
-  	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<title> Polebug | start </title>
-  	<script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
-  	<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
-    
-  </head>
-
-  <body>
-  	
-    <main class="main">
-      <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
-      <script src="/plugins/highlight/highlight.pack.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script>
-      <script type="text/javascript" async
-      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-      </script>
-      <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
-      });
-      </script>
-      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-      
-<section>
-<!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
-	<meta name="google-site-verification" content="1cByckFo34H38SxU3P_7dCe19IdyyWvuqe15x2gRK9I" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width"/>
-    <meta name="viewport" content=" initial-scale=1.0,user-scalable=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-<meta content="black" name="apple-mobile-web-app-status-bar-style" />
-    <link rel="stylesheet" href="/css/style.css">
-    <title>Polebug | start</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Hello, Polebug</title>
+  <meta name="description" content="造轮子使我快乐">
+<meta property="og:type" content="website">
+<meta property="og:title" content="polebug | 瞎折腾">
+<meta property="og:url" content="https://polebug.github.io/index.html">
+<meta property="og:site_name" content="polebug | 瞎折腾">
+<meta property="og:description" content="造轮子使我快乐">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="polebug | 瞎折腾">
+<meta name="twitter:description" content="造轮子使我快乐">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://polebug.github.io/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="polebug | 瞎折腾" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/avatar.jpg" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
 </head>
-</html>
 
-<header class="top-bar _fixed">
-    <div class="-container">
-        <div class="-main">
-            <div id="logo" class="logo-wrapper">
-                  <a href="/" class="logo">Polebug | start</a>
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/polebug" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">polebug</h2>
+        <!-- <h3 id="title" class="hidden-xs hidden-sm hidden-md">false</h3> -->
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> undefined</small> -->
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-other">
+          <a href="/salty">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">Other</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle=tooltip data-placement=top><i class="icon icon-telegram"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                想做一个普通人开心的造轮子
             </div>
-            <nav class="navigation" role="navigation" aria-label="site
-            navigation">
-                <ol class="-list">
-                    
-                </ol>
-            </nav>
         </div>
     </div>
-</header>
-</html>
-
-<body>
-	<div class="container1">
-		<div id="content">
-			<div id="mainbar" role="main">
-					  
-					<p style="margin:15px">
-						<a href="/leetcode-1811/" class="posts_list">Leetcode 泛刷题记录(11月)</a>
-						<span style="color:#A0A0A0;">2018-12-04 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/about-c-compiler-2-notes/" class="posts_list">关于编译原理 - 语法分析的原理</a>
-						<span style="color:#A0A0A0;">2018-10-12 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/about-c-compiler-1-notes/" class="posts_list">关于编译原理 - 词法分析器的原理</a>
-						<span style="color:#A0A0A0;">2018-09-21 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/about-c-compiler-0/" class="posts_list">关于编译原理 - (绪)</a>
-						<span style="color:#A0A0A0;">2018-09-20 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/leetcode-1809/" class="posts_list">Leetcode 泛刷题记录(9月)</a>
-						<span style="color:#A0A0A0;">2018-09-12 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/Django-MTV/" class="posts_list">如何理解 Django 框架</a>
-						<span style="color:#A0A0A0;">2018-03-01 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/python-re/" class="posts_list">Python 正则表达式 [不完全记录]</a>
-						<span style="color:#A0A0A0;">2018-02-03 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/About-hexo-page/" class="posts_list">如何在 Hexo 创建一个独立页面</a>
-						<span style="color:#A0A0A0;">2018-01-26 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/About-hexo-theme-bulxo/" class="posts_list">About hexo-theme-bulxo</a>
-						<span style="color:#A0A0A0;">2018-01-22 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/WSGI-socket/" class="posts_list">WSGI 协议实现与 Python socket 编程补充说明</a>
-						<span style="color:#A0A0A0;">2017-11-06 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/PostgreSQL-1/" class="posts_list">翻译:PostgreSQL&#39;s Hash Indexes Are Now Cool</a>
-						<span style="color:#A0A0A0;">2017-11-05 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/Git操作笔记/" class="posts_list">Git操作笔记</a>
-						<span style="color:#A0A0A0;">2017-08-28 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/translation01/" class="posts_list">翻译:3 mistakes to avoid when learning to code in Python</a>
-						<span style="color:#A0A0A0;">2017-08-15 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/LR/" class="posts_list">Logistic 回归分析法的原理和代码实现</a>
-						<span style="color:#A0A0A0;">2017-08-05 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/darknet-yolo/" class="posts_list">yolo-darknet的配置问题(MacOS/CPU only)</a>
-						<span style="color:#A0A0A0;">2017-05-01 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/Concrete-Mathematics3/" class="posts_list">Concrete Mathematics 3 ：Integer Functions</a>
-						<span style="color:#A0A0A0;">2017-01-27 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/markdown1/" class="posts_list">markdown语法所踩的坑（备忘/持续更）</a>
-						<span style="color:#A0A0A0;">2017-01-24 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/Concrete-Mathematics2/" class="posts_list">Concrete Mathematics 2 ：Sums</a>
-						<span style="color:#A0A0A0;">2017-01-17 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/Concrete-Mathematics1/" class="posts_list">Concrete Mathematics 1 ：Recurrent</a>
-						<span style="color:#A0A0A0;">2017-01-15 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/About-Python2.7-Module-Error/" class="posts_list">About Python2.7 Module Error</a>
-						<span style="color:#A0A0A0;">2016-12-04 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/BasicSortAlgorithm/" class="posts_list">基础排序算法</a>
-						<span style="color:#A0A0A0;">2016-11-21 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/Python-Learning（二）：Basic-Image-Processing/" class="posts_list">Python Learing（二）：Basic Image Processing 1</a>
-						<span style="color:#A0A0A0;">2016-11-05 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/Python-Learing（一）：Basic-Grammer/" class="posts_list">Python Learing（一）：Basic Grammar</a>
-						<span style="color:#A0A0A0;">2016-10-21 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/2016多校前的热身赛-1002-Circle-Problem/" class="posts_list">2016多校前的热身赛 1002 Circle Problem</a>
-						<span style="color:#A0A0A0;">2016-08-15 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/HDOJ-5726-GCD-16多校day1-1004/" class="posts_list">HDOJ 5726 GCD (16多校day1 1004)</a>
-						<span style="color:#A0A0A0;">2016-08-14 </span>
-                    </p>
-                	  
-					<p style="margin:15px">
-						<a href="/HDOJ-5821-Ball-16多校day8-1001/" class="posts_list">HDOJ 5821 Ball (16多校day8 1001)</a>
-						<span style="color:#A0A0A0;">2016-08-13 </span>
-                    </p>
-                
-            </div>
-		</div>
-		
-<!DOCTYPE html>
-<html>
-<head>
-	<meta name="google-site-verification" content="1cByckFo34H38SxU3P_7dCe19IdyyWvuqe15x2gRK9I" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width"/>
-    <meta name="viewport" content=" initial-scale=1.0,user-scalable=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-<meta content="black" name="apple-mobile-web-app-status-bar-style" />
-    <link rel="stylesheet" href="/css/style.css">
-    <title>Polebug | start</title>
-</head>
-</html>
-
-<section>
-<div class="side">
-    <div class="sidebar_pages">
-        <h1>MENU</h1>
-        	
-            <li>
-                <a href="/algorithm" class="pages_name">Algorithm</a>
-            </li>
-        	
-            <li>
-                <a href="/web" class="pages_name">Web</a>
-            </li>
-        	
-            <li>
-                <a href="/golang" class="pages_name">Golang</a>
-            </li>
-        	
-            <li>
-                <a href="/anime" class="pages_name">番评</a>
-            </li>
-        	
-            <li>
-                <a href="/salty" class="pages_name">摸鱼</a>
-            </li>
-        	
-            <li>
-                <a href="/aboutme" class="pages_name">Find</a>
-            </li>
-        
-    </div>
 </div>
-<section>
-    </div>
-</body>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta name="google-site-verification" content="1cByckFo34H38SxU3P_7dCe19IdyyWvuqe15x2gRK9I" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width"/>
-    <meta name="viewport" content=" initial-scale=1.0,user-scalable=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-<meta content="black" name="apple-mobile-web-app-status-bar-style" />
-    <link rel="stylesheet" href="/css/style.css">
-    <title>Polebug | start</title>
-</head>
-</html>
 
-<footer class="foot">
-    <p class="footer_about">
-        Last updated : Saturday, December 29th 2018, 10:36:56 pm by <strong>Polebug</strong>
-    </p>
-    <p class="theme">
-        Hexo Theme - <a href="/sakura/" style="color:white"><strong>sakura</strong></a>
-    </p>
-    <div class="visit">
-        <span id="busuanzi_container_site_pv" style="color:white">
-                view <span id="busuanzi_value_site_pv"></span>
-         </span>
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">4</span></li></ul>
     </div>
+  </div>
 
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/C-C/" style="font-size: 13.67px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.67px;">Compilers</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Pyhon/" style="font-size: 13px;">Pyhon</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/WEB/" style="font-size: 13px;">WEB</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/algorithm/" style="font-size: 13.67px;">algorithm</a> <a href="/tags/bulma/" style="font-size: 13px;">bulma</a> <a href="/tags/bulxo/" style="font-size: 13px;">bulxo</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/hexo-theme-bulxo/" style="font-size: 13px;">hexo-theme-bulxo</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/index/" style="font-size: 13px;">index</a> <a href="/tags/language-learning/" style="font-size: 13.33px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.33px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.67px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.67px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/数论/" style="font-size: 13px;">数论</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/离散数学/" style="font-size: 13px;">离散数学</a> <a href="/tags/翻译/" style="font-size: 13.33px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/algorithm/">algorithm</a>
+              </p>
+              <p class="item-title">
+                <a href="/leetcode-1811/" class="title">Leetcode 泛刷题记录(11月)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-12-04T05:35:13.000Z" itemprop="datePublished">2018-12-04</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Compilers/">Compilers</a>
+              </p>
+              <p class="item-title">
+                <a href="/about-c-compiler-2-notes/" class="title">关于编译原理 - 语法分析的原理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-10-12T02:00:00.000Z" itemprop="datePublished">2018-10-12</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Compilers/">Compilers</a>
+              </p>
+              <p class="item-title">
+                <a href="/about-c-compiler-1-notes/" class="title">关于编译原理 - 词法分析器的原理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-09-21T11:01:26.000Z" itemprop="datePublished">2018-09-21</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Compilers/">Compilers</a>
+              </p>
+              <p class="item-title">
+                <a href="/about-c-compiler-0/" class="title">关于编译原理 - (绪)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-09-20T11:43:18.000Z" itemprop="datePublished">2018-09-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/algorithm/">algorithm</a>
+              </p>
+              <p class="item-title">
+                <a href="/leetcode-1809/" class="title">Leetcode 泛刷题记录(9月)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-09-12T13:15:05.000Z" itemprop="datePublished">2018-09-12</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  <main class="main" role="main">
+  
+  <div class="content article-list">
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/leetcode-1811/">Leetcode 泛刷题记录(11月)</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/leetcode-1811/" class="article-date">
+	  <time datetime="2018-12-04T05:35:13.000Z" itemprop="datePublished">Dec 4</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/algorithm/">algorithm</a>, <a class="article-tag-link" href="/tags/leetcode/">leetcode</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/leetcode-1811/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/about-c-compiler-2-notes/">关于编译原理 - 语法分析的原理</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/about-c-compiler-2-notes/" class="article-date">
+	  <time datetime="2018-10-12T02:00:00.000Z" itemprop="datePublished">Oct 12</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Compilers/">Compilers</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/C-C/">C/C++</a>, <a class="article-tag-link" href="/tags/Compilers/">Compilers</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/about-c-compiler-2-notes/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/about-c-compiler-1-notes/">关于编译原理 - 词法分析器的原理</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/about-c-compiler-1-notes/" class="article-date">
+	  <time datetime="2018-09-21T11:01:26.000Z" itemprop="datePublished">Sep 21</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Compilers/">Compilers</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/C-C/">C/C++</a>, <a class="article-tag-link" href="/tags/Compilers/">Compilers</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/about-c-compiler-1-notes/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/about-c-compiler-0/">关于编译原理 - (绪)</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/about-c-compiler-0/" class="article-date">
+	  <time datetime="2018-09-20T11:43:18.000Z" itemprop="datePublished">Sep 20</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Compilers/">Compilers</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/C-C/">C/C++</a>, <a class="article-tag-link" href="/tags/Compilers/">Compilers</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/about-c-compiler-0/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/leetcode-1809/">Leetcode 泛刷题记录(9月)</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/leetcode-1809/" class="article-date">
+	  <time datetime="2018-09-12T13:15:05.000Z" itemprop="datePublished">Sep 12</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/algorithm/">algorithm</a>, <a class="article-tag-link" href="/tags/leetcode/">leetcode</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/leetcode-1809/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Django-MTV/">如何理解 Django 框架</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/Django-MTV/" class="article-date">
+	  <time datetime="2018-03-01T12:47:22.000Z" itemprop="datePublished">Mar 1</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Django/">Django</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Django/">Django</a>, <a class="article-tag-link" href="/tags/MCV/">MCV</a>, <a class="article-tag-link" href="/tags/MTV/">MTV</a>, <a class="article-tag-link" href="/tags/Python/">Python</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/Django-MTV/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/python-re/">Python 正则表达式 [不完全记录]</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/python-re/" class="article-date">
+	  <time datetime="2018-02-03T14:07:33.000Z" itemprop="datePublished">Feb 3</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Python/">Python</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Pyhon/">Pyhon</a>, <a class="article-tag-link" href="/tags/正则表达式/">正则表达式</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/python-re/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/About-hexo-page/">如何在 Hexo 创建一个独立页面</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>写博客的时候，通常会有一个一般需要，想要自定义一个页面（例如404页面/AboutMe）。如果你使用的是 Hexo，其实也非常容易实现这一点。以 bulxo 主题为例进行说明：</p>
+<h2 id="1-修改导航"><a href="#1-修改导航" class="headerlink" title="1.修改导航"></a>1.修改导航</h2><p>首先考虑将页面入口挂在哪里的问题，如果想创建 404 这样的页面，可以忽略掉这一步。
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/About-hexo-page/" class="article-date">
+	  <time datetime="2018-01-25T17:01:58.000Z" itemprop="datePublished">Jan 26</time>
+	</a>
+</span>
+    
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/bulxo/">bulxo</a>, <a class="article-tag-link" href="/tags/hexo/">hexo</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/About-hexo-page/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/About-hexo-theme-bulxo/">About hexo-theme-bulxo</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <blockquote>
+<p>闲来无事用 bulma 框架写了一个 hexo 主题 (bulxo 这个名字就是这样来的)。
+Demo 即本站。
+风格走的简洁，用上 bulma 框架显得比较现代。</p>
+</blockquote>
+<p>代码可见: <a href="http://github.com/polebug/hexo-theme-bulxo" target="_blank" rel="external"> hexo-theme-bulxo </a>
+帮助文档可见: <a href="https://github.com/polebug/hexo-theme-bulxo/blob/master/README.cn.md" target="_blank" rel="external">Chinese_Documentation</a> / <a href="https://github.com/polebug/hexo-theme-bulxo/blob/master/README.md" target="_blank" rel="external"> English_Documentation </a></p>
+<p>希望你也喜欢
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/About-hexo-theme-bulxo/" class="article-date">
+	  <time datetime="2018-01-22T02:28:46.000Z" itemprop="datePublished">Jan 22</time>
+	</a>
+</span>
+    
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/bulma/">bulma</a>, <a class="article-tag-link" href="/tags/hexo/">hexo</a>, <a class="article-tag-link" href="/tags/hexo-theme-bulxo/">hexo-theme-bulxo</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/About-hexo-theme-bulxo/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/WSGI-socket/">WSGI 协议实现与 Python socket 编程补充说明</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <blockquote>
+<p>偶然看到有人翻译的“一起写一个 web 服务器”系列<a href="http://python.jobbole.com/81524/" target="_blank" rel="external">[1]</a><a href="http://python.jobbole.com/81523/" target="_blank" rel="external">[2]</a><a href="http://python.jobbole.com/81820/" target="_blank" rel="external">[3]</a>，感觉挺不错的，这里做一些归纳和 Python socket 编程的补充说明。
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/WSGI-socket/" class="article-date">
+	  <time datetime="2017-11-06T12:47:51.000Z" itemprop="datePublished">Nov 6</time>
+	</a>
+</span>
+    
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Python/">Python</a>, <a class="article-tag-link" href="/tags/WEB/">WEB</a>, <a class="article-tag-link" href="/tags/WSGI/">WSGI</a>, <a class="article-tag-link" href="/tags/socket/">socket</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/WSGI-socket/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/PostgreSQL-1/">翻译:PostgreSQL&#39;s Hash Indexes Are Now Cool</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/PostgreSQL-1/" class="article-date">
+	  <time datetime="2017-11-05T06:43:09.000Z" itemprop="datePublished">Nov 5</time>
+	</a>
+</span>
+    
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/PostgreSQL/">PostgreSQL</a>, <a class="article-tag-link" href="/tags/index/">index</a>, <a class="article-tag-link" href="/tags/翻译/">翻译</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/PostgreSQL-1/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Git操作笔记/">Git操作笔记</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>前言：</p>
+<blockquote>
+<p>近期较多接触到 github，遇到各种问题，在此记下
+持续更新
+如果你觉得我的姿势还不够优雅，欢迎指教</p>
+</blockquote>
+<p><b>&lt;目录&gt;</b>
+1.fork 项目后，与原项目进行同步</p>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/Git操作笔记/" class="article-date">
+	  <time datetime="2017-08-28T03:12:20.000Z" itemprop="datePublished">Aug 28</time>
+	</a>
+</span>
+    
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/git/">git</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/Git操作笔记/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/translation01/">翻译:3 mistakes to avoid when learning to code in Python</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <blockquote>
+<p>刚加入 LCTT ，第一次翻译文章，没有什么经验，如有错误，欢迎指正</p>
+<p>本文是未校对版，已校对版发布在 <a href="https://github.com/LCTT/TranslateProject" target="_blank" rel="external">LCTT 的 github</a> 上</p>
+<p>文末是初次翻译的体会</p>
+</blockquote>
+<p>(以下是译文)</p>
+<hr>
+<h2>学习用 python 编码时要避免的 3 个错误 </h2>
+
+<p><b>这些错误会造成很麻烦的问题，需要数小时才能解决</b>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/translation01/" class="article-date">
+	  <time datetime="2017-08-15T13:54:43.000Z" itemprop="datePublished">Aug 15</time>
+	</a>
+</span>
+    
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Python/">Python</a>, <a class="article-tag-link" href="/tags/翻译/">翻译</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/translation01/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/LR/">Logistic 回归分析法的原理和代码实现</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <blockquote>
+<p>注：
+实现用的是 python / LR 原理参考 Andrew Ng 的 cs229
+感谢 <a href="http://www.cnblogs.com/jerrylead/archive/2012/05/08/2489725.html" target="_blank" rel="external">JerryLead</a> 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删
+如有错误，欢迎指正</p>
+</blockquote>
+<p><b>&lt;目录&gt;
+　　1.二元 LR 原理
+　　2.多元 LR 原理
+　　3.裸 LR 的代码实现 (梯度下降/二元/多元/预测结果/正确率统计)
+　　4.调用 sklearn 库里的 LR 模型 (训练/预测结果/正确率统计)
+</b>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/LR/" class="article-date">
+	  <time datetime="2017-08-05T03:03:52.000Z" itemprop="datePublished">Aug 5</time>
+	</a>
+</span>
+    
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Logistic/">Logistic</a>, <a class="article-tag-link" href="/tags/ML/">ML</a>, <a class="article-tag-link" href="/tags/Python/">Python</a>, <a class="article-tag-link" href="/tags/sklearn/">sklearn</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/LR/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/darknet-yolo/">yolo-darknet的配置问题(MacOS/CPU only)</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/darknet-yolo/" class="article-date">
+	  <time datetime="2017-04-30T16:50:15.000Z" itemprop="datePublished">May 1</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/yolo-darknet/">yolo-darknet</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/darknet/">darknet</a>, <a class="article-tag-link" href="/tags/yolo/">yolo</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/darknet-yolo/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Concrete-Mathematics3/">Concrete Mathematics 3 ：Integer Functions</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>本来打算先看自己比较熟悉的数论(后一章)，之后发现作者在说后面章节的内容时会涉及到前面讲过的内容。还是乖乖按照顺序看呗～
+顺便…除夕快乐～鸡年快乐啦～</p>
+<p>言归正传，这一章讲整值函数，与本书的重点：离散数学紧密相关。
+这一章主要围绕低和顶函数展开研究，内容主要是：
+<b>
+0.底函数和顶函数的介绍以及相关应用
+1.研究底函数和顶函数的递归式和和式
+2.mod</b></p>
+<p>(以下正文)
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/Concrete-Mathematics3/" class="article-date">
+	  <time datetime="2017-01-27T07:23:04.000Z" itemprop="datePublished">Jan 27</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Math/">Math</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/math/">math</a>, <a class="article-tag-link" href="/tags/具体数学/">具体数学</a>, <a class="article-tag-link" href="/tags/数论/">数论</a>, <a class="article-tag-link" href="/tags/离散数学/">离散数学</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/Concrete-Mathematics3/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/markdown1/">markdown语法所踩的坑（备忘/持续更）</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>细数来写markdown时踩的坑也算有些，在此备忘；
+(长期更)
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/markdown1/" class="article-date">
+	  <time datetime="2017-01-24T03:32:51.000Z" itemprop="datePublished">Jan 24</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/杂记/">杂记</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/markdown/">markdown</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/markdown1/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Concrete-Mathematics2/">Concrete Mathematics 2 ：Sums</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>第二章内容略多，个人感觉难度的话，是从易到难。但是作者写的过程都很清晰，慢慢啃也是美滋滋 233333333 :D</p>
+<p><b>目录：
+　　0.和式的表示
+　　1.解递归式
+　　2.单个和式的处理
+　　3.多重和式的处理
+　　4.一般性的方法
+　　5.有限微积分和无限微积分
+</b>
+（以下是正文）
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/Concrete-Mathematics2/" class="article-date">
+	  <time datetime="2017-01-17T07:59:54.000Z" itemprop="datePublished">Jan 17</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Math/">Math</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/math/">math</a>, <a class="article-tag-link" href="/tags/具体数学/">具体数学</a>, <a class="article-tag-link" href="/tags/和式/">和式</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/Concrete-Mathematics2/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Concrete-Mathematics1/">Concrete Mathematics 1 ：Recurrent</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>第一章看着难度还是很友好的，算是在这个大坑中填了微小的一块。仔细看了推导，能领会作者的意思并对递归问题有了一些新的认识。</p>
+<p>主要说了三个经典递归问题，河内塔和平面上的直线这两个问题相对简单明了。第三个问题是约瑟夫问题，就这个问题作者延伸的讲了几种递归思想，个人觉得很赞。</p>
+<p>(BTW：其实写之前想参考一些别人写的笔记，发现能参考的东西太少了，很多是未填完的坑，实在觉得可惜，希望自己能坚持写完)</p>
+<p><b>目录：
+　　0.递归问题的两种常用解法：数学归纳法和成套方法
+　　1.河内塔问题和平面上的直线问题的递归推导
+　　2.约瑟夫问题的几种递归推导
+</b>
+（以下是正文）
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/Concrete-Mathematics1/" class="article-date">
+	  <time datetime="2017-01-15T02:52:37.000Z" itemprop="datePublished">Jan 15</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Math/">Math</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/math/">math</a>, <a class="article-tag-link" href="/tags/具体数学/">具体数学</a>, <a class="article-tag-link" href="/tags/递归/">递归</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/Concrete-Mathematics1/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/About-Python2.7-Module-Error/">About Python2.7 Module Error</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>(长期更)</p>
+<p>16/11/20:
+<code>from urllib.request import urlopen</code>
+Try to use the following:</p>
+<pre><code>from urllib2 import Request           
+from urllib2 import urlopen     
+</code></pre><p>For Python2.7,we use urllib -&gt; urllib2, request -&gt; Request
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/About-Python2.7-Module-Error/" class="article-date">
+	  <time datetime="2016-12-04T13:27:09.000Z" itemprop="datePublished">Dec 4</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Python/">Python</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Python/">Python</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/About-Python2.7-Module-Error/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/BasicSortAlgorithm/">基础排序算法</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>&lt;写在前面&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。
+&nbsp;&nbsp;&nbsp;&nbsp;其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。
+&nbsp;&nbsp;&nbsp;&nbsp;正文最前面是今天讲的插入排序，下面是根据难易程度整理的其它基础排序算法，感兴趣的童鞋接着往下看～</p>
+<p>&lt;正文&gt;
+基础排序算法如下：<code>(默认由小到大排序)</code>
+ &nbsp;&nbsp;&nbsp;&nbsp;   <b>0.Insertion Sort</b>
+ &nbsp;&nbsp;&nbsp;&nbsp;   <b>1.STL: Sort</b>
+ &nbsp;&nbsp;&nbsp;&nbsp;   <b>2.Bubble Sort</b>
+ &nbsp;&nbsp;&nbsp;&nbsp;   <b>3.Bucket Sort</b>
+ &nbsp;&nbsp;&nbsp;&nbsp;   <b>4.Selection Sort</b>
+ &nbsp;&nbsp;&nbsp;&nbsp;   <b>5.Quick Sort</b>（不使用sort函数)
+ &nbsp;&nbsp;&nbsp;&nbsp;   <b>6.STL: Priority_Queue</b>
+ &nbsp;&nbsp;&nbsp;&nbsp;   <b>7.Heap Sort</b>
+ &nbsp;&nbsp;&nbsp;&nbsp;   <b>8.Merge Sort</b>
+ &nbsp;&nbsp;&nbsp;&nbsp;   <b>9.Shell Sort</b>
+提个建议：（亲测好用）
+&nbsp;&nbsp;&nbsp;&nbsp;1.如果有看不懂的地方，可以带入一个值，手动模拟代码执行的过程，帮助理解～
+&nbsp;&nbsp;&nbsp;&nbsp;2.如果编译器支持跟踪变量是极好的，如果不支持，建议手动输出中间变量；如想在过程中，查看当前a[]的排序情况，可以在中间for(int i=0;i&lt;len;i++) cout&lt;&lt;a[i]&lt;&lt;” “;通过这种方式进行debug或理解；</p>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/BasicSortAlgorithm/" class="article-date">
+	  <time datetime="2016-11-21T03:24:43.000Z" itemprop="datePublished">Nov 21</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/algorithm/">algorithm</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/BasicSortAlgorithm/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Python-Learning（二）：Basic-Image-Processing/">Python Learing（二）：Basic Image Processing 1</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p><b>&lt;写在前面&gt;</b></p>
+<p>Basic image processing 1：
+　　<b>0.（以简单的曲线图为例）对于生成的图自定义外观，使用子图，多个数据集，标题，标签，交互式标注，图例；</b>
+　　<b>1.生成散点图，直方图；</b>
+　　<b>2.简单的图像处理：转换格式，调整尺寸，旋转，复制粘贴图像区域，在图像上绘制点线；</b>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/Python-Learning（二）：Basic-Image-Processing/" class="article-date">
+	  <time datetime="2016-11-05T03:53:33.000Z" itemprop="datePublished">Nov 5</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Python/">Python</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Python/">Python</a>, <a class="article-tag-link" href="/tags/image-processing/">image processing</a>, <a class="article-tag-link" href="/tags/language-learning/">language learning</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/Python-Learning（二）：Basic-Image-Processing/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Python-Learing（一）：Basic-Grammer/">Python Learing（一）：Basic Grammar</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/Python-Learing（一）：Basic-Grammer/" class="article-date">
+	  <time datetime="2016-10-21T11:37:01.000Z" itemprop="datePublished">Oct 21</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Python/">Python</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Python/">Python</a>, <a class="article-tag-link" href="/tags/language-learning/">language learning</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/Python-Learing（一）：Basic-Grammer/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016多校前的热身赛-1002-Circle-Problem/">2016多校前的热身赛 1002 Circle Problem</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2016多校前的热身赛-1002-Circle-Problem/" class="article-date">
+	  <time datetime="2016-08-14T16:58:56.000Z" itemprop="datePublished">Aug 15</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/平几/">平几</a>, <a class="article-tag-link" href="/tags/概率问题/">概率问题</a>, <a class="article-tag-link" href="/tags/随机化/">随机化</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2016多校前的热身赛-1002-Circle-Problem/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/HDOJ-5726-GCD-16多校day1-1004/">HDOJ 5726 GCD (16多校day1 1004)</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/HDOJ-5726-GCD-16多校day1-1004/" class="article-date">
+	  <time datetime="2016-08-13T16:07:11.000Z" itemprop="datePublished">Aug 14</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/RMQ问题/">RMQ问题</a>, <a class="article-tag-link" href="/tags/gcd/">gcd</a>, <a class="article-tag-link" href="/tags/二分/">二分</a>, <a class="article-tag-link" href="/tags/区间上的操作/">区间上的操作</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/HDOJ-5726-GCD-16多校day1-1004/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/HDOJ-5821-Ball-16多校day8-1001/">HDOJ 5821 Ball (16多校day8 1001)</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/HDOJ-5821-Ball-16多校day8-1001/" class="article-date">
+	  <time datetime="2016-08-13T12:19:26.000Z" itemprop="datePublished">Aug 13</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/思维/">思维</a>, <a class="article-tag-link" href="/tags/贪心/">贪心</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/HDOJ-5821-Ball-16多校day8-1001/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+  </div>
+
+   
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle=tooltip data-placement=top><i class="icon icon-telegram"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
 </footer>
-</section>
-    </main>
-  </body>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" async
+src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+    });
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+</body>
 </html>
-
-

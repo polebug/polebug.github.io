@@ -1,76 +1,361 @@
 <!DOCTYPE html>
-<html>
-  <head>
-  	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<title> Polebug | start </title>
-  	<script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
-  	<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
-    
-  </head>
-
-  <body>
-  	
-    <main class="main">
-      <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
-      <script src="/plugins/highlight/highlight.pack.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script>
-      <script type="text/javascript" async
-      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-      </script>
-      <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
-      });
-      </script>
-      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-      <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
-	<meta name="google-site-verification" content="1cByckFo34H38SxU3P_7dCe19IdyyWvuqe15x2gRK9I" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width"/>
-    <meta name="viewport" content=" initial-scale=1.0,user-scalable=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-<meta content="black" name="apple-mobile-web-app-status-bar-style" />
-    <link rel="stylesheet" href="/css/style.css">
-    <title>Polebug | start</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>基础排序算法 | Hello, Polebug</title>
+  <meta name="description" content="&amp;lt;写在前面&amp;gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;正文">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础排序算法">
+<meta property="og:url" content="https://polebug.github.io/BasicSortAlgorithm/index.html">
+<meta property="og:site_name" content="polebug | 瞎折腾">
+<meta property="og:description" content="&amp;lt;写在前面&amp;gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;正文">
+<meta property="og:updated_time" content="2016-12-05T13:41:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基础排序算法">
+<meta name="twitter:description" content="&amp;lt;写在前面&amp;gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;正文">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://polebug.github.io/BasicSortAlgorithm/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="polebug | 瞎折腾" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/avatar.jpg" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitment@0.0.3/style/default.min.css">
+  
+  
+  
 </head>
-</html>
 
-<header class="top-bar _fixed">
-    <div class="-container">
-        <div class="-main">
-            <div id="logo" class="logo-wrapper">
-                  <a href="/" class="logo">Polebug | start</a>
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/polebug" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">polebug</h2>
+        <!-- <h3 id="title" class="hidden-xs hidden-sm hidden-md">false</h3> -->
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> undefined</small> -->
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-other">
+          <a href="/salty">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">Other</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle=tooltip data-placement=top><i class="icon icon-telegram"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                想做一个普通人开心的造轮子
             </div>
-            <nav class="navigation" role="navigation" aria-label="site
-            navigation">
-                <ol class="-list">
-                    
-                </ol>
-            </nav>
         </div>
     </div>
-</header>
-</html>
+</div>
 
-<section>
-    <div class="container1">
-        <div id="content">
-            <div id="mainbar" role="main">
-                <div class="post_about">
-                    <h1 class="post_title">基础排序算法</h1>
-                    <span class="post_time">
-                        2016-11-21
-                        <span id="busuanzi_container_page_pv" style="margin-left:10px;">
-                            阅读量<span id="busuanzi_value_page_pv"></span>次
-                        </span>
-                    </span>
-                </div>
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">4</span></li></ul>
+    </div>
+  </div>
 
-                <div class="post_content"><p>&lt;写在前面&gt;
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/C-C/" style="font-size: 13.67px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.67px;">Compilers</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Pyhon/" style="font-size: 13px;">Pyhon</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/WEB/" style="font-size: 13px;">WEB</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/algorithm/" style="font-size: 13.67px;">algorithm</a> <a href="/tags/bulma/" style="font-size: 13px;">bulma</a> <a href="/tags/bulxo/" style="font-size: 13px;">bulxo</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/hexo-theme-bulxo/" style="font-size: 13px;">hexo-theme-bulxo</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/index/" style="font-size: 13px;">index</a> <a href="/tags/language-learning/" style="font-size: 13.33px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.33px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.67px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.67px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/数论/" style="font-size: 13px;">数论</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/离散数学/" style="font-size: 13px;">离散数学</a> <a href="/tags/翻译/" style="font-size: 13.33px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/algorithm/">algorithm</a>
+              </p>
+              <p class="item-title">
+                <a href="/leetcode-1811/" class="title">Leetcode 泛刷题记录(11月)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-12-04T05:35:13.000Z" itemprop="datePublished">2018-12-04</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Compilers/">Compilers</a>
+              </p>
+              <p class="item-title">
+                <a href="/about-c-compiler-2-notes/" class="title">关于编译原理 - 语法分析的原理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-10-12T02:00:00.000Z" itemprop="datePublished">2018-10-12</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Compilers/">Compilers</a>
+              </p>
+              <p class="item-title">
+                <a href="/about-c-compiler-1-notes/" class="title">关于编译原理 - 词法分析器的原理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-09-21T11:01:26.000Z" itemprop="datePublished">2018-09-21</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Compilers/">Compilers</a>
+              </p>
+              <p class="item-title">
+                <a href="/about-c-compiler-0/" class="title">关于编译原理 - (绪)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-09-20T11:43:18.000Z" itemprop="datePublished">2018-09-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/algorithm/">algorithm</a>
+              </p>
+              <p class="item-title">
+                <a href="/leetcode-1809/" class="title">Leetcode 泛刷题记录(9月)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-09-12T13:15:05.000Z" itemprop="datePublished">2018-09-12</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="[layout]-BasicSortAlgorithm" class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      基础排序算法
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/BasicSortAlgorithm/" class="article-date">
+	  <time datetime="2016-11-21T03:24:43.000Z" itemprop="datePublished">2016-11-21</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/algorithm/">algorithm</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/BasicSortAlgorithm/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>&lt;写在前面&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;今天听zl讲插入排序，忍不住想吐槽一下，来来来，听不懂的童鞋看这里（敲黑板敲黑板）。
 &nbsp;&nbsp;&nbsp;&nbsp;其实主要是想整理一下基础排序算法的实现，毕竟以前调用sort习惯了（c++库里的sort函数，直接完成任意数组排序，下面会简单介绍一下）。
 &nbsp;&nbsp;&nbsp;&nbsp;正文最前面是今天讲的插入排序，下面是根据难易程度整理的其它基础排序算法，感兴趣的童鞋接着往下看～</p>
@@ -291,104 +576,177 @@ priority_queue &lt;int, vector&lt;int&gt;, less&lt;int&gt; &gt; q; //自定义�
         d = d/2;
     }
 </code></pre><p>}</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://polebug.github.io/BasicSortAlgorithm/" title="基础排序算法" target="_blank" rel="external">https://polebug.github.io/BasicSortAlgorithm/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/polebug" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <!-- <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/polebug" target="_blank"><span class="text-dark">polebug</span><small class="ml-1x">false</small></a></h3>
+        <div>undefined</div>
+      </div> -->
+    </figure>
+  </div>
 </div>
-            </div>
-        </div>
 
-        <div class="side">
-        <div class="post_classes">
-            <div class="post_categories">
-                <h1>CATEGORIES</h1>
-                <a class="category-link" href="/categories/算法/">算法</a>
-            </div>
-        
-            <div class="post_tags">
-                <h1>TAG</h1>
-                <a class="tag-link" href="/tags/algorithm/">algorithm</a>     
-            </div>	
-        </div>
-        </div>
-        
-<!DOCTYPE html>
-<html>
-<head>
-	<meta name="google-site-verification" content="1cByckFo34H38SxU3P_7dCe19IdyyWvuqe15x2gRK9I" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width"/>
-    <meta name="viewport" content=" initial-scale=1.0,user-scalable=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-<meta content="black" name="apple-mobile-web-app-status-bar-style" />
-    <link rel="stylesheet" href="/css/style.css">
-    <title>Polebug | start</title>
-</head>
-</html>
 
-<section>
-<div class="side">
-    <div class="sidebar_pages">
-        <h1>MENU</h1>
-        	
-            <li>
-                <a href="/algorithm" class="pages_name">Algorithm</a>
-            </li>
-        	
-            <li>
-                <a href="/web" class="pages_name">Web</a>
-            </li>
-        	
-            <li>
-                <a href="/golang" class="pages_name">Golang</a>
-            </li>
-        	
-            <li>
-                <a href="/anime" class="pages_name">番评</a>
-            </li>
-        	
-            <li>
-                <a href="/salty" class="pages_name">摸鱼</a>
-            </li>
-        	
-            <li>
-                <a href="/aboutme" class="pages_name">Find</a>
-            </li>
-        
     </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+
+    
+  </section>
+
+
+  
 </div>
-<section>
-    </div>
-    <!DOCTYPE html>
-<html>
-<head>
-	<meta name="google-site-verification" content="1cByckFo34H38SxU3P_7dCe19IdyyWvuqe15x2gRK9I" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width"/>
-    <meta name="viewport" content=" initial-scale=1.0,user-scalable=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-<meta content="black" name="apple-mobile-web-app-status-bar-style" />
-    <link rel="stylesheet" href="/css/style.css">
-    <title>Polebug | start</title>
-</head>
-</html>
 
-<footer class="foot">
-    <p class="footer_about">
-        Last updated : Saturday, December 29th 2018, 10:36:55 pm by <strong>Polebug</strong>
-    </p>
-    <p class="theme">
-        Hexo Theme - <a href="/sakura/" style="color:white"><strong>sakura</strong></a>
-    </p>
-    <div class="visit">
-        <span id="busuanzi_container_site_pv" style="color:white">
-                view <span id="busuanzi_value_site_pv"></span>
-         </span>
-    </div>
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/About-Python2.7-Module-Error/" title="About Python2.7 Module Error"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/Python-Learning（二）：Basic-Image-Processing/" title="Python Learing（二）：Basic Image Processing 1"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
 
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle=tooltip data-placement=top><i class="icon icon-telegram"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
 </footer>
-</section>
-    </main>
-  </body>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" async
+src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+    });
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+
+
+
+
+   
+    
+<script src="//cdn.jsdelivr.net/npm/gitment@0.0.3/dist/gitment.browser.min.js"></script>
+<script>
+var gitment = new Gitment({
+  // id默认为当前页面url，如果url后带参数或锚点，gitment要重新初始化
+  // https://github.com/imsun/gitment/issues/55
+  // 解决方案：id:window.location.pathname,或者将id设置为当前页面标题
+  id: '基础排序算法', 
+  owner: 'polebug', // 可以是你的GitHub用户名，也可以是github id
+  repo: 'polebug.github.io',
+  oauth: {
+    client_id: 'ce0ec393e83b9afdd9b6',
+    client_secret: '70cf9f7944bf22d405c59b6a50a6b15c6cbcd68c',
+  }
+})
+gitment.render('comments')
+</script>
+
+
+
+
+
+
+
+
+
+</body>
 </html>
-
-
