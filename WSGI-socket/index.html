@@ -19,14 +19,14 @@
   
   <title>WSGI 协议实现与 Python socket 编程补充说明 | Hello, Polebug</title>
   <meta name="description" content="偶然看到有人翻译的“一起写一个 web 服务器”系列[1][2][3]，感觉挺不错的，这里做一些归纳和 Python socket 编程的补充说明。">
-<meta name="keywords" content="Python,WSGI,WEB,socket">
+<meta name="keywords" content="Python,WSGI,web,socket">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WSGI 协议实现与 Python socket 编程补充说明">
 <meta property="og:url" content="https://polebug.github.io/WSGI-socket/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
 <meta property="og:description" content="偶然看到有人翻译的“一起写一个 web 服务器”系列[1][2][3]，感觉挺不错的，这里做一些归纳和 Python socket 编程的补充说明。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-09T15:46:45.253Z">
+<meta property="og:updated_time" content="2019-03-31T07:46:45.315Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WSGI 协议实现与 Python socket 编程补充说明">
 <meta name="twitter:description" content="偶然看到有人翻译的“一起写一个 web 服务器”系列[1][2][3]，感觉挺不错的，这里做一些归纳和 Python socket 编程的补充说明。">
@@ -197,7 +197,7 @@
   <div class="widget">
     <h3 class="widget-title">Categories</h3>
     <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">4</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PostgreSQL/">PostgreSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法与数据结构/">算法与数据结构</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -207,7 +207,7 @@
   <div class="widget">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget-body tagcloud">
-      <a href="/tags/C-C/" style="font-size: 13.67px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.67px;">Compilers</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Pyhon/" style="font-size: 13px;">Pyhon</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/WEB/" style="font-size: 13px;">WEB</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/algorithm/" style="font-size: 13.67px;">algorithm</a> <a href="/tags/bulma/" style="font-size: 13px;">bulma</a> <a href="/tags/bulxo/" style="font-size: 13px;">bulxo</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/hexo-theme-bulxo/" style="font-size: 13px;">hexo-theme-bulxo</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/index/" style="font-size: 13px;">index</a> <a href="/tags/language-learning/" style="font-size: 13.33px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.33px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.67px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.67px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/数论/" style="font-size: 13px;">数论</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/离散数学/" style="font-size: 13px;">离散数学</a> <a href="/tags/翻译/" style="font-size: 13.33px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
+      <a href="/tags/C-C/" style="font-size: 13.5px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.5px;">Compilers</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/language-learning/" style="font-size: 13.25px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.25px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.25px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/web/" style="font-size: 13px;">web</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.25px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/算法与数据结构/" style="font-size: 13.75px;">算法与数据结构</a> <a href="/tags/索引/" style="font-size: 13px;">索引</a> <a href="/tags/翻译/" style="font-size: 13.25px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
     </div>
   </div>
 
@@ -216,7 +216,7 @@
   <div class="widget">
     <h3 class="widget-title">Archive</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">7</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -232,7 +232,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/algorithm/">algorithm</a>
+                <a class="category-link" href="/categories/算法与数据结构/">算法与数据结构</a>
               </p>
               <p class="item-title">
                 <a href="/leetcode-1811/" class="title">Leetcode 泛刷题记录(11月)</a>
@@ -292,7 +292,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/algorithm/">algorithm</a>
+                <a class="category-link" href="/categories/算法与数据结构/">算法与数据结构</a>
               </p>
               <p class="item-title">
                 <a href="/leetcode-1809/" class="title">Leetcode 泛刷题记录(9月)</a>
@@ -336,10 +336,15 @@
 	</a>
 </span>
         
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Network/">Network</a>
+  </span>
+
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link" href="/tags/Python/">Python</a>, <a class="article-tag-link" href="/tags/WEB/">WEB</a>, <a class="article-tag-link" href="/tags/WSGI/">WSGI</a>, <a class="article-tag-link" href="/tags/socket/">socket</a>
+	<a class="article-tag-link" href="/tags/Python/">Python</a>, <a class="article-tag-link" href="/tags/WSGI/">WSGI</a>, <a class="article-tag-link" href="/tags/socket/">socket</a>, <a class="article-tag-link" href="/tags/web/">web</a>
   </span>
 
 
@@ -460,7 +465,7 @@
   <ul class="pager pull-left">
     
     <li class="prev">
-      <a href="/About-hexo-theme-bulxo/" title="About hexo-theme-bulxo"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+      <a href="/python-re/" title="Python 正则表达式 [不完全记录]"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
     </li>
     
     

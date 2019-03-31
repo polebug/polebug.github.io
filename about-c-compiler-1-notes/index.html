@@ -18,19 +18,19 @@
   
   
   <title>关于编译原理 - 词法分析器的原理 | Hello, Polebug</title>
-  <meta name="description" content="词法分析器: 逐字扫描语句中的每个字符，产生词法单元 (token)，用于语法分析。  0.词法单元要想让编译器知道每句话的意思，那么首先要让它先认识每个单词。   我们知道对于 C 语言编程来说，每个单词符号都有它不同的含义。例如：   int main(){     return 0; } 扫描得到的词素有 int main ( ) { return 0 ; } 有的是关键字，像 int">
+  <meta name="description" content="词法分析器: 逐字扫描语句中的每个字符，产生词法单元 (token)，用于语法分析。">
 <meta name="keywords" content="C&#x2F;C++,Compilers">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于编译原理 - 词法分析器的原理">
 <meta property="og:url" content="https://polebug.github.io/about-c-compiler-1-notes/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="词法分析器: 逐字扫描语句中的每个字符，产生词法单元 (token)，用于语法分析。  0.词法单元要想让编译器知道每句话的意思，那么首先要让它先认识每个单词。   我们知道对于 C 语言编程来说，每个单词符号都有它不同的含义。例如：   int main(){     return 0; } 扫描得到的词素有 int main ( ) { return 0 ; } 有的是关键字，像 int">
+<meta property="og:description" content="词法分析器: 逐字扫描语句中的每个字符，产生词法单元 (token)，用于语法分析。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://polebug.github.io/images/lexical.png">
-<meta property="og:updated_time" content="2018-11-19T14:51:45.446Z">
+<meta property="og:updated_time" content="2019-03-31T05:59:55.354Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于编译原理 - 词法分析器的原理">
-<meta name="twitter:description" content="词法分析器: 逐字扫描语句中的每个字符，产生词法单元 (token)，用于语法分析。  0.词法单元要想让编译器知道每句话的意思，那么首先要让它先认识每个单词。   我们知道对于 C 语言编程来说，每个单词符号都有它不同的含义。例如：   int main(){     return 0; } 扫描得到的词素有 int main ( ) { return 0 ; } 有的是关键字，像 int">
+<meta name="twitter:description" content="词法分析器: 逐字扫描语句中的每个字符，产生词法单元 (token)，用于语法分析。">
 <meta name="twitter:image" content="https://polebug.github.io/images/lexical.png">
   <!-- Canonical links -->
   <link rel="canonical" href="https://polebug.github.io/about-c-compiler-1-notes/index.html">
@@ -199,7 +199,7 @@
   <div class="widget">
     <h3 class="widget-title">Categories</h3>
     <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">4</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PostgreSQL/">PostgreSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法与数据结构/">算法与数据结构</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -209,7 +209,7 @@
   <div class="widget">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget-body tagcloud">
-      <a href="/tags/C-C/" style="font-size: 13.67px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.67px;">Compilers</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Pyhon/" style="font-size: 13px;">Pyhon</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/WEB/" style="font-size: 13px;">WEB</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/algorithm/" style="font-size: 13.67px;">algorithm</a> <a href="/tags/bulma/" style="font-size: 13px;">bulma</a> <a href="/tags/bulxo/" style="font-size: 13px;">bulxo</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/hexo-theme-bulxo/" style="font-size: 13px;">hexo-theme-bulxo</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/index/" style="font-size: 13px;">index</a> <a href="/tags/language-learning/" style="font-size: 13.33px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.33px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.67px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.67px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/数论/" style="font-size: 13px;">数论</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/离散数学/" style="font-size: 13px;">离散数学</a> <a href="/tags/翻译/" style="font-size: 13.33px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
+      <a href="/tags/C-C/" style="font-size: 13.5px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.5px;">Compilers</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/language-learning/" style="font-size: 13.25px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.25px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.25px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/web/" style="font-size: 13px;">web</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.25px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/算法与数据结构/" style="font-size: 13.75px;">算法与数据结构</a> <a href="/tags/索引/" style="font-size: 13px;">索引</a> <a href="/tags/翻译/" style="font-size: 13.25px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
     </div>
   </div>
 
@@ -218,7 +218,7 @@
   <div class="widget">
     <h3 class="widget-title">Archive</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">7</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -234,7 +234,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/algorithm/">algorithm</a>
+                <a class="category-link" href="/categories/算法与数据结构/">算法与数据结构</a>
               </p>
               <p class="item-title">
                 <a href="/leetcode-1811/" class="title">Leetcode 泛刷题记录(11月)</a>
@@ -294,7 +294,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/algorithm/">algorithm</a>
+                <a class="category-link" href="/categories/算法与数据结构/">算法与数据结构</a>
               </p>
               <p class="item-title">
                 <a href="/leetcode-1809/" class="title">Leetcode 泛刷题记录(9月)</a>
@@ -361,12 +361,13 @@
         <blockquote>
 <p>词法分析器: 逐字扫描语句中的每个字符，产生词法单元 (token)，用于语法分析。</p>
 </blockquote>
+<a id="more"></a>
 <h1 id="0-词法单元"><a href="#0-词法单元" class="headerlink" title="0.词法单元"></a>0.词法单元</h1><p>要想让编译器知道每句话的意思，那么首先要让它先认识每个单词。  </p>
 <p>我们知道对于 C 语言编程来说，每个单词符号都有它不同的含义。例如：  </p>
 <pre><code>int main(){
     return 0;
 }
-</code></pre><p>扫描得到的词素有</p>
+</code></pre><p>扫描得到的词素有  </p>
 <pre><code>int
 main
 (
@@ -383,7 +384,7 @@ return
 <p>根据以上可知，词法分析器的任务是扫描单词并识别单词的类别。<br>那么词法分析器识别单词的原理是什么呢？主要是依据程序设计语言的词法规则描述。  </p>
 </blockquote>
 <h1 id="1-文法与词法规则"><a href="#1-文法与词法规则" class="headerlink" title="1.文法与词法规则"></a>1.文法与词法规则</h1><p>
-要理清楚识别单词的原理，首先要知道文法的相关概念。</p>
+要理清楚识别单词的原理，首先要知道文法的相关概念。  </p>
 <p>文法 G 定义为四元组 $(V_{N}, V_{T}, P, S)$ : $ V_{N} $ 为非终结符，  $ V_{T} $ 为终结符，P 为文法规则的集合， S 为识别符或开始符。  </p>
 <p>举个简单的🌰:  </p>
 <blockquote>
@@ -439,11 +440,11 @@ return
 </tbody>
 </table>
 <p>程序设计语言中的单词都能用正规式来定义，例如：  </p>
-<p>表示所有标识符的集合：  e = 字母(字母|数字)$^{*}$ </p>
-<p>表示无符号整数的集合：  e = (数字)(数字)$^{*}$</p>
+<p>表示所有标识符的集合：  e = 字母(字母|数字)$^{*}$   </p>
+<p>表示无符号整数的集合：  e = (数字)(数字)$^{*}$  </p>
 <p>&nbsp;</p>
-<p>PS：正规式和正规文法是可以相互转换的，这些集合同样能用正规文法来描述。</p>
-<p>正规式和正规文法使一个单词的描述更规范，且不产生歧义。</p>
+<p>PS：正规式和正规文法是可以相互转换的，这些集合同样能用正规文法来描述。  </p>
+<p>正规式和正规文法使一个单词的描述更规范，且不产生歧义。  </p>
 <p>&nbsp;</p>
 <blockquote>
 <p>我们知道了一些构词规律，并求出了这类单词的正规表达式或正规文法(例如，上面所说的标识符集合)，那么接下来，我们要如何识别出正规式所表示的这类集合呢？答案是有穷自动机。</p>
@@ -456,8 +457,8 @@ return
       M：从K×Σ到K的映象。如果M(R，a)=Q，则输入字符为a时，当前状态R将转换到状态Q，Q成为下一当前状态；
       S：是开始状态，S∈K；
       F：是非空的终止状态集合，F∈K；
-</code></pre><p>而 NFA 与之相区别的是开始状态 S，它是一个非空初态集合，非唯一。</p>
-<p>我们根据正规文法或者正规式，画出状态转换图，接着再构造出有限自动机：</p>
+</code></pre><p>而 NFA 与之相区别的是开始状态 S，它是一个非空初态集合，非唯一。  </p>
+<p>我们根据正规文法或者正规式，画出状态转换图，接着再构造出有限自动机：  </p>
 <p>例如：有正则文法：</p>
 <pre><code>G[Z]：Z ∷=Za｜Aa｜Bb        
             A ∷=Ba｜Za｜a
@@ -471,9 +472,9 @@ return
            M(B,a)={A,B}      M(B,b)={Z}
            M(Z,a)={A,Z}      M(Z,b)= Ø
 
-</code></pre><p>举例输入串为 t = babbabb</p>
-<p>若该串能被自动机所接受，那么次串满足以上文法，即可知其类别。</p>
-<p>最后所要做的就是编程实现一个有穷自动机即可。</p>
+</code></pre><p>举例输入串为 t = babbabb  </p>
+<p>若该串能被自动机所接受，那么次串满足以上文法，即可知其类别。  </p>
+<p>最后所要做的就是编程实现一个有穷自动机即可。  </p>
 <hr>
 <blockquote>
 <p>到此为止，词法分析器的原理就讲完了。如有错误，欢迎致电 <a href="mailto:polebugfly@gmail.com" target="_blank" rel="noopener">polebugfly@gmail.com</a> 或者 telegram @polebug</p>

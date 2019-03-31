@@ -18,18 +18,18 @@
   
   
   <title>如何理解 Django 框架 | Hello, Polebug</title>
-  <meta name="description" content="初用 Django 做开发，对于其总体设计有了初步的认识，在此稍作整理，如有错误欢迎指正       在谈及 Django 的设计模式之前，先简单的谈谈 MVC 与 MTV 模式： MVC 模式 (Model - View - Controller) Model : 模型，数据存取层  View ：视图，处理数据显示的部分  Controller ：控制器，也是业务逻辑层，是程序中处理用户交互">
-<meta name="keywords" content="Python,Django,MTV,MCV">
+  <meta name="description" content="初用 Django 做开发，对于其总体设计有了初步的认识，在此稍作整理，如有错误欢迎指正      在谈及 Django 的设计模式之前，先简单的谈谈 MVC 与 MTV 模式： MVC 模式 (Model - View - Controller) Model : 模型，数据存取层    View ：视图，处理数据显示的部分    Controller ：控制器，也是业务逻辑层，是程序中处理用户">
+<meta name="keywords" content="Django,MTV,MCV,Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何理解 Django 框架">
 <meta property="og:url" content="https://polebug.github.io/Django-MTV/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="初用 Django 做开发，对于其总体设计有了初步的认识，在此稍作整理，如有错误欢迎指正       在谈及 Django 的设计模式之前，先简单的谈谈 MVC 与 MTV 模式： MVC 模式 (Model - View - Controller) Model : 模型，数据存取层  View ：视图，处理数据显示的部分  Controller ：控制器，也是业务逻辑层，是程序中处理用户交互">
+<meta property="og:description" content="初用 Django 做开发，对于其总体设计有了初步的认识，在此稍作整理，如有错误欢迎指正      在谈及 Django 的设计模式之前，先简单的谈谈 MVC 与 MTV 模式： MVC 模式 (Model - View - Controller) Model : 模型，数据存取层    View ：视图，处理数据显示的部分    Controller ：控制器，也是业务逻辑层，是程序中处理用户">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-20T07:25:40.932Z">
+<meta property="og:updated_time" content="2019-03-31T05:56:08.095Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何理解 Django 框架">
-<meta name="twitter:description" content="初用 Django 做开发，对于其总体设计有了初步的认识，在此稍作整理，如有错误欢迎指正       在谈及 Django 的设计模式之前，先简单的谈谈 MVC 与 MTV 模式： MVC 模式 (Model - View - Controller) Model : 模型，数据存取层  View ：视图，处理数据显示的部分  Controller ：控制器，也是业务逻辑层，是程序中处理用户交互">
+<meta name="twitter:description" content="初用 Django 做开发，对于其总体设计有了初步的认识，在此稍作整理，如有错误欢迎指正      在谈及 Django 的设计模式之前，先简单的谈谈 MVC 与 MTV 模式： MVC 模式 (Model - View - Controller) Model : 模型，数据存取层    View ：视图，处理数据显示的部分    Controller ：控制器，也是业务逻辑层，是程序中处理用户">
   <!-- Canonical links -->
   <link rel="canonical" href="https://polebug.github.io/Django-MTV/index.html">
   
@@ -197,7 +197,7 @@
   <div class="widget">
     <h3 class="widget-title">Categories</h3>
     <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">4</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PostgreSQL/">PostgreSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法与数据结构/">算法与数据结构</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -207,7 +207,7 @@
   <div class="widget">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget-body tagcloud">
-      <a href="/tags/C-C/" style="font-size: 13.67px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.67px;">Compilers</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Pyhon/" style="font-size: 13px;">Pyhon</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/WEB/" style="font-size: 13px;">WEB</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/algorithm/" style="font-size: 13.67px;">algorithm</a> <a href="/tags/bulma/" style="font-size: 13px;">bulma</a> <a href="/tags/bulxo/" style="font-size: 13px;">bulxo</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/hexo-theme-bulxo/" style="font-size: 13px;">hexo-theme-bulxo</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/index/" style="font-size: 13px;">index</a> <a href="/tags/language-learning/" style="font-size: 13.33px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.33px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.67px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.67px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/数论/" style="font-size: 13px;">数论</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/离散数学/" style="font-size: 13px;">离散数学</a> <a href="/tags/翻译/" style="font-size: 13.33px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
+      <a href="/tags/C-C/" style="font-size: 13.5px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.5px;">Compilers</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/language-learning/" style="font-size: 13.25px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.25px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.25px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/web/" style="font-size: 13px;">web</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.25px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/算法与数据结构/" style="font-size: 13.75px;">算法与数据结构</a> <a href="/tags/索引/" style="font-size: 13px;">索引</a> <a href="/tags/翻译/" style="font-size: 13.25px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
     </div>
   </div>
 
@@ -216,7 +216,7 @@
   <div class="widget">
     <h3 class="widget-title">Archive</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">7</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -232,7 +232,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/algorithm/">algorithm</a>
+                <a class="category-link" href="/categories/算法与数据结构/">算法与数据结构</a>
               </p>
               <p class="item-title">
                 <a href="/leetcode-1811/" class="title">Leetcode 泛刷题记录(11月)</a>
@@ -292,7 +292,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/algorithm/">algorithm</a>
+                <a class="category-link" href="/categories/算法与数据结构/">算法与数据结构</a>
               </p>
               <p class="item-title">
                 <a href="/leetcode-1809/" class="title">Leetcode 泛刷题记录(9月)</a>
@@ -357,37 +357,36 @@
     <div class="article-entry marked-body" itemprop="articleBody">
       
         <blockquote>
-<blockquote>
 <p>初用 Django 做开发，对于其总体设计有了初步的认识，在此稍作整理，如有错误欢迎指正    </p>
 </blockquote>
-</blockquote>
 <p>在谈及 Django 的设计模式之前，先简单的谈谈 MVC 与 MTV 模式：</p>
-<h1 id="MVC-模式-Model-View-Controller"><a href="#MVC-模式-Model-View-Controller" class="headerlink" title="MVC 模式 (Model - View - Controller)"></a>MVC 模式 (Model - View - Controller)</h1><p><li> <strong>Model</strong> : 模型，数据存取层</li></p>
-<p><li> <strong>View</strong> ：视图，处理数据显示的部分</li></p>
-<p><li> <strong>Controller</strong> ：控制器，也是业务逻辑层，是程序中处理用户交互的部分，通常控制器负责从视图 (View) 读取数据，并向模型 (Model) 发送数据</li></p>
-<h2 id="最简易的-MVC-模式的工作流程大体是这样的：-单向通信"><a href="#最简易的-MVC-模式的工作流程大体是这样的：-单向通信" class="headerlink" title="最简易的 MVC 模式的工作流程大体是这样的：(单向通信)"></a>最简易的 MVC 模式的工作流程大体是这样的：(单向通信)</h2><p>用户进行操作 </p>
-<p>-&gt; Web 服务端收到请求</p>
-<p>-&gt; 页面请求 传送指令到控制器 (Controller) </p>
-<p>-&gt; Controller 完成业务逻辑，调用模型 (Model) 处理数据 </p>
-<p>-&gt; Model 将新的数据发送回 View </p>
-<p>-&gt; 用户看到反馈</p>
+<h1 id="MVC-模式-Model-View-Controller"><a href="#MVC-模式-Model-View-Controller" class="headerlink" title="MVC 模式 (Model - View - Controller)"></a>MVC 模式 (Model - View - Controller)</h1><p><li> <strong>Model</strong> : 模型，数据存取层  </li></p>
+<p><li> <strong>View</strong> ：视图，处理数据显示的部分  </li></p>
+<p><li> <strong>Controller</strong> ：控制器，也是业务逻辑层，是程序中处理用户交互的部分，通常控制器负责从视图 (View) 读取数据，并向模型 (Model) 发送数据  </li></p>
+<h2 id="最简易的-MVC-模式的工作流程大体是这样的：-单向通信"><a href="#最简易的-MVC-模式的工作流程大体是这样的：-单向通信" class="headerlink" title="最简易的 MVC 模式的工作流程大体是这样的：(单向通信)"></a>最简易的 MVC 模式的工作流程大体是这样的：(单向通信)</h2><p>用户进行操作   </p>
+<p>-&gt; Web 服务端收到请求  </p>
+<p>-&gt; 页面请求 传送指令到控制器 (Controller)   </p>
+<p>-&gt; Controller 完成业务逻辑，调用模型 (Model) 处理数据   </p>
+<p>-&gt; Model 将新的数据发送回 View  </p>
+<p>-&gt; 用户看到反馈 </p>
 <h1 id="MTV-模式-Model-Template-View"><a href="#MTV-模式-Model-Template-View" class="headerlink" title="MTV 模式 (Model - Template - View)"></a>MTV 模式 (Model - Template - View)</h1><p>MTV 与 MVC 的区别在于 ：  </p>
 <p><li> <strong>Template</strong> ：模板，表现层，决定如何在页面中显示</li></p>
-<p><li> <strong>View</strong> ：视图，业务逻辑层，包含存取 Model、调用 Template 的相关逻辑<br>&nbsp;<br>除此之外：</li></p>
-<p><li> <strong>URL 分发器</strong> ：将 URL 的 request 分发给不同的 View 处理
-&nbsp;<br>&nbsp;</li></p>
-<h2 id="简易-MTV-模式的工作流程大体如下："><a href="#简易-MTV-模式的工作流程大体如下：" class="headerlink" title="简易 MTV 模式的工作流程大体如下："></a>简易 MTV 模式的工作流程大体如下：</h2><p>用户对界面进行操作 </p>
-<p>-&gt; 服务端收到请求，并传送到 URL 分发器 </p>
-<p>-&gt; URL 分发器将每个 URL 的页面请求分发给不同的视图函数 (View) 处理</p>
-<p>-&gt; View 调用相应的 Model 处理数据 以及 Template 引擎展现数据 </p>
-<p>-&gt; View 处理结束后返回一个 http 响应给 Web 服务端 </p>
-<p>-&gt; 用户看到反馈
-&nbsp;<br>其实 MTV 模式和 MVC 模式的本质是一样的，只是在定义上略有点不同</p>
+<p><li> <strong>View</strong> ：视图，业务逻辑层，包含存取 Model、调用 Template 的相关逻辑  </li></p>
+<p>除此之外：</p>
+<p><li> <strong>URL 分发器</strong> ：将 URL 的 request 分发给不同的 View 处理</li></p>
+<p>&nbsp;   </p>
+<h2 id="简易-MTV-模式的工作流程大体如下："><a href="#简易-MTV-模式的工作流程大体如下：" class="headerlink" title="简易 MTV 模式的工作流程大体如下："></a>简易 MTV 模式的工作流程大体如下：</h2><p>用户对界面进行操作   </p>
+<p>-&gt; 服务端收到请求，并传送到 URL 分发器   </p>
+<p>-&gt; URL 分发器将每个 URL 的页面请求分发给不同的视图函数 (View) 处理  </p>
+<p>-&gt; View 调用相应的 Model 处理数据 以及 Template 引擎展现数据   </p>
+<p>-&gt; View 处理结束后返回一个 http 响应给 Web 服务端   </p>
+<p>-&gt; 用户看到反馈</p>
+<p>&nbsp;<br>其实 MTV 模式和 MVC 模式的本质是一样的，只是在定义上略有点不同</p>
 <hr>
 <p>对于 Django 的设计模式而言，很明显它是遵循 MVC 模式的，但由于这里的 Controller (控制器) 的功能由 Django 框架自身实现，进而将模式转变为了 MTV，工作流程如下：</p>
 <p>&nbsp;  </p>
 <p>用户操作</p>
-<p>-&gt; Web 服务端请求处理</p>
+<p>-&gt; Web 服务端请求处理  </p>
 <p>-&gt; 请求传送到 Django 框架 (相当于 Controller)，控制用户输入，进行 URL 匹配，用 URL 分发器将每个 URL 页面请求分发给合适的视图函数 (View)</p>
 <p>-&gt; 调用相应的 Model 和 Template 处理数据：Model 进行数据的存取，Template 进行数据的呈现</p>
 <p>-&gt; 在视图中，进行模式渲染，形成页面</p>

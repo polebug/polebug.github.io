@@ -18,18 +18,18 @@
   
   
   <title>关于编译原理 - (绪) | Hello, Polebug</title>
-  <meta name="description" content="开坑编译原理系列，其实我也不懂怎么能不能讲清楚，以及能不能写完整，就权且先开着。我想慢慢更完编译器的原理部分之后，写实现过程，希望这一切都顺利…     编译器的自举原理刚接触编译原理的时候，我的脑子里都是一些乱七八糟的东西：比如，一种语言是怎么诞生的？为什么用同一语言写的编译器能编译它自己？那么编译器本身的代码又是怎么被编译的？既然系统已经可以完成对编译器代码的编译了，为什么还需要编译器 23">
+  <meta name="description" content="开坑编译原理系列，其实我也不懂怎么能不能讲清楚，以及能不能写完整，就权且先开着。">
 <meta name="keywords" content="C&#x2F;C++,Compilers">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于编译原理 - (绪)">
 <meta property="og:url" content="https://polebug.github.io/about-c-compiler-0/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="开坑编译原理系列，其实我也不懂怎么能不能讲清楚，以及能不能写完整，就权且先开着。我想慢慢更完编译器的原理部分之后，写实现过程，希望这一切都顺利…     编译器的自举原理刚接触编译原理的时候，我的脑子里都是一些乱七八糟的东西：比如，一种语言是怎么诞生的？为什么用同一语言写的编译器能编译它自己？那么编译器本身的代码又是怎么被编译的？既然系统已经可以完成对编译器代码的编译了，为什么还需要编译器 23">
+<meta property="og:description" content="开坑编译原理系列，其实我也不懂怎么能不能讲清楚，以及能不能写完整，就权且先开着。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-09T15:54:01.441Z">
+<meta property="og:updated_time" content="2019-03-31T07:44:17.239Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于编译原理 - (绪)">
-<meta name="twitter:description" content="开坑编译原理系列，其实我也不懂怎么能不能讲清楚，以及能不能写完整，就权且先开着。我想慢慢更完编译器的原理部分之后，写实现过程，希望这一切都顺利…     编译器的自举原理刚接触编译原理的时候，我的脑子里都是一些乱七八糟的东西：比如，一种语言是怎么诞生的？为什么用同一语言写的编译器能编译它自己？那么编译器本身的代码又是怎么被编译的？既然系统已经可以完成对编译器代码的编译了，为什么还需要编译器 23">
+<meta name="twitter:description" content="开坑编译原理系列，其实我也不懂怎么能不能讲清楚，以及能不能写完整，就权且先开着。">
   <!-- Canonical links -->
   <link rel="canonical" href="https://polebug.github.io/about-c-compiler-0/index.html">
   
@@ -197,7 +197,7 @@
   <div class="widget">
     <h3 class="widget-title">Categories</h3>
     <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">4</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PostgreSQL/">PostgreSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法与数据结构/">算法与数据结构</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -207,7 +207,7 @@
   <div class="widget">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget-body tagcloud">
-      <a href="/tags/C-C/" style="font-size: 13.67px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.67px;">Compilers</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Pyhon/" style="font-size: 13px;">Pyhon</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/WEB/" style="font-size: 13px;">WEB</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/algorithm/" style="font-size: 13.67px;">algorithm</a> <a href="/tags/bulma/" style="font-size: 13px;">bulma</a> <a href="/tags/bulxo/" style="font-size: 13px;">bulxo</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/hexo-theme-bulxo/" style="font-size: 13px;">hexo-theme-bulxo</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/index/" style="font-size: 13px;">index</a> <a href="/tags/language-learning/" style="font-size: 13.33px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.33px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.67px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.67px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/数论/" style="font-size: 13px;">数论</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/离散数学/" style="font-size: 13px;">离散数学</a> <a href="/tags/翻译/" style="font-size: 13.33px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
+      <a href="/tags/C-C/" style="font-size: 13.5px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.5px;">Compilers</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/language-learning/" style="font-size: 13.25px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.25px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.25px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/web/" style="font-size: 13px;">web</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.25px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/算法与数据结构/" style="font-size: 13.75px;">算法与数据结构</a> <a href="/tags/索引/" style="font-size: 13px;">索引</a> <a href="/tags/翻译/" style="font-size: 13.25px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
     </div>
   </div>
 
@@ -216,7 +216,7 @@
   <div class="widget">
     <h3 class="widget-title">Archive</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">7</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -232,7 +232,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/algorithm/">algorithm</a>
+                <a class="category-link" href="/categories/算法与数据结构/">算法与数据结构</a>
               </p>
               <p class="item-title">
                 <a href="/leetcode-1811/" class="title">Leetcode 泛刷题记录(11月)</a>
@@ -292,7 +292,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/algorithm/">algorithm</a>
+                <a class="category-link" href="/categories/算法与数据结构/">算法与数据结构</a>
               </p>
               <p class="item-title">
                 <a href="/leetcode-1809/" class="title">Leetcode 泛刷题记录(9月)</a>
@@ -357,40 +357,40 @@
     <div class="article-entry marked-body" itemprop="articleBody">
       
         <blockquote>
-<p>开坑编译原理系列，其实我也不懂怎么能不能讲清楚，以及能不能写完整，就权且先开着。<br>我想慢慢更完编译器的原理部分之后，写实现过程，希望这一切都顺利…   </p>
+<p>开坑编译原理系列，其实我也不懂怎么能不能讲清楚，以及能不能写完整，就权且先开着。     </p>
 </blockquote>
+<a id="more"></a>
 <h1 id="编译器的自举原理"><a href="#编译器的自举原理" class="headerlink" title="编译器的自举原理"></a>编译器的自举原理</h1><p>刚接触编译原理的时候，我的脑子里都是一些乱七八糟的东西：比如，一种语言是怎么诞生的？为什么用同一语言写的编译器能编译它自己？那么编译器本身的代码又是怎么被编译的？既然系统已经可以完成对编译器代码的编译了，为什么还需要编译器 233333…    </p>
 <p>现在问出来感觉挺逗的，原谅以前的我并不知道编译器的<strong>自举原理</strong>。如同鸡生蛋的问题，如果你想创造一门语言并且用这个语言来写编译器的话，拿 C 语言来说，这个过程是这样的：</p>
 <p>用汇编语言(或其他语言)写一个编译器 a，用 C 语言也写一个编译器 b，用编译器 a 编译 b,得到了一个可执行的编译器 b。接着就可以用 C 语言编译器编译 C 语言本身。或许你想更新编译器 b 的版本，那么用编译器 a 再次编译即可。</p>
-<h1 id="编译器与解释器"><a href="#编译器与解释器" class="headerlink" title="编译器与解释器"></a>编译器与解释器</h1><p><strong>编译</strong>：指的是用高级语言编写的源程序翻译成目标程序。</p>
-<p><strong>编译器</strong>也是一个程序，它把源程序翻译成目标语言编写的中间代码 (机器码)，而后对其加以解释执行。</p>
-<p>与之相提的是<strong>解释器</strong>，解释器可以边读语句边执行指令。看到轮子哥说解释器就是编译器+虚拟机，我是这样理解的，解释器将源语言翻译成低级语言，随后由虚拟机来运行低级语言。</p>
-<h1 id="编译的过程"><a href="#编译的过程" class="headerlink" title="编译的过程"></a>编译的过程</h1><p>让我们回想一下我们初学英语的过程：
-背单词 -&gt; 学习语法 -&gt; 学习句子</p>
+<h1 id="编译器与解释器"><a href="#编译器与解释器" class="headerlink" title="编译器与解释器"></a>编译器与解释器</h1><p><strong>编译</strong>：指的是用高级语言编写的源程序翻译成目标程序。  </p>
+<p><strong>编译器</strong>也是一个程序，它把源程序翻译成目标语言编写的中间代码 (机器码)，而后对其加以解释执行。  </p>
+<p>与之相提的是<strong>解释器</strong>，解释器可以边读语句边执行指令。看到轮子哥说解释器就是编译器+虚拟机，我是这样理解的，解释器将源语言翻译成低级语言，随后由虚拟机来运行低级语言。  </p>
+<h1 id="编译的过程"><a href="#编译的过程" class="headerlink" title="编译的过程"></a>编译的过程</h1><p>让我们回想一下我们初学英语的过程：<br>背单词 -&gt; 学习语法 -&gt; 学习句子</p>
 <p>事实上，编译的过程和学语言的过程是相似的：  </p>
 <p>1.<strong>词法分析</strong> (lexical analysis):</p>
-<p>扫描语句中的每个词法单元 (token)。</p>
+<p>扫描语句中的每个(token)。</p>
 <p>2.<strong>语法分析</strong> (syntax analysis / parsing): </p>
-<p>具体的任务是：接受一个(非)终结符号串作为输入，找出从文法的开始符号推导出这个串的方法。</p>
-<p>设计算法将词法分析器生成的各个词法单元生成树形(语法树)的中间表示。</p>
-<p>考虑优先级以及符号匹配问题。</p>
+<p>具体的任务是：接受一个(非)终结符号串作为输入，找出从文法的开始符号推导出这个串的方法。  </p>
+<p>设计算法将词法分析器生成的各个词法单元生成树形(语法树)的中间表示。  </p>
+<p>考虑优先级以及符号匹配问题。  </p>
 <p>3.<strong>语义分析</strong> (semantic analyzer):</p>
-<p>语义分析最主要的一部分是类型检查：</p>
-<p>运算分量与运算符是否能匹配；数组的下标是否下溢或类型错误；类型转换是否正确；等等。</p>
+<p>语义分析最主要的一部分是类型检查：  </p>
+<p>运算分量与运算符是否能匹配；数组的下标是否下溢或类型错误；类型转换是否正确；等等。  </p>
 <p>4.<strong>中间代码生成</strong>:
-生成近似 “三地址指令” 的中间代码</p>
+生成近似 “三地址指令” 的中间代码  </p>
 <p>5.<strong>中间代码优化</strong></p>
 <p>6.<strong>生成目标代码</strong></p>
-<h1 id="一趟与多趟"><a href="#一趟与多趟" class="headerlink" title="一趟与多趟"></a>一趟与多趟</h1><p><strong>趟</strong> (pass) 指的是对源程序或者中间语言程序从头到尾扫尾并完成一定的任务的过程。</p>
-<p>一趟编译器与多趟编译器的代码结构是截然不同的：</p>
-<p>一趟编译器中，以上步骤都是在一趟中完成的。整个过程通常以语法分析为核心，也叫做语法制导翻译。</p>
-<p>而多趟编译器中，以上步骤分别进行一趟，趟与趟之间存在逻辑上的先后关系，一般采用顺序结构或者并发结构。</p>
-<h1 id="关于编译原理系列的内容"><a href="#关于编译原理系列的内容" class="headerlink" title="关于编译原理系列的内容"></a>关于编译原理系列的内容</h1><p>我打算开两大部分，一部分是理论，另一部分是 coding 的过程。</p>
-<p>内容就围绕以上的编译过程进行详细说明。</p>
-<h2 id="写一个完整的-C-语言编译器的困难与挑战："><a href="#写一个完整的-C-语言编译器的困难与挑战：" class="headerlink" title="写一个完整的 C 语言编译器的困难与挑战："></a>写一个完整的 C 语言编译器的困难与挑战：</h2><p>当然，我是在立 flag，只不过 C 语言本身就相对复杂，要写它的编译器我觉得是存在困难的，对一些问题目前真是一点头绪都没有，我想先写完基本文法再接着考虑实现以下编译：</p>
-<p>1.C 语言的参数传递机制：拷贝/引用</p>
-<p>2.预编译 (宏)</p>
-<p>3.联合编译</p>
+<h1 id="一趟与多趟"><a href="#一趟与多趟" class="headerlink" title="一趟与多趟"></a>一趟与多趟</h1><p><strong>趟</strong> (pass) 指的是对源程序或者中间语言程序从头到尾扫尾并完成一定的任务的过程。  </p>
+<p>一趟编译器与多趟编译器的代码结构是截然不同的：  </p>
+<p>一趟编译器中，以上步骤都是在一趟中完成的。整个过程通常以语法分析为核心，也叫做语法制导翻译。  </p>
+<p>而多趟编译器中，以上步骤分别进行一趟，趟与趟之间存在逻辑上的先后关系，一般采用顺序结构或者并发结构。  </p>
+<h1 id="关于编译原理系列的内容"><a href="#关于编译原理系列的内容" class="headerlink" title="关于编译原理系列的内容"></a>关于编译原理系列的内容</h1><p>我打算开两大部分，一部分是理论，另一部分是 coding 的过程。  </p>
+<p>内容就围绕以上的编译过程进行详细说明。  </p>
+<h2 id="写一个完整的-C-语言编译器的困难与挑战："><a href="#写一个完整的-C-语言编译器的困难与挑战：" class="headerlink" title="写一个完整的 C 语言编译器的困难与挑战："></a>写一个完整的 C 语言编译器的困难与挑战：</h2><p>当然，我是在立 flag，只不过 C 语言本身就相对复杂，要写它的编译器我觉得是存在困难的，对一些问题目前真是一点头绪都没有，我想先写完基本文法再接着考虑实现以下编译：  </p>
+<p>1.C 语言的参数传递机制：拷贝/引用  </p>
+<p>2.预编译 (宏)  </p>
+<p>3.联合编译  </p>
 <hr>
 <p>最后我想说有些人觉得东西太老就不愿意去学，我觉得是错的。来过 CS，就不要枉费这门学科最初包含的东西。东西是老了点，但也请心存敬畏。  </p>
 <p>共勉。</p>

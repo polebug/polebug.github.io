@@ -18,25 +18,25 @@
   
   
   <title>Logistic 回归分析法的原理和代码实现 | Hello, Polebug</title>
-  <meta name="description" content="注： 实现用的是 python / LR 原理参考 Andrew Ng 的 cs229 感谢 JerryLead 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删 如有错误，欢迎指正  &amp;lt;目录&amp;gt; 　　1.二元 LR 原理 　　2.多元 LR 原理 　　3.裸 LR 的代码实现 (梯度下降/二元/多元/预测结果/正确率统计) 　　4.调用 sklearn 库里的 LR">
+  <meta name="description" content="注：实现用的是 python / LR 原理参考 Andrew Ng 的 cs229感谢 JerryLead 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删如有错误，欢迎指正">
 <meta name="keywords" content="Python,Logistic,sklearn,ML">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Logistic 回归分析法的原理和代码实现">
 <meta property="og:url" content="https://polebug.github.io/LR/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="注： 实现用的是 python / LR 原理参考 Andrew Ng 的 cs229 感谢 JerryLead 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删 如有错误，欢迎指正  &amp;lt;目录&amp;gt; 　　1.二元 LR 原理 　　2.多元 LR 原理 　　3.裸 LR 的代码实现 (梯度下降/二元/多元/预测结果/正确率统计) 　　4.调用 sklearn 库里的 LR">
+<meta property="og:description" content="注：实现用的是 python / LR 原理参考 Andrew Ng 的 cs229感谢 JerryLead 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删如有错误，欢迎指正">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170810-0@2x.png">
-<meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170810-1@2x.png">
-<meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170810-2@2x.png">
-<meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-0@2x.png">
-<meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-1@2x.png">
-<meta property="og:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-2@2x.png">
-<meta property="og:updated_time" content="2017-11-06T12:54:52.000Z">
+<meta property="og:image" content="https://polebug.github.io/LR/LR_1.png">
+<meta property="og:image" content="https://polebug.github.io/LR/LR_2.png">
+<meta property="og:image" content="https://polebug.github.io/LR/LR_3.png">
+<meta property="og:image" content="https://polebug.github.io/LR/LR_5.png">
+<meta property="og:image" content="https://polebug.github.io/LR/LR_6.png">
+<meta property="og:image" content="https://polebug.github.io/LR/LR_7.png">
+<meta property="og:updated_time" content="2019-03-31T07:40:44.612Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Logistic 回归分析法的原理和代码实现">
-<meta name="twitter:description" content="注： 实现用的是 python / LR 原理参考 Andrew Ng 的 cs229 感谢 JerryLead 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删 如有错误，欢迎指正  &amp;lt;目录&amp;gt; 　　1.二元 LR 原理 　　2.多元 LR 原理 　　3.裸 LR 的代码实现 (梯度下降/二元/多元/预测结果/正确率统计) 　　4.调用 sklearn 库里的 LR">
-<meta name="twitter:image" content="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170810-0@2x.png">
+<meta name="twitter:description" content="注：实现用的是 python / LR 原理参考 Andrew Ng 的 cs229感谢 JerryLead 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删如有错误，欢迎指正">
+<meta name="twitter:image" content="https://polebug.github.io/LR/LR_1.png">
   <!-- Canonical links -->
   <link rel="canonical" href="https://polebug.github.io/LR/index.html">
   
@@ -204,7 +204,7 @@
   <div class="widget">
     <h3 class="widget-title">Categories</h3>
     <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">4</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PostgreSQL/">PostgreSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法与数据结构/">算法与数据结构</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -214,7 +214,7 @@
   <div class="widget">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget-body tagcloud">
-      <a href="/tags/C-C/" style="font-size: 13.67px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.67px;">Compilers</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Pyhon/" style="font-size: 13px;">Pyhon</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/WEB/" style="font-size: 13px;">WEB</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/algorithm/" style="font-size: 13.67px;">algorithm</a> <a href="/tags/bulma/" style="font-size: 13px;">bulma</a> <a href="/tags/bulxo/" style="font-size: 13px;">bulxo</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/hexo-theme-bulxo/" style="font-size: 13px;">hexo-theme-bulxo</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/index/" style="font-size: 13px;">index</a> <a href="/tags/language-learning/" style="font-size: 13.33px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.33px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.67px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.67px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/数论/" style="font-size: 13px;">数论</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/离散数学/" style="font-size: 13px;">离散数学</a> <a href="/tags/翻译/" style="font-size: 13.33px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
+      <a href="/tags/C-C/" style="font-size: 13.5px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.5px;">Compilers</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/language-learning/" style="font-size: 13.25px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.25px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.25px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/web/" style="font-size: 13px;">web</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.25px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/算法与数据结构/" style="font-size: 13.75px;">算法与数据结构</a> <a href="/tags/索引/" style="font-size: 13px;">索引</a> <a href="/tags/翻译/" style="font-size: 13.25px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
     </div>
   </div>
 
@@ -223,7 +223,7 @@
   <div class="widget">
     <h3 class="widget-title">Archive</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">7</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -239,7 +239,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/algorithm/">algorithm</a>
+                <a class="category-link" href="/categories/算法与数据结构/">算法与数据结构</a>
               </p>
               <p class="item-title">
                 <a href="/leetcode-1811/" class="title">Leetcode 泛刷题记录(11月)</a>
@@ -299,7 +299,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/algorithm/">algorithm</a>
+                <a class="category-link" href="/categories/算法与数据结构/">算法与数据结构</a>
               </p>
               <p class="item-title">
                 <a href="/leetcode-1809/" class="title">Leetcode 泛刷题记录(9月)</a>
@@ -359,83 +359,46 @@
     <div class="article-entry marked-body" itemprop="articleBody">
       
         <blockquote>
-<p>注：
-实现用的是 python / LR 原理参考 Andrew Ng 的 cs229
-感谢 <a href="http://www.cnblogs.com/jerrylead/archive/2012/05/08/2489725.html" target="_blank" rel="noopener">JerryLead</a> 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删
-如有错误，欢迎指正</p>
+<p>注：<br>实现用的是 python / LR 原理参考 Andrew Ng 的 cs229<br>感谢 <a href="http://www.cnblogs.com/jerrylead/archive/2012/05/08/2489725.html" target="_blank" rel="noopener">JerryLead</a> 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删<br>如有错误，欢迎指正</p>
 </blockquote>
-<p><b>&lt;目录&gt;
-　　1.二元 LR 原理
-　　2.多元 LR 原理
-　　3.裸 LR 的代码实现 (梯度下降/二元/多元/预测结果/正确率统计)
-　　4.调用 sklearn 库里的 LR 模型 (训练/预测结果/正确率统计)
-</b>
-<a id="more"></a></p>
+<a id="more"></a>
+<p><b>&lt;目录&gt;<br>1.二元 LR 原理<br>2.多元 LR 原理<br>3.裸 LR 的代码实现 (梯度下降/二元/多元/预测结果/正确率统计)<br>4.调用 sklearn 库里的 LR 模型 (训练/预测结果/正确率统计)<br></b>
+<!--more--></p>
 <h2>二元 Logistic Regression 原理</h2>
 
-<p></p><h3>一些符号的解释</h3>
-$ h_θ(x) $ - 一个分类函数，表示的是自变量 x 为某个值时，y = 1 的概率 
-$ g(x) $ - 一个常用的 S 形逻辑函数
-J(θ) - 代价函数<p></p>
-<p></p><h3>分类函数$ h _θ(X) $</h3>
-对于一个二元的分类问题，将因变量 y 可能属于的两个类分别称为负向类 (negative class) 和正向类 (positive class)，并表示为因变量 y $\in$ {0,1}，其中 0 表示负向类，1 表示正向类。<p></p>
-<p>当自变量 x 为某个值时，$ h _θ(x) $ 表示正向类 y = 1 的概率，即 $ h_θ(x) = P (y=1 | x；θ) $；对于负向类 y = 0 的概率，则为 1 - $ h_θ(x) $</p>
-<p>我们规定，当分类函数 $ h _θ(x) $ &gt;= 0.5 时，预测 y = 1；当 $ h_θ(x) $ &lt; 0.5 时，预测 y = 0；</p>
-<p>如果我们用线性回归算法来解决一个分类问题，函数 $ h_θ(x) $ 的值很可能远大于 1 或者远小于 0，即时我们仍然可以进行分类，但是这样得到的概率值会觉得很奇怪。所以我们需要一种算法，使分类函数 $ h_θ(x) $ 的值永远在 0 到 1 之间。
-而这种算法，就是逻辑回归算法 (Logistic Regression)。</p>
+<h3>一些符号的解释</h3>
+$ h_θ(x) $ - 一个分类函数，表示的是自变量 x 为某个值时，y = 1 的概率<br>$ g(x) $ - 一个常用的 S 形逻辑函数<br>J(θ) - 代价函数<br>
+<h3>分类函数$ h _θ(X) $</h3>
+
+<p>对于一个二元的分类问题，将因变量 y 可能属于的两个类分别称为负向类 (negative class) 和正向类 (positive class)，并表示为因变量 y $\in$ {0,1}，其中 0 表示负向类，1 表示正向类。  </p>
+<p>当自变量 x 为某个值时，$ h _θ(x) $ 表示正向类 y = 1 的概率，即 $ h_θ(x) = P (y=1 | x；θ) $；对于负向类 y = 0 的概率，则为 1 - $ h_θ(x) $  </p>
+<p>我们规定，当分类函数 $ h _θ(x) $ &gt;= 0.5 时，预测 y = 1；当 $ h_θ(x) $ &lt; 0.5 时，预测 y = 0；  </p>
+<p>如果我们用线性回归算法来解决一个分类问题，函数 $ h_θ(x) $ 的值很可能远大于 1 或者远小于 0，即时我们仍然可以进行分类，但是这样得到的概率值会觉得很奇怪。所以我们需要一种算法，使分类函数 $ h_θ(x) $ 的值永远在 0 到 1 之间。  </p>
+<p>而这种算法，就是逻辑回归算法 (Logistic Regression)。</p>
 <p></p><h3>逻辑回归模型的建立</h3>
-引入模型 $ h _θ(x) = g(θ^{T}X) = \frac{1}{1 + e^{-θ^{T}X}} $
-其中，X 代表特征向量；
-$ θ^{T}X = θ_0 + θ_1X_1 + θ_2X_2 + … $，这里的 θ 表示各个特征向量的权重；
-g 代表一个常用的 S 形 (sigmoid function) 逻辑函数，其公式为 $ g(z) = \frac { 1 }{ 1 + e^{-z} } $，图像为 
-<img src="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170810-0@2x.png" width="350" height="250" alt="g(z)" align="center">
-根据这个图像，我们可以知道
-z = 0 时，g(z) = 0.5 
-z &gt; 0 时，g(z) &gt; 0.5
-z &lt; 0 时，g(z) &lt; 0.5
-又 $ z = θ^{T}X $，即
-$ θ^{T}X &gt;= 0 $时，预测 y = 1 
-$ θ^{T}X &lt; 0 $时，预测 y = 0<p></p>
+引入模型 $ h _θ(x) = g(θ^{T}X) = \frac{1}{1 + e^{-θ^{T}X}} $<br>其中，X 代表特征向量；<br>$ θ^{T}X = θ_0 + θ_1X_1 + θ_2X_2 + … $，这里的 θ 表示各个特征向量的权重；<br>g 代表一个常用的 S 形 (sigmoid function) 逻辑函数，其公式为 $ g(z) = \frac { 1 }{ 1 + e^{-z} } $，图像为<br><img src="LR_1.png" width="350" height="250" alt="g(z)" align="center"><br>根据这个图像，我们可以知道<br>z = 0 时，g(z) = 0.5<br>z &gt; 0 时，g(z) &gt; 0.5<br>z &lt; 0 时，g(z) &lt; 0.5<br>又 $ z = θ^{T}X $，即<br>$ θ^{T}X &gt;= 0 $时，预测 y = 1<br>$ θ^{T}X &lt; 0 $时，预测 y = 0  <p></p>
 <p></p><h3>判定边界</h3>
-所谓边界，就是找到各个适合的特征向量 X 的值，使 $ θ^{T}X $ = 0，即 g(z) = 0.5；
-我们可以把 $ θ_0 + θ_1X_1 + θ_2X_2 + … = 0 $ 看成是一个直线，如图所示
-<img src="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170810-1@2x.png" width="350" height="250" align="center">
-其中，绿色的直线就为我们需要找的分界线；
-如果特征向量 X 的值使得 $ θ^{T}X $ 在分界线的上方，即对应的 g(z) &gt; 0.5，那么预测 y = 1；反之，如果特征向量 X 的值使得 $ θ^{T}X $ 在分界线的下方，那么预测 y = 0；<p></p>
+所谓边界，就是找到各个适合的特征向量 X 的值，使 $ θ^{T}X $ = 0，即 g(z) = 0.5；  <p></p>
+<p>我们可以把 $ θ_0 + θ_1X_1 + θ_2X_2 + … = 0 $ 看成是一个直线，如图所示  </p>
+<p><img src="LR_2.png" width="350" height="250" align="center"></p>
+<p>其中，绿色的直线就为我们需要找的分界线；  </p>
+<p>如果特征向量 X 的值使得 $ θ^{T}X $ 在分界线的上方，即对应的 g(z) &gt; 0.5，那么预测 y = 1；反之，如果特征向量 X 的值使得 $ θ^{T}X $ 在分界线的下方，那么预测 y = 0；  </p>
 <p>接下来要做的，就是在训练过程中寻找到适合的 θ 的值，进而求出分界线方程；</p>
 <p></p><h3>拟合求解 θ </h3>
-定义逻辑回归的代价函数 $ J(θ) = \frac{1}{m} \sum_{i=1}^{m}{ Cost(h_{θ}(x_{i}),y_{i}}) $<p></p>
-<p>其中选择对数似然损失函数为Cost Function，在训练过程中：
-当 y = 1 时，$ Cost(h_{θ}(x_{i}),y_{i}) = -log(h_{θ}(x)) $
-当 y = 0 时，$ Cost(h_{θ}(x_{i}),y_{i}) = -log(1 - h_{θ}(x)) $
-将Cost函数简化为：
-$ Cost(h_{θ}(x),y) = -y * log(h_{θ}(x)) - (1 - y) * log(1-h_{θ}(x)) $</p>
-<p>将简化的Cost函数代入代价函数，得到：
-$ J(\theta) = -\frac{1}{m} [\sum_{i=1}^{m}{ y_{i} log h_{\theta}(x_{i}) + (1 - y_{i}) log(1 - h_{\theta}(x_{i}))}] $</p>
-<p>$ J(\theta) $ 的值越小，说明曲线的拟合度越高，所以我们这里用梯度下降算法或者最小二乘法来求解使代价函数最小的参数。
-(注：如果将 Cost 函数去掉负号，可以把问题转换为求极大值)
-这里不作赘述。</p>
+定义逻辑回归的代价函数 $ J(θ) = \frac{1}{m} \sum_{i=1}^{m}{ Cost(h_{θ}(x_{i}),y_{i}}) $  <p></p>
+<p>其中选择对数似然损失函数为Cost Function，在训练过程中：<br>当 y = 1 时，$ Cost(h_{θ}(x_{i}),y_{i}) = -log(h_{θ}(x)) $<br>当 y = 0 时，$ Cost(h_{θ}(x_{i}),y_{i}) = -log(1 - h_{θ}(x)) $<br>将Cost函数简化为：<br>$ Cost(h_{θ}(x),y) = -y * log(h_{θ}(x)) - (1 - y) * log(1-h_{θ}(x)) $  </p>
+<p>将简化的Cost函数代入代价函数，得到：<br>$ J(\theta) = -\frac{1}{m} [\sum_{i=1}^{m}{ y_{i} log h_{\theta}(x_{i}) + (1 - y_{i}) log(1 - h_{\theta}(x_{i}))}] $  </p>
+<p>$ J(\theta) $ 的值越小，说明曲线的拟合度越高，所以我们这里用梯度下降算法或者最小二乘法来求解使代价函数最小的参数。<br>(注：如果将 Cost 函数去掉负号，可以把问题转换为求极大值)<br>这里不作赘述。  </p>
 <h2>多元 Logistic Regression 原理</h2>
 
 <blockquote>
 <p>这一部分我觉得 <a href="http://www.cnblogs.com/jerrylead/archive/2012/05/08/2489725.html" target="_blank" rel="noopener">JerryLead</a> 大佬已经写的够浅显易懂了，举例的时候会引用一些他的图。</p>
 </blockquote>
-<p>对于多分类问题，实际上就是多个二元分类问题。
-<b>首先</b>，我们将多个类中的某一类标记为正向类，将其他所有类标记为负向类，这个模型记作 $ h_{\theta}^{(1)}(x) $；
-类似地，选择另外一类记为正向类，其他所有类记为负向类，得到模型 $ h_{\theta}^{(2)}(x) $；
-依次类推，最终得到 $ h_{\theta}^{(i)}(x) = P (y = i | x ; \theta) $，其中 i = 1,2,3,…；
-<b>然后</b>，训练所有的逻辑回归分类机；
-<b>最后</b>，在预测时，对于一个新的 x 值，选择最大的 $ h_{\theta}^{(i)}(x) $；</p>
+<p>对于多分类问题，实际上就是多个二元分类问题。<br><b>首先</b>，我们将多个类中的某一类标记为正向类，将其他所有类标记为负向类，这个模型记作 $ h_{\theta}^{(1)}(x) $；<br>类似地，选择另外一类记为正向类，其他所有类记为负向类，得到模型 $ h_{\theta}^{(2)}(x) $；<br>依次类推，最终得到 $ h_{\theta}^{(i)}(x) = P (y = i | x ; \theta) $，其中 i = 1,2,3,…；<br><b>然后</b>，训练所有的逻辑回归分类机；<br><b>最后</b>，在预测时，对于一个新的 x 值，选择最大的 $ h_{\theta}^{(i)}(x) $；  </p>
 <hr>
-<p>下面以分成三类为例进行说明。如图所示。
-<img src="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170810-2@2x.png" width="300" height="230">
-其中，三角形表示 y = 1，方块表示 y = 2，叉表示 y = 3；</p>
-<p>从三角形开始，我们将类型 1 设定为正向类，类型 2 和 3 设定为负向类，得到 $ h_{\theta}^{(1)}(x) $；
-依次类推，得到 $ h_{\theta}^{(2)}(x) $，$ h_{\theta}^{(3)}(x) $ ；
-将模型进行训练，得到相关权重 $ \theta^{T} $；
-如图所示；
-<img src="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-0@2x.png" width="210" height="180"> <img src="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-1@2x.png" width="210" height="180"> <img src="http://7x2wrf.com1.z0.glb.clouddn.com/QQ20170811-2@2x.png" width="210" height="180">
-最后将新的特征值进行预测，输出 Max($ h_{\theta}^{(i)}(x) $)；</p>
+<p>下面以分成三类为例进行说明。如图所示。<br><img src="LR_3.png" width="300" height="230">
+其中，三角形表示 y = 1，方块表示 y = 2，叉表示 y = 3；  </p>
+<p>从三角形开始，我们将类型 1 设定为正向类，类型 2 和 3 设定为负向类，得到 $ h_{\theta}^{(1)}(x) $；<br>依次类推，得到 $ h_{\theta}^{(2)}(x) $，$ h_{\theta}^{(3)}(x) $ ；<br>将模型进行训练，得到相关权重 $ \theta^{T} $；<br>如图所示；<br><img src="LR_5.png" width="210" height="180"> <img src="LR_6.png" width="210" height="180"> <img src="LR_7.png" width="210" height="180"><br>最后将新的特征值进行预测，输出 Max($ h_{\theta}^{(i)}(x) $)；  </p>
 <p></p><h2>裸 Logistic Regression 的代码实现</h2>
 自己敲了一遍，然后发现有个大佬写的比我全面很多，所以这里还是不贴自己的代码了（orz<p></p>
 <blockquote>
@@ -443,16 +406,16 @@ $ J(\theta) = -\frac{1}{m} [\sum_{i=1}^{m}{ y_{i} log h_{\theta}(x_{i}) + (1 - y
 <a href="https://github.com/ccc013/CodingPractise/blob/master/Python/MachineLearning/mulLogisticRegressionPractise.py" target="_blank" rel="noopener">多元 Logistic Regression 实现</a> (梯度下降/预测结果/统计准确率)</p>
 </blockquote>
 <p></p><h2>sklearn 库中的 Logistic Regression 模型</h2>
-（第一次用 sklearn 库，感觉不错～<p></p>
+（第一次用 sklearn 库，感觉不错～  <p></p>
 <hr>
-<p>　　　　　　　　　　　　　　　　　　　　　　　　<b>将数据集分为训练集和检验集</b></p>
+<p><b>将数据集分为训练集和检验集</b></p>
 <pre><code class="python">from sklearn.model_selection import train_test_split
 train, test = train_test_split(data, test_size=0.4, random_state=0)
 </code></pre>
 <p>其中，train是训练集，test是检验集，data是所有的样本，test_size指的是检验集在样本中的占比；
 random_state是随机数种子，其实就是该随机数的编号，在需要重复试验的时候，保证得到一组一样的随机数。但如果填的是0或者不填，每次结果都会不一样；</p>
 <hr>
-<p>　　　　　　　　　　　　　　　　　　　　　　　　<b>sklearn库中的LR的使用</b></p>
+<p><b>sklearn库中的LR的使用</b></p>
 <pre><code class="python">#所需的库
 from sklearn.linear_model import logistic_regression_path
 from sklearn.linear_model import logisticRegression
@@ -463,17 +426,15 @@ log_clf.fit(train_data,train_label)
 print log_clf.coef_
 print log_clf.intercept_
 </code></pre>
-<p>其中.coef_是各项因素的权重，.intercept_指的是截距
-确切的说，对于公式 $ h_{\theta}(x) = w_{0} + w_{1}x_{1} + w_{2}x_{2} + … $
-log_clf.coef_ 为 矩阵 $ [w_{1}, w_{2}, … ] $
-log_clf.intercept_ 为数列 $ [w_{0}] $</p>
+<p>其中.coef_是各项因素的权重，.intercept_指的是截距  </p>
+<p>确切的说，对于公式 $ h_{\theta}(x) = w_{0} + w_{1}x_{1} + w_{2}x_{2} + … $<br>log_clf.coef_ 为 矩阵 $ [w_{1}, w_{2}, … ] $<br>log_clf.intercept_ 为数列 $ [w_{0}] $  </p>
 <hr>
-<p>　　　　　　　　　　　　　　　　　　　　　　　　<b>验证集的正确率</b></p>
+<p><b>验证集的正确率</b></p>
 <pre><code class="python">log_predict = log_clf.predict(test_data) == test_label
 print log_predict.mean()
 </code></pre>
 <hr>
-<p>　　　　　　　　　　　　　　　　　　　　　　　　<b>完整代码</b></p>
+<p><b>完整代码</b></p>
 <pre><code class="python"># coding = utf-8
 #sklearn库的调用  
 from sklearn.model_selection import train_test_split
