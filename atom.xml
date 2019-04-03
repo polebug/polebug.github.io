@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://polebug.github.io/"/>
-  <updated>2019-04-01T08:03:24.274Z</updated>
+  <updated>2019-04-03T08:46:11.610Z</updated>
   <id>https://polebug.github.io/</id>
   
   <author>
@@ -15,6 +15,41 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>并发处理之异步任务</title>
+    <link href="https://polebug.github.io/about-asyncio/"/>
+    <id>https://polebug.github.io/about-asyncio/</id>
+    <published>2019-04-01T13:09:29.000Z</published>
+    <updated>2019-04-03T08:46:11.610Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>我在实习过程中，最常见的一个场景就是高并发，那么如何处理高并发问题呢？</p></blockquote><p>就拿我前几天写的需求来说吧，我需要给一些特定的用户推送特定的客服消息。推送消息这件事看起来简单，但是这里面还包含了很多额外的动作需要做，例如:  </p><p>用户点击广告，未支付成功的时候：  </p><ul><li>把这个用户的 open id 塞到 redis 里</li><li>推送消息时候，我们需要去拿连接微信的 access token，调用微信的接口或者第三方 SDK 给他推消息</li><li>定时推送消息等等…</li></ul><a id="more"></a><h2 id="同步与异步"><a href="#同步与异步" class="headerlink" title="同步与异步"></a>同步与异步</h2><p>用户点击广告之后，客户端会传来请求，这时候如果我们同步的去完成上面的动作：进程在收到消息之后，马上执行上面的动作。这样的处理方式会导致服务器响应时间很高，而且有多个请求时，势必会造成阻塞。  </p><p>事实上，客户端传来这个请求只是为了告诉服务器：『你要给这个 open id 推客服消息』，至于服务器怎么给这个人推消息，什么时候推，和响应结果并不相关，客户端只确认服务器收到这个 open id 就够了。  </p><p>那么，我们是不是可以异步的去做：  </p><ul><li>客户端传来请求</li><li>服务端把传来的 open id 塞到 redis 里，返回响应</li><li>另起一个线程或者进程去取这些 open id，完成给用户推消息的事情</li></ul><p>对于这些允许 delay 的事情，叫做<strong>任务(Task)</strong>，我们可以把他们写成一个函数，前端发来请求之后，新起另一个线程或者进程去执行这个任务。  </p><p>但这样还是存在一定的问题：</p><ul><li>如果并发很高，我们需要起成千上万个线程(进程)去执行任务吗？</li><li>如果场景改成，项目 A 存下客户端传来的 open id，由项目 B 发送消息，又该如何处理？</li></ul><h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><p>我们可以使用<strong>消息队列中间件</strong>来控制 Task 的消费：  </p><p>拿我们熟悉的生产者-消费者模型来说：</p><ul><li>客户端发来 HTTP 请求之后，把这些耗时的 Task 作为一个消息放入消息队列里(生产)；</li><li>之后有专门来执行这些 Task 的进程进行消费</li></ul><p>这样做的好处是：</p><ul><li><strong>异步处理</strong></li><li><strong>解耦</strong>:<ul><li>消息的发送者和消费者彼此之间相互独立，不存在依赖关系</li></ul></li><li><strong>广播</strong>:<ul><li>发送方的消息被广播，可通知多个下游系统来消费</li></ul></li><li><strong>流量削峰与流控</strong>:<ul><li>当上下游系统处理能力存在差距的时候，利用消息队列做一个通用的“漏斗”。在下游有能力处理的时候，再进行分发</li></ul></li></ul><p>当然，使用消息队列也有成本：</p><ul><li>需要额外部署消息队列</li><li>需要对消息进行监控</li></ul><h2 id="Celery-实现异步任务"><a href="#Celery-实现异步任务" class="headerlink" title="Celery 实现异步任务"></a>Celery 实现异步任务</h2><p>在使用 Python 的实际生产中，我们一般使用 Celery + RabbitMQ 实现异步任务</p><p><a href="http://docs.celeryproject.org/en/master/index.html" target="_blank" rel="noopener"><strong>Celery</strong></a> 是一个专注于实时处理消息的任务队列，一般用于处理异步任务和定时任务。它有四个主要的模块：  </p><ul><li><strong>Task(任务模块)</strong>:<ul><li>包含异步任务和定时任务</li><li>异步任务通常在业务逻辑中被触发并发往任务队列</li><li>定时任务由 Celery Beat 进程周期性地将任务发往任务队列</li></ul></li><li><strong>Broker(消息中间件)</strong>:<ul><li>接受任务生产者发来的消息，将任务存入队列</li><li>celery 自身不提供队列服务，需要搭配 RabbitMQ 等</li></ul></li><li><strong>Worker(任务执行单元)</strong>:<ul><li>监控队列</li><li>执行队列中的任务</li></ul></li><li><strong>Backend(任务结果存储)</strong>:<ul><li>存储任务执行的日志</li></ul></li></ul><p>使用 Celery 实现异步任务的步骤也很简单：</p><ul><li>创建一个 Celery 实例</li><li>启动 Worker</li><li>应用程序创建一个 Task 对象，调用其 delay() 方法， 将任务发送到消息中间件 Broker </li><li>Worker 监控到该任务后，就会由别的进程执行这个 Task</li></ul><hr><p>异步任务这块算是说完了… 或许以后会再补充<br>如有错误，欢迎指正~</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;我在实习过程中，最常见的一个场景就是高并发，那么如何处理高并发问题呢？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;就拿我前几天写的需求来说吧，我需要给一些特定的用户推送特定的客服消息。推送消息这件事看起来简单，但是这里面还包含了很多额外的动作需要做，例如:  &lt;/p&gt;
+&lt;p&gt;用户点击广告，未支付成功的时候：  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;把这个用户的 open id 塞到 redis 里&lt;/li&gt;
+&lt;li&gt;推送消息时候，我们需要去拿连接微信的 access token，调用微信的接口或者第三方 SDK 给他推消息&lt;/li&gt;
+&lt;li&gt;定时推送消息等等…&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="IO" scheme="https://polebug.github.io/categories/IO/"/>
+    
+    
+      <category term="celery" scheme="https://polebug.github.io/tags/celery/"/>
+    
+      <category term="异步任务" scheme="https://polebug.github.io/tags/%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1/"/>
+    
+      <category term="消息队列" scheme="https://polebug.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
+    
+  </entry>
   
   <entry>
     <title>谈谈对 RESTful 的认识</title>
@@ -539,42 +574,6 @@ MacOS&lt;br&gt;无CUDA(CPU only)&lt;br&gt;OpenCV 2.
       <category term="Python" scheme="https://polebug.github.io/tags/Python/"/>
     
       <category term="language learning" scheme="https://polebug.github.io/tags/language-learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2016多校前的热身赛 1002 Circle Problem</title>
-    <link href="https://polebug.github.io/2016%E5%A4%9A%E6%A0%A1%E5%89%8D%E7%9A%84%E7%83%AD%E8%BA%AB%E8%B5%9B-1002-Circle-Problem/"/>
-    <id>https://polebug.github.io/2016多校前的热身赛-1002-Circle-Problem/</id>
-    <published>2016-08-14T16:58:56.000Z</published>
-    <updated>2019-03-31T07:39:23.679Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>若有错误的地方，欢迎指正  </p></blockquote><h1>题意</h1>突然想想写这题的题解，发现老刘赛后没放出来….不过还好我有随手收藏题的习惯，当时截了图，原题如图所示（ps: 2018年注: 图丢了<br>题意：给出n个点的坐标，问是否存在一个圆，满足n/3个点都在这个圆上；<br><h1>题解</h1><p>思路：显然，枚举三个点，找到一个圆，然后逐一验证是否满足题意的做法会超时。那么：  </p><p>1.考虑优化枚举点的复杂度：假设存在满足题意的圆，那么1/3的点在这个圆上。由于三点确定一个圆，那么找到这个圆的概率为1/3 <em> 1/3 </em> 1/3；理论上，随机找三个点有1/27的概率找到这个圆，保险起见我们考虑找500次左右。  </p><p>2.已知三个点的坐标求解圆的方程：推导详见<a href="http://blog.sina.com.cn/s/blog_9d6efbb301018nzh.html" target="_blank" rel="noopener">此博客</a>，简单的说是消参，对于局部式子设变量求解；  </p><p>3.逐一验证剩余的点即可；  </p><p>4.细节：对于浮点数，取绝对值用fabs；验证点到圆心的距离时，比较精度为1e5，根据提交情况进行调整即可；  </p><h1>相关算法</h1><p><strong>随机化</strong></p><p>算是学习了一下，用起来很简单：</p><pre><code>#include&lt;cstdlib&gt;#inlcude&lt;ctime&gt;using namespace std;int main(){    srand(time(0));    int x=rand()%n+1;    return 0;}</code></pre><h1>代码如下</h1><p>亲测AC</p><pre><code>#include&lt;cstdio&gt;#include&lt;cstring&gt;#include&lt;iostream&gt;#include&lt;cmath&gt;#include&lt;ctime&gt;#include&lt;cstdlib&gt;using namespace std;double x[30001],y[30001];int main(){    freopen(&quot;data.txt&quot;,&quot;r&quot;,stdin);    int T,n;    scanf(&quot;%d&quot;,&amp;T);    while(T--){        scanf(&quot;%d&quot;,&amp;n);        memset(x,0,sizeof(x));        memset(y,0,sizeof(y));        for(int i=1;i&lt;=n;i++) scanf(&quot;%lf%lf&quot;,&amp;x[i],&amp;y[i]);        srand(time(0));        int flag=0;        for(int t=1;t&lt;=500;t++){            int i=rand()%n+1;            int j=rand()%n+1;            int k=rand()%n+1;            double a=2*(x[j]-x[i]);            double b=2*(y[j]-y[i]);            double c=x[j]*x[j]+y[j]*y[j]-x[i]*x[i]-y[i]*y[i];            double d=2*(x[k]-x[j]);            double e=2*(y[k]-y[j]);            double f=x[k]*x[k]+y[k]*y[k]-x[j]*x[j]-y[j]*y[j];            double x0=(b*f-e*c)/(b*d-e*a);            double y0=(d*c-a*f)/(b*d-e*a);            double r=sqrt((x0-x[i])*(x0-x[i])+(y0-y[i])*(y0-y[i]));            int tot=0;            for(int i=1;i&lt;=n;i++){                double d2=sqrt((x[i] - x0) * (x[i] - x0) + (y[i] - y0) * (y[i] - y0));                if(abs(d2 - r) &lt;= 1e-5) tot++;            }            int judge=n/3;            if(judge&lt;=tot){                flag=1;                break;            }        }        if(flag) printf(&quot;YOUGE\n&quot;); else printf(&quot;NIUGE\n&quot;);    }    return 0;}</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;若有错误的地方，欢迎指正  &lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1&gt;题意&lt;/h1&gt;
-突然想想写这题的题解，发现老刘赛后没放出来….不过还好我有随手收藏题的习惯，当时截了图，原题如图所示（ps: 2018年注: 图丢了&lt;br&gt;
-题意：给出n个点
-      
-    
-    </summary>
-    
-      <category term="算法与数据结构" scheme="https://polebug.github.io/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-    
-      <category term="平几" scheme="https://polebug.github.io/tags/%E5%B9%B3%E5%87%A0/"/>
-    
-      <category term="随机化" scheme="https://polebug.github.io/tags/%E9%9A%8F%E6%9C%BA%E5%8C%96/"/>
-    
-      <category term="概率问题" scheme="https://polebug.github.io/tags/%E6%A6%82%E7%8E%87%E9%97%AE%E9%A2%98/"/>
-    
-      <category term="算法与数据结构" scheme="https://polebug.github.io/tags/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
   </entry>
   

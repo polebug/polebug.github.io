@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>并发处理之异步任务 | Hello, Polebug</title>
+  <meta name="description" content="我在实习过程中，最常见的一个场景就是高并发，那么如何处理高并发问题呢？  就拿我前几天写的需求来说吧，我需要给一些特定的用户推送特定的客服消息。推送消息这件事看起来简单，但是这里面还包含了很多额外的动作需要做，例如:   用户点击广告，未支付成功的时候：    把这个用户的 open id 塞到 redis 里 推送消息时候，我们需要去拿连接微信的 access token，调用微信的接口或者第">
+<meta name="keywords" content="celery,异步任务,消息队列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="并发处理之异步任务">
+<meta property="og:url" content="https://polebug.github.io/about-asyncio/index.html">
+<meta property="og:site_name" content="polebug | 瞎折腾">
+<meta property="og:description" content="我在实习过程中，最常见的一个场景就是高并发，那么如何处理高并发问题呢？  就拿我前几天写的需求来说吧，我需要给一些特定的用户推送特定的客服消息。推送消息这件事看起来简单，但是这里面还包含了很多额外的动作需要做，例如:   用户点击广告，未支付成功的时候：    把这个用户的 open id 塞到 redis 里 推送消息时候，我们需要去拿连接微信的 access token，调用微信的接口或者第">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-03T08:46:11.610Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="并发处理之异步任务">
+<meta name="twitter:description" content="我在实习过程中，最常见的一个场景就是高并发，那么如何处理高并发问题呢？  就拿我前几天写的需求来说吧，我需要给一些特定的用户推送特定的客服消息。推送消息这件事看起来简单，但是这里面还包含了很多额外的动作需要做，例如:   用户点击广告，未支付成功的时候：    把这个用户的 open id 塞到 redis 里 推送消息时候，我们需要去拿连接微信的 access token，调用微信的接口或者第">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://polebug.github.io/about-asyncio/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="polebug | 瞎折腾" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/avatar.jpg" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css">
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/polebug" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">polebug</h2>
+        <!-- <h3 id="title" class="hidden-xs hidden-sm hidden-md">false</h3> -->
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> undefined</small> -->
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-other">
+          <a href="/salty">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">Other</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle="tooltip" data-placement="top"><i class="icon icon-telegram"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                只想做一个普通人开心的造轮子
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Backend/">Backend</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IO/">IO</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PostgreSQL/">PostgreSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法与数据结构/">算法与数据结构</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/C-C/" style="font-size: 13.5px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.5px;">Compilers</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RESTful/" style="font-size: 13px;">RESTful</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/RPC/" style="font-size: 13px;">RPC</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/celery/" style="font-size: 13px;">celery</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/language-learning/" style="font-size: 13.25px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.25px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.25px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/web/" style="font-size: 13px;">web</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.25px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/异步任务/" style="font-size: 13px;">异步任务</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/消息队列/" style="font-size: 13px;">消息队列</a> <a href="/tags/算法与数据结构/" style="font-size: 13.75px;">算法与数据结构</a> <a href="/tags/索引/" style="font-size: 13px;">索引</a> <a href="/tags/翻译/" style="font-size: 13.25px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/IO/">IO</a>
+              </p>
+              <p class="item-title">
+                <a href="/about-asyncio/" class="title">并发处理之异步任务</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-04-01T13:09:29.000Z" itemprop="datePublished">2019-04-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Backend/">Backend</a>
+              </p>
+              <p class="item-title">
+                <a href="/about-restful-api/" class="title">谈谈对 RESTful 的认识</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-31T08:25:26.000Z" itemprop="datePublished">2019-03-31</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/算法与数据结构/">算法与数据结构</a>
+              </p>
+              <p class="item-title">
+                <a href="/leetcode-1811/" class="title">Leetcode 泛刷题记录(11月)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-12-04T05:35:13.000Z" itemprop="datePublished">2018-12-04</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Compilers/">Compilers</a>
+              </p>
+              <p class="item-title">
+                <a href="/about-c-compiler-2-notes/" class="title">关于编译原理 - 语法分析的原理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-10-12T02:00:00.000Z" itemprop="datePublished">2018-10-12</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Compilers/">Compilers</a>
+              </p>
+              <p class="item-title">
+                <a href="/about-c-compiler-1-notes/" class="title">关于编译原理 - 词法分析器的原理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-09-21T11:01:26.000Z" itemprop="datePublished">2018-09-21</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-about-asyncio" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      并发处理之异步任务
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/about-asyncio/" class="article-date">
+	  <time datetime="2019-04-01T13:09:29.000Z" itemprop="datePublished">2019-04-01</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/IO/">IO</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/celery/">celery</a>, <a class="article-tag-link" href="/tags/异步任务/">异步任务</a>, <a class="article-tag-link" href="/tags/消息队列/">消息队列</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/about-asyncio/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 1.1k(字)</span>
+	
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <blockquote>
+<p>我在实习过程中，最常见的一个场景就是高并发，那么如何处理高并发问题呢？</p>
+</blockquote>
+<p>就拿我前几天写的需求来说吧，我需要给一些特定的用户推送特定的客服消息。推送消息这件事看起来简单，但是这里面还包含了很多额外的动作需要做，例如:  </p>
+<p>用户点击广告，未支付成功的时候：  </p>
+<ul>
+<li>把这个用户的 open id 塞到 redis 里</li>
+<li>推送消息时候，我们需要去拿连接微信的 access token，调用微信的接口或者第三方 SDK 给他推消息</li>
+<li>定时推送消息等等…</li>
+</ul>
+<a id="more"></a>
+<h2 id="同步与异步"><a href="#同步与异步" class="headerlink" title="同步与异步"></a>同步与异步</h2><p>用户点击广告之后，客户端会传来请求，这时候如果我们同步的去完成上面的动作：进程在收到消息之后，马上执行上面的动作。这样的处理方式会导致服务器响应时间很高，而且有多个请求时，势必会造成阻塞。  </p>
+<p>事实上，客户端传来这个请求只是为了告诉服务器：『你要给这个 open id 推客服消息』，至于服务器怎么给这个人推消息，什么时候推，和响应结果并不相关，客户端只确认服务器收到这个 open id 就够了。  </p>
+<p>那么，我们是不是可以异步的去做：  </p>
+<ul>
+<li>客户端传来请求</li>
+<li>服务端把传来的 open id 塞到 redis 里，返回响应</li>
+<li>另起一个线程或者进程去取这些 open id，完成给用户推消息的事情</li>
+</ul>
+<p>对于这些允许 delay 的事情，叫做<strong>任务(Task)</strong>，我们可以把他们写成一个函数，前端发来请求之后，新起另一个线程或者进程去执行这个任务。  </p>
+<p>但这样还是存在一定的问题：</p>
+<ul>
+<li>如果并发很高，我们需要起成千上万个线程(进程)去执行任务吗？</li>
+<li>如果场景改成，项目 A 存下客户端传来的 open id，由项目 B 发送消息，又该如何处理？</li>
+</ul>
+<h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><p>我们可以使用<strong>消息队列中间件</strong>来控制 Task 的消费：  </p>
+<p>拿我们熟悉的生产者-消费者模型来说：</p>
+<ul>
+<li>客户端发来 HTTP 请求之后，把这些耗时的 Task 作为一个消息放入消息队列里(生产)；</li>
+<li>之后有专门来执行这些 Task 的进程进行消费</li>
+</ul>
+<p>这样做的好处是：</p>
+<ul>
+<li><strong>异步处理</strong></li>
+<li><strong>解耦</strong>:<ul>
+<li>消息的发送者和消费者彼此之间相互独立，不存在依赖关系</li>
+</ul>
+</li>
+<li><strong>广播</strong>:<ul>
+<li>发送方的消息被广播，可通知多个下游系统来消费</li>
+</ul>
+</li>
+<li><strong>流量削峰与流控</strong>:<ul>
+<li>当上下游系统处理能力存在差距的时候，利用消息队列做一个通用的“漏斗”。在下游有能力处理的时候，再进行分发</li>
+</ul>
+</li>
+</ul>
+<p>当然，使用消息队列也有成本：</p>
+<ul>
+<li>需要额外部署消息队列</li>
+<li>需要对消息进行监控</li>
+</ul>
+<h2 id="Celery-实现异步任务"><a href="#Celery-实现异步任务" class="headerlink" title="Celery 实现异步任务"></a>Celery 实现异步任务</h2><p>在使用 Python 的实际生产中，我们一般使用 Celery + RabbitMQ 实现异步任务</p>
+<p><a href="http://docs.celeryproject.org/en/master/index.html" target="_blank" rel="noopener"><strong>Celery</strong></a> 是一个专注于实时处理消息的任务队列，一般用于处理异步任务和定时任务。它有四个主要的模块：  </p>
+<ul>
+<li><strong>Task(任务模块)</strong>:<ul>
+<li>包含异步任务和定时任务</li>
+<li>异步任务通常在业务逻辑中被触发并发往任务队列</li>
+<li>定时任务由 Celery Beat 进程周期性地将任务发往任务队列</li>
+</ul>
+</li>
+<li><strong>Broker(消息中间件)</strong>:<ul>
+<li>接受任务生产者发来的消息，将任务存入队列</li>
+<li>celery 自身不提供队列服务，需要搭配 RabbitMQ 等</li>
+</ul>
+</li>
+<li><strong>Worker(任务执行单元)</strong>:<ul>
+<li>监控队列</li>
+<li>执行队列中的任务</li>
+</ul>
+</li>
+<li><strong>Backend(任务结果存储)</strong>:<ul>
+<li>存储任务执行的日志</li>
+</ul>
+</li>
+</ul>
+<p>使用 Celery 实现异步任务的步骤也很简单：</p>
+<ul>
+<li>创建一个 Celery 实例</li>
+<li>启动 Worker</li>
+<li>应用程序创建一个 Task 对象，调用其 delay() 方法， 将任务发送到消息中间件 Broker </li>
+<li>Worker 监控到该任务后，就会由别的进程执行这个 Task</li>
+</ul>
+<hr>
+<p>异步任务这块算是说完了… 或许以后会再补充<br>如有错误，欢迎指正~</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://polebug.github.io/about-asyncio/" title="并发处理之异步任务" target="_blank" rel="external">https://polebug.github.io/about-asyncio/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/polebug" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <!-- <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/polebug" target="_blank"><span class="text-dark">polebug</span><small class="ml-1x">false</small></a></h3>
+        <div>undefined</div>
+      </div> -->
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/about-restful-api/" title="谈谈对 RESTful 的认识"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle="tooltip" data-placement="top"><i class="icon icon-telegram"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 polebug
+        
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+    });
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'ce0ec393e83b9afdd9b6',
+    clientSecret: '70cf9f7944bf22d405c59b6a50a6b15c6cbcd68c',
+    repo: 'polebug.github.io',
+    owner: 'polebug',
+    admin: ['polebug'],
+    id: md5(location.pathname),
+    distractionFreeMode: true
+  })
+  gitalk.render('comments')
+  </script>
+
+      
+
+
+
+
+
+
+
+</body>
+</html>
