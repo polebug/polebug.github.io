@@ -18,19 +18,19 @@
   
   
   <title>Go 入门笔记(二) | Hello, Polebug</title>
-  <meta name="description" content="接 Go 入门笔记(一)看图，这里是上章没说完的几个部分   第二章的主要内容包括：  协程 Goroutine 信道 缓冲区 选择 Select 互斥锁 Mutex 延迟机制 Defer 错误 严重异常 Panic 恢复 Recover">
+  <meta name="description" content="接 Go 入门笔记(一)看图，这里是上章没说完的几个部分   第二章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex 延迟机制 Defer 错误 严重异常 Panic 恢复 Recover">
 <meta name="keywords" content="Golang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go 入门笔记(二)">
 <meta property="og:url" content="https://polebug.github.io/go-start-2/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="接 Go 入门笔记(一)看图，这里是上章没说完的几个部分   第二章的主要内容包括：  协程 Goroutine 信道 缓冲区 选择 Select 互斥锁 Mutex 延迟机制 Defer 错误 严重异常 Panic 恢复 Recover">
+<meta property="og:description" content="接 Go 入门笔记(一)看图，这里是上章没说完的几个部分   第二章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex 延迟机制 Defer 错误 严重异常 Panic 恢复 Recover">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://polebug.github.io/images/go/go_learning_menu.png">
-<meta property="og:updated_time" content="2019-04-29T09:45:22.682Z">
+<meta property="og:updated_time" content="2019-04-29T10:33:11.741Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go 入门笔记(二)">
-<meta name="twitter:description" content="接 Go 入门笔记(一)看图，这里是上章没说完的几个部分   第二章的主要内容包括：  协程 Goroutine 信道 缓冲区 选择 Select 互斥锁 Mutex 延迟机制 Defer 错误 严重异常 Panic 恢复 Recover">
+<meta name="twitter:description" content="接 Go 入门笔记(一)看图，这里是上章没说完的几个部分   第二章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex 延迟机制 Defer 错误 严重异常 Panic 恢复 Recover">
 <meta name="twitter:image" content="https://polebug.github.io/images/go/go_learning_menu.png">
   <!-- Canonical links -->
   <link rel="canonical" href="https://polebug.github.io/go-start-2/index.html">
@@ -362,7 +362,7 @@
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/go-start-2/#comments" class="article-comment-link">Comments</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 1k(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 1.5k(字)</span>
 	
 	
 
@@ -376,8 +376,8 @@
 <p><img src="/images/go/go_learning_menu.png"></p>
 <p>第二章的主要内容包括：</p>
 <ul>
-<li>协程 Goroutine</li>
-<li>信道</li>
+<li><a href="http://polebug.github.io/go-start-1#协程-Goroutine">协程 Goroutine</a></li>
+<li><a href>信道 Channel</a></li>
 <li>缓冲区</li>
 <li>选择 Select</li>
 <li>互斥锁 Mutex</li>
@@ -441,7 +441,7 @@ go funcName() {
 <li><p>当一个 <code>M (work thread)</code> 线程被阻塞时，在此的 <code>P (processor)</code> 可以投奔另一个 M</p>
 </li>
 </ul>
-<h5 id="贴一个启动-goroutine-的完整用法"><a href="#贴一个启动-goroutine-的完整用法" class="headerlink" title="贴一个启动 goroutine 的完整用法:"></a>贴一个启动 goroutine 的完整用法:</h5><pre><code class="go">package main
+<h4 id="贴一个启动-goroutine-的完整用法"><a href="#贴一个启动-goroutine-的完整用法" class="headerlink" title="贴一个启动 goroutine 的完整用法:"></a>贴一个启动 goroutine 的完整用法:</h4><pre><code class="go">package main
 
 import (
     &quot;fmt&quot;
@@ -490,9 +490,99 @@ func main(){
 }
 
 </code></pre>
-<h3 id="信道"><a href="#信道" class="headerlink" title="信道"></a>信道</h3><p>TODO</p>
+<h3 id="信道-Channel"><a href="#信道-Channel" class="headerlink" title="信道 Channel"></a>信道 Channel</h3><h4 id="Go-中-Channel-的特点："><a href="#Go-中-Channel-的特点：" class="headerlink" title="Go 中 Channel 的特点："></a>Go 中 Channel 的特点：</h4><ul>
+<li><p>channel 是 goroutine 之间互相通信的通道，goroutine 之间可以通过它发消息和接收消息。</p>
+</li>
+<li><p>channel是类型相关的，一个channel只能传递（发送或接受 | send or receive）一种类型的值，这个类型需要在声明channel时指定</p>
+</li>
+<li><p>如果没有指定 channel 缓冲区的大小，默认是阻塞的，信道的存消息和取消息都是阻塞的 (叫做无缓冲的信道)</p>
+<ul>
+<li>无缓冲区的 channel: 往 channel 发送数据后，这个数据如果没有取走，channel 是阻塞的，也就是不能继续向 channel 里面发送数据</li>
+<li>带有缓冲区的channel: 在缓冲区有数据而未填满前，读取不会出现阻塞的情况。</li>
+</ul>
+</li>
+</ul>
+<h4 id="Channel-使用"><a href="#Channel-使用" class="headerlink" title="Channel 使用"></a>Channel 使用</h4><pre><code class="go">package main
+
+import (
+    &quot;fmt&quot;
+    &quot;time&quot;
+)
+
+// 使用 make 建立一个 channel
+// 定义只能接受的 channel
+// var receive_only chan int = make(&lt;-chan int)
+
+// 定义只能发送的 channel
+//var send_only chan int = make(chan&lt;- int)
+
+// 定义可同时发送接受的 channel
+// var send_receive chan int = make(chan int)
+
+// 定义可同时发送接受的有缓冲 10 个的 channel
+var send_receive chan int = make(chan int, 10)
+
+func send(channel chan&lt;- int) {
+    for i := 0; i &lt; 10; i++ {
+        fmt.Println(&quot;send ready: &quot;, i)
+        channel &lt;- i
+        fmt.Println(&quot;has send: &quot;, i)
+    }
+}
+
+func recv(channel &lt;-chan int) {
+    for i := range channel {
+        fmt.Println(&quot;has received: &quot;, i)
+    }
+}
+
+func main() {
+    go send(send_receive)
+    go recv(send_receive)
+
+    time.Sleep(3 * time.Second)
+}
+</code></pre>
+<h4 id="使用-Goroutine-和-Channel-实现一个简单的生产者-消费者模型"><a href="#使用-Goroutine-和-Channel-实现一个简单的生产者-消费者模型" class="headerlink" title="使用 Goroutine 和 Channel 实现一个简单的生产者-消费者模型"></a>使用 Goroutine 和 Channel 实现一个简单的生产者-消费者模型</h4><pre><code class="go">package main
+
+import (
+    &quot;fmt&quot;
+    &quot;time&quot;
+)
+
+var channel chan int = make(chan int, 10)
+
+func producer(role string, channel chan&lt;- int) {
+    for i := 0; i &lt; 10; i++ {
+        fmt.Println(role,&quot;: &quot;, i)
+        channel &lt;- i
+    }
+    fmt.Println(&quot;produce&quot;)
+}
+
+func consumer(role string, channel &lt;-chan int) {
+    for i := range channel {
+        fmt.Println(role, &quot;: &quot;, i)
+    }
+    fmt.Println(&quot;consume&quot;)
+
+}
+
+func main(){
+    go producer(&quot;生产者1&quot;, channel)
+    go producer(&quot;生产者2&quot;, channel)
+    go consumer(&quot;消费者1&quot;, channel)
+    go consumer(&quot;消费者2&quot;, channel)
+
+    time.Sleep(5 * time.Second)
+    close(channel)
+    time.Sleep(5 * time.Second)
+}
+</code></pre>
+<h3 id="缓冲区"><a href="#缓冲区" class="headerlink" title="缓冲区"></a>缓冲区</h3><p>TODO</p>
 <blockquote>
-<p>参考：<br><a href="https://github.com/ffhelicopter/Go42/blob/master/content/42_21_goroutine.md" target="_blank" rel="noopener">https://github.com/ffhelicopter/Go42/blob/master/content/42_21_goroutine.md</a></p>
+<p>参考：<br><a href="https://github.com/ffhelicopter/Go42/blob/master/content/42_21_goroutine.md" target="_blank" rel="noopener">https://github.com/ffhelicopter/Go42/blob/master/content/42_21_goroutine.md</a>
+<a href="http://www.hi-roy.com/2018/06/04/GO%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%BC%93%E5%86%B2%E5%8C%BAChannels%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_blank" rel="noopener">http://www.hi-roy.com/2018/06/04/GO%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%BC%93%E5%86%B2%E5%8C%BAChannels%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%B1%A0/</a></p>
 </blockquote>
 
       
