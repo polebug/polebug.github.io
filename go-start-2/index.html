@@ -18,19 +18,19 @@
   
   
   <title>Go 入门笔记『并发编程』 | Hello, Polebug</title>
-  <meta name="description" content="接 Go 入门笔记『基础』看图，这里是上章没说完的几个部分   这一章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex">
+  <meta name="description" content="在 github 上看到一个项目 Golang-developer-roadmap，感觉规划的很不错这里就根据下面的图简单说说前面 Go 语言基础就不说了，从并发开始说     这一章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex">
 <meta name="keywords" content="Golang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go 入门笔记『并发编程』">
 <meta property="og:url" content="https://polebug.github.io/go-start-2/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="接 Go 入门笔记『基础』看图，这里是上章没说完的几个部分   这一章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex">
+<meta property="og:description" content="在 github 上看到一个项目 Golang-developer-roadmap，感觉规划的很不错这里就根据下面的图简单说说前面 Go 语言基础就不说了，从并发开始说     这一章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://polebug.github.io/images/go/go_learning_menu.png">
-<meta property="og:updated_time" content="2019-04-29T13:01:16.623Z">
+<meta property="og:updated_time" content="2019-04-29T13:38:08.853Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go 入门笔记『并发编程』">
-<meta name="twitter:description" content="接 Go 入门笔记『基础』看图，这里是上章没说完的几个部分   这一章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex">
+<meta name="twitter:description" content="在 github 上看到一个项目 Golang-developer-roadmap，感觉规划的很不错这里就根据下面的图简单说说前面 Go 语言基础就不说了，从并发开始说     这一章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex">
 <meta name="twitter:image" content="https://polebug.github.io/images/go/go_learning_menu.png">
   <!-- Canonical links -->
   <link rel="canonical" href="https://polebug.github.io/go-start-2/index.html">
@@ -199,7 +199,7 @@
   <div class="widget">
     <h3 class="widget-title">Categories</h3>
     <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Backend/">Backend</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Golang/">Golang</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IO/">IO</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法与数据结构/">算法与数据结构</a><span class="category-list-count">6</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Backend/">Backend</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Golang/">Golang</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IO/">IO</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法与数据结构/">算法与数据结构</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -209,7 +209,7 @@
   <div class="widget">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget-body tagcloud">
-      <a href="/tags/C-C/" style="font-size: 13.5px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.5px;">Compilers</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Golang/" style="font-size: 13.25px;">Golang</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RESTful/" style="font-size: 13px;">RESTful</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/RPC/" style="font-size: 13px;">RPC</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/celery/" style="font-size: 13px;">celery</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/language-learning/" style="font-size: 13.25px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.25px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.25px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/web/" style="font-size: 13px;">web</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.25px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/异步任务/" style="font-size: 13px;">异步任务</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/消息队列/" style="font-size: 13px;">消息队列</a> <a href="/tags/算法与数据结构/" style="font-size: 13.75px;">算法与数据结构</a> <a href="/tags/索引/" style="font-size: 13px;">索引</a> <a href="/tags/翻译/" style="font-size: 13.25px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
+      <a href="/tags/C-C/" style="font-size: 13.5px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.5px;">Compilers</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Golang/" style="font-size: 13px;">Golang</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RESTful/" style="font-size: 13px;">RESTful</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/RPC/" style="font-size: 13px;">RPC</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/celery/" style="font-size: 13px;">celery</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/language-learning/" style="font-size: 13.25px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.25px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.25px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/web/" style="font-size: 13px;">web</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.25px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/异步任务/" style="font-size: 13px;">异步任务</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/消息队列/" style="font-size: 13px;">消息队列</a> <a href="/tags/算法与数据结构/" style="font-size: 13.75px;">算法与数据结构</a> <a href="/tags/索引/" style="font-size: 13px;">索引</a> <a href="/tags/翻译/" style="font-size: 13.25px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
     </div>
   </div>
 
@@ -218,7 +218,7 @@
   <div class="widget">
     <h3 class="widget-title">Archive</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -264,21 +264,6 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/Golang/">Golang</a>
-              </p>
-              <p class="item-title">
-                <a href="/go-start-1/" class="title">Go 入门笔记『基础』</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2019-04-27T06:00:12.000Z" itemprop="datePublished">2019-04-27</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
                 <a class="category-link" href="/categories/IO/">IO</a>
               </p>
               <p class="item-title">
@@ -301,6 +286,21 @@
               </p>
               <p class="item-date">
                 <time datetime="2019-03-31T08:25:26.000Z" itemprop="datePublished">2019-03-31</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/算法与数据结构/">算法与数据结构</a>
+              </p>
+              <p class="item-title">
+                <a href="/leetcode-1811/" class="title">Leetcode 泛刷题记录(11月)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-12-04T05:35:13.000Z" itemprop="datePublished">2018-12-04</time>
               </p>
             </div>
           </li>
@@ -362,7 +362,7 @@
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/go-start-2/#comments" class="article-comment-link">Comments</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 2.5k(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 2.9k(字)</span>
 	
 	
 
@@ -371,7 +371,7 @@
     <div class="article-entry marked-body" itemprop="articleBody">
       
         <blockquote>
-<p>接 <a href="https://polebug.github.io/go-start-1">Go 入门笔记『基础』</a><br>看图，这里是上章没说完的几个部分</p>
+<p>在 github 上看到一个项目 <a href="https://github.com/Alikhll/golang-developer-roadmap" target="_blank" rel="noopener">Golang-developer-roadmap</a>，感觉规划的很不错<br>这里就根据下面的图简单说说<br>前面 Go 语言基础就不说了，从并发开始说  </p>
 </blockquote>
 <p><img src="/images/go/go_learning_menu.png"></p>
 <p>这一章的主要内容包括：</p>
@@ -739,9 +739,62 @@ func main(){
 6129484611666145821
 0
 当前的 goroutine 数目:  1
-</code></pre><h3 id="互斥锁-Mutex"><a href="#互斥锁-Mutex" class="headerlink" title="互斥锁 Mutex"></a>互斥锁 Mutex</h3><blockquote>
+</code></pre><h3 id="互斥锁-Mutex"><a href="#互斥锁-Mutex" class="headerlink" title="互斥锁 Mutex"></a>互斥锁 Mutex</h3><p>互斥锁位于 <code>sync</code> 包，提供了 <code>Lock</code> 和 <code>Unlock</code> 方法</p>
+<p>互斥锁提供了一种锁机制来保证同一时刻只有一个 goroutine 访问临界区，这样就可以解决线程竞争问题。</p>
+<p>如果某个 goroutine 已经获得了锁，其他的 goroutine 尝试获取锁时将被阻塞，直到锁被释放。</p>
+<p>看一个存在竞争的简单场景：通过循环生成 1000 个 goroutine，每个 goroutine 都是并发执行 increment 函数并且并发获取 x 的值</p>
+<pre><code class="go">package main  
+import (  
+    &quot;fmt&quot;
+    &quot;sync&quot;
+    )
+var x  = 0  
+func increment(wg *sync.WaitGroup) {  
+    x = x + 1
+    wg.Done()
+}
+func main() {  
+    var w sync.WaitGroup
+    for i := 0; i &lt; 1000; i++ {
+        w.Add(1)        
+        go increment(&amp;w)
+    }
+    w.Wait()
+    fmt.Println(&quot;final value of x&quot;, x)
+}
+</code></pre>
+<p>发现最后得到的 x 值并不是 1000，会始终比 1000 小，这是因为这里存在线程竞争的缘故</p>
+<p>用互斥锁在解决这个问题：把 x=x+1 这句代码放在 <code>.Lock</code> () 和 <code>.Unlock()</code> 之间，这样就只有一个 goroutine 能在同一时刻执行这句代码。</p>
+<pre><code class="go">package main  
+import (  
+    &quot;fmt&quot;
+    &quot;sync&quot;
+    )
+var x  = 0  
+func increment(wg *sync.WaitGroup, m *sync.Mutex) {  
+    m.Lock()
+    x = x + 1
+    m.Unlock()
+    wg.Done()   
+}
+func main() {  
+    var w sync.WaitGroup
+    var m sync.Mutex
+    for i := 0; i &lt; 1000; i++ {
+        w.Add(1)        
+        go increment(&amp;w, &amp;m)
+    }
+    w.Wait()
+    fmt.Println(&quot;final value of x&quot;, x)
+}
+</code></pre>
+<hr>
+<p>Go 并发编程有很多有趣的地方，有空再说说 goroutine 调度器和线程池啥的，上面都说的太随意了…</p>
+<p>以上。有错欢迎提出。</p>
+<blockquote>
 <p>参考：<br><a href="https://github.com/ffhelicopter/Go42/blob/master/content/42_21_goroutine.md" target="_blank" rel="noopener">https://github.com/ffhelicopter/Go42/blob/master/content/42_21_goroutine.md</a>
-<a href="http://www.hi-roy.com/2018/06/04/GO%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%BC%93%E5%86%B2%E5%8C%BAChannels%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_blank" rel="noopener">http://www.hi-roy.com/2018/06/04/GO%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%BC%93%E5%86%B2%E5%8C%BAChannels%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%B1%A0/</a></p>
+<a href="http://www.hi-roy.com/2018/06/04/GO%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%BC%93%E5%86%B2%E5%8C%BAChannels%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_blank" rel="noopener">http://www.hi-roy.com/2018/06/04/GO%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%BC%93%E5%86%B2%E5%8C%BAChannels%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%B1%A0/</a>
+<a href="https://golangbot.com/mutex/" target="_blank" rel="noopener">https://golangbot.com/mutex/</a></p>
 </blockquote>
 
       
@@ -804,7 +857,7 @@ func main(){
     
     
     <li class="next">
-      <a href="/go-start-1/" title="Go 入门笔记『基础』"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/about-asyncio/" title="并发处理之异步任务"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
