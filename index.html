@@ -214,7 +214,7 @@
   <div class="widget">
     <h3 class="widget-title">Archive</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -230,10 +230,25 @@
             
             <div class="item-inner">
               <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/go-start-3/" class="title">Go 入门笔记『错误处理』</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-04-29T12:44:39.000Z" itemprop="datePublished">2019-04-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
                 <a class="category-link" href="/categories/Golang/">Golang</a>
               </p>
               <p class="item-title">
-                <a href="/go-start-2/" class="title">Go 入门笔记(二)</a>
+                <a href="/go-start-2/" class="title">Go 入门笔记『并发编程』</a>
               </p>
               <p class="item-date">
                 <time datetime="2019-04-29T06:00:12.000Z" itemprop="datePublished">2019-04-29</time>
@@ -248,7 +263,7 @@
                 <a class="category-link" href="/categories/Golang/">Golang</a>
               </p>
               <p class="item-title">
-                <a href="/go-start-1/" class="title">Go 入门笔记(一)</a>
+                <a href="/go-start-1/" class="title">Go 入门笔记『基础』</a>
               </p>
               <p class="item-date">
                 <time datetime="2019-04-27T06:00:12.000Z" itemprop="datePublished">2019-04-27</time>
@@ -286,21 +301,6 @@
             </div>
           </li>
           
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/categories/算法与数据结构/">算法与数据结构</a>
-              </p>
-              <p class="item-title">
-                <a href="/leetcode-1811/" class="title">Leetcode 泛刷题记录(11月)</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2018-12-04T05:35:13.000Z" itemprop="datePublished">2018-12-04</time>
-              </p>
-            </div>
-          </li>
-          
       </ul>
     </div>
   </div>
@@ -320,7 +320,7 @@
     
   
     <h1 itemprop="name">
-      <a class="article-title" href="/go-start-2/">Go 入门笔记(二)</a>
+      <a class="article-title" href="/go-start-3/">Go 入门笔记『错误处理』</a>
     </h1>
   
 
@@ -328,20 +328,62 @@
   
   <div class="article-entry text-muted" itemprop="description">
     <blockquote>
-<p>接 <a href="https://polebug.github.io/go-start-1">Go 入门笔记(一)</a><br>看图，这里是上章没说完的几个部分</p>
+<p>接 <a href="https://polebug.github.io/go-start-1">Go 入门笔记『基础』</a>、<a href="https://polebug.github.io/go-start-2">Go 入门笔记『并发编程』</a>   </p>
 </blockquote>
 <p><img src="/images/go/go_learning_menu.png"></p>
-<p>第二章的主要内容包括：</p>
+<p>这一章的主要内容包括：</p>
+<ul>
+<li>延迟机制 Defer</li>
+<li>错误</li>
+<li>严重异常 Panic</li>
+<li>恢复 Recover</li>
+</ul>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/go-start-3/" class="article-date">
+	  <time datetime="2019-04-29T12:44:39.000Z" itemprop="datePublished">Apr 29</time>
+	</a>
+</span>
+    
+    
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/go-start-3/#comments" class="article-comment-link">Comments</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 49(字)</span>
+	
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go-start-2/">Go 入门笔记『并发编程』</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <blockquote>
+<p>接 <a href="https://polebug.github.io/go-start-1">Go 入门笔记『基础』</a><br>看图，这里是上章没说完的几个部分</p>
+</blockquote>
+<p><img src="/images/go/go_learning_menu.png"></p>
+<p>这一章的主要内容包括：</p>
 <ul>
 <li><a href="#协程-Goroutine">协程 Goroutine</a></li>
 <li><a href="#%E4%BF%A1%E9%81%93-Channel">信道 Channel</a></li>
 <li><a href="#%E7%BC%93%E5%86%B2%E5%8C%BA">缓冲区</a></li>
 <li><a href="#Select">选择 Select</a></li>
-<li>互斥锁 Mutex</li>
-<li>延迟机制 Defer</li>
-<li>错误</li>
-<li>严重异常 Panic</li>
-<li>恢复 Recover</li>
+<li><a href="#互斥锁-Mutex">互斥锁 Mutex</a></li>
 </ul>
   </div>
   
@@ -368,7 +410,7 @@
     <span class="post-comment"><i class="icon icon-comment"></i> <a href="/go-start-2/#comments" class="article-comment-link">Comments</a></span>
     
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 2.1k(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 2.5k(字)</span>
 	
 	
 
@@ -381,7 +423,7 @@
     
   
     <h1 itemprop="name">
-      <a class="article-title" href="/go-start-1/">Go 入门笔记(一)</a>
+      <a class="article-title" href="/go-start-1/">Go 入门笔记『基础』</a>
     </h1>
   
 
@@ -389,7 +431,7 @@
   
   <div class="article-entry text-muted" itemprop="description">
     <blockquote>
-<p>在 github 上看到一个项目 <a href="https://github.com/Alikhll/golang-developer-roadmap" target="_blank" rel="noopener">Golang-developer-roadmap</a>，感觉规划的很不错。<br>这里就根据下面的图简单说说<br>因为内容太长，会分两章说</p>
+<p>在 github 上看到一个项目 <a href="https://github.com/Alikhll/golang-developer-roadmap" target="_blank" rel="noopener">Golang-developer-roadmap</a>，感觉规划的很不错。<br>这里就根据下面的图简单说说<br>因为内容太长，会分 <del>两章说</del> 好几章</p>
 </blockquote>
 <p><img src="/images/go/go_learning_menu.png"></p>
 <p>第一章的主要内容包括：</p>
@@ -430,7 +472,7 @@
     <span class="post-comment"><i class="icon icon-comment"></i> <a href="/go-start-1/#comments" class="article-comment-link">Comments</a></span>
     
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 82(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 85(字)</span>
 	
 	
 

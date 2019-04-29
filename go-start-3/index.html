@@ -17,17 +17,22 @@
   <meta http-equiv="window-target" content="_top">
   
   
-  <title>Hello, Polebug</title>
-  <meta property="og:type" content="website">
-<meta property="og:title" content="polebug | 瞎折腾">
-<meta property="og:url" content="https://polebug.github.io/c/Programming.Principles.and.Practice.Using.C++.html">
+  <title>Go 入门笔记『错误处理』 | Hello, Polebug</title>
+  <meta name="description" content="接 Go 入门笔记『基础』、Go 入门笔记『并发编程』      这一章的主要内容包括：  延迟机制 Defer 错误 严重异常 Panic 恢复 Recover">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go 入门笔记『错误处理』">
+<meta property="og:url" content="https://polebug.github.io/go-start-3/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
+<meta property="og:description" content="接 Go 入门笔记『基础』、Go 入门笔记『并发编程』      这一章的主要内容包括：  延迟机制 Defer 错误 严重异常 Panic 恢复 Recover">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-07-14T03:57:24.000Z">
+<meta property="og:image" content="https://polebug.github.io/images/go/go_learning_menu.png">
+<meta property="og:updated_time" content="2019-04-29T13:01:09.555Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="polebug | 瞎折腾">
+<meta name="twitter:title" content="Go 入门笔记『错误处理』">
+<meta name="twitter:description" content="接 Go 入门笔记『基础』、Go 入门笔记『并发编程』      这一章的主要内容包括：  延迟机制 Defer 错误 严重异常 Panic 恢复 Recover">
+<meta name="twitter:image" content="https://polebug.github.io/images/go/go_learning_menu.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://polebug.github.io/c/Programming.Principles.and.Practice.Using.C++.html">
+  <link rel="canonical" href="https://polebug.github.io/go-start-3/index.html">
   
     <link rel="alternate" href="/atom.xml" title="polebug | 瞎折腾" type="application/atom+xml">
   
@@ -312,15 +317,23 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="page-undefined" class="article article-type-page" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-go-start-3" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Go 入门笔记『错误处理』
+    </h1>
+  
+
       
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/c/Programming.Principles.and.Practice.Using.C++.html" class="article-date">
-	  <time datetime="2017-07-14T03:57:24.000Z" itemprop="datePublished">2017-07-14</time>
+	<a href="/go-start-3/" class="article-date">
+	  <time datetime="2019-04-29T12:44:39.000Z" itemprop="datePublished">2019-04-29</time>
 	</a>
 </span>
         
@@ -335,10 +348,10 @@
 	</span>
 
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/c/Programming.Principles.and.Practice.Using.C++.html#comments" class="article-comment-link">Comments</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/go-start-3/#comments" class="article-comment-link">Comments</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 0(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 49(字)</span>
 	
 	
 
@@ -346,7 +359,21 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <embed src="Programming.Principles.and.Practice.Using.C++.pdf" width="1300" height="620">
+        <blockquote>
+<p>接 <a href="https://polebug.github.io/go-start-1">Go 入门笔记『基础』</a>、<a href="https://polebug.github.io/go-start-2">Go 入门笔记『并发编程』</a>   </p>
+</blockquote>
+<p><img src="/images/go/go_learning_menu.png"></p>
+<p>这一章的主要内容包括：</p>
+<ul>
+<li>延迟机制 Defer</li>
+<li>错误</li>
+<li>严重异常 Panic</li>
+<li>恢复 Recover</li>
+</ul>
+<a id="more"></a>
+<p>TODO 
+明天会写完的</p>
+
       
     </div>
     <div class="article-footer">
@@ -355,7 +382,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://polebug.github.io/c/Programming.Principles.and.Practice.Using.C++.html" title target="_blank" rel="external">https://polebug.github.io/c/Programming.Principles.and.Practice.Using.C++.html</a>
+      <a href="https://polebug.github.io/go-start-3/" title="Go 入门笔记『错误处理』" target="_blank" rel="external">https://polebug.github.io/go-start-3/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -398,6 +425,16 @@
 
   <nav class="bar bar-footer clearfix" data-stick-bottom>
   <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/go-start-2/" title="Go 入门笔记『并发编程』"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
   
   
   
@@ -475,6 +512,12 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 </script>
 <script src="/js/insight.js"></script>
 
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
 

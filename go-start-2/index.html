@@ -17,20 +17,20 @@
   <meta http-equiv="window-target" content="_top">
   
   
-  <title>Go 入门笔记(二) | Hello, Polebug</title>
-  <meta name="description" content="接 Go 入门笔记(一)看图，这里是上章没说完的几个部分   第二章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex 延迟机制 Defer 错误 严重异常 Panic 恢复 Recover">
+  <title>Go 入门笔记『并发编程』 | Hello, Polebug</title>
+  <meta name="description" content="接 Go 入门笔记『基础』看图，这里是上章没说完的几个部分   这一章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex">
 <meta name="keywords" content="Golang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go 入门笔记(二)">
+<meta property="og:title" content="Go 入门笔记『并发编程』">
 <meta property="og:url" content="https://polebug.github.io/go-start-2/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="接 Go 入门笔记(一)看图，这里是上章没说完的几个部分   第二章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex 延迟机制 Defer 错误 严重异常 Panic 恢复 Recover">
+<meta property="og:description" content="接 Go 入门笔记『基础』看图，这里是上章没说完的几个部分   这一章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://polebug.github.io/images/go/go_learning_menu.png">
-<meta property="og:updated_time" content="2019-04-29T12:17:48.789Z">
+<meta property="og:updated_time" content="2019-04-29T13:01:16.623Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Go 入门笔记(二)">
-<meta name="twitter:description" content="接 Go 入门笔记(一)看图，这里是上章没说完的几个部分   第二章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex 延迟机制 Defer 错误 严重异常 Panic 恢复 Recover">
+<meta name="twitter:title" content="Go 入门笔记『并发编程』">
+<meta name="twitter:description" content="接 Go 入门笔记『基础』看图，这里是上章没说完的几个部分   这一章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex">
 <meta name="twitter:image" content="https://polebug.github.io/images/go/go_learning_menu.png">
   <!-- Canonical links -->
   <link rel="canonical" href="https://polebug.github.io/go-start-2/index.html">
@@ -218,7 +218,7 @@
   <div class="widget">
     <h3 class="widget-title">Archive</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -234,10 +234,25 @@
             
             <div class="item-inner">
               <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/go-start-3/" class="title">Go 入门笔记『错误处理』</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-04-29T12:44:39.000Z" itemprop="datePublished">2019-04-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
                 <a class="category-link" href="/categories/Golang/">Golang</a>
               </p>
               <p class="item-title">
-                <a href="/go-start-2/" class="title">Go 入门笔记(二)</a>
+                <a href="/go-start-2/" class="title">Go 入门笔记『并发编程』</a>
               </p>
               <p class="item-date">
                 <time datetime="2019-04-29T06:00:12.000Z" itemprop="datePublished">2019-04-29</time>
@@ -252,7 +267,7 @@
                 <a class="category-link" href="/categories/Golang/">Golang</a>
               </p>
               <p class="item-title">
-                <a href="/go-start-1/" class="title">Go 入门笔记(一)</a>
+                <a href="/go-start-1/" class="title">Go 入门笔记『基础』</a>
               </p>
               <p class="item-date">
                 <time datetime="2019-04-27T06:00:12.000Z" itemprop="datePublished">2019-04-27</time>
@@ -290,21 +305,6 @@
             </div>
           </li>
           
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/categories/算法与数据结构/">算法与数据结构</a>
-              </p>
-              <p class="item-title">
-                <a href="/leetcode-1811/" class="title">Leetcode 泛刷题记录(11月)</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2018-12-04T05:35:13.000Z" itemprop="datePublished">2018-12-04</time>
-              </p>
-            </div>
-          </li>
-          
       </ul>
     </div>
   </div>
@@ -325,7 +325,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Go 入门笔记(二)
+      Go 入门笔记『并发编程』
     </h1>
   
 
@@ -362,7 +362,7 @@
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/go-start-2/#comments" class="article-comment-link">Comments</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 2.1k(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 2.5k(字)</span>
 	
 	
 
@@ -371,20 +371,16 @@
     <div class="article-entry marked-body" itemprop="articleBody">
       
         <blockquote>
-<p>接 <a href="https://polebug.github.io/go-start-1">Go 入门笔记(一)</a><br>看图，这里是上章没说完的几个部分</p>
+<p>接 <a href="https://polebug.github.io/go-start-1">Go 入门笔记『基础』</a><br>看图，这里是上章没说完的几个部分</p>
 </blockquote>
 <p><img src="/images/go/go_learning_menu.png"></p>
-<p>第二章的主要内容包括：</p>
+<p>这一章的主要内容包括：</p>
 <ul>
 <li><a href="#协程-Goroutine">协程 Goroutine</a></li>
 <li><a href="#%E4%BF%A1%E9%81%93-Channel">信道 Channel</a></li>
 <li><a href="#%E7%BC%93%E5%86%B2%E5%8C%BA">缓冲区</a></li>
 <li><a href="#Select">选择 Select</a></li>
-<li>互斥锁 Mutex</li>
-<li>延迟机制 Defer</li>
-<li>错误</li>
-<li>严重异常 Panic</li>
-<li>恢复 Recover</li>
+<li><a href="#互斥锁-Mutex">互斥锁 Mutex</a></li>
 </ul>
 <a id="more"></a>
 <h3 id="协程-Goroutine"><a href="#协程-Goroutine" class="headerlink" title="协程 Goroutine"></a>协程 Goroutine</h3><p>Go 提供了一种用户态线程(协程)来支持并发。协程可以说是轻量线程，它不由 os 而是由应用程序创建和管理，使用开销较低，切换不需要耗费较多的时间。</p>
@@ -661,8 +657,89 @@ func main() {
 }
 
 </code></pre>
-<h3 id="Select"><a href="#Select" class="headerlink" title="Select"></a>Select</h3><p>Go 语言借用多路复用的概念，提出了 select 关键字，用于多路监听多个通道。当监听的通道没有状态是可读或可写的，</p>
-<blockquote>
+<h3 id="Select"><a href="#Select" class="headerlink" title="Select"></a>Select</h3><p>Go 语言借用多路复用的概念，提出了 select 关键字，用于多路监听多个通道：</p>
+<ul>
+<li>当监听的通道没有状态是可读或可写的，select 是阻塞的</li>
+<li>只要监听的通道中有一个状态是可读或可写的，则 select 不会阻塞，而是进入处理就绪通道的分支流程</li>
+<li>如果监听的通道有多个可读或可写的状态，则 select 随机选取一个处理</li>
+</ul>
+<p>简单使用：</p>
+<pre><code class="go">package main
+
+import &quot;fmt&quot;
+
+func main() {
+    channel := make(chan int, 1)
+    go func(chan int){
+        for {
+            select {
+            case channel &lt;- 0:
+            case channel &lt;- 1:
+            }
+        }
+    }(channel)
+
+    for i := 0; i &lt; 5; i++ {
+        fmt.Println(&lt;-channel)
+    }
+}
+</code></pre>
+<h4 id="Fan-in-out"><a href="#Fan-in-out" class="headerlink" title="Fan in/out"></a>Fan in/out</h4><blockquote>
+<p>扇入(Fan in): 指将多路通道聚合到一条通道中处理<br>扇出(Fan out): 指将一条通道发散到多条通道中处理</p>
+</blockquote>
+<p>在 Go 语言里面实现扇入是通过 select 聚合多条通道服务，实现扇出是通过启动多个 goroutine 并发处理</p>
+<p>一种应用场景是实现<strong>退出通知机制</strong>：读取已经关闭的通道不会引起阻塞，也不会导致 Panic，而是立即返回该通道存储类型的零值。关闭 select 监听的某个通道能使 select 立即感知这种通知，然后进行响应的处理。</p>
+<p>简单实现：(下游的消费者不需要随机数时，显式地通知生产者停止生产)</p>
+<pre><code class="go">package main
+
+import (
+    &quot;fmt&quot;
+    &quot;math/rand&quot;
+    &quot;runtime&quot;
+)
+
+func generateRandInt(done chan struct{}) chan int{
+    ch := make(chan int)
+    go func(){
+    Label:
+        for {
+            select{
+            case ch &lt;- rand.Int():
+            // 增加对退出通知信号 done 的监听
+            case &lt;-done:
+                break Label
+            }
+        }
+        close(ch)
+    }()
+    return ch
+}
+
+func main(){
+    done := make(chan struct{})
+    ch := generateRandInt(done)
+
+    fmt.Println(&lt;-ch)
+    fmt.Println(&lt;-ch)
+
+    // 发送通知，告诉生产者停止生产
+    close(done)
+
+    fmt.Println(&lt;-ch)
+    fmt.Println(&lt;-ch)
+
+    // 生产者已经退出
+    fmt.Println(&quot;当前的 goroutine 数目: &quot;, runtime.NumGoroutine())
+
+}
+</code></pre>
+<p>Output:</p>
+<pre><code>5577006791947779410
+8674665223082153551
+6129484611666145821
+0
+当前的 goroutine 数目:  1
+</code></pre><h3 id="互斥锁-Mutex"><a href="#互斥锁-Mutex" class="headerlink" title="互斥锁 Mutex"></a>互斥锁 Mutex</h3><blockquote>
 <p>参考：<br><a href="https://github.com/ffhelicopter/Go42/blob/master/content/42_21_goroutine.md" target="_blank" rel="noopener">https://github.com/ffhelicopter/Go42/blob/master/content/42_21_goroutine.md</a>
 <a href="http://www.hi-roy.com/2018/06/04/GO%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%BC%93%E5%86%B2%E5%8C%BAChannels%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_blank" rel="noopener">http://www.hi-roy.com/2018/06/04/GO%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%BC%93%E5%86%B2%E5%8C%BAChannels%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%B1%A0/</a></p>
 </blockquote>
@@ -675,7 +752,7 @@ func main() {
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://polebug.github.io/go-start-2/" title="Go 入门笔记(二)" target="_blank" rel="external">https://polebug.github.io/go-start-2/</a>
+      <a href="https://polebug.github.io/go-start-2/" title="Go 入门笔记『并发编程』" target="_blank" rel="external">https://polebug.github.io/go-start-2/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -721,9 +798,13 @@ func main() {
   
   <ul class="pager pull-left">
     
+    <li class="prev">
+      <a href="/go-start-3/" title="Go 入门笔记『错误处理』"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
     
     <li class="next">
-      <a href="/go-start-1/" title="Go 入门笔记(一)"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/go-start-1/" title="Go 入门笔记『基础』"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
