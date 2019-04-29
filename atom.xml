@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://polebug.github.io/"/>
-  <updated>2019-04-29T00:50:38.889Z</updated>
+  <updated>2019-04-29T01:00:49.624Z</updated>
   <id>https://polebug.github.io/</id>
   
   <author>
@@ -21,16 +21,16 @@
     <link href="https://polebug.github.io/go-start-2/"/>
     <id>https://polebug.github.io/go-start-2/</id>
     <published>2019-04-29T06:00:12.000Z</published>
-    <updated>2019-04-29T00:50:38.889Z</updated>
+    <updated>2019-04-29T01:00:49.624Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>接 <a href="https://polebug.github.io/go-start-1">Go 入门笔记(一)</a><br>看图，这里是上章没说完的几个部分</p></blockquote><p><img src="go/go_learning_menu.png"></p><p>第二章的主要内容包括：</p><ul><li>协程 Goroutine</li><li>信道</li><li>缓冲区</li><li>选择 Select</li><li>互斥锁 Mutex</li><li>延迟机制 Defer</li><li>错误</li><li>严重异常 Panic</li><li>恢复 Recover</li></ul><a id="more"></a><p>TODO</p>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>接 <a href="https://polebug.github.io/go-start-1">Go 入门笔记(一)</a><br>看图，这里是上章没说完的几个部分</p></blockquote><p><img src="go_learning_menu.png"></p><p>第二章的主要内容包括：</p><ul><li>协程 Goroutine</li><li>信道</li><li>缓冲区</li><li>选择 Select</li><li>互斥锁 Mutex</li><li>延迟机制 Defer</li><li>错误</li><li>严重异常 Panic</li><li>恢复 Recover</li></ul><a id="more"></a><p>TODO</p>]]></content>
     
     <summary type="html">
     
       &lt;blockquote&gt;
 &lt;p&gt;接 &lt;a href=&quot;https://polebug.github.io/go-start-1&quot;&gt;Go 入门笔记(一)&lt;/a&gt;&lt;br&gt;看图，这里是上章没说完的几个部分&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;go/go_learning_menu.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;go_learning_menu.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;第二章的主要内容包括：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;协程 Goroutine&lt;/li&gt;
@@ -58,16 +58,16 @@
     <link href="https://polebug.github.io/go-start-1/"/>
     <id>https://polebug.github.io/go-start-1/</id>
     <published>2019-04-27T06:00:12.000Z</published>
-    <updated>2019-04-29T00:50:42.878Z</updated>
+    <updated>2019-04-29T00:59:55.879Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>在 github 上看到一个项目 <a href="https://github.com/Alikhll/golang-developer-roadmap" target="_blank" rel="noopener">Golang-developer-roadmap</a>，感觉规划的很不错。<br>这里就根据下面的图简单说说<br>因为内容太长，会分两章说</p></blockquote><p><img src="go/go_learning_menu.png"></p><p>第一章的主要内容包括：</p><ul><li>Go 命令行操作</li><li>变量、常量、类型</li><li>函数</li><li>包</li><li>数组</li><li>切片</li><li>指针</li><li>结构</li><li>方法</li><li>接口</li></ul><a id="more"></a><p>TODO</p>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>在 github 上看到一个项目 <a href="https://github.com/Alikhll/golang-developer-roadmap" target="_blank" rel="noopener">Golang-developer-roadmap</a>，感觉规划的很不错。<br>这里就根据下面的图简单说说<br>因为内容太长，会分两章说</p></blockquote><p><img src="go_learning_menu.png"></p><p>第一章的主要内容包括：</p><ul><li>Go 命令行操作</li><li>变量、常量、类型</li><li>函数</li><li>包</li><li>数组</li><li>切片</li><li>指针</li><li>结构</li><li>方法</li><li>接口</li></ul><a id="more"></a><p>TODO</p>]]></content>
     
     <summary type="html">
     
       &lt;blockquote&gt;
 &lt;p&gt;在 github 上看到一个项目 &lt;a href=&quot;https://github.com/Alikhll/golang-developer-roadmap&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Golang-developer-roadmap&lt;/a&gt;，感觉规划的很不错。&lt;br&gt;这里就根据下面的图简单说说&lt;br&gt;因为内容太长，会分两章说&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;go/go_learning_menu.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;go_learning_menu.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;第一章的主要内容包括：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Go 命令行操作&lt;/li&gt;
