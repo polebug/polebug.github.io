@@ -27,7 +27,7 @@
 <meta property="og:description" content="接 Go 入门笔记(一)看图，这里是上章没说完的几个部分   第二章的主要内容包括：  协程 Goroutine 信道 缓冲区 选择 Select 互斥锁 Mutex 延迟机制 Defer 错误 严重异常 Panic 恢复 Recover">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://polebug.github.io/images/go/go_learning_menu.png">
-<meta property="og:updated_time" content="2019-04-29T01:07:10.865Z">
+<meta property="og:updated_time" content="2019-04-29T09:45:22.682Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go 入门笔记(二)">
 <meta name="twitter:description" content="接 Go 入门笔记(一)看图，这里是上章没说完的几个部分   第二章的主要内容包括：  协程 Goroutine 信道 缓冲区 选择 Select 互斥锁 Mutex 延迟机制 Defer 错误 严重异常 Panic 恢复 Recover">
@@ -362,7 +362,7 @@
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/go-start-2/#comments" class="article-comment-link">Comments</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 63(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 1k(字)</span>
 	
 	
 
@@ -387,7 +387,113 @@
 <li>恢复 Recover</li>
 </ul>
 <a id="more"></a>
-<p>TODO</p>
+<h3 id="协程-Goroutine"><a href="#协程-Goroutine" class="headerlink" title="协程 Goroutine"></a>协程 Goroutine</h3><p>Go 提供了一种用户态线程(协程)来支持并发。协程可以说是轻量线程，它不由 os 而是由应用程序创建和管理，使用开销较低，切换不需要耗费较多的时间。</p>
+<h4 id="Goroutine-有如下特性"><a href="#Goroutine-有如下特性" class="headerlink" title="Goroutine 有如下特性"></a>Goroutine 有如下特性</h4><ul>
+<li>go 后面的函数的返回值会被忽略</li>
+<li>调度器不能保证多个 goroutine 的执行顺序</li>
+<li>所有 goroutine 都是平等的</li>
+<li>会为 main 函数创建一个 goroutine，遇到其他 go 关键字时再去创建 goroutine</li>
+<li>不能再 goroutine 里面显式地操作另一个 goroutine</li>
+<li>goroutine 的执行是非阻塞的，不会等待</li>
+</ul>
+<h4 id="如何启动-goroutine"><a href="#如何启动-goroutine" class="headerlink" title="如何启动 goroutine"></a>如何启动 goroutine</h4><p>启动一个协程的语法非常简单，使用 go 关键字即可</p>
+<pre><code class="go">// 匿名函数形式
+go func() {
+    ...
+}
+
+// 有名函数形式
+go funcName() {
+    ...
+}
+</code></pre>
+<h4 id="多个-goroutine-之间的同步"><a href="#多个-goroutine-之间的同步" class="headerlink" title="多个 goroutine 之间的同步"></a>多个 goroutine 之间的同步</h4><p>多个协程之间可以通过 sync.WaitGroup 同步，类似于信号量</p>
+<ul>
+<li>wg.Add(1) 信号量加1</li>
+<li>wg.Done() 信号量减1</li>
+<li>wg.Wait() 信号量为正时阻塞，直到信号量为 0 时被唤醒</li>
+</ul>
+<p>等讲完 channel，可以搭配写一个生产者消费者 demo</p>
+<h4 id="调度器"><a href="#调度器" class="headerlink" title="调度器"></a>调度器</h4><h5 id="调度器的作用"><a href="#调度器的作用" class="headerlink" title="调度器的作用"></a>调度器的作用</h5><p>对于同一个内核上的 goroutine，我们需要一个调度器来维护他们。调度器的主要有4个重要部分，分别是M、G、P、Sched，前三个定义在runtime.h中，Sched定义在proc.c中：</p>
+<ul>
+<li><p>M (work thread) 代表了系统线程OS Thread，由操作系统管理</p>
+</li>
+<li><p>P (processor) 衔接M和G的调度上下文，它负责将等待执行的G与M对接。P的数量可以通过GOMAXPROCS()来设置，它其实也就代表了真正的并发度，即有多少个goroutine可以同时运行</p>
+</li>
+<li><p>G (goroutine) goroutine的实体，包括了调用栈，重要的调度信息，例如channel等</p>
+</li>
+</ul>
+<p>PS: 通过 <code>untime.GOMAXPROCS(n)</code> 设定CPU核数，实际中运行的 CPU 核数未必会和实际物理 CPU 数相吻合。</p>
+<h5 id="简单说说调度器的工作原理"><a href="#简单说说调度器的工作原理" class="headerlink" title="简单说说调度器的工作原理"></a>简单说说调度器的工作原理</h5><!-- 在 Go 1.1 中实现了 G-P-M 调度模型，如图：
+
+<img src="/images/go/goroutine-scheduler-model.png"> -->
+<blockquote>
+<p>我看了一些调度器的工作原理和实现，有一些复杂，这里就简单说说一些场景，以后有空再详细说。</p>
+</blockquote>
+<p>假如有两个<code>M (work thread)</code>，即两个OS Thread线程，分别对应一个<code>P (processor)</code>，每一个P调度一个<code>G (goroutine)队列</code>，那么会出现以下几种场景：</p>
+<ul>
+<li><p>当我们通过循环来创建 goroutine 时，goroutine 会被分配到不同的 <code>G (goroutine)</code> 队列中。 而 <code>M (work thread)</code> 的数量又不是唯一的，当 M 随机挑选 <code>P (processor)</code> 时，也就等同随机挑选了 goroutine。</p>
+</li>
+<li><p>当有一个 <code>M (work thread)</code> 返回时，一般情况下，它会尝试从别的 M 里取得一个 <code>P (processor)</code> 来运行 goroutine；如果没有拿到，它就把goroutine 放在一个 <code>global 就绪队列</code>里，然后自己进入线程缓存里</p>
+</li>
+<li><p>如果某个 <code>P (processor)</code> 所分配的 <code>G (goroutine)队列</code> 很快就执行完了，导致整体的队列存在不平衡，当前 <code>P (processor)</code> 会从其他 P 中截取一部分 goroutine 进行调度(一般来说是取一半，确保每个 M 都能充分的使用)</p>
+</li>
+<li><p>当一个 <code>M (work thread)</code> 线程被阻塞时，在此的 <code>P (processor)</code> 可以投奔另一个 M</p>
+</li>
+</ul>
+<h5 id="贴一个启动-goroutine-的完整用法"><a href="#贴一个启动-goroutine-的完整用法" class="headerlink" title="贴一个启动 goroutine 的完整用法:"></a>贴一个启动 goroutine 的完整用法:</h5><pre><code class="go">package main
+
+import (
+    &quot;fmt&quot;
+    &quot;runtime&quot;
+    &quot;time&quot;
+)
+
+func getGoroutineInfo() {
+    NumCPU := runtime.NumCPU()
+    NumGoroutine := runtime.NumGoroutine()
+    fmt.Println(&quot;当前 CPU 内核数: &quot;, NumCPU)
+    fmt.Println(&quot;当前正在运行的 goroutine 数: &quot;, NumGoroutine)
+}
+
+// 通过有名函数启动 goroutine
+func testGoroutine1() {
+    sum := 0
+    for i := 0; i &lt; 1000; i++ {
+        sum += i
+    }
+    fmt.Println(sum)
+    time.Sleep(10 * time.Second)
+}
+
+func testGoroutine2() {
+    // 通过匿名函数启动 goroutine
+    go func() {
+        sum := 0
+        for i := 0; i &lt; 2000; i++ {
+            sum += i
+        }
+        fmt.Println(sum)
+        time.Sleep(20 * time.Second)
+    }()
+}
+
+func main(){
+
+    go testGoroutine1()
+    getGoroutineInfo()
+
+    testGoroutine2()
+    getGoroutineInfo()
+
+    time.Sleep(5 * time.Second)
+}
+
+</code></pre>
+<h3 id="信道"><a href="#信道" class="headerlink" title="信道"></a>信道</h3><p>TODO</p>
+<blockquote>
+<p>参考：<br><a href="https://github.com/ffhelicopter/Go42/blob/master/content/42_21_goroutine.md" target="_blank" rel="noopener">https://github.com/ffhelicopter/Go42/blob/master/content/42_21_goroutine.md</a></p>
+</blockquote>
 
       
     </div>
@@ -495,6 +601,12 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 </script>
 <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
+
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
     tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
