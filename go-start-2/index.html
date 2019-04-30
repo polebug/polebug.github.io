@@ -18,19 +18,19 @@
   
   
   <title>Go 入门笔记『并发编程』 | Hello, Polebug</title>
-  <meta name="description" content="在 github 上看到一个项目 Golang-developer-roadmap，感觉规划的很不错这里就根据下面的图简单说说前面 Go 语言基础就不说了，从并发开始说     这一章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex">
+  <meta name="description" content="在 github 上看到一个项目 Golang-developer-roadmap，感觉规划的很不错这里就根据下面的图简单说说前面的 Go 语言基础就不说了，后面的错误处理之后再补。这就就简单说说 Go 并发编程   主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex">
 <meta name="keywords" content="Golang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go 入门笔记『并发编程』">
 <meta property="og:url" content="https://polebug.github.io/go-start-2/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="在 github 上看到一个项目 Golang-developer-roadmap，感觉规划的很不错这里就根据下面的图简单说说前面 Go 语言基础就不说了，从并发开始说     这一章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex">
+<meta property="og:description" content="在 github 上看到一个项目 Golang-developer-roadmap，感觉规划的很不错这里就根据下面的图简单说说前面的 Go 语言基础就不说了，后面的错误处理之后再补。这就就简单说说 Go 并发编程   主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://polebug.github.io/images/go/go_learning_menu.png">
-<meta property="og:updated_time" content="2019-04-29T13:38:08.853Z">
+<meta property="og:updated_time" content="2019-04-30T03:44:52.737Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go 入门笔记『并发编程』">
-<meta name="twitter:description" content="在 github 上看到一个项目 Golang-developer-roadmap，感觉规划的很不错这里就根据下面的图简单说说前面 Go 语言基础就不说了，从并发开始说     这一章的主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex">
+<meta name="twitter:description" content="在 github 上看到一个项目 Golang-developer-roadmap，感觉规划的很不错这里就根据下面的图简单说说前面的 Go 语言基础就不说了，后面的错误处理之后再补。这就就简单说说 Go 并发编程   主要内容包括：  协程 Goroutine 信道 Channel 缓冲区 选择 Select 互斥锁 Mutex">
 <meta name="twitter:image" content="https://polebug.github.io/images/go/go_learning_menu.png">
   <!-- Canonical links -->
   <link rel="canonical" href="https://polebug.github.io/go-start-2/index.html">
@@ -218,7 +218,7 @@
   <div class="widget">
     <h3 class="widget-title">Archive</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -230,21 +230,6 @@
     <div class="widget-body">
       <ul class="recent-post-list list-unstyled no-thumbnail">
         
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                
-              </p>
-              <p class="item-title">
-                <a href="/go-start-3/" class="title">Go 入门笔记『错误处理』</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2019-04-29T12:44:39.000Z" itemprop="datePublished">2019-04-29</time>
-              </p>
-            </div>
-          </li>
-          
           <li>
             
             <div class="item-inner">
@@ -301,6 +286,21 @@
               </p>
               <p class="item-date">
                 <time datetime="2018-12-04T05:35:13.000Z" itemprop="datePublished">2018-12-04</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Compilers/">Compilers</a>
+              </p>
+              <p class="item-title">
+                <a href="/about-c-compiler-2-notes/" class="title">关于编译原理 - 语法分析的原理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-10-12T02:00:00.000Z" itemprop="datePublished">2018-10-12</time>
               </p>
             </div>
           </li>
@@ -371,10 +371,10 @@
     <div class="article-entry marked-body" itemprop="articleBody">
       
         <blockquote>
-<p>在 github 上看到一个项目 <a href="https://github.com/Alikhll/golang-developer-roadmap" target="_blank" rel="noopener">Golang-developer-roadmap</a>，感觉规划的很不错<br>这里就根据下面的图简单说说<br>前面 Go 语言基础就不说了，从并发开始说  </p>
+<p>在 github 上看到一个项目 <a href="https://github.com/Alikhll/golang-developer-roadmap" target="_blank" rel="noopener">Golang-developer-roadmap</a>，感觉规划的很不错<br>这里就根据下面的图简单说说<br>前面的 Go 语言基础就不说了，后面的错误处理之后再补。这就就简单说说 Go 并发编程</p>
 </blockquote>
 <p><img src="/images/go/go_learning_menu.png"></p>
-<p>这一章的主要内容包括：</p>
+<p>主要内容包括：</p>
 <ul>
 <li><a href="#协程-Goroutine">协程 Goroutine</a></li>
 <li><a href="#%E4%BF%A1%E9%81%93-Channel">信道 Channel</a></li>
@@ -850,10 +850,6 @@ func main() {
   <div class="bar-inner">
   
   <ul class="pager pull-left">
-    
-    <li class="prev">
-      <a href="/go-start-3/" title="Go 入门笔记『错误处理』"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
-    </li>
     
     
     <li class="next">
