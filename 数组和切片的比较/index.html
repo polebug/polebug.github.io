@@ -18,18 +18,18 @@
   
   
   <title>数组和切片的比较 (Golang) | Hello, Polebug</title>
-  <meta name="description" content="数组和切片的比较 前言：写了数组和切片基本的特性，还有切片共享数据的一些坑，平时应该多加小心  数组数组是一个固定长度的序列 数组变量的含义举个栗子： var a =[...]int{0,1,2} fmt.Println(a, &amp;amp;a, &amp;amp;a[0], &amp;amp;a[1], &amp;amp;a[2])  输出的是： [0 1 2] &amp;amp;[0 1 2] 0xc00008e000 0xc0">
+  <meta name="description" content="前言：写了数组和切片基本的特性，还有切片共享数据的一些坑，平时应该多加小心  数组数组是一个固定长度的序列 数组变量的含义举个栗子： var a =[...]int{0,1,2} fmt.Println(a, &amp;amp;a, &amp;amp;a[0], &amp;amp;a[1], &amp;amp;a[2])  输出的是： [0 1 2] &amp;amp;[0 1 2] 0xc00008e000 0xc00008e008">
 <meta name="keywords" content="Golang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数组和切片的比较 (Golang)">
 <meta property="og:url" content="https://polebug.github.io/数组和切片的比较/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="数组和切片的比较 前言：写了数组和切片基本的特性，还有切片共享数据的一些坑，平时应该多加小心  数组数组是一个固定长度的序列 数组变量的含义举个栗子： var a =[...]int{0,1,2} fmt.Println(a, &amp;amp;a, &amp;amp;a[0], &amp;amp;a[1], &amp;amp;a[2])  输出的是： [0 1 2] &amp;amp;[0 1 2] 0xc00008e000 0xc0">
+<meta property="og:description" content="前言：写了数组和切片基本的特性，还有切片共享数据的一些坑，平时应该多加小心  数组数组是一个固定长度的序列 数组变量的含义举个栗子： var a =[...]int{0,1,2} fmt.Println(a, &amp;amp;a, &amp;amp;a[0], &amp;amp;a[1], &amp;amp;a[2])  输出的是： [0 1 2] &amp;amp;[0 1 2] 0xc00008e000 0xc00008e008">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-19T02:56:46.213Z">
+<meta property="og:updated_time" content="2019-06-19T02:57:28.152Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数组和切片的比较 (Golang)">
-<meta name="twitter:description" content="数组和切片的比较 前言：写了数组和切片基本的特性，还有切片共享数据的一些坑，平时应该多加小心  数组数组是一个固定长度的序列 数组变量的含义举个栗子： var a =[...]int{0,1,2} fmt.Println(a, &amp;amp;a, &amp;amp;a[0], &amp;amp;a[1], &amp;amp;a[2])  输出的是： [0 1 2] &amp;amp;[0 1 2] 0xc00008e000 0xc0">
+<meta name="twitter:description" content="前言：写了数组和切片基本的特性，还有切片共享数据的一些坑，平时应该多加小心  数组数组是一个固定长度的序列 数组变量的含义举个栗子： var a =[...]int{0,1,2} fmt.Println(a, &amp;amp;a, &amp;amp;a[0], &amp;amp;a[1], &amp;amp;a[2])  输出的是： [0 1 2] &amp;amp;[0 1 2] 0xc00008e000 0xc00008e008">
   <!-- Canonical links -->
   <link rel="canonical" href="https://polebug.github.io/数组和切片的比较/index.html">
   
@@ -368,7 +368,7 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h1 id="数组和切片的比较"><a href="#数组和切片的比较" class="headerlink" title="数组和切片的比较"></a>数组和切片的比较</h1><blockquote>
+        <blockquote>
 <p>前言：写了数组和切片基本的特性，还有切片共享数据的一些坑，平时应该多加小心</p>
 </blockquote>
 <h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>数组是一个<strong>固定长度</strong>的序列</p>
