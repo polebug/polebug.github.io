@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://polebug.github.io/"/>
-  <updated>2019-04-30T03:44:52.737Z</updated>
+  <updated>2019-06-19T02:55:30.006Z</updated>
   <id>https://polebug.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数组和切片的比较</title>
+    <link href="https://polebug.github.io/%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87%E7%9A%84%E6%AF%94%E8%BE%83/"/>
+    <id>https://polebug.github.io/数组和切片的比较/</id>
+    <published>2019-06-19T02:10:10.000Z</published>
+    <updated>2019-06-19T02:55:30.006Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="数组和切片的比较"><a href="#数组和切片的比较" class="headerlink" title="数组和切片的比较"></a>数组和切片的比较</h1><blockquote><p>前言：写了数组和切片基本的特性，还有切片共享数据的一些坑，平时应该多加小心</p></blockquote><h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>数组是一个<strong>固定长度</strong>的序列</p><h3 id="数组变量的含义"><a href="#数组变量的含义" class="headerlink" title="数组变量的含义"></a>数组变量的含义</h3><p>举个栗子：</p><pre><code class="go">var a =[...]int{0,1,2}fmt.Println(a, &amp;a, &amp;a[0], &amp;a[1], &amp;a[2])输出的是：[0 1 2] &amp;[0 1 2] 0xc00008e000 0xc00008e008 0xc00008e010</code></pre><p>要注意的是，一个数组变量表示的是<strong>一个完整的值</strong>，代表整个数组，<strong>并不是指向第一个元素的指针</strong></p><p><strong>这一点与 C/C++ 的数组不同，C/C++ 的数组变量是(隐式的)指向第一个元素的指针</strong></p><pre><code class="cpp">int a[3] = {0,1,2};cout&lt;&lt; a &lt;&lt; endl &lt;&lt; &amp;a &lt;&lt; endl &lt;&lt; &amp;a[0];0x7ffee6b2568c0x7ffee6b2568c0x7ffee6b2568c</code></pre><p>golang 中，为了避免数组赋值时产生较大开销，一般会创建一个指针指向这个数组</p><h3 id="数组的拷贝"><a href="#数组的拷贝" class="headerlink" title="数组的拷贝"></a>数组的拷贝</h3><p>另外一个与 C/C++ 不同的点是，golang 的赋值都是<strong>值拷贝</strong>，数组的拷贝当然也是</p><pre><code>var a = [3]int{0,1,2}var b = a</code></pre><p>会发现拷贝之后的数组 b 不仅值与 a 数组相同，b 中元素的地址也与 a 相同</p><h4 id="一些操作"><a href="#一些操作" class="headerlink" title="一些操作"></a>一些操作</h4><ul><li><p><strong>数组的定义：</strong></p><pre><code>  // 字符串数组  var s = [...]string{}  // 结构体数组  var structList = [...]struct.Val{struct.Val:0}  // 接口数组  var interfaceList = [...]interface{}{1, &quot;a&quot;}  // 管道数组  var chanList = [3]chan int{}</code></pre></li><li><p><strong>遍历数组：</strong></p><pre><code>  for i := range a {      ...  }  也可以 for i := 0; i &lt; len(a); i++ {}  for range 性能更好，而且可以保证不会出现数组越界</code></pre></li><li><p><strong>内置函数:</strong> </p><ul><li><code>len()</code> 用于计算数组的长度</li><li><code>cap()</code> 用于计算数组的容量(元素个数)</li></ul></li></ul><h2 id="切片-slice"><a href="#切片-slice" class="headerlink" title="切片 slice"></a>切片 slice</h2><p>切片是可以<strong>动态增长和收缩</strong>序列，可以认为是动态数组</p><h3 id="切片变量的含义"><a href="#切片变量的含义" class="headerlink" title="切片变量的含义"></a>切片变量的含义</h3><p><strong>切片其实是一个结构体：</strong></p><pre><code class="go">type SliceHeader struct {    Data uintptr    Len int    Cap int}</code></pre><ul><li><strong>Data</strong> 是切片指向的低层字节数组(当 Data 指针为空时，切片为 nil)</li><li><strong>Len</strong> 是切片的字节长度</li><li><strong>Cap</strong> 是切片指向的内存空间的最大容量(元素个数)</li></ul><p>那么一个切片变量是表示的是什么呢？它表示的是 Data 指针指向的低层数组的值</p><pre><code class="go">var c = []int{1,2}fmt.Println(c, &amp;c, &amp;c[0])[1 2] &amp;[1 2] 0xc000086000</code></pre><p>要时刻记住一个重要的特点：<strong>slice 是对低层数组的引用</strong></p><p>也正是因为这个特性，使得 slice 具有共享数据的特点</p><h3 id="共享"><a href="#共享" class="headerlink" title="共享"></a>共享</h3><p>因为切片是<strong>引用类型</strong>，多个切片如果指向同一个数组的片段，它们可以<strong>共享数据</strong></p><p>举个例子：</p><pre><code class="go">func mulA(a [5]int) {    for i, _ := range a {        a[i] *= 2    }}func mulB(a []int) {    for i, _ := range a {        a[i] *= 2    }}func main() {    a := [5]int{1, 2, 3, 4, 5}    b := []int{1, 2, 3, 4, 5}    mulA(a)    fmt.Println(a)     mulB(b)    fmt.Println(b)}</code></pre><p>输出的结果是</p><pre><code>[1 2 3 4 5][2 4 6 8 10]</code></pre><p>我们可以看到，调用 Mul 函数之后，数组 a 原本的值并没有改变，而 slice b 原本的值改变了，原因就在于 slice 是一个引用类型</p><p>slice 允许多个 slice 指向同一个底层数组，在很多场景下都能通过这个特性实现 no copy，不需要使用额外的内存而提高效率</p><p>但是！！！共享同时意味着不安全，容易掉进一些意想不到的坑里，再看一个例子</p><p>我们先定义了一个 slice a，然后想在 a[0:1] 后面追加一个元素 3 再赋值给 b，代码如下：</p><pre><code class="go">var a = []int{1,2}b := append(a[0:1], 3)fmt.Println(a)fmt.Println(b)</code></pre><p>按照我们原本的想法：<br>a = [1, 2]<br>b = [1, 3]  </p><p>结果却输出了：<br>a = [1, 3]<br>b = [1, 3]  </p><p>这是因为 a, b 都指向同一个低层数组，b 在追加元素 3 时覆盖了这个数组的第二个元素，导致打印 slice a 时，输出的也是 [1, 3]</p><p>那么正确的写法应该是怎么样的？  </p><p>我们的需求是希望 a, b 互不影响，那么 b 是一个新的 slice，再通过 copy 把 a 的内容赋值给 b</p><pre><code class="go">var a = []int{1, 2}b := make([]int, 2)copy(b, a[0:1])b = append(b, 3)</code></pre><h3 id="切片的定义"><a href="#切片的定义" class="headerlink" title="切片的定义"></a>切片的定义</h3><pre><code>var (    a  = []int{1, 2, 3, 4} //len和cap都是4    b = a[:2] //取a开头两个元素, len=2, cap(b)=cap(a)    c = a[1:2:4] //a 的 index 从 1到2(左边界闭，右边界开)，cap=4-1, len=1    d = make([]int, 2, 3) // len=2, cap=3)</code></pre><h4 id="切片的操作"><a href="#切片的操作" class="headerlink" title="切片的操作"></a>切片的操作</h4><ul><li><p><strong>添加切片元素：</strong></p><pre><code>  // 在首部添加元素 1  a = append(1, a)  // 在尾部添加元素 1  a = append(a, 1)  // 可添加切片  a = append(a, []int{1,2,3})</code></pre><p>  PS: 调用 append() 函数之后，返回一个新的切片，用这个新的切片来更新原有的切片</p></li><li><p><strong>复制</strong></p><pre><code>  copy(b[i:], a[j:])  copy(a[i+1:], a[i:])</code></pre></li><li><p><strong>删除元素</strong></p><pre><code>  // 删除开头一个元素  a = a[1:]  // 删除末尾一个元素  a = a[:len(a)-1]  // 删除 i 到 j 中的元素  a = append(a[:i], a[j:]...) </code></pre></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;数组和切片的比较&quot;&gt;&lt;a href=&quot;#数组和切片的比较&quot; class=&quot;headerlink&quot; title=&quot;数组和切片的比较&quot;&gt;&lt;/a&gt;数组和切片的比较&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;前言：写了数组和切片基本的特性，还有切片共享数据的一些坑，平时应该
+      
+    
+    </summary>
+    
+      <category term="Golang" scheme="https://polebug.github.io/categories/Golang/"/>
+    
+    
+      <category term="Golang" scheme="https://polebug.github.io/tags/Golang/"/>
+    
+  </entry>
   
   <entry>
     <title>Go 入门笔记『并发编程』</title>
@@ -550,34 +576,6 @@ MacOS&lt;br&gt;无CUDA(CPU only)&lt;br&gt;OpenCV 2.
     
     
       <category term="算法与数据结构" scheme="https://polebug.github.io/tags/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python Learing（二）：Basic Image Processing 1</title>
-    <link href="https://polebug.github.io/Python-Learning%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9ABasic-Image-Processing/"/>
-    <id>https://polebug.github.io/Python-Learning（二）：Basic-Image-Processing/</id>
-    <published>2016-11-05T03:53:33.000Z</published>
-    <updated>2019-03-31T07:41:46.485Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>Basic image processing 1：<br>0.（以简单的曲线图为例）对于生成的图自定义外观，使用子图，多个数据集，标题，标签，交互式标注，图例；<br>1.生成散点图，直方图；2.简单的图像处理：转换格式，调整尺寸，旋转，复制粘贴图像区域，在图像上绘制点线；<a id="more"></a></p></blockquote><p>以上内容主要用了以下几种模块：<br>　　<b>0.PIL </b>(Python Image Library<br>　　<b>1.NumPy</b><br>　　<b>2.Matplotlib</b><br>　　<b>3.SciPy</b>  </p><p>无法安装的话，参考<a href="http://polebug.github.io/2016/11/04/Python%EF%BC%9AModule%20Install%20Issues/">这篇文章</a>  </p><p>其实写这篇文章的时候，我一直在纠结是分模块整理好一些呢，还是将各种模块的功能集于同一个对象进行描述。一开始是尝试着分模块整理的，整理了一段时间发现这样做并不有效，而且提取的实际意义并不大。于是改成同一个对象，如何用python的模板画，这样的方式进行编写。希望之后自己能做一些亦可赛艇的东西丫~ </p><p><b>&lt;以下是正文&gt;</b></p><h2>生成简单的曲线图，并进行基础处理</h2><h3>生成简单的曲线图</h3><pre><code class="python">import matplotlib.pyplot as plt     #用matplotlib中的plt.plot画线import numpy as np                  #用numpy　　　　　　　　　x = np.linspace(0,2*np.pi, 50)         #np.linspace定义参数：将在[0,2π]区间生成包含50个元素的数组y = np.sin(x)                          #使用np.sin()，生成一个正弦函数plt.plot(x, y)                         #使用plt.plot( , )画线 plt.show()                                           </code></pre><p>生成了默认定义的sinx曲线 </p><h3>自定义外观</h3><p>参考官网：自定义外观的<a href="http://matplotlib.org/api/markers_api.html" target="_blank" rel="noopener">相关文章</a></p><p>例如：将上面的plt.plot语句改为</p><pre><code class="python">plt.plot(x, y, &#39;r-o&#39;)                # r:红色；-o:实心点</code></pre><h3>使用多个数据集</h3><p>在plt.plot定义多个点即可如定义两个数据集</p><pre><code>plt.plot(x, np.sin(x) , &#39;r&#39;, x, np.cos(x), &#39;g&#39;)</code></pre><h3>使用子图</h3>使用 <b>plt.subplot(x, y, z)</b>：x定义横向长度为相对的1/x，y定义纵向长度为相对的1/y，z定义所在的是哪个区域<br><code>import matplotlib.pyplot as pltimport numpy as npx = np.linspace(0, 2* np.pi, 50)y = np.sin(x)plt.subplot(2 , 1, 1)  plt.plot(x, y)z = np.cos(x)plt.subplot(2, 1 , 2)plt.plot(x, z)plt.show()</code><h3>显示标题，标签，图例</h3><pre><code>import matplotlib.pyplot as pltimport numpy as npx = np.linspace(0, 2*np.pi, 50)         plt.legend()                                              #显示图例plt.title(&#39;Sin and Cos Waves&#39;)                            #显示标题plt.plot(x, np.sin(x), &#39;r-o&#39;, label=&#39;Sin(x)&#39;)             #注明图例plt.plot(y, np.cos(x), &#39;g-^&#39;, label=&#39;Cos(x)&#39;)               plt.xlabel(&#39;x&#39;)                                           #显示x标签plt.ylabel(&#39;y&#39;)plt.show()</code></pre><h3>使用交互式标注</h3><pre><code class="python">from PIL import Imagefrom pylab import *im = array(Image.open(&#39;a.jpg&#39;))imshow(im)print &#39;Please click 1 point&#39;x = ginput(1)print &#39;you clicked: &#39;,xshow()</code></pre><h2>生成直方图，散点图等基础图像</h2><h3>直方图</h3><code>pythonimport matplotlib.pyplot as pltimport numpy as npx = np.random.randn(1000)plt.hist(x, 50)                       #给hist()函数传入一个包含数据的数组，以及代表数据容器的个数plt.show()</code><h3>散点图</h3><h4>曲线波形图</h4><code>pythonimport matplotlib.pyplot as pltimport numpy as npx = np.linspace(0, 2 * np.pi, 50)y = np.sin(x)plt.scatter(x, y)plt.show()</code><h4>彩色映射随机散点图</h4><code>pythonimport matplotlib.pyplot as pltimport numpy as npx = np.random.rand(1000)y = np.random.rand(1000)size = np.random.rand(1000) *50colour = np.random.rand(1000)plt.scatter(x, y, size, colour)plt.colorbar()plt.show()</code><h2>简单图像处理</h2><h3>运用PIL库</h3><pre><code class="python">from PIL import Image#转换格式im2.save(&#39;/python test/image_test/a.jpg&#39;, &#39;jpeg&#39;)#调整尺寸out = pil_im.resize((100, 100))#旋转（默认逆时针）out = pil_im.rotate(45)#复制粘贴a = (100, 100, 400, 400)region = pil_im.crop(a)pil_im.paste(region, a)</code></pre><h3>在图像上绘制点线</h3><pre><code class="python">from PIL import Imagefrom pylab import *im = array(Image.open(&#39;night2.jpg&#39;))imshow(im)x = [100, 100, 400, 400, 20, 60]                #选取任意个数的点y = [200, 500, 200, 500, 30, 30]plot(x, y , &#39;r-^&#39;)plot(x[:5], y[:5])                              #按顺序，依次连接前5个点show()</code></pre><hr><p>19.3 记<br>一开始写博客是用的七牛云做图床，之后发现他们家需要绑定自己的域名，以前的图没有做好迁移，都失效了</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;Basic image processing 1：&lt;br&gt;0.（以简单的曲线图为例）对于生成的图自定义外观，使用子图，多个数据集，标题，标签，交互式标注，图例；&lt;br&gt;1.生成散点图，直方图；
-2.简单的图像处理：转换格式，调整尺寸，旋转，复制粘贴图像区域，在图像上绘制点线；
-    
-    </summary>
-    
-      <category term="Python" scheme="https://polebug.github.io/categories/Python/"/>
-    
-    
-      <category term="Python" scheme="https://polebug.github.io/tags/Python/"/>
-    
-      <category term="image processing" scheme="https://polebug.github.io/tags/image-processing/"/>
-    
-      <category term="language learning" scheme="https://polebug.github.io/tags/language-learning/"/>
     
   </entry>
   

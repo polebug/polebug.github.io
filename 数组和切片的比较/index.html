@@ -17,19 +17,21 @@
   <meta http-equiv="window-target" content="_top">
   
   
-  <title>Archive: 2017/1 | Hello, Polebug</title>
-  <meta name="description" content="造轮子使我快乐">
-<meta property="og:type" content="website">
-<meta property="og:title" content="polebug | 瞎折腾">
-<meta property="og:url" content="https://polebug.github.io/archives/2017/01/index.html">
+  <title>数组和切片的比较 | Hello, Polebug</title>
+  <meta name="description" content="数组和切片的比较 前言：写了数组和切片基本的特性，还有切片共享数据的一些坑，平时应该多加小心  数组数组是一个固定长度的序列 数组变量的含义举个栗子： var a =[...]int{0,1,2} fmt.Println(a, &amp;amp;a, &amp;amp;a[0], &amp;amp;a[1], &amp;amp;a[2])  输出的是： [0 1 2] &amp;amp;[0 1 2] 0xc00008e000 0xc0">
+<meta name="keywords" content="Golang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数组和切片的比较">
+<meta property="og:url" content="https://polebug.github.io/数组和切片的比较/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="造轮子使我快乐">
+<meta property="og:description" content="数组和切片的比较 前言：写了数组和切片基本的特性，还有切片共享数据的一些坑，平时应该多加小心  数组数组是一个固定长度的序列 数组变量的含义举个栗子： var a =[...]int{0,1,2} fmt.Println(a, &amp;amp;a, &amp;amp;a[0], &amp;amp;a[1], &amp;amp;a[2])  输出的是： [0 1 2] &amp;amp;[0 1 2] 0xc00008e000 0xc0">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-19T02:55:30.006Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="polebug | 瞎折腾">
-<meta name="twitter:description" content="造轮子使我快乐">
+<meta name="twitter:title" content="数组和切片的比较">
+<meta name="twitter:description" content="数组和切片的比较 前言：写了数组和切片基本的特性，还有切片共享数据的一些坑，平时应该多加小心  数组数组是一个固定长度的序列 数组变量的含义举个栗子： var a =[...]int{0,1,2} fmt.Println(a, &amp;amp;a, &amp;amp;a[0], &amp;amp;a[1], &amp;amp;a[2])  输出的是： [0 1 2] &amp;amp;[0 1 2] 0xc00008e000 0xc0">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://polebug.github.io/archives/2017/01/index.html">
+  <link rel="canonical" href="https://polebug.github.io/数组和切片的比较/index.html">
   
     <link rel="alternate" href="/atom.xml" title="polebug | 瞎折腾" type="application/atom+xml">
   
@@ -313,68 +315,296 @@
   
   
 <main class="main" role="main">
-  	<article class="content article article-archives article-type-list" itemscope>
-	    <header class="article-header">
-	      <h1 itemprop="title">Archive: 2017/1</h1>
-	      <p class="text-muted">Total 3 articles</p>
-	    </header>
-	    <div class="article-body">
-	      
-  
-  
+  <div class="content">
+  <article id="[layout]-数组和切片的比较" class="article article-type-[layout]" itemscope itemtype="http://schema.org/BlogPosting">
     
-    
+    <div class="article-header">
       
+        
+  
+    <h1 class="article-title" itemprop="name">
+      数组和切片的比较
+    </h1>
+  
+
       
-      <section class="panel panel-default b-no">
-        <div class="panel-heading" role="tab">
-          <h3 class="panel-title">
-            <a data-toggle="collapse" href="#collapse2017" aria-expanded="true">
-              <i class="icon icon-calendar-plus text-active"></i><i class="icon icon-calendar-minus text"></i>
-              2017
-            </a>
-            <!-- <a href="/archives/2017" class="archive-year">2017</a> -->
-          </h3>
-        </div>
-        <div id="collapse2017" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading2017">
-        <div class="panel-body">
-          <div class="collection">
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/数组和切片的比较/" class="article-date">
+	  <time datetime="2019-06-19T02:10:10.000Z" itemprop="datePublished">2019-06-19</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Golang/">Golang</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/数组和切片的比较/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 1.3k(字)</span>
+	
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="数组和切片的比较"><a href="#数组和切片的比较" class="headerlink" title="数组和切片的比较"></a>数组和切片的比较</h1><blockquote>
+<p>前言：写了数组和切片基本的特性，还有切片共享数据的一些坑，平时应该多加小心</p>
+</blockquote>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>数组是一个<strong>固定长度</strong>的序列</p>
+<h3 id="数组变量的含义"><a href="#数组变量的含义" class="headerlink" title="数组变量的含义"></a>数组变量的含义</h3><p>举个栗子：</p>
+<pre><code class="go">var a =[...]int{0,1,2}
+fmt.Println(a, &amp;a, &amp;a[0], &amp;a[1], &amp;a[2])
+
+输出的是：
+[0 1 2] &amp;[0 1 2] 0xc00008e000 0xc00008e008 0xc00008e010
+</code></pre>
+<p>要注意的是，一个数组变量表示的是<strong>一个完整的值</strong>，代表整个数组，<strong>并不是指向第一个元素的指针</strong></p>
+<p><strong>这一点与 C/C++ 的数组不同，C/C++ 的数组变量是(隐式的)指向第一个元素的指针</strong></p>
+<pre><code class="cpp">int a[3] = {0,1,2};
+cout&lt;&lt; a &lt;&lt; endl &lt;&lt; &amp;a &lt;&lt; endl &lt;&lt; &amp;a[0];
+
+0x7ffee6b2568c
+0x7ffee6b2568c
+0x7ffee6b2568c
+</code></pre>
+<p>golang 中，为了避免数组赋值时产生较大开销，一般会创建一个指针指向这个数组</p>
+<h3 id="数组的拷贝"><a href="#数组的拷贝" class="headerlink" title="数组的拷贝"></a>数组的拷贝</h3><p>另外一个与 C/C++ 不同的点是，golang 的赋值都是<strong>值拷贝</strong>，数组的拷贝当然也是</p>
+<pre><code>var a = [3]int{0,1,2}
+var b = a
+</code></pre><p>会发现拷贝之后的数组 b 不仅值与 a 数组相同，b 中元素的地址也与 a 相同</p>
+<h4 id="一些操作"><a href="#一些操作" class="headerlink" title="一些操作"></a>一些操作</h4><ul>
+<li><p><strong>数组的定义：</strong></p>
+<pre><code>  // 字符串数组
+  var s = [...]string{}
+
+  // 结构体数组
+  var structList = [...]struct.Val{struct.Val:0}
+
+  // 接口数组
+  var interfaceList = [...]interface{}{1, &quot;a&quot;}
+
+  // 管道数组
+  var chanList = [3]chan int{}
+</code></pre></li>
+<li><p><strong>遍历数组：</strong></p>
+<pre><code>  for i := range a {
+      ...
+  }
+
+  也可以 for i := 0; i &lt; len(a); i++ {}
+
+  for range 性能更好，而且可以保证不会出现数组越界
+</code></pre></li>
+<li><p><strong>内置函数:</strong> </p>
+<ul>
+<li><code>len()</code> 用于计算数组的长度</li>
+<li><code>cap()</code> 用于计算数组的容量(元素个数)</li>
+</ul>
+</li>
+</ul>
+<h2 id="切片-slice"><a href="#切片-slice" class="headerlink" title="切片 slice"></a>切片 slice</h2><p>切片是可以<strong>动态增长和收缩</strong>序列，可以认为是动态数组</p>
+<h3 id="切片变量的含义"><a href="#切片变量的含义" class="headerlink" title="切片变量的含义"></a>切片变量的含义</h3><p><strong>切片其实是一个结构体：</strong></p>
+<pre><code class="go">type SliceHeader struct {
+    Data uintptr
+    Len int
+    Cap int
+}
+</code></pre>
+<ul>
+<li><strong>Data</strong> 是切片指向的低层字节数组(当 Data 指针为空时，切片为 nil)</li>
+<li><strong>Len</strong> 是切片的字节长度</li>
+<li><strong>Cap</strong> 是切片指向的内存空间的最大容量(元素个数)</li>
+</ul>
+<p>那么一个切片变量是表示的是什么呢？它表示的是 Data 指针指向的低层数组的值</p>
+<pre><code class="go">var c = []int{1,2}
+fmt.Println(c, &amp;c, &amp;c[0])
+
+[1 2] &amp;[1 2] 0xc000086000
+</code></pre>
+<p>要时刻记住一个重要的特点：<strong>slice 是对低层数组的引用</strong></p>
+<p>也正是因为这个特性，使得 slice 具有共享数据的特点</p>
+<h3 id="共享"><a href="#共享" class="headerlink" title="共享"></a>共享</h3><p>因为切片是<strong>引用类型</strong>，多个切片如果指向同一个数组的片段，它们可以<strong>共享数据</strong></p>
+<p>举个例子：</p>
+<pre><code class="go">func mulA(a [5]int) {
+    for i, _ := range a {
+        a[i] *= 2
+    }
+}
+
+func mulB(a []int) {
+    for i, _ := range a {
+        a[i] *= 2
+    }
+}
+
+func main() {
+    a := [5]int{1, 2, 3, 4, 5}
+    b := []int{1, 2, 3, 4, 5}
+    mulA(a)
+    fmt.Println(a) 
+
+    mulB(b)
+    fmt.Println(b)
+}
+</code></pre>
+<p>输出的结果是</p>
+<pre><code>[1 2 3 4 5]
+[2 4 6 8 10]
+</code></pre><p>我们可以看到，调用 Mul 函数之后，数组 a 原本的值并没有改变，而 slice b 原本的值改变了，原因就在于 slice 是一个引用类型</p>
+<p>slice 允许多个 slice 指向同一个底层数组，在很多场景下都能通过这个特性实现 no copy，不需要使用额外的内存而提高效率</p>
+<p>但是！！！共享同时意味着不安全，容易掉进一些意想不到的坑里，再看一个例子</p>
+<p>我们先定义了一个 slice a，然后想在 a[0:1] 后面追加一个元素 3 再赋值给 b，代码如下：</p>
+<pre><code class="go">var a = []int{1,2}
+b := append(a[0:1], 3)
+
+fmt.Println(a)
+fmt.Println(b)
+</code></pre>
+<p>按照我们原本的想法：<br>a = [1, 2]<br>b = [1, 3]  </p>
+<p>结果却输出了：<br>a = [1, 3]<br>b = [1, 3]  </p>
+<p>这是因为 a, b 都指向同一个低层数组，b 在追加元素 3 时覆盖了这个数组的第二个元素，导致打印 slice a 时，输出的也是 [1, 3]</p>
+<p>那么正确的写法应该是怎么样的？  </p>
+<p>我们的需求是希望 a, b 互不影响，那么 b 是一个新的 slice，再通过 copy 把 a 的内容赋值给 b</p>
+<pre><code class="go">var a = []int{1, 2}
+
+b := make([]int, 2)
+copy(b, a[0:1])
+b = append(b, 3)
+</code></pre>
+<h3 id="切片的定义"><a href="#切片的定义" class="headerlink" title="切片的定义"></a>切片的定义</h3><pre><code>var (
+    a  = []int{1, 2, 3, 4} //len和cap都是4
+
+    b = a[:2] //取a开头两个元素, len=2, cap(b)=cap(a)
+
+    c = a[1:2:4] //a 的 index 从 1到2(左边界闭，右边界开)，cap=4-1, len=1
+
+    d = make([]int, 2, 3) // len=2, cap=3
+)
+</code></pre><h4 id="切片的操作"><a href="#切片的操作" class="headerlink" title="切片的操作"></a>切片的操作</h4><ul>
+<li><p><strong>添加切片元素：</strong></p>
+<pre><code>  // 在首部添加元素 1
+  a = append(1, a)
+
+  // 在尾部添加元素 1
+  a = append(a, 1)
+
+  // 可添加切片
+  a = append(a, []int{1,2,3})
+</code></pre><p>  PS: 调用 append() 函数之后，返回一个新的切片，用这个新的切片来更新原有的切片</p>
+</li>
+<li><p><strong>复制</strong></p>
+<pre><code>  copy(b[i:], a[j:])
+
+  copy(a[i+1:], a[i:])
+</code></pre></li>
+<li><p><strong>删除元素</strong></p>
+<pre><code>  // 删除开头一个元素
+  a = a[1:]
+
+  // 删除末尾一个元素
+  a = a[:len(a)-1]
+
+  // 删除 i 到 j 中的元素
+  a = append(a[:i], a[j:]...) 
+
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
     
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://polebug.github.io/数组和切片的比较/" title="数组和切片的比较" target="_blank" rel="external">https://polebug.github.io/数组和切片的比较/</a>
+    </li>
     
-<a href="/markdown1/" class="collection-item" target="_blank" itemprop="url">
-  <time datetime="2017-01-24T03:32:51.000Z" itemprop="datePublished">2017-01-24</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> markdown语法所踩的坑（备忘/持续更）
-</a>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/polebug" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <!-- <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/polebug" target="_blank"><span class="text-dark">polebug</span><small class="ml-1x">false</small></a></h3>
+        <div>undefined</div>
+      </div> -->
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
 
 
   
-    
-    
-    
-<a href="/Concrete-Mathematics2/" class="collection-item" target="_blank" itemprop="url">
-  <time datetime="2017-01-17T07:59:54.000Z" itemprop="datePublished">2017-01-17</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> Concrete Mathematics 2 ：Sums
-</a>
+</div>
 
-
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
   
+  <ul class="pager pull-left">
     
     
+    <li class="next">
+      <a href="/go-start-2/" title="Go 入门笔记『并发编程』"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
     
-<a href="/Concrete-Mathematics1/" class="collection-item" target="_blank" itemprop="url">
-  <time datetime="2017-01-15T02:52:37.000Z" itemprop="datePublished">2017-01-15</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> Concrete Mathematics 1 ：Recurrent
-</a>
-
-
+    
+  </ul>
   
   
-    </div></div></div></section>
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
   
 
-	    </div>
-  	</article>
-  	 	
+
 </main>
 
   <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
@@ -442,6 +672,33 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'ce0ec393e83b9afdd9b6',
+    clientSecret: '70cf9f7944bf22d405c59b6a50a6b15c6cbcd68c',
+    repo: 'polebug.github.io',
+    owner: 'polebug',
+    admin: ['polebug'],
+    id: md5(location.pathname),
+    distractionFreeMode: true
+  })
+  gitalk.render('comments')
+  </script>
+
+      
 
 
 
