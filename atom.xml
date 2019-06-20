@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://polebug.github.io/"/>
-  <updated>2019-06-20T16:09:19.321Z</updated>
+  <updated>2019-06-20T16:13:34.093Z</updated>
   <id>https://polebug.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://polebug.github.io/Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B1/"/>
     <id>https://polebug.github.io/Go并发编程1/</id>
     <published>2019-06-20T06:00:12.000Z</published>
-    <updated>2019-06-20T16:09:19.321Z</updated>
+    <updated>2019-06-20T16:13:34.093Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>我觉得 Go 并发编程和其他语言差别很大，其原因在于它有自己独特的设计。Select 就是其中一个很特别的设计，它能在并发中起到什么样的效果呢？</p></blockquote><a id="more"></a><pre><code>select {case 语句1:    ...case 语句2:    ...default:    ...}</code></pre><p>乍一看 select 语句的长得有点像 switch，但它跟 switch 完全不同，不仅语法上存在不同，二者的使用场景也完全不同</p><p>select 有什么特别之处呢？ </p><h2 id="select-的使用"><a href="#select-的使用" class="headerlink" title="select 的使用"></a>select 的使用</h2><p>举一个具体使用的例子：</p><pre><code class="go">select { // 不停的监听每个 case 语句中 channel 的 IO 操作case &lt;-chanl : //检测有没有数据可以读// 如果chanl成功读取到数据，则进行该case处理语句case chan2 &lt;- 1 : //检测有没有可以写// 如果成功向chan2写入数据，则进行该case处理语句default:// default 子句总是可运行的}</code></pre><p>select 主要用于处理异步通道操作，这使得它在<strong>语法上</strong>有一些特别：</p><ul><li><strong>case 语句必须包含一个 channel 操作，必须是一个通信(IO)</strong></li><li>default 子句总是可运行的</li><li>select 没有条件表达式，一直在等待分支进入可运行状态</li></ul><p>select 在<strong>执行上</strong>也很特别，在一个 select 语句中，Go 会按顺序监听每一个 case 语句中的 channel 的读写操作：</p><ul><li>如果有多个分支都可以继续执行(即没有被阻塞)，select 会<strong>随机地选一个执行，其他分支不会执行</strong></li><li>如果没有可运行的分支(即所有通道都被阻塞)，那么有两种情况：<ul><li>有 default 语句，那么就会执行 default 的动作</li><li><strong>没有 default 语句，select 将阻塞，直到某个分支可以运行</strong></li></ul></li></ul><p>就比如上面代码中的例子，  </p><ul><li>如果 chan1 有数据可读，且 chan2 可以写数据，那么会随机地选一个 case 处理  </li><li>如果那个 case 都不能继续执行，那么会执行 default 中的处理语句</li></ul><h2 id="select-的使用场景"><a href="#select-的使用场景" class="headerlink" title="select 的使用场景"></a>select 的使用场景</h2><p>我们初步认识到 select 是用于处理异步通道操作，那么它在具体能用于哪些场景呢？</p><h3 id="1-超时处理"><a href="#1-超时处理" class="headerlink" title="1. 超时处理"></a>1. 超时处理</h3><p>使用 <strong>select + 定时器</strong>可以实现：给通道增加读写数据的容忍时间，如果超过限定的时间内无法读写，就停止处理</p><pre><code class="go">var ch = make(chan int)func test() {    select{    case data := &lt;-ch:        doSometing(data)    case &lt;-time.After(time.Second * 5):        fmt.Println(&quot;request time out&quot;)    }</code></pre><h3 id="2-判断-channel-是否阻塞"><a href="#2-判断-channel-是否阻塞" class="headerlink" title="2. 判断 channel 是否阻塞"></a>2. 判断 channel 是否阻塞</h3><p>在某些情况下，想判断 channel 缓存是否满了</p><pre><code class="go">ch := make(chan int, 1024)data := 0select{case ch &lt;- data:default:    doSometing()</code></pre><p>PS: 暂且就知道以上这几种使用场景，之后碰上了会再补上来</p><h2 id="Select-的性能问题"><a href="#Select-的性能问题" class="headerlink" title="Select 的性能问题"></a>Select 的性能问题</h2><p>因为 select 并不是采用事件触发，所以当 chanel 数量超过 1 时，Go 内部会创建一个 goroutine，由它每秒轮询的方式检查每个 channel 是否可用</p><p>这导致了 select 异步操作随着 channel 数增加，性能线性下降，每增加一个管道增加 100ns/op</p><p>解决的方法是，在使用 select 时应避免使用过多的管道 chan 分支，或者把无法用到的 chan 置为 nil</p><blockquote><p>参考了以下文章：<br> <a href="https://www.kancloud.cn/liupengjie/go/570039" target="_blank" rel="noopener">刘鹏杰的 Golang 文档</a></p></blockquote>]]></content>
     
@@ -37,6 +37,8 @@
     
     
       <category term="Golang" scheme="https://polebug.github.io/tags/Golang/"/>
+    
+      <category term="IO" scheme="https://polebug.github.io/tags/IO/"/>
     
   </entry>
   
