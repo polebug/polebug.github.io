@@ -18,19 +18,19 @@
   
   
   <title>DNS 的工作原理 | Hello, Polebug</title>
-  <meta name="description" content="因为主机的 IP 地址不便于记忆，所以人们常用主机名来标识主机。而对于路由，则是使用定长的、有层次结构的 IP 地址。 因为需求之间的矛盾，这就需要一种目录服务，能够提供主机名到 IP 地址映射的查询服务。这就是 域名系统 (Domain Name System, DNS) 所提供的服务。 (Q1)DNS 是什么呢？   一般我们提到 DNS 的时候，指的是 DNS 服务器；有时间指的是 DNS">
+  <meta name="description" content="因为主机的 IP 地址不便于记忆，所以人们常用主机名来标识主机。而对于路由，则是使用定长的、有层次结构的 IP 地址。 因为需求之间的矛盾，这就需要一种目录服务，能够提供主机名到 IP 地址映射的查询服务。这就是 域名系统 (Domain Name System, DNS) 所提供的服务。 (Q1)DNS 是什么呢？   一般我们提到 DNS 的时候，指的是 DNS 服务器；有时候指的是 DNS">
 <meta name="keywords" content="Network,DNS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DNS 的工作原理">
 <meta property="og:url" content="https://polebug.github.io/DNS的工作原理/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="因为主机的 IP 地址不便于记忆，所以人们常用主机名来标识主机。而对于路由，则是使用定长的、有层次结构的 IP 地址。 因为需求之间的矛盾，这就需要一种目录服务，能够提供主机名到 IP 地址映射的查询服务。这就是 域名系统 (Domain Name System, DNS) 所提供的服务。 (Q1)DNS 是什么呢？   一般我们提到 DNS 的时候，指的是 DNS 服务器；有时间指的是 DNS">
+<meta property="og:description" content="因为主机的 IP 地址不便于记忆，所以人们常用主机名来标识主机。而对于路由，则是使用定长的、有层次结构的 IP 地址。 因为需求之间的矛盾，这就需要一种目录服务，能够提供主机名到 IP 地址映射的查询服务。这就是 域名系统 (Domain Name System, DNS) 所提供的服务。 (Q1)DNS 是什么呢？   一般我们提到 DNS 的时候，指的是 DNS 服务器；有时候指的是 DNS">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://polebug.github.io/素材/DNS体系结构图.jpg">
-<meta property="og:updated_time" content="2019-06-23T02:04:17.752Z">
+<meta property="og:updated_time" content="2019-06-23T02:06:18.733Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DNS 的工作原理">
-<meta name="twitter:description" content="因为主机的 IP 地址不便于记忆，所以人们常用主机名来标识主机。而对于路由，则是使用定长的、有层次结构的 IP 地址。 因为需求之间的矛盾，这就需要一种目录服务，能够提供主机名到 IP 地址映射的查询服务。这就是 域名系统 (Domain Name System, DNS) 所提供的服务。 (Q1)DNS 是什么呢？   一般我们提到 DNS 的时候，指的是 DNS 服务器；有时间指的是 DNS">
+<meta name="twitter:description" content="因为主机的 IP 地址不便于记忆，所以人们常用主机名来标识主机。而对于路由，则是使用定长的、有层次结构的 IP 地址。 因为需求之间的矛盾，这就需要一种目录服务，能够提供主机名到 IP 地址映射的查询服务。这就是 域名系统 (Domain Name System, DNS) 所提供的服务。 (Q1)DNS 是什么呢？   一般我们提到 DNS 的时候，指的是 DNS 服务器；有时候指的是 DNS">
 <meta name="twitter:image" content="https://polebug.github.io/素材/DNS体系结构图.jpg">
   <!-- Canonical links -->
   <link rel="canonical" href="https://polebug.github.io/DNS的工作原理/index.html">
@@ -373,7 +373,7 @@
         <p>因为主机的 IP 地址不便于记忆，所以人们常用主机名来标识主机。而对于路由，则是使用定长的、有层次结构的 IP 地址。</p>
 <p>因为需求之间的矛盾，这就需要一种目录服务，能够提供主机名到 IP 地址映射的查询服务。这就是 <code>域名系统 (Domain Name System, DNS)</code> 所提供的服务。</p>
 <p>(Q1)DNS 是什么呢？  </p>
-<p>一般我们提到 DNS 的时候，指的是 DNS 服务器；有时间指的是 DNS 协议。DNS 服务器能够处理 DNS 报文，进而提供查询服务。</p>
+<p>一般我们提到 DNS 的时候，指的是 DNS 服务器；有时候指的是 DNS 协议。DNS 服务器能够处理 DNS 报文，进而提供查询服务。</p>
 <p>下面详细介绍一下</p>
 <ul>
 <li>DNS 记录</li>
