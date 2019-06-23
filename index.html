@@ -214,7 +214,7 @@
   <div class="widget">
     <h3 class="widget-title">Archive</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -226,6 +226,21 @@
     <div class="widget-body">
       <ul class="recent-post-list list-unstyled no-thumbnail">
         
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Network/">Network</a>
+              </p>
+              <p class="item-title">
+                <a href="/DNS的工作原理/" class="title">DNS 的工作原理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-06-23T12:47:22.000Z" itemprop="datePublished">2019-06-23</time>
+              </p>
+            </div>
+          </li>
+          
           <li>
             
             <div class="item-inner">
@@ -286,21 +301,6 @@
             </div>
           </li>
           
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/categories/Backend/">Backend</a>
-              </p>
-              <p class="item-title">
-                <a href="/about-restful-api/" class="title">谈谈对 RESTful 的认识</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2019-03-31T08:25:26.000Z" itemprop="datePublished">2019-03-31</time>
-              </p>
-            </div>
-          </li>
-          
       </ul>
     </div>
   </div>
@@ -314,6 +314,63 @@
   <main class="main" role="main">
   
   <div class="content article-list">
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/DNS的工作原理/">DNS 的工作原理</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>因为主机的 IP 地址不便于记忆，所以人们常用主机名来标识主机。而对于路由，则是使用定长的、有层次结构的 IP 地址。</p>
+<p>因为需求之间的矛盾，这就需要一种目录服务，能够提供主机名到 IP 地址映射的查询服务。这就是 <code>域名系统 (Domain Name System, DNS)</code> 所提供的服务。</p>
+<p>(Q1)DNS 是什么呢？  </p>
+<p>一般我们提到 DNS 的时候，指的是 DNS 服务器；有时间指的是 DNS 协议。DNS 服务器能够处理 DNS 报文，进而提供查询服务。</p>
+<p>下面详细介绍一下</p>
+<ul>
+<li>DNS 记录</li>
+<li>DNS 服务器的体系结构</li>
+<li>DNS 协议的原理</li>
+<li>DNS 服务器提供查询服务的工作流程</li>
+<li>DNS 缓存</li>
+</ul>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/DNS的工作原理/" class="article-date">
+	  <time datetime="2019-06-23T12:47:22.000Z" itemprop="datePublished">Jun 23</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Network/">Network</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/DNS/">DNS</a>, <a class="article-tag-link" href="/tags/Network/">Network</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/DNS的工作原理/#comments" class="article-comment-link">Comments</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 2.3k(字)</span>
+	
+	
+
+  </p>
+</article>
+
     
       <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
   <div class="article-header">
@@ -804,63 +861,6 @@
     
 	
 		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 113(字)</span>
-	
-	
-
-  </p>
-</article>
-
-    
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/DNS的工作原理/">DNS 的工作原理</a>
-    </h1>
-  
-
-  </div>
-  
-  <div class="article-entry text-muted" itemprop="description">
-    <p>因为主机的 IP 地址不便于记忆，所以人们常用主机名来标识主机。而对于路由，则是使用定长的、有层次结构的 IP 地址。</p>
-<p>因为需求之间的矛盾，这就需要一种目录服务，能够提供主机名到 IP 地址映射的查询服务。这就是 <code>域名系统 (Domain Name System, DNS)</code> 所提供的服务。</p>
-<p>(Q1)DNS 是什么呢？  </p>
-<p>一般我们提到 DNS 的时候，指的是 DNS 服务器；有时间指的是 DNS 协议。DNS 服务器能够处理 DNS 报文，进而提供查询服务。</p>
-<p>下面详细介绍一下</p>
-<ul>
-<li>DNS 记录</li>
-<li>DNS 服务器的体系结构</li>
-<li>DNS 协议的原理</li>
-<li>DNS 服务器提供查询服务的工作流程</li>
-<li>DNS 缓存</li>
-</ul>
-  </div>
-  
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/DNS的工作原理/" class="article-date">
-	  <time datetime="2018-06-23T12:47:22.000Z" itemprop="datePublished">Jun 23</time>
-	</a>
-</span>
-    
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/Network/">Network</a>
-  </span>
-
-    
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link" href="/tags/DNS/">DNS</a>, <a class="article-tag-link" href="/tags/Network/">Network</a>
-  </span>
-
-
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/DNS的工作原理/#comments" class="article-comment-link">Comments</a></span>
-    
-	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 2.3k(字)</span>
 	
 	
 
