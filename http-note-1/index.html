@@ -18,21 +18,21 @@
   
   
   <title>HTTP 协议的工作原理 | Hello, Polebug</title>
-  <meta name="description" content="HTTP 协议的工作原理这一章的笔记主要包括：  HTTP 协议 HTTP 报文 HTTP 方法以及幂等性 状态码以及原因短语   HTTP 连接管理 非持续连接 持续连接 HTTP/1.0+ keep-alive 连接 HTTP/1.1 persistent 连接 HTTP/1.1 pipelining 持续连接模式如何判断数据包已发完   HTTP 事务的延迟   HTTP/2 特性 二进制传">
+  <meta name="description" content="这一章的笔记主要包括：  HTTP 协议 HTTP 报文 HTTP 方法以及幂等性 状态码以及原因短语   HTTP 连接管理 非持续连接 持续连接 HTTP/1.0+ keep-alive 连接 HTTP/1.1 persistent 连接 HTTP/1.1 pipelining 持续连接模式如何判断数据包已发完   HTTP 事务的延迟   HTTP/2 特性 二进制传输 多路复用 Heade">
 <meta name="keywords" content="HTTP,Network,HTTPS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTP 协议的工作原理">
 <meta property="og:url" content="https://polebug.github.io/http-note-1/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
-<meta property="og:description" content="HTTP 协议的工作原理这一章的笔记主要包括：  HTTP 协议 HTTP 报文 HTTP 方法以及幂等性 状态码以及原因短语   HTTP 连接管理 非持续连接 持续连接 HTTP/1.0+ keep-alive 连接 HTTP/1.1 persistent 连接 HTTP/1.1 pipelining 持续连接模式如何判断数据包已发完   HTTP 事务的延迟   HTTP/2 特性 二进制传">
+<meta property="og:description" content="这一章的笔记主要包括：  HTTP 协议 HTTP 报文 HTTP 方法以及幂等性 状态码以及原因短语   HTTP 连接管理 非持续连接 持续连接 HTTP/1.0+ keep-alive 连接 HTTP/1.1 persistent 连接 HTTP/1.1 pipelining 持续连接模式如何判断数据包已发完   HTTP 事务的延迟   HTTP/2 特性 二进制传输 多路复用 Heade">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://polebug.github.io/images/network/http-connections.png">
 <meta property="og:image" content="https://polebug.github.io/images/network/http-keep-alive.png">
 <meta property="og:image" content="https://polebug.github.io/images/network/https-ssl.png">
-<meta property="og:updated_time" content="2019-07-10T07:48:03.443Z">
+<meta property="og:updated_time" content="2019-07-14T13:33:31.081Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP 协议的工作原理">
-<meta name="twitter:description" content="HTTP 协议的工作原理这一章的笔记主要包括：  HTTP 协议 HTTP 报文 HTTP 方法以及幂等性 状态码以及原因短语   HTTP 连接管理 非持续连接 持续连接 HTTP/1.0+ keep-alive 连接 HTTP/1.1 persistent 连接 HTTP/1.1 pipelining 持续连接模式如何判断数据包已发完   HTTP 事务的延迟   HTTP/2 特性 二进制传">
+<meta name="twitter:description" content="这一章的笔记主要包括：  HTTP 协议 HTTP 报文 HTTP 方法以及幂等性 状态码以及原因短语   HTTP 连接管理 非持续连接 持续连接 HTTP/1.0+ keep-alive 连接 HTTP/1.1 persistent 连接 HTTP/1.1 pipelining 持续连接模式如何判断数据包已发完   HTTP 事务的延迟   HTTP/2 特性 二进制传输 多路复用 Heade">
 <meta name="twitter:image" content="https://polebug.github.io/images/network/http-connections.png">
   <!-- Canonical links -->
   <link rel="canonical" href="https://polebug.github.io/http-note-1/index.html">
@@ -364,7 +364,7 @@
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/http-note-1/#comments" class="article-comment-link">Comments</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 4.8k(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 4.7k(字)</span>
 	
 	
 
@@ -372,7 +372,7 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h1 id="HTTP-协议的工作原理"><a href="#HTTP-协议的工作原理" class="headerlink" title="HTTP 协议的工作原理"></a>HTTP 协议的工作原理</h1><p>这一章的笔记主要包括：</p>
+        <p>这一章的笔记主要包括：</p>
 <ul>
 <li>HTTP 协议<ul>
 <li>HTTP 报文</li>
@@ -407,6 +407,7 @@
 </ul>
 </li>
 </ul>
+<a id="more"></a>
 <hr>
 <p>开始之前先说说 <strong>(Q1)什么是 HTTP 事务？</strong></p>
 <p>HTTP 事务由以下几部分构成：</p>
