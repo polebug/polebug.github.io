@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>关于 goroutine 和 channel 原理的一些理解 | Hello, Polebug</title>
+  <meta name="description" content="一篇笔记主要从操作系统的角度去思考 goroutine 和 channel简单说说我对 goroutine 和 channel 原理的理解">
+<meta name="keywords" content="Golang,goroutine,go-channel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于 goroutine 和 channel 原理的一些理解">
+<meta property="og:url" content="https://polebug.github.io/goroutine-channel/index.html">
+<meta property="og:site_name" content="polebug | 瞎折腾">
+<meta property="og:description" content="一篇笔记主要从操作系统的角度去思考 goroutine 和 channel简单说说我对 goroutine 和 channel 原理的理解">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-23T16:47:44.100Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于 goroutine 和 channel 原理的一些理解">
+<meta name="twitter:description" content="一篇笔记主要从操作系统的角度去思考 goroutine 和 channel简单说说我对 goroutine 和 channel 原理的理解">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://polebug.github.io/goroutine-channel/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="polebug | 瞎折腾" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/avatar.jpg" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css">
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/polebug" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">polebug</h2>
+        <!-- <h3 id="title" class="hidden-xs hidden-sm hidden-md">false</h3> -->
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> undefined</small> -->
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle="tooltip" data-placement="top"><i class="icon icon-telegram"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                只想做一个普通人开心的造轮子
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Backend/">Backend</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Compilers/">Compilers</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Golang/">Golang</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IO/">IO</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/yolo-darknet/">yolo-darknet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法与数据结构/">算法与数据结构</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/C-C/" style="font-size: 13.4px;">C/C++</a> <a href="/tags/Compilers/" style="font-size: 13.4px;">Compilers</a> <a href="/tags/DNS/" style="font-size: 13px;">DNS</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Golang/" style="font-size: 13.6px;">Golang</a> <a href="/tags/HTTP/" style="font-size: 13px;">HTTP</a> <a href="/tags/HTTPS/" style="font-size: 13px;">HTTPS</a> <a href="/tags/IO/" style="font-size: 13px;">IO</a> <a href="/tags/Logistic/" style="font-size: 13px;">Logistic</a> <a href="/tags/MCV/" style="font-size: 13px;">MCV</a> <a href="/tags/ML/" style="font-size: 13px;">ML</a> <a href="/tags/MTV/" style="font-size: 13px;">MTV</a> <a href="/tags/Network/" style="font-size: 13.2px;">Network</a> <a href="/tags/PostgreSQL/" style="font-size: 13px;">PostgreSQL</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/RESTful/" style="font-size: 13px;">RESTful</a> <a href="/tags/RMQ问题/" style="font-size: 13px;">RMQ问题</a> <a href="/tags/RPC/" style="font-size: 13px;">RPC</a> <a href="/tags/WSGI/" style="font-size: 13px;">WSGI</a> <a href="/tags/celery/" style="font-size: 13px;">celery</a> <a href="/tags/darknet/" style="font-size: 13px;">darknet</a> <a href="/tags/gcd/" style="font-size: 13px;">gcd</a> <a href="/tags/go-channel/" style="font-size: 13px;">go-channel</a> <a href="/tags/goroutine/" style="font-size: 13px;">goroutine</a> <a href="/tags/image-processing/" style="font-size: 13px;">image processing</a> <a href="/tags/language-learning/" style="font-size: 13.2px;">language learning</a> <a href="/tags/leetcode/" style="font-size: 13.2px;">leetcode</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/math/" style="font-size: 13.2px;">math</a> <a href="/tags/sklearn/" style="font-size: 13px;">sklearn</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/web/" style="font-size: 13px;">web</a> <a href="/tags/yolo/" style="font-size: 13px;">yolo</a> <a href="/tags/二分/" style="font-size: 13px;">二分</a> <a href="/tags/具体数学/" style="font-size: 13.2px;">具体数学</a> <a href="/tags/区间上的操作/" style="font-size: 13px;">区间上的操作</a> <a href="/tags/和式/" style="font-size: 13px;">和式</a> <a href="/tags/平几/" style="font-size: 13px;">平几</a> <a href="/tags/异步任务/" style="font-size: 13px;">异步任务</a> <a href="/tags/思维/" style="font-size: 13px;">思维</a> <a href="/tags/概率问题/" style="font-size: 13px;">概率问题</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/消息队列/" style="font-size: 13px;">消息队列</a> <a href="/tags/算法与数据结构/" style="font-size: 13.8px;">算法与数据结构</a> <a href="/tags/索引/" style="font-size: 13px;">索引</a> <a href="/tags/翻译/" style="font-size: 13.2px;">翻译</a> <a href="/tags/贪心/" style="font-size: 13px;">贪心</a> <a href="/tags/递归/" style="font-size: 13px;">递归</a> <a href="/tags/随机化/" style="font-size: 13px;">随机化</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Golang/">Golang</a>
+              </p>
+              <p class="item-title">
+                <a href="/goroutine-channel/" class="title">关于 goroutine 和 channel 原理的一些理解</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-07-24T06:00:12.000Z" itemprop="datePublished">2019-07-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Network/">Network</a>
+              </p>
+              <p class="item-title">
+                <a href="/http-note-1/" class="title">HTTP 协议的工作原理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-06-27T13:15:05.000Z" itemprop="datePublished">2019-06-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Network/">Network</a>
+              </p>
+              <p class="item-title">
+                <a href="/DNS的工作原理/" class="title">DNS 的工作原理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-06-23T12:47:22.000Z" itemprop="datePublished">2019-06-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Golang/">Golang</a>
+              </p>
+              <p class="item-title">
+                <a href="/Go并发编程1/" class="title">Go 并发编程 (一) Select</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-06-20T06:00:12.000Z" itemprop="datePublished">2019-06-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Golang/">Golang</a>
+              </p>
+              <p class="item-title">
+                <a href="/数组和切片的比较/" class="title">数组和切片的比较 (Golang)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-06-19T02:10:10.000Z" itemprop="datePublished">2019-06-19</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-goroutine-channel" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      关于 goroutine 和 channel 原理的一些理解
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/goroutine-channel/" class="article-date">
+	  <time datetime="2019-07-24T06:00:12.000Z" itemprop="datePublished">2019-07-24</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Golang/">Golang</a>, <a class="article-tag-link" href="/tags/go-channel/">go-channel</a>, <a class="article-tag-link" href="/tags/goroutine/">goroutine</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/goroutine-channel/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 1.2k(字)</span>
+	
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <blockquote>
+<p>一篇笔记主要从操作系统的角度去思考 goroutine 和 channel<br>简单说说我对 goroutine 和 channel 原理的理解</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="goroutine"><a href="#goroutine" class="headerlink" title="goroutine"></a>goroutine</h2><p>我们知道 Go 语言在语言层面提供了并发编程的高级特性，一个很好的例子是 <strong>goroutine</strong></p>
+<p><strong>goroutine 有以下几个特点：</strong>  </p>
+<ul>
+<li>它是一种用户态线程，不需要操作系统来进行抢占式调用，而是由<strong>Go runtime 管理</strong></li>
+<li>它是 Go 语言<strong>轻量级</strong>的线程实现，它不由系统而由应用程序创建和管理，因此使用 goroutine 的开销非常低</li>
+</ul>
+<h3 id="关于上下文切换"><a href="#关于上下文切换" class="headerlink" title="关于上下文切换"></a>关于上下文切换</h3><p><strong>关于线程的上下文切换：</strong>  </p>
+<ul>
+<li><p>我们知道线程的调度是由操作系统管理的，线程的切换可能发生在任何时机：主动的线程调度、抢占式调度  </p>
+</li>
+<li><p>内核无法区分出当前哪些寄存器正在使用，因此需要将所有寄存器的状态全都保存下来，开销很高</p>
+</li>
+</ul>
+<p><strong>goroutine 的上下文切换：</strong>  </p>
+<ul>
+<li><p>goroutine 由 Go runtime 管理，goroutine 的调度是协作式的。Go 在很多地方增加了 hook，例如标准库、函数调用等等</p>
+</li>
+<li><p>goroutine 调度的时机是确定的，编译器知道在调度时执行到了哪里，能自动将寄存器的状态保存下来</p>
+</li>
+<li><p>实际上，需要保存和恢复的寄存器有三个：PC、SP、DX，相比于线程切换，开销小很多</p>
+</li>
+</ul>
+<h3 id="简单说说调度器"><a href="#简单说说调度器" class="headerlink" title="简单说说调度器"></a>简单说说调度器</h3><p>对于同一个内核上的 goroutine，我们需要一个调度器来维护他们。调度器的主要有4个重要部分，分别是 M、G、P、Sched，前三个定义在 <code>runtime</code> 中，Sched 定义在 <code>proc.c</code> 中：</p>
+<ul>
+<li><p>M (work thread) 代表了系统线程OS Thread，由操作系统管理</p>
+</li>
+<li><p>P (processor) 衔接 M 和 G 的调度上下文，它负责将等待执行的 G 与 M 对接。P的数量可以通过 <code>GOMAXPROCS()</code> 来设置，它其实也就代表了真正的并发度，即有多少个 goroutine 可以同时运行</p>
+</li>
+<li><p>G (goroutine) goroutine 的实体，包括了调用栈，重要的调度信息，例如 channel等</p>
+</li>
+</ul>
+<p>调度器的工作原理这里先不说，我理解的还不深，等我真正看懂了再补一篇完整的笔记，顺带加上 goroutine 的生老病死</p>
+<h2 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h2><p>我们想要协调并发单元之间的工作，需要让它们相互通信</p>
+<p>并发通信的方式通常有两种类型：共享内存和消息传递</p>
+<p><strong>基于共享内存的并发：</strong> </p>
+<ul>
+<li><p>利用文件映射：内核专门留出了一块内存区，可以由需要访问的进程将其映射到自己的私有地址空间。进程就可以直接读写这一块内存而不需要进行数据的拷贝，从而大大提高效率</p>
+</li>
+<li><p>由于多个进程共享一段内存，因此也需要依靠某种同步机制(锁)</p>
+</li>
+</ul>
+<p><strong>基于消息传递的并发：</strong> </p>
+<ul>
+<li><p>利用一种类似队列的机制作为通信手段</p>
+</li>
+<li><p>根据实现方式的不同，这个队列可能是同步的，也可能是异步的</p>
+</li>
+</ul>
+<p>Go 的并发通信机制使采用了消息传递的方式，而消息传递的载体就是 <code>channel</code></p>
+<h3 id="channel-内部的实现原理"><a href="#channel-内部的实现原理" class="headerlink" title="channel 内部的实现原理"></a>channel 内部的实现原理</h3><p>channel 数据结构的定义：</p>
+<pre><code class="go">type hchan struct {
+    qcount   uint // 队列缓冲区的数据个数
+    dataqsiz uint // 队列缓冲区的大小
+    buf      unsafe.Pointer // 指向队列缓冲区的指针
+    elemsize uint16
+    closed   uint32
+    elemtype *_type
+    sendx    uint // send index
+    recvx    uint // receive index
+    recvq    waitq // 指向等待接收数据的 goroutine 链表的指针
+    sendq    waitq // 指向等待发送数据的 goroutine 链表的指针
+    lock     mutex // 用于保护对 channel 访问的互斥锁
+}
+</code></pre>
+<p>我们可以定义两种 channel：</p>
+<ul>
+<li><p><strong>无缓冲区的 chan</strong></p>
+<ul>
+<li><code>ch := make(chan int)</code> </li>
+<li>它的 buf == nil 且 dataqsiz == 0，Go 不会为其分配数据缓冲区，这种 channel 是同步的：消息被接收前，发送方将阻塞</li>
+</ul>
+</li>
+<li><p><strong>带缓冲区的 chan</strong> </p>
+<ul>
+<li><code>ch := make(chan int, 10)</code></li>
+<li>Go 会为其分配数据缓冲区，这种 channel 是异步的：发送方将数据发送至队列缓冲区后，继续执行</li>
+</ul>
+</li>
+</ul>
+<h3 id="goroutine-搭配-channel-的通信过程"><a href="#goroutine-搭配-channel-的通信过程" class="headerlink" title="goroutine 搭配 channel 的通信过程"></a>goroutine 搭配 channel 的通信过程</h3><p>让我们想想一下，goroutine 之间是如何通过 chan 进行通信的？</p>
+<p>首先，发送数据的 goroutine 会对 channel 做一系列检查，通过 <code>recvq</code> 发现链表中有另外一个 goroutine 在等待接受数据</p>
+<p>于是发送方 goroutine 将之前阻塞的 goroutine 从链表中移除，<strong>把需要发送的数据写入到接收方的栈空间，并将其唤醒</strong></p>
+<p>接收方 goroutine 也会对 channle 做一些检查，比如</p>
+<ul>
+<li>这个 chan 是否是 closed</li>
+<li>有没有 buf</li>
+<li>通过 <code>sendq</code> 检查出是否有 goroutine 在等待发送数据</li>
+</ul>
+<p>如果这个 channel 没有 close，也没有 buf，也没有其他 goroutine 在等待发送数据，那么当前 goroutine 会把自己添加到 recvq 链表中，并阻塞</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://polebug.github.io/goroutine-channel/" title="关于 goroutine 和 channel 原理的一些理解" target="_blank" rel="external">https://polebug.github.io/goroutine-channel/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/polebug" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <!-- <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/polebug" target="_blank"><span class="text-dark">polebug</span><small class="ml-1x">false</small></a></h3>
+        <div>undefined</div>
+      </div> -->
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/http-note-1/" title="HTTP 协议的工作原理"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/polebug" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://twitter.com/polebug" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/polebug" target="_blank" title="Telegram" data-toggle="tooltip" data-placement="top"><i class="icon icon-telegram"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 polebug
+        
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+    });
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'ce0ec393e83b9afdd9b6',
+    clientSecret: '70cf9f7944bf22d405c59b6a50a6b15c6cbcd68c',
+    repo: 'polebug.github.io',
+    owner: 'polebug',
+    admin: ['polebug'],
+    id: md5(location.pathname),
+    distractionFreeMode: true
+  })
+  gitalk.render('comments')
+  </script>
+
+      
+
+
+
+
+
+
+
+</body>
+</html>
