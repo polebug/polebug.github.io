@@ -17,18 +17,18 @@
   <meta http-equiv="window-target" content="_top">
   
   
-  <title>关于 goroutine 和 channel 原理的一些理解 | Hello, Polebug</title>
+  <title>从操作系统角度浅谈 goroutine 和 channel | Hello, Polebug</title>
   <meta name="description" content="一篇笔记主要从操作系统的角度去思考 goroutine 和 channel简单说说我对 goroutine 和 channel 原理的理解">
 <meta name="keywords" content="Golang,goroutine,go-channel">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于 goroutine 和 channel 原理的一些理解">
+<meta property="og:title" content="从操作系统角度浅谈 goroutine 和 channel">
 <meta property="og:url" content="https://polebug.github.io/goroutine-channel/index.html">
 <meta property="og:site_name" content="polebug | 瞎折腾">
 <meta property="og:description" content="一篇笔记主要从操作系统的角度去思考 goroutine 和 channel简单说说我对 goroutine 和 channel 原理的理解">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-23T16:47:44.100Z">
+<meta property="og:updated_time" content="2019-07-24T01:24:36.588Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于 goroutine 和 channel 原理的一些理解">
+<meta name="twitter:title" content="从操作系统角度浅谈 goroutine 和 channel">
 <meta name="twitter:description" content="一篇笔记主要从操作系统的角度去思考 goroutine 和 channel简单说说我对 goroutine 和 channel 原理的理解">
   <!-- Canonical links -->
   <link rel="canonical" href="https://polebug.github.io/goroutine-channel/index.html">
@@ -225,7 +225,7 @@
                 <a class="category-link" href="/categories/Golang/">Golang</a>
               </p>
               <p class="item-title">
-                <a href="/goroutine-channel/" class="title">关于 goroutine 和 channel 原理的一些理解</a>
+                <a href="/goroutine-channel/" class="title">从操作系统角度浅谈 goroutine 和 channel</a>
               </p>
               <p class="item-date">
                 <time datetime="2019-07-24T06:00:12.000Z" itemprop="datePublished">2019-07-24</time>
@@ -313,7 +313,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      关于 goroutine 和 channel 原理的一些理解
+      从操作系统角度浅谈 goroutine 和 channel
     </h1>
   
 
@@ -441,7 +441,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="goroutine-搭配-channel-的通信过程"><a href="#goroutine-搭配-channel-的通信过程" class="headerlink" title="goroutine 搭配 channel 的通信过程"></a>goroutine 搭配 channel 的通信过程</h3><p>让我们想想一下，goroutine 之间是如何通过 chan 进行通信的？</p>
+<h3 id="goroutine-搭配-channel-的通信过程"><a href="#goroutine-搭配-channel-的通信过程" class="headerlink" title="goroutine 搭配 channel 的通信过程"></a>goroutine 搭配 channel 的通信过程</h3><p><strong>让我们想一下，goroutine 之间是如何通过 chan 进行通信的？</strong></p>
 <p>首先，发送数据的 goroutine 会对 channel 做一系列检查，通过 <code>recvq</code> 发现链表中有另外一个 goroutine 在等待接受数据</p>
 <p>于是发送方 goroutine 将之前阻塞的 goroutine 从链表中移除，<strong>把需要发送的数据写入到接收方的栈空间，并将其唤醒</strong></p>
 <p>接收方 goroutine 也会对 channle 做一些检查，比如</p>
@@ -460,7 +460,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://polebug.github.io/goroutine-channel/" title="关于 goroutine 和 channel 原理的一些理解" target="_blank" rel="external">https://polebug.github.io/goroutine-channel/</a>
+      <a href="https://polebug.github.io/goroutine-channel/" title="从操作系统角度浅谈 goroutine 和 channel" target="_blank" rel="external">https://polebug.github.io/goroutine-channel/</a>
     </li>
     
     <li class="post-copyright-license">
