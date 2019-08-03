@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://polebug.github.io/DNS%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</loc>
+    
+    <lastmod>2019-08-03T03:03:46.717Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://polebug.github.io/goroutine-channel/</loc>
     
     <lastmod>2019-07-24T01:24:36.588Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>https://polebug.github.io/http-note-1/</loc>
     
     <lastmod>2019-07-14T13:33:31.081Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/DNS%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</loc>
-    
-    <lastmod>2019-07-10T07:48:30.494Z</lastmod>
     
   </url>
   

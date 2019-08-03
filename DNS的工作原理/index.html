@@ -27,7 +27,7 @@
 <meta property="og:description" content="因为主机的 IP 地址不便于记忆，所以人们常用主机名来标识主机。而对于路由，则是使用定长的、有层次结构的 IP 地址。 因为需求之间的矛盾，这就需要一种目录服务，能够提供主机名到 IP 地址映射的查询服务。这就是 域名系统 (Domain Name System, DNS) 所提供的服务。 (Q1)DNS 是什么呢？   一般我们提到 DNS 的时候，指的是 DNS 服务器；有时候指的是 DNS">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://polebug.github.io/images/network/DNS.jpg">
-<meta property="og:updated_time" content="2019-07-10T07:48:30.494Z">
+<meta property="og:updated_time" content="2019-08-03T03:03:46.717Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DNS 的工作原理">
 <meta name="twitter:description" content="因为主机的 IP 地址不便于记忆，所以人们常用主机名来标识主机。而对于路由，则是使用定长的、有层次结构的 IP 地址。 因为需求之间的矛盾，这就需要一种目录服务，能够提供主机名到 IP 地址映射的查询服务。这就是 域名系统 (Domain Name System, DNS) 所提供的服务。 (Q1)DNS 是什么呢？   一般我们提到 DNS 的时候，指的是 DNS 服务器；有时候指的是 DNS">
@@ -352,7 +352,7 @@
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/DNS的工作原理/#comments" class="article-comment-link">Comments</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 2.3k(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数: 2.4k(字)</span>
 	
 	
 
@@ -373,22 +373,27 @@
 <li>DNS 缓存</li>
 </ul>
 <a id="more"></a>
-<h2 id="DNS-记录"><a href="#DNS-记录" class="headerlink" title="DNS 记录"></a>DNS 记录</h2><p>(Q2)域名和 IP 的关系在 DNS 服务器中是以怎样的形式被记录的？</p>
+<h2 id="DNS-记录"><a href="#DNS-记录" class="headerlink" title="DNS 记录"></a>DNS 记录</h2><p>(Q2)host 和 IP 的关系在 DNS 服务器中是以怎样的形式被记录的？</p>
 <p>DNS 服务器存储了资源记录(RR)，提供了主机名到 IP 地址的映射。每个 DNS 回答报文包含了一条或多条资源记录。</p>
 <p>资源记录是一个 4 元组：
 <code>(Name, Value, Type, TTL)</code></p>
 <ul>
 <li><p><strong>Name 和 Value</strong> 的值取决于 Type</p>
 </li>
-<li><p><strong>Type</strong> 有多种：
-(各个类型的详细介绍参考 <a href="http://www.zytrax.com/books/dns/ch8/" target="_blank" rel="noopener">DNS Resource Records</a> )</p>
+<li><p><strong>Type</strong> 有多种：(各个类型的详细介绍参考 <a href="http://www.zytrax.com/books/dns/ch8/" target="_blank" rel="noopener">DNS Resource Records</a> )</p>
 <ul>
-<li>A记录：ipv4地址</li>
-<li>AAAA记录：ipv6地址</li>
-<li>NS记录：授权DNS地址</li>
-<li>MX记录：邮件服务器地址</li>
-<li>CNAME记录：别名记录</li>
-<li>PTR记录：反向解析记录</li>
+<li><p>A记录： 将 host 解析到指定的 IPv4 地址</p>
+</li>
+<li><p>AAAA记录：将 host 解析到指定的 IPv6 地址</p>
+</li>
+<li><p>CNAME记录：别名记录，将域名解析到另外一个域名。可以用于将不同域名都转到一个域名记录上，由这个域名记录统一解析管理</p>
+</li>
+<li><p>NS记录：域名服务器记录，用来指定该 host 由哪个 DNS 服务器来进行解析</p>
+</li>
+<li><p>MX记录：邮件服务器地址，它指向一个邮件服务器，用于电子邮件系统发邮件时根据收信人的地址后缀来定位邮件服务器</p>
+</li>
+<li><p>PTR记录：反向解析记录，是一个指针记录，用于将一个IP地址映射到对应的主机名,也可以看成是A记录的反向</p>
+</li>
 </ul>
 </li>
 </ul>
