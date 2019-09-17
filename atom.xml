@@ -39,32 +39,6 @@
   </entry>
   
   <entry>
-    <title>杂谈：秋招以及最近几天的todo</title>
-    <link href="https://polebug.github.io/%E6%9D%82%E8%B0%88%EF%BC%9A%E7%A7%8B%E6%8B%9B%E4%BB%A5%E5%8F%8A%E6%9C%80%E8%BF%91%E5%87%A0%E5%A4%A9%E7%9A%84todo/"/>
-    <id>https://polebug.github.io/杂谈：秋招以及最近几天的todo/</id>
-    <published>2019-08-22T06:00:12.000Z</published>
-    <updated>2019-08-22T13:46:02.498Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近两个月在忙秋招的事，</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;最近两个月在忙秋招的事，&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-      <category term="杂谈" scheme="https://polebug.github.io/categories/%E6%9D%82%E8%B0%88/"/>
-    
-    
-      <category term="秋招" scheme="https://polebug.github.io/tags/%E7%A7%8B%E6%8B%9B/"/>
-    
-  </entry>
-  
-  <entry>
     <title>从操作系统角度浅谈 goroutine 和 channel</title>
     <link href="https://polebug.github.io/goroutine-channel/"/>
     <id>https://polebug.github.io/goroutine-channel/</id>
@@ -486,13 +460,13 @@
       <category term="Django" scheme="https://polebug.github.io/categories/Django/"/>
     
     
-      <category term="Python" scheme="https://polebug.github.io/tags/Python/"/>
-    
       <category term="Django" scheme="https://polebug.github.io/tags/Django/"/>
     
       <category term="MTV" scheme="https://polebug.github.io/tags/MTV/"/>
     
       <category term="MCV" scheme="https://polebug.github.io/tags/MCV/"/>
+    
+      <category term="Python" scheme="https://polebug.github.io/tags/Python/"/>
     
   </entry>
   
@@ -571,11 +545,11 @@
       <category term="Database" scheme="https://polebug.github.io/categories/Database/"/>
     
     
-      <category term="翻译" scheme="https://polebug.github.io/tags/%E7%BF%BB%E8%AF%91/"/>
-    
       <category term="PostgreSQL" scheme="https://polebug.github.io/tags/PostgreSQL/"/>
     
       <category term="索引" scheme="https://polebug.github.io/tags/%E7%B4%A2%E5%BC%95/"/>
+    
+      <category term="翻译" scheme="https://polebug.github.io/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
@@ -609,6 +583,34 @@
       <category term="Python" scheme="https://polebug.github.io/tags/Python/"/>
     
       <category term="翻译" scheme="https://polebug.github.io/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Logistic 回归分析法的原理和代码实现</title>
+    <link href="https://polebug.github.io/LR/"/>
+    <id>https://polebug.github.io/LR/</id>
+    <published>2017-08-05T03:03:52.000Z</published>
+    <updated>2019-04-04T08:16:43.547Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>注：<br>实现用的是 python / LR 原理参考 Andrew Ng 的 cs229<br>感谢 <a href="http://www.cnblogs.com/jerrylead/archive/2012/05/08/2489725.html" target="_blank" rel="noopener">JerryLead</a> 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删<br>如有错误，欢迎指正</p></blockquote><a id="more"></a><p><b>&lt;目录&gt;<br>1.二元 LR 原理<br>2.多元 LR 原理<br>3.裸 LR 的代码实现 (梯度下降/二元/多元/预测结果/正确率统计)<br>4.调用 sklearn 库里的 LR 模型 (训练/预测结果/正确率统计)<br></b><!--more--></p><h2>二元 Logistic Regression 原理</h2><h3>一些符号的解释</h3>$ h_θ(x) $ - 一个分类函数，表示的是自变量 x 为某个值时，y = 1 的概率<br>$ g(x) $ - 一个常用的 S 形逻辑函数<br>J(θ) - 代价函数<br><h3>分类函数$ h _θ(X) $</h3><p>对于一个二元的分类问题，将因变量 y 可能属于的两个类分别称为负向类 (negative class) 和正向类 (positive class)，并表示为因变量 y $\in$ {0,1}，其中 0 表示负向类，1 表示正向类。  </p><p>当自变量 x 为某个值时，$ h _θ(x) $ 表示正向类 y = 1 的概率，即 $ h_θ(x) = P (y=1 | x；θ) $；对于负向类 y = 0 的概率，则为 1 - $ h_θ(x) $  </p><p>我们规定，当分类函数 $ h _θ(x) $ &gt;= 0.5 时，预测 y = 1；当 $ h_θ(x) $ &lt; 0.5 时，预测 y = 0；  </p><p>如果我们用线性回归算法来解决一个分类问题，函数 $ h_θ(x) $ 的值很可能远大于 1 或者远小于 0，即时我们仍然可以进行分类，但是这样得到的概率值会觉得很奇怪。所以我们需要一种算法，使分类函数 $ h_θ(x) $ 的值永远在 0 到 1 之间。  </p><p>而这种算法，就是逻辑回归算法 (Logistic Regression)。</p><p></p><h3>逻辑回归模型的建立</h3>引入模型 $ h _θ(x) = g(θ^{T}X) = \frac{1}{1 + e^{-θ^{T}X}} $<br>其中，X 代表特征向量；<br>$ θ^{T}X = θ_0 + θ_1X_1 + θ_2X_2 + … $，这里的 θ 表示各个特征向量的权重；<br>g 代表一个常用的 S 形 (sigmoid function) 逻辑函数，其公式为 $ g(z) = \frac { 1 }{ 1 + e^{-z} } $，图像为<br><img src="LR/LR_1.png" width="350" height="250" alt="g(z)" align="center"><br>根据这个图像，我们可以知道<br>z = 0 时，g(z) = 0.5<br>z &gt; 0 时，g(z) &gt; 0.5<br>z &lt; 0 时，g(z) &lt; 0.5<br>又 $ z = θ^{T}X $，即<br>$ θ^{T}X &gt;= 0 $时，预测 y = 1<br>$ θ^{T}X &lt; 0 $时，预测 y = 0  <p></p><p></p><h3>判定边界</h3>所谓边界，就是找到各个适合的特征向量 X 的值，使 $ θ^{T}X $ = 0，即 g(z) = 0.5；  <p></p><p>我们可以把 $ θ_0 + θ_1X_1 + θ_2X_2 + … = 0 $ 看成是一个直线，如图所示  </p><p><img src="LR/LR_2.png" width="350" height="250" align="center"></p><p>其中，绿色的直线就为我们需要找的分界线；  </p><p>如果特征向量 X 的值使得 $ θ^{T}X $ 在分界线的上方，即对应的 g(z) &gt; 0.5，那么预测 y = 1；反之，如果特征向量 X 的值使得 $ θ^{T}X $ 在分界线的下方，那么预测 y = 0；  </p><p>接下来要做的，就是在训练过程中寻找到适合的 θ 的值，进而求出分界线方程；</p><p></p><h3>拟合求解 θ </h3>定义逻辑回归的代价函数 $ J(θ) = \frac{1}{m} \sum_{i=1}^{m}{ Cost(h_{θ}(x_{i}),y_{i}}) $  <p></p><p>其中选择对数似然损失函数为Cost Function，在训练过程中：<br>当 y = 1 时，$ Cost(h_{θ}(x_{i}),y_{i}) = -log(h_{θ}(x)) $<br>当 y = 0 时，$ Cost(h_{θ}(x_{i}),y_{i}) = -log(1 - h_{θ}(x)) $<br>将Cost函数简化为：<br>$ Cost(h_{θ}(x),y) = -y * log(h_{θ}(x)) - (1 - y) * log(1-h_{θ}(x)) $  </p><p>将简化的Cost函数代入代价函数，得到：<br>$ J(\theta) = -\frac{1}{m} [\sum_{i=1}^{m}{ y_{i} log h_{\theta}(x_{i}) + (1 - y_{i}) log(1 - h_{\theta}(x_{i}))}] $  </p><p>$ J(\theta) $ 的值越小，说明曲线的拟合度越高，所以我们这里用梯度下降算法或者最小二乘法来求解使代价函数最小的参数。<br>(注：如果将 Cost 函数去掉负号，可以把问题转换为求极大值)<br>这里不作赘述。  </p><h2>多元 Logistic Regression 原理</h2><blockquote><p>这一部分我觉得 <a href="http://www.cnblogs.com/jerrylead/archive/2012/05/08/2489725.html" target="_blank" rel="noopener">JerryLead</a> 大佬已经写的够浅显易懂了，举例的时候会引用一些他的图。</p></blockquote><p>对于多分类问题，实际上就是多个二元分类问题。<br><b>首先</b>，我们将多个类中的某一类标记为正向类，将其他所有类标记为负向类，这个模型记作 $ h_{\theta}^{(1)}(x) $；<br>类似地，选择另外一类记为正向类，其他所有类记为负向类，得到模型 $ h_{\theta}^{(2)}(x) $；<br>依次类推，最终得到 $ h_{\theta}^{(i)}(x) = P (y = i | x ; \theta) $，其中 i = 1,2,3,…；<br><b>然后</b>，训练所有的逻辑回归分类机；<br><b>最后</b>，在预测时，对于一个新的 x 值，选择最大的 $ h_{\theta}^{(i)}(x) $；  </p><hr><p>下面以分成三类为例进行说明。如图所示。<br><img src="LR/LR_3.png" width="300" height="230">其中，三角形表示 y = 1，方块表示 y = 2，叉表示 y = 3；  </p><p>从三角形开始，我们将类型 1 设定为正向类，类型 2 和 3 设定为负向类，得到 $ h_{\theta}^{(1)}(x) $；<br>依次类推，得到 $ h_{\theta}^{(2)}(x) $，$ h_{\theta}^{(3)}(x) $ ；<br>将模型进行训练，得到相关权重 $ \theta^{T} $；<br>如图所示；<br><img src="LR/LR_5.png" width="210" height="180"> <img src="LR/LR_6.png" width="210" height="180"> <img src="LR/LR_7.png" width="210" height="180"><br>最后将新的特征值进行预测，输出 Max($ h_{\theta}^{(i)}(x) $)；  </p><p></p><h2>裸 Logistic Regression 的代码实现</h2>自己敲了一遍，然后发现有个大佬写的比我全面很多，所以这里还是不贴自己的代码了（orz<p></p><blockquote><p><a href="https://github.com/ccc013/CodingPractise/blob/master/Python/MachineLearning/LogisticRegressionPractise.py" target="_blank" rel="noopener">二元 Logistic Regression 实现</a> (梯度下降/预测结果/统计准确率)<a href="https://github.com/ccc013/CodingPractise/blob/master/Python/MachineLearning/mulLogisticRegressionPractise.py" target="_blank" rel="noopener">多元 Logistic Regression 实现</a> (梯度下降/预测结果/统计准确率)</p></blockquote><p></p><h2>sklearn 库中的 Logistic Regression 模型</h2>（第一次用 sklearn 库，感觉不错～  <p></p><hr><p><b>将数据集分为训练集和检验集</b></p><pre><code class="python">from sklearn.model_selection import train_test_splittrain, test = train_test_split(data, test_size=0.4, random_state=0)</code></pre><p>其中，train是训练集，test是检验集，data是所有的样本，test_size指的是检验集在样本中的占比；random_state是随机数种子，其实就是该随机数的编号，在需要重复试验的时候，保证得到一组一样的随机数。但如果填的是0或者不填，每次结果都会不一样；</p><hr><p><b>sklearn库中的LR的使用</b></p><pre><code class="python">#所需的库from sklearn.linear_model import logistic_regression_pathfrom sklearn.linear_model import logisticRegression#调用log_clf = logisticRegression(multi_class = &#39;ovr&#39;)log_clf.fit(train_data,train_label)#输出权重print log_clf.coef_print log_clf.intercept_</code></pre><p>其中.coef_是各项因素的权重，.intercept_指的是截距  </p><p>确切的说，对于公式 $ h_{\theta}(x) = w_{0} + w_{1}x_{1} + w_{2}x_{2} + … $<br>log_clf.coef_ 为 矩阵 $ [w_{1}, w_{2}, … ] $<br>log_clf.intercept_ 为数列 $ [w_{0}] $  </p><hr><p><b>验证集的正确率</b></p><pre><code class="python">log_predict = log_clf.predict(test_data) == test_labelprint log_predict.mean()</code></pre><hr><p><b>完整代码</b></p><pre><code class="python"># coding = utf-8#sklearn库的调用  from sklearn.model_selection import train_test_splitfrom sklearn.linear_model import logistic_regression_pathfrom sklearn.linear_model import LogisticRegression#用pandas库读取.csv文件的数据import pandas as pd #数据读取data = pd.read_csv(&#39;data.csv&#39;)  #数据处理，假设第一第二第三列的数据为各个特征，第四列为分的类型(分成三类，分别为123)  train, test = train_test_split(data, test_size=0.6, random_state=1)Index = data.columnstrain_label = train[Index[4]] test_label = test[Index[4]] visial_data = train#利用布尔索引把训练集归类first_kind = visial_data[visial_data[Index[4]] == 1]second_kind = visial_data[visial_data[Index[4]] == 2]third_kind = visial_data[visial_data[Index[4]] == 3]#调用sklearn中的LR  log_clf = LogisticRegression(multi_class=&#39;ovr&#39;)log_clf.fit(train,train_label)log_predict = log_clf.predict(test)==test_label#输出  print log_predict.mean()print log_clf.coef_print log_clf.intercept_</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;注：&lt;br&gt;实现用的是 python / LR 原理参考 Andrew Ng 的 cs229&lt;br&gt;感谢 &lt;a href=&quot;http://www.cnblogs.com/jerrylead/archive/2012/05/08/2489725.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;JerryLead&lt;/a&gt; 大佬的机器学习笔记，给我很多启发，其中我改进和引用了一些图，侵删&lt;br&gt;如有错误，欢迎指正&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="Python" scheme="https://polebug.github.io/tags/Python/"/>
+    
+      <category term="Logistic" scheme="https://polebug.github.io/tags/Logistic/"/>
+    
+      <category term="sklearn" scheme="https://polebug.github.io/tags/sklearn/"/>
+    
+      <category term="ML" scheme="https://polebug.github.io/tags/ML/"/>
     
   </entry>
   
