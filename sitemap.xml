@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://polebug.github.io/about-campus-recruitment/</loc>
+    
+    <lastmod>2019-12-12T13:58:11.020Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://polebug.github.io/aboutme/index.html</loc>
     
     <lastmod>2019-12-03T06:09:46.197Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://polebug.github.io/about-c-compiler-0/</loc>
     
     <lastmod>2019-12-03T05:40:20.856Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/about-campus-recruitment/</loc>
-    
-    <lastmod>2019-12-03T05:36:37.100Z</lastmod>
     
   </url>
   
