@@ -27,7 +27,7 @@
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 html {
-  font-family: sans-serif;
+  font-family: sans-serif; 
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
@@ -455,32 +455,32 @@ h6 .small,
 
 h1,
 .h1 {
-  font-size: 30px;
+  font-size: 23px;
 }
 
 h2,
 .h2 {
-  font-size: 26px;
+  font-size: 20px;
 }
 
 h3,
 .h3 {
-  font-size: 22px;
+  font-size: 17px;
 }
 
 h4,
 .h4 {
-  font-size: 18px;
+  font-size: 14px;
 }
 
 h5,
 .h5 {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 h6,
 .h6 {
-  font-size: 12px;
+  font-size: 10px;
 }
 
 p {
@@ -3256,7 +3256,7 @@ body {
 body {
   padding-right: 0 !important;
   font-family: "PingHei","PingFang SC",Helvetica Neue,"Work Sans","Hiragino Sans GB","Microsoft YaHei",SimSun,sans-serif;
-  font-size: 14px;
+  font-size: 12.5px;
   line-height: 1.57143;
   color: #333333;
   background-color: #fff;

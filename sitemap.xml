@@ -2,30 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://polebug.github.io/hello/</loc>
+    <loc>https://polebug.github.io/about-the-first/</loc>
     
-    <lastmod>2019-12-21T03:23:49.823Z</lastmod>
+    <lastmod>2020-02-29T17:18:46.312Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://polebug.github.io/aboutme/index.html</loc>
     
-    <lastmod>2019-12-03T06:09:46.197Z</lastmod>
+    <lastmod>2020-02-29T16:18:00.824Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://polebug.github.io/resume/index.html</loc>
+    <loc>https://polebug.github.io/Life/index.html</loc>
     
-    <lastmod>2019-07-14T13:36:51.476Z</lastmod>
+    <lastmod>2020-02-29T15:23:20.277Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://polebug.github.io/resume.html</loc>
+    <loc>https://polebug.github.io/404/index.html</loc>
     
-    <lastmod>2019-06-27T01:19:30.544Z</lastmod>
+    <lastmod>2020-02-29T15:17:11.081Z</lastmod>
     
   </url>
   
@@ -40,20 +40,6 @@
     <loc>https://polebug.github.io/tags/index.html</loc>
     
     <lastmod>2019-03-31T07:55:29.669Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/salty/index.html</loc>
-    
-    <lastmod>2018-12-29T14:33:19.580Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/salty/about-2018/index.html</loc>
-    
-    <lastmod>2018-12-29T14:28:08.120Z</lastmod>
     
   </url>
   
@@ -86,37 +72,9 @@
   </url>
   
   <url>
-    <loc>https://polebug.github.io/salty/about-return0-1/index.html</loc>
-    
-    <lastmod>2018-12-09T15:56:53.723Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/when-free-a-pointer.html</loc>
-    
-    <lastmod>2018-10-16T13:31:40.739Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/sakura/index.html</loc>
-    
-    <lastmod>2018-09-25T10:24:09.519Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://polebug.github.io/algorithm/index.html</loc>
     
     <lastmod>2018-09-12T12:13:21.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/http-get-post.html</loc>
-    
-    <lastmod>2018-03-06T07:29:51.000Z</lastmod>
     
   </url>
   
@@ -142,34 +100,6 @@
   </url>
   
   <url>
-    <loc>https://polebug.github.io/Life/index.html</loc>
-    
-    <lastmod>2018-01-22T08:00:19.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/python-instantiation.html</loc>
-    
-    <lastmod>2017-12-16T13:04:59.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/python-scrapy.html</loc>
-    
-    <lastmod>2017-12-16T12:21:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/Programming-Alpha-To-Omega.html</loc>
-    
-    <lastmod>2017-11-09T08:21:58.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://polebug.github.io/c/index.html</loc>
     
     <lastmod>2017-07-14T04:00:21.000Z</lastmod>
@@ -180,13 +110,6 @@
     <loc>https://polebug.github.io/c/Programming.Principles.and.Practice.Using.C++.html</loc>
     
     <lastmod>2017-07-14T03:57:24.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/404/index.html</loc>
-    
-    <lastmod>2017-07-13T05:55:36.000Z</lastmod>
     
   </url>
   
