@@ -2,23 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://polebug.github.io/travel/</loc>
+    
+    <lastmod>2022-04-09T16:41:56.628Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://polebug.github.io/aboutme/index.html</loc>
     
-    <lastmod>2020-03-01T05:03:42.814Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/hello/</loc>
-    
-    <lastmod>2020-03-01T03:54:55.135Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/Life/index.html</loc>
-    
-    <lastmod>2020-02-29T15:23:20.277Z</lastmod>
+    <lastmod>2020-06-22T16:56:06.456Z</lastmod>
     
   </url>
   
@@ -51,72 +44,9 @@
   </url>
   
   <url>
-    <loc>https://polebug.github.io/python/index.html</loc>
-    
-    <lastmod>2018-12-09T16:04:18.607Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/golang/index.html</loc>
-    
-    <lastmod>2018-12-09T16:04:09.359Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/web/index.html</loc>
-    
-    <lastmod>2018-12-09T16:04:02.056Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://polebug.github.io/anime/index.html</loc>
     
     <lastmod>2018-12-09T16:03:10.042Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/algorithm/index.html</loc>
-    
-    <lastmod>2018-09-12T12:13:21.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/leetcode/1/index.html</loc>
-    
-    <lastmod>2018-01-25T17:06:54.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/leetcode/index.html</loc>
-    
-    <lastmod>2018-01-25T17:06:38.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/c/index.html</loc>
-    
-    <lastmod>2017-07-14T04:00:21.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/c/Programming.Principles.and.Practice.Using.C++.html</loc>
-    
-    <lastmod>2017-07-14T03:57:24.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/others/index.html</loc>
-    
-    <lastmod>2017-07-13T05:43:19.000Z</lastmod>
     
   </url>
   
