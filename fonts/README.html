@@ -1,0 +1,5 @@
+<h1 id="Font-Assets"><a href="#Font-Assets" class="headerlink" title="Font Assets"></a>Font Assets</h1><p>If you are providing web font files, this is the place to put them. The fonts task will copy them over to the destination specified in <code>config.json</code>, and file names will be reved in production builds (if enabled).</p>
+<p>If you don’t plan using web fonts, or are relying on an external service like Google Fonts, feel free to delete this folder and the <code>tasks.fonts</code> config in <code>gulpfile.js/config.json</code>.</p>
+<h3 id="Tasks-and-Files"><a href="#Tasks-and-Files" class="headerlink" title="Tasks and Files"></a>Tasks and Files</h3><pre><code>gulpfile.js/tasks/fonts
+</code></pre><p>All this task does is copy fonts from <code>./src/fonts</code> to <code>./public/fonts</code>. </p>
+<p>A sass <code>+font-face</code> mixin is included in <code>./src/stylesheets/base/mixins</code>.</p>
