@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://polebug.github.io/model.html</loc>
+    
+    <lastmod>2023-01-23T07:52:33.670Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://polebug.github.io/travel/</loc>
     
     <lastmod>2022-04-16T08:50:55.791Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>https://polebug.github.io/404/index.html</loc>
     
     <lastmod>2020-02-29T15:17:11.081Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://polebug.github.io/model.html</loc>
-    
-    <lastmod>2020-02-29T15:16:20.484Z</lastmod>
     
   </url>
   
