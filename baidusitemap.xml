@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://polebug.github.io/20230805/</loc>
-    <lastmod>2023-08-06</lastmod>
+    <loc>https://polebug.github.io/20230812/</loc>
+    <lastmod>2023-08-12</lastmod>
   </url>
   <url>
     <loc>https://polebug.github.io/202301_books/</loc>
-    <lastmod>2023-08-05</lastmod>
+    <lastmod>2023-08-10</lastmod>
+  </url>
+  <url>
+    <loc>https://polebug.github.io/20230805/</loc>
+    <lastmod>2023-08-10</lastmod>
   </url>
   <url>
     <loc>https://polebug.github.io/travel/</loc>
