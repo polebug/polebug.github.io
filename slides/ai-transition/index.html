@@ -157,6 +157,26 @@
       line-height: 1.15;
     }
 
+    .brand h1 a {
+      display: inline-block;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.14em;
+      transition:
+        color 220ms var(--ease),
+        text-decoration-color 220ms var(--ease),
+        transform 220ms var(--ease);
+    }
+
+    .brand h1 a:hover,
+    .brand h1 a:focus-visible {
+      color: var(--coral);
+      text-decoration-color: currentColor;
+      transform: translateX(2px);
+      outline: none;
+    }
+
     .brand p {
       margin: 2px 0 0;
       color: var(--nav-muted);
@@ -1376,7 +1396,7 @@
       <aside class="sidebar" aria-label="Slides navigation">
         <div class="brand">
           <small>polebug's Talk #1</small>
-          <h1>保持思考｜等待｜斋戒</h1>
+          <h1><a href="/" aria-label="返回博客首页">保持思考｜等待｜斋戒</a></h1>
           <p>从后端开发到 AI 方向的学习经历和工作转变</p>
         </div>
 
