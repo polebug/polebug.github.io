@@ -13,3 +13,16 @@
 .main-container {
     height: auto !important;
 }
+
+/* 在 style.css 最末尾加上这个自定义类 */
+.my-tips-card {
+    background-color: #f0f7ff;
+    border-left: 5px solid #3b82f6;
+    padding: 15px 20px;
+    margin: 25px 0;
+    border-radius: 4px;
+    font-size: 17px;
+}
+.my-tips-card strong {
+    color: #1d4ed8;
+}
