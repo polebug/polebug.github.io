@@ -26,3 +26,16 @@
 .my-tips-card strong {
     color: #1d4ed8;
 }
+
+/* 图片悬浮放大特效 */
+.hover-zoom-img {
+    transition: transform 0.4s ease, box-shadow 0.4s ease; /* 设置 0.4 秒的平滑过渡 */
+    border-radius: 8px; /* 统一圆角 */
+    cursor: pointer; /* 鼠标放上去变成小手 */
+}
+
+/* 当鼠标悬浮(hover)时的状态 */
+.hover-zoom-img:hover {
+    transform: scale(1.03); /* 稍微放大 3% */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* 浮现一圈高级灰阴影 */
+}
