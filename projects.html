@@ -126,10 +126,12 @@
     </main>
 
     <script>
-        // 🎵 核心音频源管理 & 轮播逻辑（这里如果首页改了，各个页面也要保持一致）
+        // 🎵 核心音频源管理 & 轮播逻辑（完全同步首页 4 首配置）
         const playlist = [
             { title: 'PWLT', artist: 'Krystal', src: '/images/PWLT.mp3' },
-            { title: 'Focus Station', artist: 'Lo-Fi Ambient', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' }
+            { title: '비행운', artist: 'MoonMoon', src: '/images/飞机云.mp3' },
+            { title: '위잉위잉 (WI ING WI ING) ', artist: '혁오 (Hyukoh) ', src: '/images/WIINGWIING.mp3' },
+            { title: 'Surf Boy', artist: '혁오 (Hyukoh) ', src: '/images/Surf_boy.mp3' }
         ];
         let currentTrackIdx = 0;
         const audio = document.getElementById('global-audio');
@@ -223,7 +225,7 @@
                 a.classList.toggle('active', aPath === currentPath);
             });
 
-            // 首页联动激活
+            // 首页专属组件联动激活（如果路由回首页）
             const homeCard = document.getElementById('home-music-widget');
             if (homeCard) {
                 homeCard.addEventListener('click', togglePlay);
@@ -236,7 +238,7 @@
                     });
                     card.addEventListener('mouseleave', () => card.style.transform = 'none');
                 });
-                const insights = ['"最敏锐的商业机会，往往藏在用户的原声数据里。"', '"跳出传统的问卷框架，去聆听真实世界的声音。"'];
+                const insights = ['"最敏锐的商业机会，往往藏在用户的原声数据里。"', '"跳出传统的问卷框架，去聆听真实世界的声音。"', '"适老化改造，不仅是硬件升级，更是尊严的重塑。"'];
                 let idx = 0;
                 document.getElementById('insight-box').addEventListener('click', () => {
                     idx = (idx + 1) % insights.length;
