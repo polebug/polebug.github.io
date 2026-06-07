@@ -2,11 +2,26 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>生活秩序脱轨</title>
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* 胶囊音乐样式 */
+        .floating-audio-pill { position: fixed; bottom: 30px; right: 30px; z-index: 2000; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 30px; padding: 8px 16px; display: flex; align-items: center; gap: 12px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06); transition: all 0.4s; }
+        .pill-btn { background: none; border: none; cursor: pointer; }
+    </style>
 </head>
 <body>
-<div class="container" id="stage">
+
+    <audio id="global-audio"></audio>
+    <div class="floating-audio-pill" id="global-player">
+        <div id="pill-visualizer">▶</div>
+        <div class="pill-track-info"><div id="pill-title">Not Playing</div></div>
+        <button class="pill-btn" id="pill-play-btn">▶</button>
+        <button class="pill-btn" id="pill-next-btn">⏭</button>
+    </div>
+
+<div class="container" id="pjax-container">
     <div class="row">
         <div class="col-sm-9 col-xs-12 main-container" id="main-container">
             <h1>生活秩序脱轨</h1>
@@ -35,11 +50,40 @@
             </div>
             <p><a href="/thoughts.html">← 返回首页</a></p>
         </div>
-        <!-- 可选：如果你希望侧边栏也出现，可以复制侧边栏代码，但为了简洁，可以只保留主要内容区 -->
     </div>
 </div>
+
 <script src="/js/jquery-3.1.0.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-<!-- 其他脚本根据需要复制 -->
+<script>
+    // 路由拦截逻辑：明确排除静态资源
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (!link || !link.href || link.getAttribute('target') === '_blank') return;
+        const isStatic = /\.(css|js|png|jpg|ico|mp3|wav)$/.test(link.href);
+        if (link.origin === window.location.origin && !isStatic) {
+            e.preventDefault();
+            loadPage(link.href);
+        }
+    });
+
+    async function loadPage(url) {
+        try {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error();
+            const html = await res.text();
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            const container = doc.getElementById('pjax-container');
+            if (container) {
+                document.getElementById('pjax-container').innerHTML = container.innerHTML;
+                document.title = doc.title;
+                history.pushState(null, null, url);
+                window.scrollTo(0, 0);
+            } else {
+                window.location.href = url;
+            }
+        } catch (err) { window.location.href = url; }
+    }
+</script>
 </body>
 </html>
