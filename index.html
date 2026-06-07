@@ -1,164 +1,273 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <meta name="X-UA-Compatible" content="IE=edge">
-    <meta name="author" content="ww5468451">
-    <title>哇哇的博客</title>
-    <meta name="description" content="个人博客，记录技术、生活与思考">
-    <meta name="keywords" content="博客,技术,生活">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    <meta content="telephone=no" name="format-detection">
-    <meta name="renderer" content="webkit">
-    <link rel="short icon" href="/images/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/notes.css">
-    <meta name="generator" content="Hexo 7.3.0">
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIKI | HOME</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ================= 核心重置与高级变量 ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #0a0a0c; /* 换成更有沉浸感的极客深邃黑 */
+            color: #ffffff;
+            overflow-x: hidden;
+            /* 丝滑入场动画 */
+            animation: pageFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ================= 1. 统一高度的毛玻璃导航栏 ================= */
+        .vibe-navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            height: 75px; /* 锁死高度，解决多页面高度不一致问题 */
+            background-color: rgba(10, 10, 12, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #fff;
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.5);
+            margin-left: 35px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #fff;
+        }
+
+        /* ================= 2. 巨型排版 Hero 视觉区 ================= */
+        .home-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 5% 120px;
+        }
+
+        .home-hero {
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        /* 借鉴李泳知官网：打破常规的超大粗体字，自带呼吸感的光晕背景 */
+        .hero-title {
+            font-size: clamp(48px, 9.5vw, 95px);
+            font-weight: 800;
+            line-height: 0.9;
+            letter-spacing: -4px;
+            color: #ffffff;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.15) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: #8a8a93;
+            max-width: 600px;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* ================= 3. 异步流线型分流卡片（核心布局改造） ================= */
+        .home-portal-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .portal-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px 30px;
+            min-height: 320px;
+            border-radius: 28px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        /* 分别赋予三张卡片极具暗黑 Ins 风的渐变与微光 */
+        .item-projects {
+            background: linear-gradient(135deg, #1e1e24 0%, #111115 100%);
+        }
+        /* 克莱因蓝的微弱呼吸霓虹光，暗示“技术力与专业” */
+        .item-projects::after {
+            content: ''; position: absolute; top: -50%; right: -50%; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(47, 90, 196, 0.15) 0%, transparent 70%);
+        }
+
+        .item-thoughts {
+            background: linear-gradient(135deg, #252529 0%, #16161a 100%);
+        }
+
+        .item-about {
+            background: linear-gradient(135deg, #1a1c2e 0%, #0f101d 100%);
+        }
+        /* 紫色微光，暗示“个人特质” */
+        .item-about::after {
+            content: ''; position: absolute; bottom: -50%; left: -50%; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
+        }
+
+        /* 卡片内细节排版 */
+        .portal-num {
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 2px;
+        }
+
+        .portal-card h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+
+        .portal-card h2 span {
+            display: block;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            margin-top: 8px;
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+
+        .portal-arrow {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            align-self: flex-end;
+        }
+
+        /* ================= 悬浮高级动效 ================= */
+        .portal-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .portal-card:hover .portal-arrow {
+            color: #ffffff;
+            transform: translateX(5px);
+        }
+
+        /* ================= 汉堡菜单手机端自适应 ================= */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .menu-toggle .bar {
+            width: 20px;
+            height: 20px;
+            border-bottom: 2px solid #fff;
+            margin: 2px 0;
+        }
+
+        @media (max-width: 900px) {
+            .home-portal-grid { grid-template-columns: 1fr; gap: 20px; }
+            .portal-card { min-height: 240px; }
+            .hero-title { letter-spacing: -2px; }
+        }
+    </style>
+</head>
 <body>
 
     <nav class="vibe-navbar">
-        <div class="logo">MY WIKI.</div>
-        
+        <div class="logo">WW.WIKI</div>
         <div class="menu-toggle" id="mobile-menu">
             <span class="bar"></span>
             <span class="bar"></span>
-            <span class="bar"></span>
         </div>
-        
         <div class="nav-links" id="nav-links">
-            <a href="/index.html">Home</a>
-            <a href="/projects.html">Projects</a>
-            <a href="/thoughts.html">Thoughts</a>
-            <a href="/about.html">Me,Myself&I</a>
+            <a href="index.html" class="active">首页</a>
+            <a href="projects.html">项目与洞察</a>
+            <a href="thoughts.html">思考与生活</a>
+            <a href="about.html">关于我</a>
         </div>
     </nav>
 
-<!-- 重新定义Home Page -->
-<main class="home-container">
-    
-    <header class="home-hero">
-        <h1 class="hero-title">RESEARCH.<br>THINK.<br>CREATE.</h1>
-        <p class="hero-subtitle">欢迎来到我的数字花园。这里记录关于移动出行与适老化市场的专业洞察，以及对抗无聊生活的日常思考。</p>
-    </header>
-
-    <section class="home-portal-grid">
+    <main class="home-container">
         
-        <a href="/projects.html" class="portal-card item-projects">
-            <div class="portal-info">
-                <span class="portal-num">01</span>
-                <h2>项目与技术力<br>PORTFOLIO</h2>
-            </div>
-            <div class="portal-arrow">→</div>
-        </a>
+        <header class="home-hero">
+            <h1 class="hero-title">RESEARCH.<br>THINK.<br>CREATE.</h1>
+            <p class="hero-subtitle">探索移动出行与适老化市场的专业数据洞察，在喧嚣的世界里留下一处安静解构生活的数字花园。</p>
+        </header>
 
-        <a href="/thoughts.html" class="portal-card item-thoughts">
-            <div class="portal-info">
-                <span class="portal-num">02</span>
-                <h2>思考与生活<br>THOUGHTS</h2>
-            </div>
-            <div class="portal-arrow">→</div>
-        </a>
-
-        <a href="/about.html" class="portal-card item-about">
-            <div class="portal-info">
-                <span class="portal-num">03</span>
-                <h2>关于我<br>ME, MYSELF & I</h2>
-            </div>
-            <div class="portal-arrow">→</div>
-        </a>
-        
-    </section>
-</main>
-    
-    <section class="portfolio-section">
-        <h2 class="section-title">专业洞察 / Professional Insights</h2>
-        
-        <div class="project-grid">
-
-            <a href="/projects/aging-market-study.html" class="project-card">
-                <div class="card-image bg-blue">
-                    <span class="img-placeholder">CONSUMER INSIGHTS</span>
-                </div>
-                <div class="card-content">
-                    <div class="tags">
-                        <span class="tag">#社会化聆听</span>
-                        <span class="tag">#适老化市场</span>
-                    </div>
-                    <h3>中国适老化产品市场机会扫描</h3>
-                    <p>基于电商平台评论与社交媒体数据的深度洞察，输出逻辑严谨、数据可靠的市场调研报告。</p>
-                </div>
-            </a>
-        
-            <a href="/projects/mobility-scooter-research.html" class="project-card">
-                <div class="card-image bg-dark">
-                    <span class="img-placeholder">GLOBAL MARKET</span>
-                </div>
-                <div class="card-content">
-                    <div class="tags">
-                        <span class="tag">#竞品分析</span>
-                        <span class="tag">#用户画像</span>
-                    </div>
-                    <h3>北美高龄代步车与轮椅需求追踪</h3>
-                    <p>针对美国市场的 3 阶段调研，挖掘 r/disability 等社区的核心痛点，助力代步产品功能迭代。</p>
-                </div>
-            </a>
-
+        <section class="home-portal-grid">
             
-            <div class="project-card">
-                <div class="card-image bg-gray">
-                    <span class="img-placeholder">HARDWARE TECH</span>
-                </div>
-                <div class="card-content">
-                    <div class="tags">
-                        <span class="tag">#E-Scooter</span>
-                        <span class="tag">#防盗物联网</span>
-                    </div>
-                    <h3>电动滑板车 (E-Scooter) 行业全景解析</h3>
-                    <p>覆盖主流品牌的技术参数对比，及 Find My 等防盗网络硬件集成的成本与可行性评估。</p>
-                </div>
-            </div>
-        </div>
-    </section>
+            <a href="projects.html" class="portal-card item-projects">
+                <div class="portal-num">// 01</div>
+                <h2>项目与技术力<span>Portfolio & Insights</span></h2>
+                <div class="portal-arrow">→</div>
+            </a>
 
+            <a href="thoughts.html" class="portal-card item-thoughts">
+                <div class="portal-num">// 02</div>
+                <h2>思考与生活<span>Thoughts & Diaries</span></h2>
+                <div class="portal-arrow">→</div>
+            </a>
 
-<div class="container" id="stage">
-    <div class="row">
-        <div class="col-sm-3 col-xs-12 side-container invisible" id="side-bar">
-            <div class="vertical-text site-title">
-                <h3 class="site-title-small" tabindex="-1"><a class="a-title" href="/">ww5468451's blog</a></h3>
-                <h1 class="site-title-large" tabindex="-1"><a class="a-title" href="/">记录｜分享｜成长</a></h1>
-            </div>
-            <br class="visible-lg visible-md visible-sm">
-            <div class="site-title-links" id="site-nav">
-                <ul>
-                    <li><a class="current" href="/">Home</a></li>
-                    <li class="soc">
-                        <a href="https://github.com/ww5468451" target="_blank" rel="noopener noreferrer" aria-label="Github"><i class="fa fa-github"></i></a>
-                        <a href="/atom.xml" target="_blank" rel="noopener noreferrer" aria-label="RSS"><i class="fa fa-rss"></i></a>
-                    </li>
-                </ul>
-                <div class="visible-lg visible-md visible-sm site-nav-footer">
-                    <br class="site-nav-footer-br">
-                    <footer>
-                        <p>&copy; 2026 <a target="_blank" href="https://ww5468451.github.io" rel="noopener noreferrer">ww5468451</a></p>
-                        <p>Theme <a target="_blank" href="https://github.com/SumiMakito/hexo-theme-typography">Typography</a> by <a target="_blank" href="https://www.keep.moe">Makito</a></p>
-                        <p>Proudly published with <a target="_blank" href="https://hexo.io">Hexo</a></p>
-                    </footer>
-                </div>
-            </div>
-        </div>
-</div>
-<script src="/js/jquery-3.1.0.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/jquery-migrate-1.2.1.min.js"></script>
-<script src="/js/jquery.appear.js"></script>
-<script src="/js/google-analytics.js"></script>
-<script src="/js/typography.js"></script>
+            <a href="about.html" class="portal-card item-about">
+                <div class="portal-num">// 03</div>
+                <h2>关于我<span>Me, Myself & I</span></h2>
+                <div class="portal-arrow">→</div>
+            </a>
+            
+        </section>
+    </main>
+
+    <script>
+        // 移动端菜单控制
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+        if(mobileMenu) {
+            mobileMenu.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        }
+    </script>
 </body>
 </html>
