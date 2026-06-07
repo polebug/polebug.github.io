@@ -81,7 +81,7 @@
         }
         @keyframes marquee { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-50%, 0, 0); } }
 
-        /* ================= 顶级大卡片网格 (三大传送门) ================= */
+        /* ================= 大卡片网格 (三大传送门) ================= */
         .home-portal-grid {
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 25px;
             perspective: 1000px;
@@ -113,10 +113,10 @@
         .portal-card:hover { border-color: rgba(0, 0, 0, 0.12); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.04); }
         .portal-card:hover .portal-arrow { color: #111115; transform: translateZ(40px) translateX(5px); }
 
-        /* ================= ⚡ 新增：高级小组件便当盒网格 ================= */
+        /* ================= 便当盒微卡片网格 ================= */
         .widget-grid {
             display: grid;
-            grid-template-columns: 1.5fr 1.2fr 1fr; /* 不对称错落排版 */
+            grid-template-columns: 1.5fr 1.2fr 1fr;
             gap: 25px;
         }
 
@@ -137,19 +137,32 @@
         .live-time { font-size: 28px; font-weight: 800; font-family: monospace; color: #111115; letter-spacing: -1px; margin-top: 10px; }
         .live-location { font-size: 12px; color: #666; margin-top: 2px; }
 
-        /* 组件2：正在播放音频动效 */
-        .audio-player { display: flex; align-items: center; gap: 15px; background: #fafafa; padding: 15px; border-radius: 16px; }
-        .audio-disc { width: 40px; height: 40px; background: #e0e0e6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; animation: spin 8s linear infinite; }
+        /* 组件2：【真实播放】音频播放器样式 */
+        .audio-player-card { cursor: pointer; position: relative; }
+        .audio-player { display: flex; align-items: center; gap: 15px; background: #fafafa; padding: 15px; border-radius: 16px; transition: background 0.3s; }
+        .audio-player-card:hover .audio-player { background: #f0f0f4; }
+        
+        /* 旋转唱片：默认暂停，播放时才转 */
+        .audio-disc { 
+            width: 40px; height: 40px; background: #e0e0e6; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; font-size: 16px; 
+            animation: spin 8s linear infinite;
+            animation-play-state: paused; 
+        }
         @keyframes spin { 100% { transform: rotate(360deg); } }
+        
         .audio-info { flex-grow: 1; }
-        .audio-track { font-size: 14px; font-weight: 600; color: #111115; }
+        .audio-track { font-size: 14px; font-weight: 600; color: #111115; transition: color 0.2s; }
         .audio-artist { font-size: 11px; color: #888; margin-top: 2px; }
-        /* 纯 CSS 动效波形图 */
-        .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 20px; width: 30px; }
-        .visualizer span { width: 3px; background: #111115; border-radius: 3px; animation: bounce 0.8s ease-in-out infinite alternate; }
-        .visualizer span:nth-child(2) { animation-duration: 0.5s; animation-delay: 0.1s; }
-        .visualizer span:nth-child(3) { animation-duration: 0.7s; animation-delay: 0.2s; }
-        @keyframes bounce { 0% { height: 4px; } 100% { height: 20px; } }
+        
+        /* 纯 CSS 动效波形图：默认静态，加了 .playing 类才会动 */
+        .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 18px; width: 25px; }
+        .visualizer span { width: 3px; height: 3px; background: #111115; border-radius: 3px; transition: height 0.2s; }
+        
+        .visualizer.playing span { animation: bounce 0.8s ease-in-out infinite alternate; }
+        .visualizer.playing span:nth-child(2) { animation-duration: 0.5s; animation-delay: 0.1s; }
+        .visualizer.playing span:nth-child(3) { animation-duration: 0.7s; animation-delay: 0.2s; }
+        @keyframes bounce { 0% { height: 3px; } 100% { height: 18px; } }
 
         /* 组件3：方法论抽卡/点击计数 */
         .shuffler-text { font-size: 14px; line-height: 1.5; color: #333; font-weight: 500; min-height: 42px; cursor: pointer; }
@@ -160,7 +173,6 @@
         }
         .interaction-btn:active { transform: scale(0.95); background: #222; }
 
-        /* ================= 响应式 ================= */
         @media (max-width: 900px) {
             .home-portal-grid, .widget-grid { grid-template-columns: 1fr; gap: 20px; }
             .portal-card { min-height: 220px; }
@@ -231,16 +243,17 @@
                 </div>
             </div>
 
-            <div class="widget-card">
+            <div class="widget-card audio-player-card" id="music-widget">
+                <audio id="bg-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
                 <div>
-                    <div class="widget-label">Focus Beats</div>
+                    <div class="widget-label" id="player-status">Click to Play Music</div>
                     <div class="audio-player">
-                        <div class="audio-disc">🎧</div>
+                        <div class="audio-disc" id="audio-disc">💿</div>
                         <div class="audio-info">
-                            <div class="audio-track">Lo-Fi Research Mode</div>
-                            <div class="audio-artist">Ambient Focus Station</div>
+                            <div class="audio-track" id="audio-title">Lo-Fi Station</div>
+                            <div class="audio-artist">Focus Ambient Beat</div>
                         </div>
-                        <div class="visualizer">
+                        <div class="visualizer" id="visualizer">
                             <span></span><span></span><span></span>
                         </div>
                     </div>
@@ -287,14 +300,37 @@
         // 2. 实时时钟组件逻辑
         function updateClock() {
             const now = new Date();
-            // 自动转换为新加坡/北京时间 (SGT)
             const options = { timeZone: 'Asia/Singapore', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
             document.getElementById('clock').innerText = now.toLocaleTimeString('zh-CN', options);
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 3. 灵感洗牌机逻辑
+        // 3. 【全新联动】真实音频播放核心控制
+        const musicWidget = document.getElementById('music-widget');
+        const audio = document.getElementById('bg-audio');
+        const visualizer = document.getElementById('visualizer');
+        const disc = document.getElementById('audio-disc');
+        const playerStatus = document.getElementById('player-status');
+        const audioTitle = document.getElementById('audio-title');
+
+        musicWidget.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                visualizer.classList.add('playing');
+                disc.style.animationPlayState = 'running';
+                playerStatus.innerText = 'Now Playing';
+                audioTitle.style.color = '#1a73e8'; // 播放时歌名变色提示
+            } else {
+                audio.pause();
+                visualizer.classList.remove('playing');
+                disc.style.animationPlayState = 'paused';
+                playerStatus.innerText = 'Music Paused';
+                audioTitle.style.color = '#111115';
+            }
+        });
+
+        // 4. 灵感洗牌机逻辑
         const insights = [
             '"最敏锐的商业机会，往往藏在用户的原声数据里。"',
             '"跳出传统的问卷框架，去聆听真实世界的声音。"',
@@ -308,7 +344,7 @@
             document.getElementById('insight-box').innerText = insights[currentIdx];
         });
 
-        // 4. 点赞互动计数
+        // 5. 点赞互动计数
         let count = 108;
         document.getElementById('like-btn').addEventListener('click', () => {
             count++;
