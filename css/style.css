@@ -186,3 +186,63 @@
     color: #666;
     line-height: 1.6;
 }
+
+/* 默认情况下（电脑端），隐藏汉堡菜单图标 */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #111;
+    margin: 4px 0;
+    transition: all 0.3s ease; /* 让三条杠变 X 的时候有动画 */
+}
+
+/* ================= 手机端专属样式 ================= */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex; /* 手机端显示三条杠 */
+    }
+
+    .nav-links {
+        display: none; /* 默认把菜单藏起来 */
+        flex-direction: column;
+        position: absolute;
+        top: 68px; /* 根据你的导航栏高度微调，让它刚好贴在导航栏下方 */
+        left: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+        padding: 20px 0;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .nav-links a {
+        margin: 15px 0;
+        text-align: center;
+        width: 100%;
+        margin-left: 0; /* 清除电脑端的左边距 */
+        font-size: 17px;
+    }
+
+    /* 当用 JS 给 nav-links 加上 .active 类时，菜单显示出来 */
+    .nav-links.active {
+        display: flex;
+    }
+    
+    /* 炫技动画：点击时，三条杠变成一个“X” */
+    .menu-toggle.open .bar:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+    .menu-toggle.open .bar:nth-child(2) {
+        opacity: 0; /* 中间那条杠隐形 */
+    }
+    .menu-toggle.open .bar:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+}
