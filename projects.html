@@ -191,14 +191,14 @@
     // 🚀 优化后的 SPA 拦截器：自动忽略 CSS、JS、图片及外部链接
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a');
-            
-            // 如果链接为空、是新窗口打开、或者包含静态资源后缀，则不拦截，让浏览器正常跳转
+            // 如果没有链接，或者链接是新窗口打开，直接跳过拦截
             if (!link || !link.href || link.getAttribute('target') === '_blank') return;
             
-            const isInternal = link.origin === window.location.origin;
-            const isStaticAsset = /\.(css|js|png|jpg|ico|xml|txt)$/.test(link.href);
+            // 【添加这行】过滤：如果是静态资源，直接放行，不要拦截！
+            const isStaticAsset = /\.(css|js|png|jpg|ico|mp3|wav|xml|txt)$/.test(link.href);
             
-            if (isInternal && !isStaticAsset) {
+            // 只有在是站内链接 且 不是静态资源时，才执行 PJAX 拦截
+            if (link.origin === window.location.origin && !isStaticAsset) {
                 e.preventDefault();
                 loadPage(link.href);
             }
