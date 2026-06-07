@@ -67,6 +67,23 @@
     color: #3b82f6; /* 鼠标悬浮变色 */
 }
 
+/* ================= 全局页面丝滑淡入动画 ================= */
+body {
+    animation: pageFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0; /* 初始完全透明 */
+}
+
+@keyframes pageFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px); /* 从下方 12px 微微浮起，极具现代高级感 */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* ================= 全局导航栏样式 ================= */
 .vibe-navbar {
     display: flex;
