@@ -4,148 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文章标题 | WW.WIKI</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-    
-    <style>
-        /* ================= 全局核心样式（严禁修改，保证切页不断歌） ================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; background-color: #f9f9fb; color: #111115; overflow-x: hidden; }
-        .vibe-navbar { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 75px; background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
-        .logo { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
-        .nav-links { display: flex; }
-        .nav-links a { text-decoration: none; color: rgba(0, 0, 0, 0.45); margin-left: 35px; font-size: 14px; font-weight: 600; transition: all 0.3s ease; }
-        .nav-links a:hover, .nav-links a.active { color: #111115; }
-        .floating-audio-pill { position: fixed; bottom: 30px; right: 30px; z-index: 2000; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 30px; padding: 8px 16px; display: flex; align-items: center; gap: 12px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); user-select: none; }
-        .floating-audio-pill:hover { transform: translateY(-3px); border-color: rgba(0, 0, 0, 0.15); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); }
-        .pill-track-info { max-width: 90px; overflow: hidden; }
-        .pill-track-name { font-size: 12px; font-weight: 700; color: #111115; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .pill-btn { background: none; border: none; font-size: 14px; cursor: pointer; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
-        .pill-btn:hover { background: rgba(0,0,0,0.05); }
-        .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 18px; width: 25px; }
-        .visualizer span { width: 3px; height: 3px; background: #111115; border-radius: 3px; transition: height 0.2s; }
-        .visualizer.playing span { animation: bounce 0.8s ease-in-out infinite alternate; }
-        .visualizer.playing span:nth-child(2) { animation-duration: 0.5s; animation-delay: 0.1s; }
-        .visualizer.playing span:nth-child(3) { animation-duration: 0.7s; animation-delay: 0.2s; }
-        @keyframes bounce { 0% { height: 3px; } 100% { height: 18px; } }
-
-        /* ================= 📝 新增：专门针对文章阅读优化的精美样式 ================= */
-        .article-container { max-width: 760px; margin: 0 auto; padding: 60px 20px 120px; }
-        .article-back { display: inline-block; text-decoration: none; color: #888; font-size: 13px; font-weight: 600; margin-bottom: 30px; transition: color 0.2s; }
-        .article-back:hover { color: #111115; }
-        .article-header { margin-bottom: 40px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 30px; }
-        .article-title { font-size: 36px; font-weight: 800; line-height: 1.2; letter-spacing: -1px; color: #111115; margin-bottom: 15px; }
-        .article-meta { font-size: 13px; color: #888; display: flex; gap: 15px; }
-        .article-content { font-size: 16px; line-height: 1.8; color: #333; }
-        .article-content p { margin-bottom: 24px; text-align: justify; }
-        .article-content h3 { font-size: 20px; font-weight: 700; color: #111115; margin: 40px 0 15px; }
-    </style>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
     <nav class="vibe-navbar">
         <div class="logo">WW.WIKI</div>
         <div class="nav-links">
-            <a href="index.html">首页</a>
-            <a href="projects.html">项目与洞察</a>
-            <a href="thoughts.html">思考与生活</a>
-            <a href="about.html">关于我</a>
+            <a href="/index.html">首页</a>
+            <a href="/projects.html">项目与洞察</a>
+            <a href="/thoughts.html">思考与生活</a>
+            <a href="/about.html">关于我</a>
         </div>
     </nav>
 
     <audio id="global-audio"></audio>
     <div class="floating-audio-pill" id="global-player">
         <div class="visualizer" id="pill-visualizer"><span></span><span></span><span></span></div>
-        <div class="pill-track-info"><div class="pill-track-name" id="pill-title">Not Playing</div></div>
+        <div class="pill-track-info"><div class="pill-track-name" id="pill-title">Loading...</div></div>
         <button class="pill-btn" id="pill-play-btn">▶</button>
         <button class="pill-btn" id="pill-next-btn">⏭</button>
     </div>
 
     <main class="article-container" id="pjax-container">
-        
-        <a href="thoughts.html" class="article-back">← 返回思考与生活</a>
-
+        <a href="/thoughts.html" class="article-back">← 返回思考与生活</a>
         <article>
             <header class="article-header">
-                <h1 class="article-title">这里是你的文章标题</h1>
+                <h1 class="article-title">这里填标题</h1>
                 <div class="article-meta">
-                    <span>📅 2026年6月7日</span>
-                    <span>🏷️ 适老化调研 / 出行科技</span>
+                    <span>📅 2026-06-07</span>
                 </div>
             </header>
-
             <div class="article-content">
-                <p>这里是文章的第一段文字。你可以自由地在这里写下你的研究洞察、生活随笔或者对数字花园的搭建心得。</p>
-                
-                <h3>一、这是一个小标题</h3>
-                <p>这里是第二段文字。因为全局外壳完全一致，当读者从列表页点击进入这篇文章时，右下角的音乐会毫无痕迹地继续流淌，不会发生任何中断。</p>
+                <p>这里开始你的正文...</p>
             </div>
         </article>
-
     </main>
 
     <script>
-        // 【注意】这里的播放列表需要跟你首页底部的 playlist 完全保持一致！
-        const playlist = [
-            { title: 'PWLT', artist: 'Krystal', src: '/images/PWLT.mp3' }
-        ];
-        let currentTrackIdx = 0; const audio = document.getElementById('global-audio');
-        function initAudio() { audio.src = playlist[currentTrackIdx].src; audio.onended = () => { nextTrack(); }; }
-        function syncPlayerUI() {
-            const isPlaying = !audio.paused; const currentTrack = playlist[currentTrackIdx];
-            document.getElementById('pill-title').innerText = currentTrack.title;
-            document.getElementById('pill-play-btn').innerText = isPlaying ? '⏸' : '▶';
-            document.getElementById('pill-visualizer').classList.toggle('playing', isPlaying);
-            const homeTitle = document.getElementById('home-audio-title'); const homeArtist = document.getElementById('home-audio-artist'); const homeStatus = document.getElementById('home-player-status'); const homeVisualizer = document.getElementById('home-visualizer'); const homeDisc = document.getElementById('home-audio-disc');
-            if (homeTitle) { homeTitle.innerText = currentTrack.title; homeArtist.innerText = currentTrack.artist; homeStatus.innerText = isPlaying ? 'Now Playing' : 'Music Paused'; homeVisualizer.classList.toggle('playing', isPlaying); homeDisc.style.animationPlayState = isPlaying ? 'running' : 'paused'; homeTitle.style.color = isPlaying ? '#1a73e8' : '#111115'; }
-        }
-        function togglePlay() { if (!audio.src) initAudio(); if (audio.paused) { audio.play().then(syncPlayerUI).catch(e => console.log(e)); } else { audio.pause(); syncPlayerUI(); } }
-        function nextTrack() { currentTrackIdx = (currentTrackIdx + 1) % playlist.length; audio.src = playlist[currentTrackIdx].src; audio.play().then(syncPlayerUI).catch(e => console.log(e)); syncPlayerUI(); }
-        document.getElementById('pill-play-btn').addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
-        document.getElementById('pill-next-btn').addEventListener('click', (e) => { e.stopPropagation(); nextTrack(); });
-        initAudio(); syncPlayerUI();
-
-        // PJAX 核心拦截
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a');
-            if (link && link.href && link.origin === window.location.origin && link.getAttribute('target') !== '_blank') {
-                e.preventDefault(); loadPage(link.href);
+            if (!link || !link.href || link.getAttribute('target') === '_blank') return;
+            const isStatic = /\.(css|js|png|jpg|ico|mp3|wav)$/.test(link.href);
+            if (link.origin === window.location.origin && !isStatic) {
+                e.preventDefault();
+                loadPage(link.href);
             }
         });
-        async function loadPage(url, skipPushState = false) {
+
+        async function loadPage(url) {
             try {
-                const res = await fetch(url); if (!res.ok) throw new Error(); const html = await res.text();
-                const parser = new DOMParser(); const doc = parser.parseFromString(html, 'text/html');
+                const res = await fetch(url);
+                if (!res.ok) throw new Error();
+                const html = await res.text();
+                const doc = new DOMParser().parseFromString(html, 'text/html');
                 document.getElementById('pjax-container').innerHTML = doc.getElementById('pjax-container').innerHTML;
-                document.title = doc.title; if (!skipPushState) history.pushState(null, null, url);
-                reRunPageScripts();
+                document.title = doc.title;
+                history.pushState(null, null, url);
+                window.scrollTo(0, 0);
+                // 触发必要组件重载
+                if(typeof reRunPageScripts === 'function') reRunPageScripts();
             } catch (err) { window.location.href = url; }
         }
-        window.addEventListener('popstate', () => { loadPage(window.location.href, true); });
-
-        function reRunPageScripts() {
-            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-            document.querySelectorAll('.nav-links a').forEach(a => { const aPath = a.getAttribute('href'); a.classList.toggle('active', aPath === currentPath); });
-            const homeCard = document.getElementById('home-music-widget');
-            if (homeCard) {
-                homeCard.addEventListener('click', togglePlay);
-                document.querySelectorAll('.portal-card').forEach(card => {
-                    card.addEventListener('mousemove', (e) => {
-                        const rect = card.getBoundingClientRect();
-                        const rotateX = (rect.height / 2 - (e.clientY - rect.top)) / 14; const rotateY = ((e.clientX - rect.left) - rect.width / 2) / 14;
-                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
-                    });
-                    card.addEventListener('mouseleave', () => card.style.transform = 'none');
-                });
-                const insights = ['"最敏锐的商业机会，往往藏在用户的原声数据里。"', '"跳出传统的问卷框架，去聆听真实世界的声音。"'];
-                let idx = 0; document.getElementById('insight-box').addEventListener('click', () => { idx = (idx + 1) % insights.length; document.getElementById('insight-box').innerText = insights[idx]; });
-                let count = 108; document.getElementById('like-btn').addEventListener('click', () => { document.getElementById('like-count').innerText = ++count; });
-            }
-            syncPlayerUI();
-        }
-        function updateClock() { const clockEl = document.getElementById('clock'); if (clockEl) { const options = { timeZone: 'Asia/Singapore', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }; clockEl.innerText = new Date().toLocaleTimeString('zh-CN', options); } }
-        setInterval(updateClock, 1000); reRunPageScripts();
     </script>
 </body>
 </html>
