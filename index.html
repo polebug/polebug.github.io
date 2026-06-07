@@ -295,20 +295,22 @@
 
 
     // 🚀 优化后的 SPA 拦截器：自动忽略 CSS、JS、图片及外部链接
-        document.addEventListener('click', (e) => {
-            const link = e.target.closest('a');
-            
-            // 如果链接为空、是新窗口打开、或者包含静态资源后缀，则不拦截，让浏览器正常跳转
-            if (!link || !link.href || link.getAttribute('target') === '_blank') return;
-            
-            const isInternal = link.origin === window.location.origin;
-            const isStaticAsset = /\.(css|js|png|jpg|ico|xml|txt)$/.test(link.href);
-            
-            if (isInternal && !isStaticAsset) {
-                e.preventDefault();
-                loadPage(link.href);
-            }
-        });
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        
+        // 1. 如果不是链接，或者链接是外部跳转，直接跳过
+        if (!link || !link.href || link.getAttribute('target') === '_blank') return;
+        
+        // 2. 【关键】判断是否为静态资源（CSS, JS, 媒体文件）
+        // 如果点击的是这些后缀的文件，不要拦截！让浏览器正常加载它们
+        const isStaticAsset = /\.(css|js|png|jpg|jpeg|ico|mp3|wav|xml|txt)$/.test(link.href);
+        
+        // 3. 只拦截站内跳转，且必须不是静态资源
+        if (link.origin === window.location.origin && !isStaticAsset) {
+            e.preventDefault();
+            loadPage(link.href); // 执行你的异步加载逻辑
+        }
+    });
     
         async function loadPage(url, skipPushState = false) {
             try {
