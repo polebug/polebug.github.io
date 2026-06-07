@@ -2,11 +2,26 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的第一个博客网站</title>
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* 胶囊音乐样式 */
+        .floating-audio-pill { position: fixed; bottom: 30px; right: 30px; z-index: 2000; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 30px; padding: 8px 16px; display: flex; align-items: center; gap: 12px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06); transition: all 0.4s; }
+        .pill-btn { background: none; border: none; cursor: pointer; }
+    </style>
 </head>
 <body>
-<div class="container" id="stage">
+
+    <audio id="global-audio"></audio>
+    <div class="floating-audio-pill" id="global-player">
+        <div id="pill-visualizer">▶</div>
+        <div class="pill-track-info"><div id="pill-title">Not Playing</div></div>
+        <button class="pill-btn" id="pill-play-btn">▶</button>
+        <button class="pill-btn" id="pill-next-btn">⏭</button>
+    </div>
+
+<div class="container" id="pjax-container">
     <div class="row">
         <div class="col-sm-9 col-xs-12 main-container" id="main-container">
             <h1>我的第一个博客网站</h1>
@@ -14,15 +29,42 @@
             <div class="content">
                 <p>这是第一个博客网站！花了一下午终于搞定了！！爽。</p>
                 <p>2026-06-07  update：</p>
-                <p>    今天终于把所有26年的notion思考全部搬上我的小blog咯~除了5.17的一篇写在iPad备忘录里的还没时间写入notion，等我有空再搬运，现在时间是凌晨4:00，应该花了有两小时才搬完这么寥寥几篇文章，算下来整个博客从搭建到完毕花了4小时左右？目前还想改善一下美观性，vibe coding上头~还没空优化格式和搞成动态版网页呢，期待大功告成的那天！前两周在B站上看到一个05年生的女孩子技术特别厉害，还十分勤奋，她做的个人项目网站就是动态版的，我很喜欢，希望有机会能改出一版无敌完美的网站！现在该收拾收拾准备去睡觉了，热死我了我要回房间吹空调。</p>
+                <p>今天终于把所有26年的notion思考全部搬上我的小blog咯~除了5.17的一篇写在iPad备忘录里的还没时间写入notion，等我有空再搬运，现在时间是凌晨4:00，应该花了有两小时才搬完这么寥寥几篇文章，算下来整个博客从搭建到完毕花了4小时左右？目前还想改善一下美观性，vibe coding上头~还没空优化格式和搞成动态版网页呢，期待大功告成的那天！前两周在B站上看到一个05年生的女孩子技术特别厉害，还十分勤奋，她做的个人项目网站就是动态版的，我很喜欢，希望有机会能改出一版无敌完美的网站！现在该收拾收拾准备去睡觉了，热死我了我要回房间吹空调。</p>
             </div>
             <p><a href="/thoughts.html">← 返回首页</a></p>
         </div>
-        <!-- 可选：如果你希望侧边栏也出现，可以复制侧边栏代码，但为了简洁，可以只保留主要内容区 -->
     </div>
 </div>
+
 <script src="/js/jquery-3.1.0.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-<!-- 其他脚本根据需要复制 -->
+<script>
+    // 路由拦截逻辑 (跳过静态资源)
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (!link || !link.href || link.getAttribute('target') === '_blank') return;
+        const isStatic = /\.(css|js|png|jpg|ico|mp3|wav)$/.test(link.href);
+        if (link.origin === window.location.origin && !isStatic) {
+            e.preventDefault();
+            loadPage(link.href);
+        }
+    });
+
+    async function loadPage(url) {
+        try {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error();
+            const html = await res.text();
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            const container = doc.getElementById('pjax-container');
+            if (container) {
+                document.getElementById('pjax-container').innerHTML = container.innerHTML;
+                document.title = doc.title;
+                history.pushState(null, null, url);
+                window.scrollTo(0, 0);
+            } else { window.location.href = url; }
+        } catch (err) { window.location.href = url; }
+    }
+</script>
 </body>
 </html>
