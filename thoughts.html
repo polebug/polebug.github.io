@@ -1,322 +1,107 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <meta name="X-UA-Compatible" content="IE=edge">
-    <meta name="author" content="ww5468451">
-    <title>哇哇的博客</title>
-    <meta name="description" content="个人博客，记录技术、生活与思考">
-    <meta name="keywords" content="博客,技术,生活">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    <meta content="telephone=no" name="format-detection">
-    <meta name="renderer" content="webkit">
-    <link rel="short icon" href="/images/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>思考与生活 | WW.WIKI</title>
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/notes.css">
-    <meta name="generator" content="Hexo 7.3.0">
-    
-    <style>
-        /* ================= 核心悬浮音乐胶囊与动画样式（绝对路径版本统一） ================= */
-        .floating-audio-pill {
-            position: fixed; bottom: 30px; right: 30px; z-index: 2000;
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 30px; padding: 8px 16px;
-            display: flex; align-items: center; gap: 12px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); user-select: none;
-        }
-        .floating-audio-pill:hover { transform: translateY(-3px); border-color: rgba(0, 0, 0, 0.15); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); }
-        .pill-track-info { max-width: 90px; overflow: hidden; }
-        .pill-track-name { font-size: 12px; font-weight: 700; color: #111115; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .pill-btn { background: none; border: none; font-size: 14px; cursor: pointer; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
-        .pill-btn:hover { background: rgba(0,0,0,0.05); }
-
-        .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 18px; width: 25px; }
-        .visualizer span { width: 3px; height: 3px; background: #111115; border-radius: 3px; transition: height 0.2s; }
-        .visualizer.playing span { animation: bounce 0.8s ease-in-out infinite alternate; }
-        .visualizer.playing span:nth-child(2) { animation-duration: 0.5s; animation-delay: 0.1s; }
-        .visualizer.playing span:nth-child(3) { animation-duration: 0.7s; animation-delay: 0.2s; }
-        @keyframes bounce { 0% { height: 3px; } 100% { height: 18px; } }
-    </style>
 </head>
-
 <body>
 
     <nav class="vibe-navbar">
-        <div class="logo">MY WIKI.</div>
-        
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-        
-        <div class="nav-links" id="nav-links">
-            <a href="/index.html">Home</a>
-            <a href="/projects.html">Projects</a>
-            <a href="/thoughts.html" class="active">Thoughts</a>
-            <a href="/about.html">Me,Myself&I</a>
+        <div class="logo">WW.WIKI</div>
+        <div class="nav-links">
+            <a href="/index.html">首页</a>
+            <a href="/projects.html">项目与洞察</a>
+            <a href="/thoughts.html" class="active">思考与生活</a>
+            <a href="/about.html">关于我</a>
         </div>
     </nav>
 
     <audio id="global-audio"></audio>
     <div class="floating-audio-pill" id="global-player">
         <div class="visualizer" id="pill-visualizer"><span></span><span></span><span></span></div>
-        <div class="pill-track-info">
-            <div class="pill-track-name" id="pill-title">Not Playing</div>
-        </div>
-        <button class="pill-btn" id="pill-play-btn" title="播放/暂停">▶</button>
-        <button class="pill-btn" id="pill-next-btn" title="下一首">⏭</button>
+        <div class="pill-track-info"><div class="pill-track-name" id="pill-title">Not Playing</div></div>
+        <button class="pill-btn" id="pill-play-btn">▶</button>
+        <button class="pill-btn" id="pill-next-btn">⏭</button>
     </div>
 
-    <div class="container" id="pjax-container">
-        <div class="row">
-            <div class="col-sm-3 col-xs-12 side-container" id="side-bar">
-                <div class="vertical-text site-title">
-                    <h3 class="site-title-small" tabindex="-1"><a class="a-title" href="/">ww5468451's blog</a></h3>
-                    <h1 class="site-title-large" tabindex="-1"><a class="a-title" href="/">记录｜分享｜成长</a></h1>
-                </div>
-                <br class="visible-lg visible-md visible-sm">
-                <div class="site-title-links" id="site-nav">
-                    <ul>
-                        <li><a class="current" href="/">Home</a></li>
-                        <li class="soc">
-                            <a href="https://github.com/ww5468451" target="_blank" rel="noopener noreferrer" aria-label="Github"><i class="fa fa-github"></i></a>
-                            <a href="/atom.xml" target="_blank" rel="noopener noreferrer" aria-label="RSS"><i class="fa fa-rss"></i></a>
-                        </li>
-                    </ul>
-                    <div class="visible-lg visible-md visible-sm site-nav-footer">
-                        <br class="site-nav-footer-br">
-                        <footer>
-                            <p>&copy; 2026 <a target="_blank" href="https://ww5468451.github.io" rel="noopener noreferrer">ww5468451</a></p>
-                            <p>Theme <a target="_blank" href="https://github.com/SumiMakito/hexo-theme-typography">Typography</a> by <a target="_blank" href="https://www.keep.moe">Makito</a></p>
-                            <p>Proudly published with <a target="_blank" href="https://hexo.io">Hexo</a></p>
-                        </footer>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-9 col-xs-12 main-container" id="main-container">
-                <div class="autopagerize_page_element">
-                    <div class="content">
-                        <div class="post-container">
-                            <p class="post-title"><a href="/2026/0522我的第一个博客网站.html">Hello World - 我的第一篇博客</a></p>
-                            <p class="post-meta"><span class="date meta-item">Posted at 2026-05-22</span></p>
-                            <p class="post-abstract">花了两小时搭成功了博客网站！</p>
-                        </div>
-                        <div class="post-container">
-                            <p class="post-title"><a href="/2026/0417vibe-coding初体验.html">Vibe Coding初体验</a></p>
-                            <p class="post-meta"><span class="date meta-item">Posted at 2026-04-17</span></p>
-                            <p class="post-abstract">终于体验上vibe coding了，用deepseek and chatgpt……</p>
-                        </div>
-                        <div class="post-container">
-                            <p class="post-title"><a href="/2026/0323接手项目经理工作有感.html">接手项目经理工作有感</a></p>
-                            <p class="post-meta"><span class="date meta-item">Posted at 2026-03-23</span></p>
-                            <p class="post-abstract">剪辑日本VLOG（激情剪辑，两晚上搞定）</p>
-                        </div>
-                        <div class="post-container">
-                            <p class="post-title"><a href="/2026/0318同事离职有感.html">同事离职有感</a></p>
-                            <p class="post-meta"><span class="date meta-item">Posted at 2026-03-18</span></p>
-                            <p class="post-abstract">AI一直在减少人类的随机性，长此以往发展人类的思维会变得更加的范式化。</p>
-                        </div>
-                        <div class="post-container">
-                            <p class="post-title"><a href="/2026/0302生活秩序脱轨.html">生活秩序脱轨</a></p>
-                            <p class="post-meta"><span class="date meta-item">Posted at 2026-03-02</span></p>
-                            <p class="post-abstract">独居时间真的不够用……</p>
-                        </div>
-                        <div class="post-container">
-                            <p class="post-title"><a href="/2026/0212鲁豫对谈许知远.html">鲁豫对谈许知远</a></p>
-                            <p class="post-meta"><span class="date meta-item">Posted at 2026-02-12</span></p>
-                            <p class="post-abstract">罗素说三种激情推动他：对爱情的渴望，对知识的追求，对人类苦难不可遏制的同情。</p>
-                        </div>                    
-                        <div class="post-container">
-                            <p class="post-title"><a href="/2026/0120新加坡3日游记.html">新加坡3日游记</a></p>
-                            <p class="post-meta"><span class="date meta-item">Posted at 2026-01-20</span></p>
-                            <p class="post-abstract">这个国家仿佛是一个巨大的国际学校，人种混合、崇尚运动和健康、且不失平等和谦卑，各种设计都十分超前和具有人性化考量……</p>
-                        </div>
-                        <div class="post-container">
-                            <p class="post-title"><a href="/2026/example.html">example</a></p>
-                            <p class="post-meta"><span class="date meta-item">Posted at 2026-xx-xx</span></p>
-                        </div>
-                        </div>
-                </div>
-                <div class="visible-xs site-bottom-footer">
-                    <footer>
-                        <p>&copy; 2026 <a target="_blank" href="https://ww5468451.github.io" rel="noopener noreferrer">ww5468451</a></p>
-                        <p>Theme <a target="_blank" href="https://github.com/SumiMakito/hexo-theme-typography">Typography</a> by Makito</p>
-                        <p>Proudly published with <a target="_blank" href="https://hexo.io">Hexo</a></p>
-                    </footer>
-                </div>
-            </div>
-        </div>
-    </div>
+    <main class="article-container" id="pjax-container">
+        <h1>思考与生活</h1>
+        <p>这里是你的思考记录。</p>
+        <ul>
+            <li><a href="/posts/vibe-coding.html">Vibe Coding初体验</a></li>
+        </ul>
+    </main>
 
-<script src="/js/jquery-3.1.0.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/jquery-migrate-1.2.1.min.js"></script>
-<script src="/js/jquery.appear.js"></script>
-<script src="/js/google-analytics.js"></script>
-<script src="/js/typography.js"></script>
+    <script>
+        // 1. 音乐播放逻辑
+        const playlist = [{ title: 'PWLT', artist: 'Krystal', src: '/images/PWLT.mp3' }];
+        let currentTrackIdx = 0; 
+        const audio = document.getElementById('global-audio');
 
-<script>
-    // 🎵 完全同步全局的 4 首音乐大脑配置（绝对路径）
-    const playlist = [
-        { title: 'PWLT', artist: 'Krystal', src: '/images/PWLT.mp3' },
-        { title: '비행운', artist: 'MoonMoon', src: '/images/飞机云.mp3' },
-        { title: '위잉위잉 (WI ING WI ING) ', artist: '혁오 (Hyukoh) ', src: '/images/WIINGWIING.mp3' },
-        { title: 'Surf Boy', artist: '혁오 (Hyukoh) ', src: '/images/Surf_boy.mp3' }
-    ];
-    let currentTrackIdx = 0;
-    const audio = document.getElementById('global-audio');
-
-    function initAudio() {
-        audio.src = playlist[currentTrackIdx].src;
-        audio.onended = () => { nextTrack(); };
-    }
-
-    function syncPlayerUI() {
-        const isPlaying = !audio.paused;
-        const currentTrack = playlist[currentTrackIdx];
-
-        document.getElementById('pill-title').innerText = currentTrack.title;
-        document.getElementById('pill-play-btn').innerText = isPlaying ? '⏸' : '▶';
-        document.getElementById('pill-visualizer').classList.toggle('playing', isPlaying);
-
-        // 联动主页内部特有组件
-        const homeTitle = document.getElementById('home-audio-title');
-        const homeArtist = document.getElementById('home-audio-artist');
-        const homeStatus = document.getElementById('home-player-status');
-        const homeVisualizer = document.getElementById('home-visualizer');
-        const homeDisc = document.getElementById('home-audio-disc');
-
-        if (homeTitle) {
-            homeTitle.innerText = currentTrack.title;
-            homeArtist.innerText = currentTrack.artist;
-            homeStatus.innerText = isPlaying ? 'Now Playing' : 'Music Paused';
-            homeVisualizer.classList.toggle('playing', isPlaying);
-            homeDisc.style.animationPlayState = isPlaying ? 'running' : 'paused';
-            homeTitle.style.color = isPlaying ? '#1a73e8' : '#111115';
+        function syncPlayerUI() {
+            const isPlaying = !audio.paused;
+            document.getElementById('pill-title').innerText = playlist[currentTrackIdx].title;
+            document.getElementById('pill-play-btn').innerText = isPlaying ? '⏸' : '▶';
+            document.getElementById('pill-visualizer').classList.toggle('playing', isPlaying);
         }
-    }
 
-    function togglePlay() {
-        if (!audio.src) initAudio();
-        if (audio.paused) {
-            audio.play().then(syncPlayerUI).catch(e => console.log("等待交互:", e));
-        } else {
-            audio.pause();
+        function togglePlay() {
+            if (audio.paused) { audio.play().catch(()=>{}); } else { audio.pause(); }
             syncPlayerUI();
         }
-    }
 
-    function nextTrack() {
-        currentTrackIdx = (currentTrackIdx + 1) % playlist.length;
-        audio.src = playlist[currentTrackIdx].src;
-        audio.play().then(syncPlayerUI).catch(e => console.log("切歌失败:", e));
-        syncPlayerUI();
-    }
+        document.getElementById('pill-play-btn').addEventListener('click', togglePlay);
+        document.getElementById('pill-next-btn').addEventListener('click', () => { /* 循环逻辑 */ syncPlayerUI(); });
 
-    document.getElementById('pill-play-btn').addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
-    document.getElementById('pill-next-btn').addEventListener('click', (e) => { e.stopPropagation(); nextTrack(); });
-    initAudio();
-    syncPlayerUI();
-
-    // 🚀 优化后的 SPA 拦截器：自动忽略 CSS、JS、图片及外部链接
+        // 2. 核心路由拦截与加载逻辑（带错误防御）
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a');
-            // 如果没有链接，或者链接是新窗口打开，直接跳过拦截
             if (!link || !link.href || link.getAttribute('target') === '_blank') return;
             
-            // 【添加这行】过滤：如果是静态资源，直接放行，不要拦截！
+            // 严防死守：如果是静态文件，坚决不拦截，让浏览器自己去加载 CSS/JS
             const isStaticAsset = /\.(css|js|png|jpg|ico|mp3|wav|xml|txt)$/.test(link.href);
             
-            // 只有在是站内链接 且 不是静态资源时，才执行 PJAX 拦截
             if (link.origin === window.location.origin && !isStaticAsset) {
                 e.preventDefault();
                 loadPage(link.href);
             }
         });
-    
-        async function loadPage(url, skipPushState = false) {
+
+        async function loadPage(url) {
+            document.body.style.cursor = 'wait';
             try {
                 const res = await fetch(url);
                 if (!res.ok) throw new Error();
                 const html = await res.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-    
-                // 核心：只抓取对应的容器内容
-                const newContent = doc.getElementById('pjax-container');
-                if (!newContent) throw new Error("页面结构不匹配");
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                const container = doc.getElementById('pjax-container');
                 
-                document.getElementById('pjax-container').innerHTML = newContent.innerHTML;
-                document.title = doc.title;
-    
-                if (!skipPushState) history.pushState(null, null, url);
-                
-                // 重新初始化所有页面的逻辑（如导航栏、音乐播放器状态等）
-                reRunPageScripts();
+                if (container) {
+                    document.getElementById('pjax-container').innerHTML = container.innerHTML;
+                    document.title = doc.title;
+                    history.pushState(null, null, url);
+                    window.scrollTo(0, 0);
+                    // 运行后置脚本，加 try 包裹防崩溃
+                    try { reRunPageScripts(); } catch(e) {}
+                } else {
+                    window.location.href = url;
+                }
             } catch (err) {
-                // 如果读取页面失败，直接让浏览器进行传统跳转
-                window.location.href = url;
+                window.location.href = url; // 失败直接强转
+            } finally {
+                document.body.style.cursor = 'default';
             }
         }
-    window.addEventListener('popstate', () => { loadPage(window.location.href, true); });
 
-    // 🔄 统一使用根路径 / 对链接动态切灯，并在切回首页时激活对应组件
-    function reRunPageScripts() {
-        const currentPath = window.location.pathname;
-        
-        document.querySelectorAll('.vibe-navbar .nav-links a').forEach(a => {
-            const aHref = a.getAttribute('href');
-            // 精准匹配根绝对路径
-            if (currentPath === aHref || (currentPath === '/' && aHref === '/index.html')) {
-                a.classList.add('active');
-            } else {
-                a.classList.remove('active');
-            }
-        });
-
-        // 联动主页组件逻辑（在路由回主页时触发）
-        const homeCard = document.getElementById('home-music-widget');
-        if (homeCard) {
-            homeCard.addEventListener('click', togglePlay);
-            document.querySelectorAll('.portal-card').forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const rotateX = (rect.height / 2 - (e.clientY - rect.top)) / 14;
-                    const rotateY = ((e.clientX - rect.left) - rect.width / 2) / 14;
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
-                });
-                card.addEventListener('mouseleave', () => card.style.transform = 'none');
+        function reRunPageScripts() {
+            const path = window.location.pathname.split('/').pop() || 'index.html';
+            document.querySelectorAll('.nav-links a').forEach(a => {
+                a.classList.toggle('active', a.getAttribute('href').includes(path));
             });
-            const insights = ['"最敏锐的商业机会，往往藏在用户的原声数据里。"', '"跳出传统的问卷框架，去聆听真实世界的声音。"', '"适老化改造，不仅是硬件升级，更是尊严的重塑。"'];
-            let idx = 0;
-            document.getElementById('insight-box').addEventListener('click', () => {
-                idx = (idx + 1) % insights.length;
-                document.getElementById('insight-box').innerText = insights[idx];
-            });
-            let count = 108;
-            document.getElementById('like-btn').addEventListener('click', () => {
-                document.getElementById('like-count').innerText = ++count;
-            });
+            syncPlayerUI();
         }
-        syncPlayerUI();
-    }
-
-    // 时钟
-    function updateClock() {
-        const clockEl = document.getElementById('clock');
-        if (clockEl) {
-            const options = { timeZone: 'Asia/Singapore', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-            clockEl.innerText = new Date().toLocaleTimeString('zh-CN', options);
-        }
-    }
-    setInterval(updateClock, 1000);
-
-    reRunPageScripts();
-</script>
+    </script>
 </body>
 </html>
