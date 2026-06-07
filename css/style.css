@@ -60,3 +60,127 @@
 .nav-links a:hover {
     color: #3b82f6; /* 鼠标悬浮变色 */
 }
+
+/* ================= 全局导航栏样式 ================= */
+.vibe-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px); /* 苹果风格的毛玻璃特效 */
+    -webkit-backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #111;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #888;
+    margin-left: 35px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: #111;
+}
+
+/* ================= 项目网格布局 ================= */
+.portfolio-section {
+    max-width: 1200px;
+    margin: 0 auto; 
+    padding-bottom: 80px;
+}
+
+.section-title {
+    margin: 60px 5% 30px;
+    font-size: 26px;
+    font-weight: 800;
+    color: #111;
+}
+
+.project-grid {
+    display: grid;
+    /* CSS Grid 魔法：屏幕宽就排三列，屏幕窄就自动挤成一列（适配手机） */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    padding: 0 5%;
+}
+
+/* ================= 卡片细节设计 ================= */
+.project-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    border: 1px solid #f0f0f0;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
+}
+
+/* 卡片悬浮浮起特效 */
+.project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* 卡片顶部图片占位区 */
+.card-image {
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.9);
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+/* 给你准备了三种高级渐变色，之后可以替换成真实的图片 img */
+.bg-blue { background: linear-gradient(135deg, #4A90E2, #50E3C2); }
+.bg-dark { background: linear-gradient(135deg, #2b2d42, #8d99ae); }
+.bg-gray { background: linear-gradient(135deg, #bdc3c7, #2c3e50); }
+
+/* 卡片文字内容区 */
+.card-content {
+    padding: 25px;
+}
+
+.tags {
+    margin-bottom: 15px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #f4f6f8;
+    color: #4A90E2;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 6px;
+}
+
+.card-content h3 {
+    margin: 0 0 12px 0;
+    font-size: 19px;
+    color: #111;
+    line-height: 1.4;
+}
+
+.card-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+}
