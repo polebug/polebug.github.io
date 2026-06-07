@@ -18,8 +18,8 @@
 
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #0a0a0c; /* 换成更有沉浸感的极客深邃黑 */
-            color: #ffffff;
+            background-color: #f9f9fb; /* 完美的浅色底色，带有一丝高级冷调，比纯白更有质感 */
+            color: #111115;
             overflow-x: hidden;
             /* 丝滑入场动画 */
             animation: pageFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -31,27 +31,27 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ================= 1. 统一高度的毛玻璃导航栏 ================= */
+        /* ================= 1. 统一高度的浅色毛玻璃导航栏 ================= */
         .vibe-navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 5%;
-            height: 75px; /* 锁死高度，解决多页面高度不一致问题 */
-            background-color: rgba(10, 10, 12, 0.75);
+            height: 75px; /* 锁死高度，保持全站一致 */
+            background-color: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .logo {
             font-size: 20px;
             font-weight: 800;
             letter-spacing: -0.5px;
-            color: #fff;
+            color: #111115;
         }
 
         .nav-links {
@@ -60,7 +60,7 @@
 
         .nav-links a {
             text-decoration: none;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(0, 0, 0, 0.45);
             margin-left: 35px;
             font-size: 14px;
             font-weight: 600;
@@ -68,10 +68,10 @@
         }
 
         .nav-links a:hover, .nav-links a.active {
-            color: #fff;
+            color: #111115;
         }
 
-        /* ================= 2. 巨型排版 Hero 视觉区 ================= */
+        /* ================= 2. 巨型排版 Hero 视觉区（深色渐变字） ================= */
         .home-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -83,29 +83,28 @@
             position: relative;
         }
 
-        /* 借鉴李泳知官网：打破常规的超大粗体字，自带呼吸感的光晕背景 */
+        /* 标题变为由深至浅的石墨色渐变，保留李泳知的视觉张力 */
         .hero-title {
             font-size: clamp(48px, 9.5vw, 95px);
             font-weight: 800;
             line-height: 0.9;
             letter-spacing: -4px;
-            color: #ffffff;
             margin-bottom: 40px;
             text-transform: uppercase;
-            background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.15) 100%);
+            background: linear-gradient(180deg, #111115 0%, #66666e 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero-subtitle {
             font-size: 16px;
-            color: #8a8a93;
+            color: #55555a;
             max-width: 600px;
             line-height: 1.7;
-            font-weight: 300;
+            font-weight: 400;
         }
 
-        /* ================= 3. 异步流线型分流卡片（核心布局改造） ================= */
+        /* ================= 3. 浅色高质感分流卡片 ================= */
         .home-portal-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -123,51 +122,52 @@
             position: relative;
             overflow: hidden;
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
         }
 
-        /* 分别赋予三张卡片极具暗黑 Ins 风的渐变与微光 */
+        /* 优化卡片配色，用微妙的色差营造法式极简 Ins 感 */
         .item-projects {
-            background: linear-gradient(135deg, #1e1e24 0%, #111115 100%);
+            background: #ffffff; /* 纯白纯净 */
         }
-        /* 克莱因蓝的微弱呼吸霓虹光，暗示“技术力与专业” */
+        /* 极其克制的浅蓝色微光，增加呼吸感 */
         .item-projects::after {
             content: ''; position: absolute; top: -50%; right: -50%; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(47, 90, 196, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(47, 90, 196, 0.06) 0%, transparent 70%);
         }
 
         .item-thoughts {
-            background: linear-gradient(135deg, #252529 0%, #16161a 100%);
+            background: #f4f4f7; /* 标志性的工业灰块 */
         }
 
         .item-about {
-            background: linear-gradient(135deg, #1a1c2e 0%, #0f101d 100%);
+            background: #f0f3fa; /* 淡淡的藏蓝调灰色 */
         }
-        /* 紫色微光，暗示“个人特质” */
+        /* 极其克制的浅紫色微光 */
         .item-about::after {
             content: ''; position: absolute; bottom: -50%; left: -50%; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.05) 0%, transparent 70%);
         }
 
-        /* 卡片内细节排版 */
+        /* 浅色模式下的文字细节平衡 */
         .portal-num {
             font-size: 14px;
             font-weight: 600;
-            color: rgba(255, 255, 255, 0.2);
+            color: rgba(0, 0, 0, 0.15);
             letter-spacing: 2px;
         }
 
         .portal-card h2 {
             font-size: 22px;
             font-weight: 600;
-            color: #ffffff;
+            color: #111115;
             line-height: 1.3;
         }
 
         .portal-card h2 span {
             display: block;
             font-size: 12px;
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(0, 0, 0, 0.4);
             text-transform: uppercase;
             margin-top: 8px;
             letter-spacing: 1px;
@@ -176,24 +176,24 @@
 
         .portal-arrow {
             font-size: 24px;
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(0, 0, 0, 0.25);
             transition: all 0.3s ease;
             align-self: flex-end;
         }
 
-        /* ================= 悬浮高级动效 ================= */
+        /* ================= 浅色悬浮动效 ================= */
         .portal-card:hover {
             transform: translateY(-10px);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 0, 0, 0.12);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.05); /* 柔和优雅的浅色投影 */
         }
 
         .portal-card:hover .portal-arrow {
-            color: #ffffff;
+            color: #111115;
             transform: translateX(5px);
         }
 
-        /* ================= 汉堡菜单手机端自适应 ================= */
+        /* ================= 汉堡菜单自适应 ================= */
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -202,7 +202,7 @@
         .menu-toggle .bar {
             width: 20px;
             height: 20px;
-            border-bottom: 2px solid #fff;
+            border-bottom: 2px solid #111115;
             margin: 2px 0;
         }
 
@@ -260,7 +260,6 @@
     </main>
 
     <script>
-        // 移动端菜单控制
         const mobileMenu = document.getElementById('mobile-menu');
         const navLinks = document.getElementById('nav-links');
         if(mobileMenu) {
