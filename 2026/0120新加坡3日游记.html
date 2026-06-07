@@ -132,33 +132,58 @@
     initAudio();
     syncPlayerUI();
 
-    // 🚀 SPA 全局链接拦截点击
-    document.addEventListener('click', (e) => {
-        const link = e.target.closest('a');
-        if (link && link.href && link.origin === window.location.origin && link.getAttribute('target') !== '_blank') {
-            e.preventDefault();
-            loadPage(link.href);
+    // 🚀 最终版 SPA 路由拦截器（加入了后缀过滤与空值防御）
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a');
+            
+            // 1. 基本过滤：无链接、新窗口打开、或点击的是非网页资源（css/js/png等），直接放行
+            if (!link || !link.href || link.getAttribute('target') === '_blank') return;
+            
+            // 检查链接后缀是否为静态资源
+            const isStaticAsset = /\.(css|js|png|jpg|ico|xml|txt|mp3|wav)$/.test(link.href);
+            const isInternal = link.origin === window.location.origin;
+            
+            if (isInternal && !isStaticAsset) {
+                e.preventDefault();
+                loadPage(link.href);
+            }
+        });
+    
+        async function loadPage(url, skipPushState = false) {
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error("网络错误");
+                const html = await res.text();
+                
+                // 使用 DOMParser 将 HTML 字符串转换为可操作的文档对象
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+    
+                // 寻找核心内容区
+                const newContent = doc.getElementById('pjax-container');
+                if (!newContent) {
+                    // 如果找不到容器，说明这可能不是目标页面，直接跳转
+                    window.location.href = url;
+                    return;
+                }
+    
+                // 更新 DOM 和标题
+                document.getElementById('pjax-container').innerHTML = newContent.innerHTML;
+                document.title = doc.title;
+    
+                if (!skipPushState) history.pushState(null, null, url);
+                
+                // 重新初始化所有页面的逻辑（导航、音乐播放器、动效等）
+                reRunPageScripts();
+                
+                // 滚动到顶部
+                window.scrollTo(0, 0);
+                
+            } catch (err) {
+                console.error("加载失败，回退至原生跳转:", err);
+                window.location.href = url;
+            }
         }
-    });
-
-    async function loadPage(url, skipPushState = false) {
-        try {
-            const res = await fetch(url);
-            if (!res.ok) throw new Error();
-            const html = await res.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-
-            // 联动重载主体内容区
-            document.getElementById('pjax-container').innerHTML = doc.getElementById('pjax-container').innerHTML;
-            document.title = doc.title;
-
-            if (!skipPushState) history.pushState(null, null, url);
-            reRunPageScripts();
-        } catch (err) {
-            window.location.href = url;
-        }
-    }
 
     window.addEventListener('popstate', () => { loadPage(window.location.href, true); });
 
