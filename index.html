@@ -294,16 +294,22 @@
         syncPlayerUI();
 
 
-        // 2. 🚀 SPA 核心路由逻辑（拦截全站页面加载，保证音乐不中断）
+    // 🚀 优化后的 SPA 拦截器：自动忽略 CSS、JS、图片及外部链接
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a');
-            // 只拦截符合本站域名的本地链接，且没有配置新窗口打开的链接
-            if (link && link.href && link.origin === window.location.origin && link.getAttribute('target') !== '_blank') {
+            
+            // 如果链接为空、是新窗口打开、或者包含静态资源后缀，则不拦截，让浏览器正常跳转
+            if (!link || !link.href || link.getAttribute('target') === '_blank') return;
+            
+            const isInternal = link.origin === window.location.origin;
+            const isStaticAsset = /\.(css|js|png|jpg|ico|xml|txt)$/.test(link.href);
+            
+            if (isInternal && !isStaticAsset) {
                 e.preventDefault();
                 loadPage(link.href);
             }
         });
-
+    
         async function loadPage(url, skipPushState = false) {
             try {
                 const res = await fetch(url);
@@ -311,17 +317,20 @@
                 const html = await res.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-
-                // 核心替换：仅仅替换 main 容器里的信息，全局 player 依然活着！
-                document.getElementById('pjax-container').innerHTML = doc.getElementById('pjax-container').innerHTML;
+    
+                // 核心：只抓取对应的容器内容
+                const newContent = doc.getElementById('pjax-container');
+                if (!newContent) throw new Error("页面结构不匹配");
+                
+                document.getElementById('pjax-container').innerHTML = newContent.innerHTML;
                 document.title = doc.title;
-
+    
                 if (!skipPushState) history.pushState(null, null, url);
-
-                // 重新激活对应页面的 JS 交互
+                
+                // 重新初始化所有页面的逻辑（如导航栏、音乐播放器状态等）
                 reRunPageScripts();
             } catch (err) {
-                // 如果出错（比如本地测试遇到跨域），降级采用传统跳转方式
+                // 如果读取页面失败，直接让浏览器进行传统跳转
                 window.location.href = url;
             }
         }
