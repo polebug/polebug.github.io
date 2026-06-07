@@ -1,60 +1,87 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <meta name="X-UA-Compatible" content="IE=edge">
-    <meta name="author" content="ww5468451">
-    <title>归档 | 哇哇的博客</title>
-    <meta name="description" content="文章归档 - 按年份分类">
-    <meta name="keywords" content="归档,博客">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    <meta content="telephone=no" name="format-detection">
-    <meta name="renderer" content="webkit">
-    <link rel="short icon" href="/images/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/notes.css">
-    <link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我 | Me, Myself & I</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="container" id="stage">
-    <div class="row">
-        <div class="col-sm-3 col-xs-12 side-container invisible" id="side-bar">
-            <div class="vertical-text site-title">
-                <h3 class="site-title-small" tabindex="-1"><a class="a-title" href="/">ww5468451's blog</a></h3>
-                <h1 class="site-title-large" tabindex="-1"><a class="a-title" href="/">记录｜分享｜成长</a></h1>
-            </div>
-            <br class="visible-lg visible-md visible-sm">
-            <div class="site-title-links" id="site-nav">
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a class="current" href="/archives/">Archive</a></li>
-                    <li class="soc">
-                        <a href="https://github.com/ww5468451" target="_blank" rel="noopener noreferrer"><i class="fa fa-github"></i></a>
-                        <a href="/atom.xml" target="_blank" rel="noopener noreferrer"><i class="fa fa-rss"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
 
+    <nav class="vibe-navbar">
+        <div class="logo">MY WIKI.</div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="index.html">首页</a>
+            <a href="projects.html">项目与洞察</a>
+            <a href="thoughts.html">思考与生活</a>
+            <a href="about.html" class="active">关于我</a>
+        </div>
+    </nav>
+
+    <main class="about-container">
+        
+        <header class="about-header">
+            <h1 class="about-title">HEY THERE.</h1>
+            <p class="about-subtitle">透过数据与聆听，寻找技术重塑生活的绝佳切入点。</p>
+        </header>
+
+        <div class="bento-grid">
+            
+            <div class="bento-card bento-hero">
+                <div class="hero-avatar">
+                    <span class="avatar-placeholder">PHOTO</span>
+                </div>
+                <div class="hero-info">
+                    <h2>Market Researcher<br>& Consumer Insight Analyst</h2>
+                    <p>专注领域：适老化市场 (Silver Economy) / 移动出行 (E-Mobility) / 智能硬件</p>
                 </div>
             </div>
-            <div class="visible-xs site-bottom-footer">
-                <footer style="margin-top: 2rem; text-align: center; font-size: 0.8rem;">
-                    <p>&copy; 2026 <a href="/">ww5468451</a></p>
-                </footer>
+
+            <div class="bento-card bento-profile dark-card">
+                <h3>PROFILE</h3>
+                <ul class="profile-list">
+                    <li><strong>BORN</strong> <span>2001.05.21</span></li>
+                    <li><strong>BASE</strong> <span>Singapore</span></li>
+                    <li><strong>VIBE</strong> <span>理性观察 / 细节控</span></li>
+                </ul>
             </div>
+
+            <div class="bento-card bento-skills">
+                <h3>CORE SKILLS</h3>
+                <div class="skill-tags">
+                    <span>社会化聆听 (Social Listening)</span>
+                    <span>消费者痛点挖掘</span>
+                    <span>竞品深度剖析</span>
+                    <span>数据可视化</span>
+                </div>
+            </div>
+
+            <div class="bento-card bento-methodology">
+                <div class="quote-icon">“</div>
+                <p>擅长跳出传统的问卷框架，通过深入 Reddit (如 r/disability)、Amazon 真实评论区进行<strong>社会化聆听</strong>。从北美高龄代步车的需求痛点，到集成 Find My 防盗网络的滑板车成本评估，我相信最敏锐的商业机会，永远藏在用户的原声数据里。</p>
+            </div>
+
+            <div class="bento-card bento-status gradient-card">
+                <div class="status-dot"></div>
+                <h3>CURRENTLY</h3>
+                <p>深入调研<strong>中国国内适老化电商市场</strong>，输出驱动业务增长与产品迭代的商业分析报告。</p>
+            </div>
+
         </div>
-    </div>
-</div>
-<script src="/js/jquery-3.1.0.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/jquery-migrate-1.2.1.min.js"></script>
-<script src="/js/jquery.appear.js"></script>
-<script src="/js/google-analytics.js"></script>
-<script src="/js/typography.js"></script>
+    </main>
+
+    <script>
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenu.classList.toggle('open');
+        });
+    </script>
 </body>
 </html>
