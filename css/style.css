@@ -585,3 +585,24 @@ body {
     }
     .hero-avatar { height: 200px; }
 }
+
+
+/* ================= 强行插入：悬浮音乐播放器组件样式 ================= */
+.floating-audio-pill {
+    position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+    background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 30px; padding: 8px 16px;
+    display: flex; align-items: center; gap: 12px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); user-select: none; font-family: sans-serif;
+}
+.floating-audio-pill:hover { transform: translateY(-3px); border-color: rgba(0, 0, 0, 0.15); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); }
+.pill-track-info { max-width: 90px; overflow: hidden; }
+.pill-track-name { font-size: 12px; font-weight: 700; color: #111115; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pill-btn { background: none; border: none; font-size: 14px; cursor: pointer; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; color: #111115; }
+.pill-btn:hover { background: rgba(0,0,0,0.05); }
+.visualizer { display: flex; align-items: flex-end; gap: 3px; height: 18px; width: 25px; }
+.visualizer span { width: 3px; height: 3px; background: #111115; border-radius: 3px; transition: height 0.2s; }
+.visualizer.playing span { animation: pjax-bounce 0.8s ease-in-out infinite alternate; }
+.visualizer.playing span:nth-child(2) { animation-duration: 0.5s; animation-delay: 0.1s; }
+.visualizer.playing span:nth-child(3) { animation-duration: 0.7s; animation-delay: 0.2s; }
+@keyframes pjax-bounce { 0% { height: 3px; } 100% { height: 18px; } }
