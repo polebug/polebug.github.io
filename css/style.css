@@ -380,3 +380,208 @@ body {
     .portal-card { min-height: 200px; padding: 30px 25px; }
     .portal-num { font-size: 40px; margin-bottom: 15px; }
 }
+
+
+/* ================= 关于我页面：Bento Box 布局 ================= */
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 5% 100px;
+}
+
+.about-header {
+    margin-bottom: 50px;
+}
+
+.about-title {
+    font-size: clamp(36px, 6vw, 65px);
+    font-weight: 900;
+    letter-spacing: -2px;
+    color: #111;
+    margin-bottom: 10px;
+}
+
+.about-subtitle {
+    font-size: 18px;
+    color: #666;
+    font-weight: 400;
+}
+
+/* 网格容器：这是便当盒的灵魂 */
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(180px, auto);
+    gap: 20px;
+}
+
+/* 基础卡片样式 */
+.bento-card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 30px;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bento-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+}
+
+.bento-card h3 {
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+/* 各个卡片的跨行/跨列排布 */
+/* 1. 主视觉卡片（跨 2 列，跨 2 行） */
+.bento-hero {
+    grid-column: span 2;
+    grid-row: span 2;
+    padding: 8px; /* 让内部图片撑满 */
+}
+
+.hero-avatar {
+    width: 100%;
+    height: 60%;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a0b4d4;
+    font-weight: 800;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+}
+
+.hero-info {
+    padding: 0 20px 10px;
+}
+.hero-info h2 {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    color: #111;
+}
+.hero-info p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* 2. 档案卡片（深色，跨 2 列） */
+.bento-profile.dark-card {
+    grid-column: span 2;
+    background: #111;
+    color: #fff;
+    border: none;
+}
+.dark-card h3 { color: rgba(255,255,255,0.4); }
+
+.profile-list {
+    list-style: none;
+}
+.profile-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 16px;
+}
+.profile-list li:last-child { border-bottom: none; }
+.profile-list li strong { font-weight: 500; color: #aaa; }
+.profile-list li span { font-weight: 700; color: #fff; }
+
+/* 3. 技能卡片 */
+.bento-skills {
+    grid-column: span 2;
+}
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.skill-tags span {
+    background: #f4f4f5;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* 4. 方法论与思想 (跨 2 列，跨 2 行) */
+.bento-methodology {
+    grid-column: span 2;
+    grid-row: span 2;
+    background: #fdfbf7; /* 带点温度的纸张色 */
+}
+.quote-icon {
+    font-family: serif;
+    font-size: 60px;
+    color: #d1d1d1;
+    line-height: 0.5;
+    margin-bottom: 10px;
+}
+.bento-methodology p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #444;
+}
+.bento-methodology strong { color: #111; border-bottom: 2px solid #e2e8f0; }
+
+/* 5. 当前状态 (渐变色) */
+.bento-status.gradient-card {
+    grid-column: span 2;
+    background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+    border: none;
+    position: relative;
+}
+.status-dot {
+    width: 12px;
+    height: 12px;
+    background: #4f46e5;
+    border-radius: 50%;
+    position: absolute;
+    top: 32px;
+    right: 30px;
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+}
+.gradient-card p {
+    font-size: 16px;
+    font-weight: 500;
+    color: #3730a3;
+    line-height: 1.5;
+}
+
+/* ================= 手机端自适应 ================= */
+@media (max-width: 900px) {
+    .bento-grid {
+        grid-template-columns: repeat(2, 1fr); /* 平板变两列 */
+    }
+}
+
+@media (max-width: 600px) {
+    .bento-grid {
+        grid-template-columns: 1fr; /* 手机端变一列堆叠 */
+    }
+    .bento-hero, .bento-profile, .bento-skills, .bento-methodology, .bento-status {
+        grid-column: span 1;
+        grid-row: auto;
+    }
+    .hero-avatar { height: 200px; }
+}
