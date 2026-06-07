@@ -114,5 +114,16 @@
 <script src="/js/jquery-3.1.0.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <!-- 其他脚本根据需要复制 -->
+
+<script>
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active'); // 控制菜单展开/折叠
+            mobileMenu.classList.toggle('open');   // 控制三条杠变X
+        });
+    </script>
+
 </body>
 </html>
