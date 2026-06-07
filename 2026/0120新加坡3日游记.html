@@ -135,15 +135,14 @@
     // 🚀 最终版 SPA 路由拦截器（加入了后缀过滤与空值防御）
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a');
-            
-            // 1. 基本过滤：无链接、新窗口打开、或点击的是非网页资源（css/js/png等），直接放行
+            // 如果没有链接，或者链接是新窗口打开，直接跳过拦截
             if (!link || !link.href || link.getAttribute('target') === '_blank') return;
             
-            // 检查链接后缀是否为静态资源
-            const isStaticAsset = /\.(css|js|png|jpg|ico|xml|txt|mp3|wav)$/.test(link.href);
-            const isInternal = link.origin === window.location.origin;
+            // 【添加这行】过滤：如果是静态资源，直接放行，不要拦截！
+            const isStaticAsset = /\.(css|js|png|jpg|ico|mp3|wav|xml|txt)$/.test(link.href);
             
-            if (isInternal && !isStaticAsset) {
+            // 只有在是站内链接 且 不是静态资源时，才执行 PJAX 拦截
+            if (link.origin === window.location.origin && !isStaticAsset) {
                 e.preventDefault();
                 loadPage(link.href);
             }
