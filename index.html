@@ -18,7 +18,7 @@
 
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #f9f9fb; /* 完美的浅色底色，带有一丝高级冷调，比纯白更有质感 */
+            background-color: #f9f9fb; /* 浅色高级冷调底色 */
             color: #111115;
             overflow-x: hidden;
             /* 丝滑入场动画 */
@@ -31,13 +31,13 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ================= 1. 统一高度的浅色毛玻璃导航栏 ================= */
+        /* ================= 1. 浅色毛玻璃导航栏 ================= */
         .vibe-navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 5%;
-            height: 75px; /* 锁死高度，保持全站一致 */
+            height: 75px;
             background-color: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -71,7 +71,7 @@
             color: #111115;
         }
 
-        /* ================= 2. 巨型排版 Hero 视觉区（深色渐变字） ================= */
+        /* ================= 2. Hero 视觉区 ================= */
         .home-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -79,11 +79,10 @@
         }
 
         .home-hero {
-            margin-bottom: 80px;
+            margin-bottom: 40px;
             position: relative;
         }
 
-        /* 标题变为由深至浅的石墨色渐变，保留李泳知的视觉张力 */
         .hero-title {
             font-size: clamp(48px, 9.5vw, 95px);
             font-weight: 800;
@@ -104,11 +103,42 @@
             font-weight: 400;
         }
 
-        /* ================= 3. 浅色高质感分流卡片 ================= */
+        /* ================= 3. 动态无缝走马灯样式 ================= */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            margin-bottom: 60px;
+            pointer-events: none; /* 防止挡住鼠标点击 */
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee linear infinite;
+            animation-duration: 25s; /* 控制滚动速度 */
+            font-size: 45px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.03); /* 极淡的半透明字，若隐若现最高级 */
+            letter-spacing: 15px;
+        }
+
+        @keyframes marquee {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
+        }
+
+        /* ================= 4. 3D 视差分流卡片网格 ================= */
         .home-portal-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 25px;
+            perspective: 1000px; /* 激活网页的 3D 空间感 */
         }
 
         .portal-card {
@@ -121,35 +151,38 @@
             text-decoration: none;
             position: relative;
             overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.01);
+            
+            /* 核心：将动效过渡交给 JS 处理，CSS 负责还原时的顺滑度 */
+            transform-style: preserve-3d;
+            transition: border-color 0.3s, box-shadow 0.5s;
         }
 
-        /* 优化卡片配色，用微妙的色差营造法式极简 Ins 感 */
-        .item-projects {
-            background: #ffffff; /* 纯白纯净 */
-        }
-        /* 极其克制的浅蓝色微光，增加呼吸感 */
-        .item-projects::after {
-            content: ''; position: absolute; top: -50%; right: -50%; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(47, 90, 196, 0.06) 0%, transparent 70%);
+        /* 为不同的卡片配置内部追踪光效的底层色调 */
+        .item-projects { --glow-color: rgba(47, 90, 196, 0.07); }
+        .item-thoughts { --glow-color: rgba(0, 0, 0, 0.04); background: #f5f5f7; }
+        .item-about    { --glow-color: rgba(139, 92, 246, 0.06); background: #f0f3fa; }
+
+        /* 利用 CSS 变量动态生成鼠标追踪光晕 */
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(300px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), var(--glow-color), transparent 80%);
+            z-index: 1;
+            pointer-events: none;
         }
 
-        .item-thoughts {
-            background: #f4f4f7; /* 标志性的工业灰块 */
+        /* 卡片内容提升至 z-index 上层，并增加独立的 3D 景深位移 */
+        .portal-num, .portal-card h2, .portal-arrow {
+            position: relative;
+            z-index: 2;
+            transform: translateZ(30px); /* 悬浮时内容会微微“浮”出卡片表面 */
+            transition: transform 0.3s ease;
         }
 
-        .item-about {
-            background: #f0f3fa; /* 淡淡的藏蓝调灰色 */
-        }
-        /* 极其克制的浅紫色微光 */
-        .item-about::after {
-            content: ''; position: absolute; bottom: -50%; left: -50%; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.05) 0%, transparent 70%);
-        }
-
-        /* 浅色模式下的文字细节平衡 */
         .portal-num {
             font-size: 14px;
             font-weight: 600;
@@ -177,20 +210,19 @@
         .portal-arrow {
             font-size: 24px;
             color: rgba(0, 0, 0, 0.25);
-            transition: all 0.3s ease;
             align-self: flex-end;
+            transition: transform 0.3s ease, color 0.3s;
         }
 
-        /* ================= 浅色悬浮动效 ================= */
+        /* 悬浮时的基础增强（配合 JS 的 3D 动作） */
         .portal-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(0, 0, 0, 0.12);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.05); /* 柔和优雅的浅色投影 */
+            border-color: rgba(0, 0, 0, 0.15);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.06);
         }
 
         .portal-card:hover .portal-arrow {
             color: #111115;
-            transform: translateX(5px);
+            transform: translateZ(40px) translateX(5px);
         }
 
         /* ================= 汉堡菜单自适应 ================= */
@@ -236,6 +268,15 @@
             <p class="hero-subtitle">探索移动出行与适老化市场的专业数据洞察，在喧嚣的世界里留下一处安静解构生活的数字花园。</p>
         </header>
 
+        <div class="marquee-container">
+            <div class="marquee-content">
+                PORTFOLIO • INSIGHTS • THOUGHTS • DIARIES • ABOUT ME • DIGITAL GARDEN • &nbsp;
+            </div>
+            <div class="marquee-content">
+                PORTFOLIO • INSIGHTS • THOUGHTS • DIARIES • ABOUT ME • DIGITAL GARDEN • &nbsp;
+            </div>
+        </div>
+
         <section class="home-portal-grid">
             
             <a href="projects.html" class="portal-card item-projects">
@@ -260,6 +301,7 @@
     </main>
 
     <script>
+        // 1. 移动端汉堡菜单
         const mobileMenu = document.getElementById('mobile-menu');
         const navLinks = document.getElementById('nav-links');
         if(mobileMenu) {
@@ -267,6 +309,35 @@
                 navLinks.classList.toggle('active');
             });
         }
+
+        // 2. 核心大招：鼠标追踪光效 + 3D 视差倾斜脚本
+        const cards = document.querySelectorAll('.portal-card');
+        
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                
+                // 计算鼠标在卡片内部的相对坐标 (用于光晕特效)
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+                
+                // 计算倾斜角度 (用于 3D 视差交互)
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (centerY - y) / 12; // 调整分母可以改变倾斜敏感度
+                const rotateY = (x - centerX) / 12;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+            });
+
+            // 鼠标移出时，完美平滑复原
+            card.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+            });
+        });
     </script>
 </body>
 </html>
