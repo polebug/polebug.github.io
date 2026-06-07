@@ -39,3 +39,24 @@
     transform: scale(1.03); /* 稍微放大 3% */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* 浮现一圈高级灰阴影 */
 }
+
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* 底部轻微阴影分隔 */
+    position: sticky; /* 让导航栏在滚动时吸顶 */
+    top: 0;
+    z-index: 1000;
+}
+.nav-links a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+.nav-links a:hover {
+    color: #3b82f6; /* 鼠标悬浮变色 */
+}
