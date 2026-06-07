@@ -223,34 +223,46 @@
     initAudio();
     syncPlayerUI();
 
-    // 🚀 SPA 核心路由拦截（全面锁定根目录绝对路径防止雪崩）
-    document.addEventListener('click', (e) => {
-        const link = e.target.closest('a');
-        if (link && link.href && link.origin === window.location.origin && link.getAttribute('target') !== '_blank') {
-            e.preventDefault();
-            loadPage(link.href);
+    // 🚀 优化后的 SPA 拦截器：自动忽略 CSS、JS、图片及外部链接
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a');
+            
+            // 如果链接为空、是新窗口打开、或者包含静态资源后缀，则不拦截，让浏览器正常跳转
+            if (!link || !link.href || link.getAttribute('target') === '_blank') return;
+            
+            const isInternal = link.origin === window.location.origin;
+            const isStaticAsset = /\.(css|js|png|jpg|ico|xml|txt)$/.test(link.href);
+            
+            if (isInternal && !isStaticAsset) {
+                e.preventDefault();
+                loadPage(link.href);
+            }
+        });
+    
+        async function loadPage(url, skipPushState = false) {
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error();
+                const html = await res.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+    
+                // 核心：只抓取对应的容器内容
+                const newContent = doc.getElementById('pjax-container');
+                if (!newContent) throw new Error("页面结构不匹配");
+                
+                document.getElementById('pjax-container').innerHTML = newContent.innerHTML;
+                document.title = doc.title;
+    
+                if (!skipPushState) history.pushState(null, null, url);
+                
+                // 重新初始化所有页面的逻辑（如导航栏、音乐播放器状态等）
+                reRunPageScripts();
+            } catch (err) {
+                // 如果读取页面失败，直接让浏览器进行传统跳转
+                window.location.href = url;
+            }
         }
-    });
-
-    async function loadPage(url, skipPushState = false) {
-        try {
-            const res = await fetch(url);
-            if (!res.ok) throw new Error();
-            const html = await res.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-
-            // 联动重载双栏主体内容
-            document.getElementById('pjax-container').innerHTML = doc.getElementById('pjax-container').innerHTML;
-            document.title = doc.title;
-
-            if (!skipPushState) history.pushState(null, null, url);
-            reRunPageScripts();
-        } catch (err) {
-            window.location.href = url;
-        }
-    }
-
     window.addEventListener('popstate', () => { loadPage(window.location.href, true); });
 
     // 🔄 统一使用根路径 / 对链接动态切灯，并在切回首页时激活对应组件
