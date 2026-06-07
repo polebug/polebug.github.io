@@ -21,7 +21,6 @@
             background-color: #f9f9fb; /* 浅色高级冷调底色 */
             color: #111115;
             overflow-x: hidden;
-            /* 丝滑入场动画 */
             animation: pageFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
         }
@@ -31,7 +30,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ================= 1. 浅色毛玻璃导航栏 ================= */
+        /* ================= 导航栏 ================= */
         .vibe-navbar {
             display: flex;
             justify-content: space-between;
@@ -47,201 +46,124 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        .logo {
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: #111115;
-        }
-
-        .nav-links {
-            display: flex;
-        }
-
+        .logo { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+        .nav-links { display: flex; }
         .nav-links a {
-            text-decoration: none;
-            color: rgba(0, 0, 0, 0.45);
-            margin-left: 35px;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            text-decoration: none; color: rgba(0, 0, 0, 0.45);
+            margin-left: 35px; font-size: 14px; font-weight: 600; transition: all 0.3s ease;
         }
+        .nav-links a:hover, .nav-links a.active { color: #111115; }
 
-        .nav-links a:hover, .nav-links a.active {
-            color: #111115;
-        }
-
-        /* ================= 2. Hero 视觉区 ================= */
+        /* ================= 布局主容器 ================= */
         .home-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 80px 5% 120px;
+            padding: 60px 5% 100px;
         }
 
-        .home-hero {
-            margin-bottom: 40px;
-            position: relative;
-        }
-
+        .home-hero { margin-bottom: 40px; }
         .hero-title {
-            font-size: clamp(48px, 9.5vw, 95px);
-            font-weight: 800;
-            line-height: 0.9;
-            letter-spacing: -4px;
-            margin-bottom: 40px;
-            text-transform: uppercase;
+            font-size: clamp(48px, 9.5vw, 95px); font-weight: 800; line-height: 0.9;
+            letter-spacing: -4px; margin-bottom: 30px; text-transform: uppercase;
             background: linear-gradient(180deg, #111115 0%, #66666e 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
+        .hero-subtitle { font-size: 16px; color: #55555a; max-width: 600px; line-height: 1.7; }
 
-        .hero-subtitle {
-            font-size: 16px;
-            color: #55555a;
-            max-width: 600px;
-            line-height: 1.7;
-            font-weight: 400;
-        }
-
-        /* ================= 3. 动态无缝走马灯样式 ================= */
+        /* ================= 走马灯 ================= */
         .marquee-container {
-            overflow: hidden;
-            white-space: nowrap;
-            margin-bottom: 60px;
-            pointer-events: none; /* 防止挡住鼠标点击 */
-            width: 100vw;
-            position: relative;
-            left: 50%;
-            right: 50%;
-            margin-left: -50vw;
-            margin-right: -50vw;
+            overflow: hidden; white-space: nowrap; margin-bottom: 50px; pointer-events: none;
+            width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;
         }
-
         .marquee-content {
-            display: inline-block;
-            animation: marquee linear infinite;
-            animation-duration: 25s; /* 控制滚动速度 */
-            font-size: 45px;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: rgba(0, 0, 0, 0.03); /* 极淡的半透明字，若隐若现最高级 */
-            letter-spacing: 15px;
+            display: inline-block; animation: marquee linear infinite 25s;
+            font-size: 40px; font-weight: 800; text-transform: uppercase; color: rgba(0, 0, 0, 0.03); letter-spacing: 15px;
         }
+        @keyframes marquee { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-50%, 0, 0); } }
 
-        @keyframes marquee {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-50%, 0, 0); }
-        }
-
-        /* ================= 4. 3D 视差分流卡片网格 ================= */
+        /* ================= 顶级大卡片网格 (三大传送门) ================= */
         .home-portal-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            perspective: 1000px; /* 激活网页的 3D 空间感 */
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 25px;
+            perspective: 1000px;
         }
 
         .portal-card {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 40px 30px;
-            min-height: 320px;
-            border-radius: 28px;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            background: #ffffff;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.01);
-            
-            /* 核心：将动效过渡交给 JS 处理，CSS 负责还原时的顺滑度 */
-            transform-style: preserve-3d;
-            transition: border-color 0.3s, box-shadow 0.5s;
+            display: flex; flex-direction: column; justify-content: space-between;
+            padding: 40px 30px; min-height: 280px; border-radius: 28px; text-decoration: none;
+            position: relative; overflow: hidden; background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.05);
+            transform-style: preserve-3d; transition: border-color 0.3s, box-shadow 0.5s;
         }
 
-        /* 为不同的卡片配置内部追踪光效的底层色调 */
-        .item-projects { --glow-color: rgba(47, 90, 196, 0.07); }
-        .item-thoughts { --glow-color: rgba(0, 0, 0, 0.04); background: #f5f5f7; }
-        .item-about    { --glow-color: rgba(139, 92, 246, 0.06); background: #f0f3fa; }
+        .item-projects { --glow-color: rgba(47, 90, 196, 0.06); }
+        .item-thoughts { --glow-color: rgba(0, 0, 0, 0.03); background: #f5f5f7; }
+        .item-about    { --glow-color: rgba(139, 92, 246, 0.05); background: #f0f3fa; }
 
-        /* 利用 CSS 变量动态生成鼠标追踪光晕 */
         .portal-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(300px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), var(--glow-color), transparent 80%);
-            z-index: 1;
-            pointer-events: none;
+            z-index: 1; pointer-events: none;
         }
 
-        /* 卡片内容提升至 z-index 上层，并增加独立的 3D 景深位移 */
-        .portal-num, .portal-card h2, .portal-arrow {
-            position: relative;
-            z-index: 2;
-            transform: translateZ(30px); /* 悬浮时内容会微微“浮”出卡片表面 */
-            transition: transform 0.3s ease;
+        .portal-num, .portal-card h2, .portal-arrow { position: relative; z-index: 2; transform: translateZ(30px); transition: transform 0.3s ease; }
+        .portal-num { font-size: 13px; font-weight: 600; color: rgba(0, 0, 0, 0.15); letter-spacing: 2px; }
+        .portal-card h2 { font-size: 22px; font-weight: 600; color: #111115; line-height: 1.3; }
+        .portal-card h2 span { display: block; font-size: 12px; color: rgba(0, 0, 0, 0.4); text-transform: uppercase; margin-top: 8px; letter-spacing: 1px; }
+        .portal-arrow { font-size: 24px; color: rgba(0, 0, 0, 0.25); align-self: flex-end; }
+
+        .portal-card:hover { border-color: rgba(0, 0, 0, 0.12); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.04); }
+        .portal-card:hover .portal-arrow { color: #111115; transform: translateZ(40px) translateX(5px); }
+
+        /* ================= ⚡ 新增：高级小组件便当盒网格 ================= */
+        .widget-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1.2fr 1fr; /* 不对称错落排版 */
+            gap: 25px;
         }
 
-        .portal-num {
-            font-size: 14px;
-            font-weight: 600;
-            color: rgba(0, 0, 0, 0.15);
-            letter-spacing: 2px;
+        .widget-card {
+            background: #ffffff; border-radius: 24px; padding: 25px;
+            border: 1px solid rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        .widget-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03); }
 
-        .portal-card h2 {
-            font-size: 22px;
-            font-weight: 600;
-            color: #111115;
-            line-height: 1.3;
-        }
+        .widget-label { font-size: 11px; font-weight: 600; color: #999; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 15px; }
 
-        .portal-card h2 span {
-            display: block;
-            font-size: 12px;
-            color: rgba(0, 0, 0, 0.4);
-            text-transform: uppercase;
-            margin-top: 8px;
-            letter-spacing: 1px;
-            font-weight: 400;
-        }
+        /* 组件1：状态与时钟 */
+        .status-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+        .status-dot-wrapper { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #2e7d32; }
+        .live-dot { width: 8px; height: 8px; background: #4caf50; border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(76, 175, 80, 0); } 100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); } }
+        .live-time { font-size: 28px; font-weight: 800; font-family: monospace; color: #111115; letter-spacing: -1px; margin-top: 10px; }
+        .live-location { font-size: 12px; color: #666; margin-top: 2px; }
 
-        .portal-arrow {
-            font-size: 24px;
-            color: rgba(0, 0, 0, 0.25);
-            align-self: flex-end;
-            transition: transform 0.3s ease, color 0.3s;
-        }
+        /* 组件2：正在播放音频动效 */
+        .audio-player { display: flex; align-items: center; gap: 15px; background: #fafafa; padding: 15px; border-radius: 16px; }
+        .audio-disc { width: 40px; height: 40px; background: #e0e0e6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; animation: spin 8s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .audio-info { flex-grow: 1; }
+        .audio-track { font-size: 14px; font-weight: 600; color: #111115; }
+        .audio-artist { font-size: 11px; color: #888; margin-top: 2px; }
+        /* 纯 CSS 动效波形图 */
+        .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 20px; width: 30px; }
+        .visualizer span { width: 3px; background: #111115; border-radius: 3px; animation: bounce 0.8s ease-in-out infinite alternate; }
+        .visualizer span:nth-child(2) { animation-duration: 0.5s; animation-delay: 0.1s; }
+        .visualizer span:nth-child(3) { animation-duration: 0.7s; animation-delay: 0.2s; }
+        @keyframes bounce { 0% { height: 4px; } 100% { height: 20px; } }
 
-        /* 悬浮时的基础增强（配合 JS 的 3D 动作） */
-        .portal-card:hover {
-            border-color: rgba(0, 0, 0, 0.15);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.06);
+        /* 组件3：方法论抽卡/点击计数 */
+        .shuffler-text { font-size: 14px; line-height: 1.5; color: #333; font-weight: 500; min-height: 42px; cursor: pointer; }
+        .interaction-btn {
+            background: #111115; color: #fff; border: none; padding: 10px 16px; border-radius: 12px;
+            font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: all 0.2s; align-self: flex-start; margin-top: 15px;
         }
+        .interaction-btn:active { transform: scale(0.95); background: #222; }
 
-        .portal-card:hover .portal-arrow {
-            color: #111115;
-            transform: translateZ(40px) translateX(5px);
-        }
-
-        /* ================= 汉堡菜单自适应 ================= */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-        .menu-toggle .bar {
-            width: 20px;
-            height: 20px;
-            border-bottom: 2px solid #111115;
-            margin: 2px 0;
-        }
-
+        /* ================= 响应式 ================= */
         @media (max-width: 900px) {
-            .home-portal-grid { grid-template-columns: 1fr; gap: 20px; }
-            .portal-card { min-height: 240px; }
-            .hero-title { letter-spacing: -2px; }
+            .home-portal-grid, .widget-grid { grid-template-columns: 1fr; gap: 20px; }
+            .portal-card { min-height: 220px; }
         }
     </style>
 </head>
@@ -249,11 +171,7 @@
 
     <nav class="vibe-navbar">
         <div class="logo">WW.WIKI</div>
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-        <div class="nav-links" id="nav-links">
+        <div class="nav-links">
             <a href="index.html" class="active">首页</a>
             <a href="projects.html">项目与洞察</a>
             <a href="thoughts.html">思考与生活</a>
@@ -278,7 +196,6 @@
         </div>
 
         <section class="home-portal-grid">
-            
             <a href="projects.html" class="portal-card item-projects">
                 <div class="portal-num">// 01</div>
                 <h2>项目与技术力<span>Portfolio & Insights</span></h2>
@@ -296,47 +213,106 @@
                 <h2>关于我<span>Me, Myself & I</span></h2>
                 <div class="portal-arrow">→</div>
             </a>
+        </section>
+
+        <section class="widget-grid">
             
+            <div class="widget-card">
+                <div>
+                    <div class="status-header">
+                        <div class="widget-label">Availability</div>
+                        <div class="status-dot-wrapper">
+                            <div class="live-dot"></div>
+                            <span>Active Now</span>
+                        </div>
+                    </div>
+                    <div class="live-time" id="clock">00:00:00</div>
+                    <div class="live-location">Singapore (SGT) — Delivering Insights</div>
+                </div>
+            </div>
+
+            <div class="widget-card">
+                <div>
+                    <div class="widget-label">Focus Beats</div>
+                    <div class="audio-player">
+                        <div class="audio-disc">🎧</div>
+                        <div class="audio-info">
+                            <div class="audio-track">Lo-Fi Research Mode</div>
+                            <div class="audio-artist">Ambient Focus Station</div>
+                        </div>
+                        <div class="visualizer">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="widget-card">
+                <div style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
+                    <div>
+                        <div class="widget-label">Click to Shuffle Insight</div>
+                        <div class="shuffler-text" id="insight-box">"最敏锐的商业机会，往往藏在用户的原声数据里。"</div>
+                    </div>
+                    <button class="interaction-btn" id="like-btn">
+                        <span>✨ 能量注入</span> <span id="like-count">108</span>
+                    </button>
+                </div>
+            </div>
+
         </section>
     </main>
 
     <script>
-        // 1. 移动端汉堡菜单
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navLinks = document.getElementById('nav-links');
-        if(mobileMenu) {
-            mobileMenu.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
-        }
-
-        // 2. 核心大招：鼠标追踪光效 + 3D 视差倾斜脚本
+        // 1. 3D 视差与鼠标追踪
         const cards = document.querySelectorAll('.portal-card');
-        
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
-                
-                // 计算鼠标在卡片内部的相对坐标 (用于光晕特效)
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
                 card.style.setProperty('--mouse-x', `${x}px`);
                 card.style.setProperty('--mouse-y', `${y}px`);
-                
-                // 计算倾斜角度 (用于 3D 视差交互)
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
-                const rotateX = (centerY - y) / 12; // 调整分母可以改变倾斜敏感度
-                const rotateY = (x - centerX) / 12;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+                const rotateX = (centerY - y) / 14;
+                const rotateY = (x - centerX) / 14;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
             });
-
-            // 鼠标移出时，完美平滑复原
             card.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
             });
+        });
+
+        // 2. 实时时钟组件逻辑
+        function updateClock() {
+            const now = new Date();
+            // 自动转换为新加坡/北京时间 (SGT)
+            const options = { timeZone: 'Asia/Singapore', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            document.getElementById('clock').innerText = now.toLocaleTimeString('zh-CN', options);
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // 3. 灵感洗牌机逻辑
+        const insights = [
+            '"最敏锐的商业机会，往往藏在用户的原声数据里。"',
+            '"跳出传统的问卷框架，去聆听真实世界的声音。"',
+            '"适老化改造，不仅是硬件升级，更是尊严的重塑。"',
+            '"用理性的数据，解构感性的人类行为。"',
+            '"Stay curious. The next data point might surprise you."'
+        ];
+        let currentIdx = 0;
+        document.getElementById('insight-box').addEventListener('click', () => {
+            currentIdx = (currentIdx + 1) % insights.length;
+            document.getElementById('insight-box').innerText = insights[currentIdx];
+        });
+
+        // 4. 点赞互动计数
+        let count = 108;
+        document.getElementById('like-btn').addEventListener('click', () => {
+            count++;
+            document.getElementById('like-count').innerText = count;
         });
     </script>
 </body>
