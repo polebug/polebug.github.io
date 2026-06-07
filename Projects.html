@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>文章标题</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <nav class="vibe-navbar">
+        <div class="logo">MY WIKI.</div>
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        
+        <div class="nav-links" id="nav-links">
+            <a href="/index.html">Home</a>
+            <a href="/projects.html">Projects</a>
+            <a href="/thoughts.html">Thoughts</a>
+            <a href="/about.html">Me,Myself&I</a>
+        </div>
+    </nav>
+    
+    <section class="portfolio-section">
+        <h2 class="section-title">专业洞察 / Professional Insights</h2>
+        
+        <div class="project-grid">
+
+            <a href="/projects/aging-market-study.html" class="project-card">
+                <div class="card-image bg-blue">
+                    <span class="img-placeholder">CONSUMER INSIGHTS</span>
+                </div>
+                <div class="card-content">
+                    <div class="tags">
+                        <span class="tag">#社会化聆听</span>
+                        <span class="tag">#适老化市场</span>
+                    </div>
+                    <h3>中国适老化产品市场机会扫描</h3>
+                    <p>基于电商平台评论与社交媒体数据的深度洞察，输出逻辑严谨、数据可靠的市场调研报告。</p>
+                </div>
+            </a>
+        
+            <a href="/projects/mobility-scooter-research.html" class="project-card">
+                <div class="card-image bg-dark">
+                    <span class="img-placeholder">GLOBAL MARKET</span>
+                </div>
+                <div class="card-content">
+                    <div class="tags">
+                        <span class="tag">#竞品分析</span>
+                        <span class="tag">#用户画像</span>
+                    </div>
+                    <h3>北美高龄代步车与轮椅需求追踪</h3>
+                    <p>针对美国市场的 3 阶段调研，挖掘 r/disability 等社区的核心痛点，助力代步产品功能迭代。</p>
+                </div>
+            </a>
+
+            
+            <div class="project-card">
+                <div class="card-image bg-gray">
+                    <span class="img-placeholder">HARDWARE TECH</span>
+                </div>
+                <div class="card-content">
+                    <div class="tags">
+                        <span class="tag">#E-Scooter</span>
+                        <span class="tag">#防盗物联网</span>
+                    </div>
+                    <h3>电动滑板车 (E-Scooter) 行业全景解析</h3>
+                    <p>覆盖主流品牌的技术参数对比，及 Find My 等防盗网络硬件集成的成本与可行性评估。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<script src="/js/jquery-3.1.0.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<!-- 其他脚本根据需要复制 -->
+
+<script>
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active'); // 控制菜单展开/折叠
+            mobileMenu.classList.toggle('open');   // 控制三条杠变X
+        });
+    </script>
+
+</body>
+</html>
