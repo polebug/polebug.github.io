@@ -5,6 +5,17 @@
     <title>文章标题</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
+
+<nav class="top-nav">
+    <div class="nav-logo">我的个人维基</div>
+    <div class="nav-links">
+        <a href="/index.html">Home</a>
+        <a href="/projects.html">Projects</a>
+        <a href="/thoughts.html">Thoughts</a>
+        <a href="/about.html">Me,Myself&I</a>
+    </div>
+</nav>
+
 <body>
 <div class="container" id="stage">
     <div class="row">
@@ -13,7 +24,40 @@
             <p class="post-meta">Posted at 2026-05-22</p>
             <div class="content">
                 <p></p>
+                <p>这里是普通的正文内容。你可以将一段话中的<strong>重点词汇进行加粗</strong>，或者使用 <em>斜体来表达稍微不同的语气</em>。</p>
                 <p>你也可以用 <code>&lt;pre&gt;</code> 或者 <code>&lt;blockquote&gt;</code> 等标签。</p>
+                
+                <blockquote style="border-left: 4px solid #2e405b; padding-left: 15px; color: #555; background-color: #f9f9f9; padding: 10px 15px; margin: 20px 0;">
+    "旅行的意义不在于去了哪里，而在于在路上遇到了怎样的自己。" —— 2026 新加坡随想
+                </blockquote>
+                <!-- 💡 提示：在这段代码里直接加上了内联 CSS 样式，你可以直接看到带有灰色背景和深蓝色左边框的高级效果。 -->
+                <div class="my-tips-card">
+                    <strong>💡 游记干货：</strong> 这里的海南鸡饭一定要在中午 12 点前去排队，不然就卖光了！
+                </div>
+                <!-- 💡 提示：做了一个好看的“划重点”卡片。效果其实跟blockquote相似，只是这个嵌在style.css中了，只需调用div class="my-tips-card"即可实现。 -->
+                
+                <h2 style="border-bottom: 2px dashed #eee; padding-bottom: 10px; margin-top: 40px;">📍 第一站：樟宜机场的清晨</h2>
+                <h3 style="color: #666;">关于过关的小贴士</h3>
+                <!-- 💡 提示：建立层级，巧用多级标题与加粗。长篇文章一定要有“骨架”。读者在浏览网页时，习惯先扫视大标题，再细看内容。 -->
+
+                <p>这次出行的必备好物清单：</p>
+                <ul style="line-height: 1.8; background: rgba(46, 64, 91, 0.05); padding: 15px 40px; border-radius: 8px;">
+                    <li><b>证件类：</b>护照、打印好的签证电子版</li>
+                    <li><b>电子类：</b>充电宝（一定要带）、转换插头</li>
+                    <li><b>日用类：</b>防晒霜（赤道阳光太毒了）、墨镜</li>
+                </ul>
+                <!-- 💡 提示：用无序/有序列表当你要写“行程安排”、“注意事项”或“花费清单”时，千万不要用顿号写成一段话，一定要用列表 <ul> 或 <ol>。<b></b>貌似是列表中的加粗方式。 -->
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <img src="/images/你的图片.jpg" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%;" alt="新加坡街景">
+                    <p style="font-size: 14px; color: #888; margin-top: 10px;">清晨无人的街道，空气里都是湿润的味道</p>
+                </div>
+                <!-- 💡 提示：高级 Plog 玩法，图片排版与图注。不要只是把图片丢上去，给图片加上圆角和一行居中的小字说明（图注），瞬间就有了杂志感。 -->
+                
+                <img src="你的照片路径.jpg" class="hover-zoom-img" alt="新加坡风景">
+                <!-- 💡 提示：照片可能是静态的，我们可以加几行代码，让鼠标放上去时，照片能微微放大并浮现阴影，瞬间拥有高级画廊的质感。 -->
+
+                
             </div>
             <p><a href="/">← 返回首页</a></p>
         </div>
