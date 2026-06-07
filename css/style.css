@@ -120,6 +120,8 @@
 
 /* ================= 卡片细节设计 ================= */
 .project-card {
+    text-decoration: none; /* 核心：去除超链接下划线 */
+    display: block;        /* 核心：让 a 标签像块级元素一样撑开整个卡片 */
     background: #fff;
     border-radius: 16px;
     overflow: hidden;
