@@ -137,12 +137,11 @@
         .live-time { font-size: 28px; font-weight: 800; font-family: monospace; color: #111115; letter-spacing: -1px; margin-top: 10px; }
         .live-location { font-size: 12px; color: #666; margin-top: 2px; }
 
-        /* 组件2：【真实播放】音频播放器样式 */
+        /* 组件2：音频播放器样式 */
         .audio-player-card { cursor: pointer; position: relative; }
         .audio-player { display: flex; align-items: center; gap: 15px; background: #fafafa; padding: 15px; border-radius: 16px; transition: background 0.3s; }
         .audio-player-card:hover .audio-player { background: #f0f0f4; }
         
-        /* 旋转唱片：默认暂停，播放时才转 */
         .audio-disc { 
             width: 40px; height: 40px; background: #e0e0e6; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; font-size: 16px; 
@@ -155,7 +154,6 @@
         .audio-track { font-size: 14px; font-weight: 600; color: #111115; transition: color 0.2s; }
         .audio-artist { font-size: 11px; color: #888; margin-top: 2px; }
         
-        /* 纯 CSS 动效波形图：默认静态，加了 .playing 类才会动 */
         .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 18px; width: 25px; }
         .visualizer span { width: 3px; height: 3px; background: #111115; border-radius: 3px; transition: height 0.2s; }
         
@@ -239,19 +237,19 @@
                         </div>
                     </div>
                     <div class="live-time" id="clock">00:00:00</div>
-                    <div class="live-location">Shenzhen</div>
+                    <div class="live-location">Singapore (SGT) — Delivering Insights</div>
                 </div>
             </div>
 
             <div class="widget-card audio-player-card" id="music-widget">
-                <audio id="bg-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+                <audio id="bg-audio" src="/images/pwlt.mp3" loop></audio>
                 <div>
                     <div class="widget-label" id="player-status">Click to Play Music</div>
                     <div class="audio-player">
-                        <div class="audio-disc" id="audio-disc">💿</div>
+                        <div class="audio-disc" id="audio-disc">🎵</div>
                         <div class="audio-info">
-                            <div class="audio-track" id="audio-title">Lo-Fi Station</div>
-                            <div class="audio-artist">Focus Ambient Beat</div>
+                            <div class="audio-track" id="audio-title">PWLT</div>
+                            <div class="audio-artist">Krystal</div>
                         </div>
                         <div class="visualizer" id="visualizer">
                             <span></span><span></span><span></span>
@@ -306,7 +304,7 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 3. 【全新联动】真实音频播放核心控制
+        // 3. 真实音频播放控制
         const musicWidget = document.getElementById('music-widget');
         const audio = document.getElementById('bg-audio');
         const visualizer = document.getElementById('visualizer');
@@ -316,11 +314,11 @@
 
         musicWidget.addEventListener('click', () => {
             if (audio.paused) {
-                audio.play();
+                audio.play().catch(err => console.log("播放被浏览器拦截，需要用户交互:", err));
                 visualizer.classList.add('playing');
                 disc.style.animationPlayState = 'running';
                 playerStatus.innerText = 'Now Playing';
-                audioTitle.style.color = '#1a73e8'; // 播放时歌名变色提示
+                audioTitle.style.color = '#1a73e8'; 
             } else {
                 audio.pause();
                 visualizer.classList.remove('playing');
