@@ -72,9 +72,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 5%;
+    padding: 0 5%;       /* 左右保持 5% 的留白 */
+    height: 75px;        /* 核心：显式将高度锁死在 75px，谁也别想多一像素 */
     background-color: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px); /* 苹果风格的毛玻璃特效 */
+    backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     position: sticky;
     top: 0;
