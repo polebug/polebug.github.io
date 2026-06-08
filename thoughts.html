@@ -4,7 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>思考与生活 | WW.WIKI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .thoughts-list {
+            max-width: 800px;
+            margin: 0 auto;
+            list-style: none;
+            padding: 0;
+        }
+        .thoughts-list li {
+            margin: 30px 0;
+            border-bottom: 1px solid #eaeef5;
+            padding-bottom: 20px;
+        }
+        .thoughts-list a {
+            font-size: 20px;
+            font-weight: 600;
+            color: #111115;
+            text-decoration: none;
+            border-bottom: none;
+        }
+        .thoughts-list a:hover {
+            color: #2e405b;
+            background: none;
+        }
+        .post-date {
+            font-size: 14px;
+            color: #888;
+            margin-top: 8px;
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
@@ -18,7 +51,7 @@
         </div>
     </nav>
 
-    <audio id="global-audio"></audio>
+    <audio id="global-audio" preload="auto"></audio>
     <div class="floating-audio-pill" id="global-player">
         <div class="visualizer" id="pill-visualizer"><span></span><span></span><span></span></div>
         <div class="pill-track-info"><div class="pill-track-name" id="pill-title">Not Playing</div></div>
@@ -26,17 +59,39 @@
         <button class="pill-btn" id="pill-next-btn">⏭</button>
     </div>
 
-    <main class="article-container" id="pjax-container" style="max-width: 1200px; margin: 0 auto; padding: 60px 5%;">
-        <h1>思考与生活</h1>
-        <p>这里是你的思考记录。</p>
-        <ul>
-            <li><a href="/0323接手项目经理工作有感.html">接手项目经理工作有感</a></li>
-            <li><a href="/0417vibe-coding初体验.html">Vibe Coding初体验</a></li>
-            <li><a href="/0522我的第一个博客网站.html">我的第一个博客网站</a></li>
-            <li><a href="/0120新加坡3日游记.html">新加坡3日游记</a></li>
-            <li><a href="/0212鲁豫对谈许知远.html">鲁豫对谈许知远</a></li>
-            <li><a href="/0302生活秩序脱轨.html">生活秩序脱轨</a></li>
-            <li><a href="/0318同事离职有感.html">同事离职有感</a></li>
+    <main style="max-width: 1200px; margin: 0 auto; padding: 60px 5%;">
+        <h1 style="margin-bottom: 10px;">思考与生活</h1>
+        <p style="color: #666; margin-bottom: 50px;">碎片想法、阅读笔记与日常随想</p>
+        
+        <ul class="thoughts-list">
+            <li>
+                <a href="/0522我的第一个博客网站.html">我的第一个博客网站</a>
+                <span class="post-date">2026-05-22</span>
+            </li>
+            <li>
+                <a href="/0417vibe-coding初体验.html">Vibe Coding初体验</a>
+                <span class="post-date">2026-04-17</span>
+            </li>
+            <li>
+                <a href="/0323接手项目经理工作有感.html">接手项目经理工作有感</a>
+                <span class="post-date">2026-03-23</span>
+            </li>
+            <li>
+                <a href="/0318同事离职有感.html">同事离职有感</a>
+                <span class="post-date">2026-03-18</span>
+            </li>
+            <li>
+                <a href="/0302生活秩序脱轨.html">生活秩序脱轨</a>
+                <span class="post-date">2026-03-02</span>
+            </li>
+            <li>
+                <a href="/0212鲁豫对谈许知远.html">鲁豫对谈许知远</a>
+                <span class="post-date">2026-02-12</span>
+            </li>
+            <li>
+                <a href="/0120新加坡3日游记.html">新加坡3日游记</a>
+                <span class="post-date">2026-01-20</span>
+            </li>
         </ul>
     </main>
 
@@ -44,8 +99,8 @@
         const playlist = [
             { title: 'PWLT', artist: 'Krystal', src: '/images/PWLT.mp3' },
             { title: '비행운', artist: 'MoonMoon', src: '/images/飞机云.mp3' },
-            { title: '위잉위잉 (WI ING WI ING) ', artist: '혁오 (Hyukoh) ', src: '/images/WIINGWIING.mp3' },
-            { title: 'Surf Boy', artist: '혁오 (Hyukoh) ', src: '/images/Surf_boy.mp3' }
+            { title: '위잉위잉', artist: 'Hyukoh', src: '/images/WIINGWIING.mp3' },
+            { title: 'Surf Boy', artist: 'Hyukoh', src: '/images/Surf_boy.mp3' }
         ];
         let currentTrackIdx = 0;
         const audio = document.getElementById('global-audio');
@@ -74,55 +129,6 @@
         document.getElementById('pill-next-btn').addEventListener('click', (e) => { e.stopPropagation(); nextTrack(); });
         initAudio();
         syncPlayerUI();
-
-        // SPA 路由
-        document.addEventListener('click', (e) => {
-            const link = e.target.closest('a');
-            if (!link || !link.href || link.getAttribute('target') === '_blank') return;
-            if (link.origin !== window.location.origin) return;
-            const isStaticAsset = /\.(css|js|png|jpg|jpeg|ico|mp3|wav|xml|txt|json)$/i.test(link.href);
-            if (isStaticAsset) return;
-            e.preventDefault();
-            loadPage(link.href);
-        });
-        async function loadPage(url, skipPushState = false) {
-            document.body.style.cursor = 'wait';
-            try {
-                const res = await fetch(url);
-                if (!res.ok) throw new Error();
-                const html = await res.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const newContent = doc.getElementById('pjax-container');
-                if (!newContent) throw new Error();
-                const newStyles = doc.querySelectorAll('link[rel="stylesheet"]');
-                newStyles.forEach(newLink => {
-                    const href = newLink.getAttribute('href');
-                    if (!document.querySelector(`link[rel="stylesheet"][href="${href}"]`)) {
-                        const linkNode = document.createElement('link');
-                        linkNode.rel = 'stylesheet';
-                        linkNode.href = href;
-                        document.head.appendChild(linkNode);
-                    }
-                });
-                document.getElementById('pjax-container').innerHTML = newContent.innerHTML;
-                document.title = doc.title;
-                if (!skipPushState) history.pushState(null, null, url);
-                window.scrollTo(0, 0);
-                if (typeof reRunPageScripts === 'function') reRunPageScripts();
-            } catch (err) { window.location.href = url; }
-            finally { document.body.style.cursor = 'default'; }
-        }
-        window.addEventListener('popstate', () => { loadPage(window.location.href, true); });
-        function reRunPageScripts() {
-            const currentPath = window.location.pathname;
-            document.querySelectorAll('.vibe-navbar .nav-links a').forEach(a => {
-                const aHref = a.getAttribute('href');
-                a.classList.toggle('active', currentPath === aHref);
-            });
-            syncPlayerUI();
-        }
-        reRunPageScripts();
     </script>
 </body>
 </html>
