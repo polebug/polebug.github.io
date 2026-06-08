@@ -7,97 +7,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-    
-    <style>
-        /* ================= 核心样式（保持和 index.html 完全一致，确保切换时不闪烁） ================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #f9f9fb; color: #111115; overflow-x: hidden;
-        }
-
-        /* 导航栏 */
-        .vibe-navbar {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; height: 75px; background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        .logo { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
-        .nav-links { display: flex; }
-        .nav-links a {
-            text-decoration: none; color: rgba(0, 0, 0, 0.45);
-            margin-left: 35px; font-size: 14px; font-weight: 600; transition: all 0.3s ease;
-        }
-        .nav-links a:hover, .nav-links a.active { color: #111115; }
-
-        /* 布局主容器 */
-        .home-container { max-width: 1200px; margin: 0 auto; padding: 60px 5% 100px; }
-        .home-hero { margin-bottom: 40px; }
-        .hero-title {
-            font-size: clamp(48px, 9.5vw, 95px); font-weight: 800; line-height: 0.9;
-            letter-spacing: -4px; margin-bottom: 30px; text-transform: uppercase;
-            background: linear-gradient(180deg, #111115 0%, #66666e 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .hero-subtitle { font-size: 16px; color: #55555a; max-width: 600px; line-height: 1.7; }
-
-        /* 大卡片网格 */
-        .home-portal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 25px; perspective: 1000px; }
-        .portal-card {
-            display: flex; flex-direction: column; justify-content: space-between;
-            padding: 40px 30px; min-height: 280px; border-radius: 28px; text-decoration: none;
-            position: relative; overflow: hidden; background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.05);
-            transform-style: preserve-3d; transition: border-color 0.3s, box-shadow 0.5s;
-        }
-        .item-projects { --glow-color: rgba(47, 90, 196, 0.06); }
-        .item-thoughts { --glow-color: rgba(0, 0, 0, 0.03); background: #f5f5f7; }
-        .item-about    { --glow-color: rgba(139, 92, 246, 0.05); background: #f0f3fa; }
-
-        .portal-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(300px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), var(--glow-color), transparent 80%);
-            z-index: 1; pointer-events: none;
-        }
-        .portal-num, .portal-card h2, .portal-arrow { position: relative; z-index: 2; transform: translateZ(30px); transition: transform 0.3s ease; }
-        .portal-num { font-size: 13px; font-weight: 600; color: rgba(0, 0, 0, 0.15); letter-spacing: 2px; }
-        .portal-card h2 { font-size: 22px; font-weight: 600; color: #111115; line-height: 1.3; }
-        .portal-card h2 span { display: block; font-size: 12px; color: rgba(0, 0, 0, 0.4); text-transform: uppercase; margin-top: 8px; letter-spacing: 1px; }
-        .portal-arrow { font-size: 24px; color: rgba(0, 0, 0, 0.25); align-self: flex-end; }
-        .portal-card:hover { border-color: rgba(0, 0, 0, 0.12); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.04); }
-        .portal-card:hover .portal-arrow { color: #111115; transform: translateZ(40px) translateX(5px); }
-
-        /* 全局悬浮音乐胶囊 */
-        .floating-audio-pill {
-            position: fixed; bottom: 30px; right: 30px; z-index: 2000;
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 30px; padding: 8px 16px;
-            display: flex; align-items: center; gap: 12px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); user-select: none;
-        }
-        .floating-audio-pill:hover { transform: translateY(-3px); border-color: rgba(0, 0, 0, 0.15); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); }
-        .pill-track-info { max-width: 90px; overflow: hidden; }
-        .pill-track-name { font-size: 12px; font-weight: 700; color: #111115; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .pill-btn { background: none; border: none; font-size: 14px; cursor: pointer; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
-        .pill-btn:hover { background: rgba(0,0,0,0.05); }
-
-        .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 18px; width: 25px; }
-        .visualizer span { width: 3px; height: 3px; background: #111115; border-radius: 3px; transition: height 0.2s; }
-        .visualizer.playing span { animation: bounce 0.8s ease-in-out infinite alternate; }
-        .visualizer.playing span:nth-child(2) { animation-duration: 0.5s; animation-delay: 0.1s; }
-        .visualizer.playing span:nth-child(3) { animation-duration: 0.7s; animation-delay: 0.2s; }
-        @keyframes bounce { 0% { height: 3px; } 100% { height: 18px; } }
-    </style>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
     <nav class="vibe-navbar">
         <div class="logo">WW.WIKI</div>
         <div class="nav-links">
-            <a href="index.html">首页</a>
-            <a href="projects.html" class="active">项目与洞察</a>
-            <a href="thoughts.html">思考与生活</a>
-            <a href="about.html">关于我</a>
+            <a href="/index.html">首页</a>
+            <a href="/projects.html" class="active">项目与洞察</a>
+            <a href="/thoughts.html">思考与生活</a>
+            <a href="/about.html">关于我</a>
         </div>
     </nav>
 
@@ -112,21 +32,17 @@
     </div>
 
     <main class="home-container" id="pjax-container">
-        
         <header class="home-hero">
             <h1 class="hero-title">PORTFOLIO.<br>INSIGHTS.</h1>
             <p class="hero-subtitle">欢迎来到项目与技术力工作台。这里记录了关于智能出行、移动科技以及适老化市场的专业深度洞察与消费者原声解构报告。</p>
         </header>
-
         <section style="background: #fff; padding: 40px; border-radius: 24px; border: 1px solid rgba(0,0,0,0.05); margin-top: 40px;">
             <h3 style="margin-bottom: 15px;">🚀 调研工坊待办中</h3>
             <p style="color: #666; line-height: 1.6; font-size: 14px;">项目卡片与洞察报告模块正在整理装配。你可以像编辑常规 HTML 一样，随时在这里拓展你的专业产出内容。</p>
         </section>
-
     </main>
 
     <script>
-        // 🎵 核心音频源管理 & 轮播逻辑（完全同步首页 4 首配置）
         const playlist = [
             { title: 'PWLT', artist: 'Krystal', src: '/images/PWLT.mp3' },
             { title: '비행운', artist: 'MoonMoon', src: '/images/飞机云.mp3' },
@@ -136,146 +52,78 @@
         let currentTrackIdx = 0;
         const audio = document.getElementById('global-audio');
 
-        function initAudio() {
-            audio.src = playlist[currentTrackIdx].src;
-            audio.onended = () => { nextTrack(); };
-        }
-
+        function initAudio() { audio.src = playlist[currentTrackIdx].src; audio.onended = () => { nextTrack(); }; }
         function syncPlayerUI() {
             const isPlaying = !audio.paused;
             const currentTrack = playlist[currentTrackIdx];
-
             document.getElementById('pill-title').innerText = currentTrack.title;
             document.getElementById('pill-play-btn').innerText = isPlaying ? '⏸' : '▶';
             document.getElementById('pill-visualizer').classList.toggle('playing', isPlaying);
-
-            // 联动首页内部卡片（如果有）
-            const homeTitle = document.getElementById('home-audio-title');
-            const homeArtist = document.getElementById('home-audio-artist');
-            const homeStatus = document.getElementById('home-player-status');
-            const homeVisualizer = document.getElementById('home-visualizer');
-            const homeDisc = document.getElementById('home-audio-disc');
-
-            if (homeTitle) {
-                homeTitle.innerText = currentTrack.title;
-                homeArtist.innerText = currentTrack.artist;
-                homeStatus.innerText = isPlaying ? 'Now Playing' : 'Music Paused';
-                homeVisualizer.classList.toggle('playing', isPlaying);
-                homeDisc.style.animationPlayState = isPlaying ? 'running' : 'paused';
-                homeTitle.style.color = isPlaying ? '#1a73e8' : '#111115';
-            }
         }
-
         function togglePlay() {
             if (!audio.src) initAudio();
-            if (audio.paused) {
-                audio.play().then(syncPlayerUI).catch(e => console.log("等待用户交互:", e));
-            } else {
-                audio.pause();
-                syncPlayerUI();
-            }
+            if (audio.paused) audio.play().then(syncPlayerUI).catch(e=>console.log);
+            else audio.pause();
+            syncPlayerUI();
         }
-
         function nextTrack() {
             currentTrackIdx = (currentTrackIdx + 1) % playlist.length;
             audio.src = playlist[currentTrackIdx].src;
-            audio.play().then(syncPlayerUI).catch(e => console.log("切歌自启失败:", e));
+            audio.play().then(syncPlayerUI).catch(e=>console.log);
             syncPlayerUI();
         }
-
         document.getElementById('pill-play-btn').addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
         document.getElementById('pill-next-btn').addEventListener('click', (e) => { e.stopPropagation(); nextTrack(); });
         initAudio();
         syncPlayerUI();
 
-    // 🚀 优化后的 SPA 拦截器：自动忽略 CSS、JS、图片及外部链接
+        // SPA 路由
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a');
-            // 如果没有链接，或者链接是新窗口打开，直接跳过拦截
             if (!link || !link.href || link.getAttribute('target') === '_blank') return;
-            
-            // 【添加这行】过滤：如果是静态资源，直接放行，不要拦截！
-            const isStaticAsset = /\.(css|js|png|jpg|ico|mp3|wav|xml|txt)$/.test(link.href);
-            
-            // 只有在是站内链接 且 不是静态资源时，才执行 PJAX 拦截
-            if (link.origin === window.location.origin && !isStaticAsset) {
-                e.preventDefault();
-                loadPage(link.href);
-            }
+            if (link.origin !== window.location.origin) return;
+            const isStaticAsset = /\.(css|js|png|jpg|jpeg|ico|mp3|wav|xml|txt|json)$/i.test(link.href);
+            if (isStaticAsset) return;
+            e.preventDefault();
+            loadPage(link.href);
         });
-    
         async function loadPage(url, skipPushState = false) {
+            document.body.style.cursor = 'wait';
             try {
                 const res = await fetch(url);
                 if (!res.ok) throw new Error();
                 const html = await res.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-    
-                // 核心：只抓取对应的容器内容
                 const newContent = doc.getElementById('pjax-container');
-                if (!newContent) throw new Error("页面结构不匹配");
-                
+                if (!newContent) throw new Error();
+                const newStyles = doc.querySelectorAll('link[rel="stylesheet"]');
+                newStyles.forEach(newLink => {
+                    const href = newLink.getAttribute('href');
+                    if (!document.querySelector(`link[rel="stylesheet"][href="${href}"]`)) {
+                        const linkNode = document.createElement('link');
+                        linkNode.rel = 'stylesheet';
+                        linkNode.href = href;
+                        document.head.appendChild(linkNode);
+                    }
+                });
                 document.getElementById('pjax-container').innerHTML = newContent.innerHTML;
                 document.title = doc.title;
-    
                 if (!skipPushState) history.pushState(null, null, url);
-                
-                // 重新初始化所有页面的逻辑（如导航栏、音乐播放器状态等）
-                reRunPageScripts();
-            } catch (err) {
-                // 如果读取页面失败，直接让浏览器进行传统跳转
-                window.location.href = url;
-            }
+                window.scrollTo(0, 0);
+                if (typeof reRunPageScripts === 'function') reRunPageScripts();
+            } catch (err) { window.location.href = url; }
+            finally { document.body.style.cursor = 'default'; }
         }
-
         window.addEventListener('popstate', () => { loadPage(window.location.href, true); });
-
-        // 🔄 页面专属脚本激活中心
         function reRunPageScripts() {
-            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-            document.querySelectorAll('.nav-links a').forEach(a => {
-                const aPath = a.getAttribute('href');
-                a.classList.toggle('active', aPath === currentPath);
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.vibe-navbar .nav-links a').forEach(a => {
+                const aHref = a.getAttribute('href');
+                a.classList.toggle('active', currentPath === aHref);
             });
-
-            // 首页专属组件联动激活（如果路由回首页）
-            const homeCard = document.getElementById('home-music-widget');
-            if (homeCard) {
-                homeCard.addEventListener('click', togglePlay);
-                document.querySelectorAll('.portal-card').forEach(card => {
-                    card.addEventListener('mousemove', (e) => {
-                        const rect = card.getBoundingClientRect();
-                        const rotateX = (rect.height / 2 - (e.clientY - rect.top)) / 14;
-                        const rotateY = ((e.clientX - rect.left) - rect.width / 2) / 14;
-                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
-                    });
-                    card.addEventListener('mouseleave', () => card.style.transform = 'none');
-                });
-                const insights = ['"最敏锐的商业机会，往往藏在用户的原声数据里。"', '"跳出传统的问卷框架，去聆听真实世界的声音。"', '"适老化改造，不仅是硬件升级，更是尊严的重塑。"'];
-                let idx = 0;
-                document.getElementById('insight-box').addEventListener('click', () => {
-                    idx = (idx + 1) % insights.length;
-                    document.getElementById('insight-box').innerText = insights[idx];
-                });
-                let count = 108;
-                document.getElementById('like-btn').addEventListener('click', () => {
-                    document.getElementById('like-count').innerText = ++count;
-                });
-            }
             syncPlayerUI();
         }
-
-        // 时钟控制
-        function updateClock() {
-            const clockEl = document.getElementById('clock');
-            if (clockEl) {
-                const options = { timeZone: 'Asia/Singapore', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-                clockEl.innerText = new Date().toLocaleTimeString('zh-CN', options);
-            }
-        }
-        setInterval(updateClock, 1000);
-        
         reRunPageScripts();
     </script>
 </body>
