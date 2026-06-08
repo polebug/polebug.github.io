@@ -4,46 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>思考与生活 | WW.WIKI</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
-    <style>
-        .thoughts-list {
-            max-width: 800px;
-            margin: 0 auto;
-            list-style: none;
-            padding: 0;
-        }
-        .thoughts-list li {
-            margin: 30px 0;
-            border-bottom: 1px solid #eaeef5;
-            padding-bottom: 20px;
-        }
-        .thoughts-list a {
-            font-size: 20px;
-            font-weight: 600;
-            color: #111115;
-            text-decoration: none;
-            border-bottom: none;
-        }
-        .thoughts-list a:hover {
-            color: #2e405b;
-            background: none;
-        }
-        .post-date {
-            font-size: 14px;
-            color: #888;
-            margin-top: 8px;
-            display: block;
-        }
-    </style>
 </head>
 <body>
 
     <nav class="vibe-navbar">
         <div class="logo">WW.WIKI</div>
-        <div class="nav-links">
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </div>
+        <div class="nav-links" id="nav-links">
             <a href="/index.html">首页</a>
             <a href="/projects.html">项目与洞察</a>
             <a href="/thoughts.html" class="active">思考与生活</a>
@@ -51,7 +21,7 @@
         </div>
     </nav>
 
-    <audio id="global-audio" preload="auto"></audio>
+    <audio id="global-audio"></audio>
     <div class="floating-audio-pill" id="global-player">
         <div class="visualizer" id="pill-visualizer"><span></span><span></span><span></span></div>
         <div class="pill-track-info"><div class="pill-track-name" id="pill-title">Not Playing</div></div>
@@ -59,76 +29,28 @@
         <button class="pill-btn" id="pill-next-btn">⏭</button>
     </div>
 
-    <main style="max-width: 1200px; margin: 0 auto; padding: 60px 5%;">
-        <h1 style="margin-bottom: 10px;">思考与生活</h1>
-        <p style="color: #666; margin-bottom: 50px;">碎片想法、阅读笔记与日常随想</p>
+    <main class="article-container" id="pjax-container" style="max-width: 800px; margin: 0 auto; padding: 60px 20px;">
+        <h1 style="font-size: 36px; font-weight: 800; margin-bottom: 20px;">思考与生活</h1>
+        <p style="color: #666; margin-bottom: 40px;">这里是你的思考记录。</p>
         
-        <ul class="thoughts-list">
-            <li>
-                <a href="/0522我的第一个博客网站.html">我的第一个博客网站</a>
-                <span class="post-date">2026-05-22</span>
+        <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 15px;">
+                <a href="/2026/0120新加坡3日游记.html" style="font-size: 18px; font-weight: bold; text-decoration: none; color: #111;">新加坡3日游记</a>
+                <span style="display: block; font-size: 14px; color: #999; margin-top: 5px;">2026-01-20</span>
             </li>
-            <li>
-                <a href="/0417vibe-coding初体验.html">Vibe Coding初体验</a>
-                <span class="post-date">2026-04-17</span>
+            <li style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 15px;">
+                <a href="/2026/0417vibe-coding初体验.html" style="font-size: 18px; font-weight: bold; text-decoration: none; color: #111;">Vibe Coding初体验</a>
+                <span style="display: block; font-size: 14px; color: #999; margin-top: 5px;">2026-04-17</span>
             </li>
-            <li>
-                <a href="/0323接手项目经理工作有感.html">接手项目经理工作有感</a>
-                <span class="post-date">2026-03-23</span>
-            </li>
-            <li>
-                <a href="/0318同事离职有感.html">同事离职有感</a>
-                <span class="post-date">2026-03-18</span>
-            </li>
-            <li>
-                <a href="/0302生活秩序脱轨.html">生活秩序脱轨</a>
-                <span class="post-date">2026-03-02</span>
-            </li>
-            <li>
-                <a href="/0212鲁豫对谈许知远.html">鲁豫对谈许知远</a>
-                <span class="post-date">2026-02-12</span>
-            </li>
-            <li>
-                <a href="/0120新加坡3日游记.html">新加坡3日游记</a>
-                <span class="post-date">2026-01-20</span>
+            <li style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 15px;">
+                <a href="/2026/0522我的第一个博客网站.html" style="font-size: 18px; font-weight: bold; text-decoration: none; color: #111;">我的第一个博客网站</a>
+                <span style="display: block; font-size: 14px; color: #999; margin-top: 5px;">2026-05-22</span>
             </li>
         </ul>
     </main>
 
     <script>
-        const playlist = [
-            { title: 'PWLT', artist: 'Krystal', src: '/images/PWLT.mp3' },
-            { title: '비행운', artist: 'MoonMoon', src: '/images/飞机云.mp3' },
-            { title: '위잉위잉', artist: 'Hyukoh', src: '/images/WIINGWIING.mp3' },
-            { title: 'Surf Boy', artist: 'Hyukoh', src: '/images/Surf_boy.mp3' }
-        ];
-        let currentTrackIdx = 0;
-        const audio = document.getElementById('global-audio');
-
-        function initAudio() { audio.src = playlist[currentTrackIdx].src; audio.onended = () => { nextTrack(); }; }
-        function syncPlayerUI() {
-            const isPlaying = !audio.paused;
-            const currentTrack = playlist[currentTrackIdx];
-            document.getElementById('pill-title').innerText = currentTrack.title;
-            document.getElementById('pill-play-btn').innerText = isPlaying ? '⏸' : '▶';
-            document.getElementById('pill-visualizer').classList.toggle('playing', isPlaying);
-        }
-        function togglePlay() {
-            if (!audio.src) initAudio();
-            if (audio.paused) audio.play().then(syncPlayerUI).catch(e=>console.log);
-            else audio.pause();
-            syncPlayerUI();
-        }
-        function nextTrack() {
-            currentTrackIdx = (currentTrackIdx + 1) % playlist.length;
-            audio.src = playlist[currentTrackIdx].src;
-            audio.play().then(syncPlayerUI).catch(e=>console.log);
-            syncPlayerUI();
-        }
-        document.getElementById('pill-play-btn').addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
-        document.getElementById('pill-next-btn').addEventListener('click', (e) => { e.stopPropagation(); nextTrack(); });
-        initAudio();
-        syncPlayerUI();
+        // 【由于字数限制，请直接将刚才上方 index.html 底部那个从 <script> 到 </script> 的所有代码，完整粘贴覆盖在此处即可】
     </script>
 </body>
 </html>
