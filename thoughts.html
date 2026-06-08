@@ -26,82 +26,103 @@
         <button class="pill-btn" id="pill-next-btn">⏭</button>
     </div>
 
-    <main class="article-container" id="pjax-container">
+    <main class="article-container" id="pjax-container" style="max-width: 1200px; margin: 0 auto; padding: 60px 5%;">
         <h1>思考与生活</h1>
         <p>这里是你的思考记录。</p>
         <ul>
-            <li><a href="/posts/vibe-coding.html">Vibe Coding初体验</a></li>
+            <li><a href="/0323接手项目经理工作有感.html">接手项目经理工作有感</a></li>
+            <li><a href="/0417vibe-coding初体验.html">Vibe Coding初体验</a></li>
+            <li><a href="/0522我的第一个博客网站.html">我的第一个博客网站</a></li>
+            <li><a href="/0120新加坡3日游记.html">新加坡3日游记</a></li>
+            <li><a href="/0212鲁豫对谈许知远.html">鲁豫对谈许知远</a></li>
+            <li><a href="/0302生活秩序脱轨.html">生活秩序脱轨</a></li>
+            <li><a href="/0318同事离职有感.html">同事离职有感</a></li>
         </ul>
     </main>
 
     <script>
-        // 1. 音乐播放逻辑
-        const playlist = [{ title: 'PWLT', artist: 'Krystal', src: '/images/PWLT.mp3' }];
-        let currentTrackIdx = 0; 
+        const playlist = [
+            { title: 'PWLT', artist: 'Krystal', src: '/images/PWLT.mp3' },
+            { title: '비행운', artist: 'MoonMoon', src: '/images/飞机云.mp3' },
+            { title: '위잉위잉 (WI ING WI ING) ', artist: '혁오 (Hyukoh) ', src: '/images/WIINGWIING.mp3' },
+            { title: 'Surf Boy', artist: '혁오 (Hyukoh) ', src: '/images/Surf_boy.mp3' }
+        ];
+        let currentTrackIdx = 0;
         const audio = document.getElementById('global-audio');
 
+        function initAudio() { audio.src = playlist[currentTrackIdx].src; audio.onended = () => { nextTrack(); }; }
         function syncPlayerUI() {
             const isPlaying = !audio.paused;
-            document.getElementById('pill-title').innerText = playlist[currentTrackIdx].title;
+            const currentTrack = playlist[currentTrackIdx];
+            document.getElementById('pill-title').innerText = currentTrack.title;
             document.getElementById('pill-play-btn').innerText = isPlaying ? '⏸' : '▶';
             document.getElementById('pill-visualizer').classList.toggle('playing', isPlaying);
         }
-
         function togglePlay() {
-            if (audio.paused) { audio.play().catch(()=>{}); } else { audio.pause(); }
+            if (!audio.src) initAudio();
+            if (audio.paused) audio.play().then(syncPlayerUI).catch(e=>console.log);
+            else audio.pause();
             syncPlayerUI();
         }
+        function nextTrack() {
+            currentTrackIdx = (currentTrackIdx + 1) % playlist.length;
+            audio.src = playlist[currentTrackIdx].src;
+            audio.play().then(syncPlayerUI).catch(e=>console.log);
+            syncPlayerUI();
+        }
+        document.getElementById('pill-play-btn').addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
+        document.getElementById('pill-next-btn').addEventListener('click', (e) => { e.stopPropagation(); nextTrack(); });
+        initAudio();
+        syncPlayerUI();
 
-        document.getElementById('pill-play-btn').addEventListener('click', togglePlay);
-        document.getElementById('pill-next-btn').addEventListener('click', () => { /* 循环逻辑 */ syncPlayerUI(); });
-
-        // 2. 核心路由拦截与加载逻辑（带错误防御）
+        // SPA 路由
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a');
             if (!link || !link.href || link.getAttribute('target') === '_blank') return;
-            
-            // 严防死守：如果是静态文件，坚决不拦截，让浏览器自己去加载 CSS/JS
-            const isStaticAsset = /\.(css|js|png|jpg|ico|mp3|wav|xml|txt)$/.test(link.href);
-            
-            if (link.origin === window.location.origin && !isStaticAsset) {
-                e.preventDefault();
-                loadPage(link.href);
-            }
+            if (link.origin !== window.location.origin) return;
+            const isStaticAsset = /\.(css|js|png|jpg|jpeg|ico|mp3|wav|xml|txt|json)$/i.test(link.href);
+            if (isStaticAsset) return;
+            e.preventDefault();
+            loadPage(link.href);
         });
-
-        async function loadPage(url) {
+        async function loadPage(url, skipPushState = false) {
             document.body.style.cursor = 'wait';
             try {
                 const res = await fetch(url);
                 if (!res.ok) throw new Error();
                 const html = await res.text();
-                const doc = new DOMParser().parseFromString(html, 'text/html');
-                const container = doc.getElementById('pjax-container');
-                
-                if (container) {
-                    document.getElementById('pjax-container').innerHTML = container.innerHTML;
-                    document.title = doc.title;
-                    history.pushState(null, null, url);
-                    window.scrollTo(0, 0);
-                    // 运行后置脚本，加 try 包裹防崩溃
-                    try { reRunPageScripts(); } catch(e) {}
-                } else {
-                    window.location.href = url;
-                }
-            } catch (err) {
-                window.location.href = url; // 失败直接强转
-            } finally {
-                document.body.style.cursor = 'default';
-            }
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newContent = doc.getElementById('pjax-container');
+                if (!newContent) throw new Error();
+                const newStyles = doc.querySelectorAll('link[rel="stylesheet"]');
+                newStyles.forEach(newLink => {
+                    const href = newLink.getAttribute('href');
+                    if (!document.querySelector(`link[rel="stylesheet"][href="${href}"]`)) {
+                        const linkNode = document.createElement('link');
+                        linkNode.rel = 'stylesheet';
+                        linkNode.href = href;
+                        document.head.appendChild(linkNode);
+                    }
+                });
+                document.getElementById('pjax-container').innerHTML = newContent.innerHTML;
+                document.title = doc.title;
+                if (!skipPushState) history.pushState(null, null, url);
+                window.scrollTo(0, 0);
+                if (typeof reRunPageScripts === 'function') reRunPageScripts();
+            } catch (err) { window.location.href = url; }
+            finally { document.body.style.cursor = 'default'; }
         }
-
+        window.addEventListener('popstate', () => { loadPage(window.location.href, true); });
         function reRunPageScripts() {
-            const path = window.location.pathname.split('/').pop() || 'index.html';
-            document.querySelectorAll('.nav-links a').forEach(a => {
-                a.classList.toggle('active', a.getAttribute('href').includes(path));
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.vibe-navbar .nav-links a').forEach(a => {
+                const aHref = a.getAttribute('href');
+                a.classList.toggle('active', currentPath === aHref);
             });
             syncPlayerUI();
         }
+        reRunPageScripts();
     </script>
 </body>
 </html>
