@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WIKI | PROJECTS</title>
+    <title>项目与洞察 | WW.WIKI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -21,33 +21,28 @@
         </div>
     </nav>
 
-    <audio id="global-audio"></audio>
+    <audio id="global-audio" preload="auto"></audio>
     <div class="floating-audio-pill" id="global-player">
         <div class="visualizer" id="pill-visualizer"><span></span><span></span><span></span></div>
-        <div class="pill-track-info">
-            <div class="pill-track-name" id="pill-title">Not Playing</div>
-        </div>
-        <button class="pill-btn" id="pill-play-btn" title="播放/暂停">▶</button>
-        <button class="pill-btn" id="pill-next-btn" title="下一首">⏭</button>
+        <div class="pill-track-info"><div class="pill-track-name" id="pill-title">Not Playing</div></div>
+        <button class="pill-btn" id="pill-play-btn">▶</button>
+        <button class="pill-btn" id="pill-next-btn">⏭</button>
     </div>
 
-    <main class="home-container" id="pjax-container">
-        <header class="home-hero">
-            <h1 class="hero-title">PORTFOLIO.<br>INSIGHTS.</h1>
-            <p class="hero-subtitle">欢迎来到项目与技术力工作台。这里记录了关于智能出行、移动科技以及适老化市场的专业深度洞察与消费者原声解构报告。</p>
-        </header>
-        <section style="background: #fff; padding: 40px; border-radius: 24px; border: 1px solid rgba(0,0,0,0.05); margin-top: 40px;">
-            <h3 style="margin-bottom: 15px;">🚀 调研工坊待办中</h3>
-            <p style="color: #666; line-height: 1.6; font-size: 14px;">项目卡片与洞察报告模块正在整理装配。你可以像编辑常规 HTML 一样，随时在这里拓展你的专业产出内容。</p>
-        </section>
+    <main style="max-width: 1200px; margin: 0 auto; padding: 60px 5%;">
+        <h1>项目与洞察</h1>
+        <p style="color: #666; margin-bottom: 40px;">硬核内容、技术笔记、行业研究报告。</p>
+        <div style="background: #f5f5f7; padding: 40px; border-radius: 24px; text-align: center; color: #888;">
+            🚀 调研工坊待办中 —— 项目卡片与洞察报告模块正在整理装配。
+        </div>
     </main>
 
     <script>
         const playlist = [
             { title: 'PWLT', artist: 'Krystal', src: '/images/PWLT.mp3' },
             { title: '비행운', artist: 'MoonMoon', src: '/images/飞机云.mp3' },
-            { title: '위잉위잉 (WI ING WI ING) ', artist: '혁오 (Hyukoh) ', src: '/images/WIINGWIING.mp3' },
-            { title: 'Surf Boy', artist: '혁오 (Hyukoh) ', src: '/images/Surf_boy.mp3' }
+            { title: '위잉위잉', artist: 'Hyukoh', src: '/images/WIINGWIING.mp3' },
+            { title: 'Surf Boy', artist: 'Hyukoh', src: '/images/Surf_boy.mp3' }
         ];
         let currentTrackIdx = 0;
         const audio = document.getElementById('global-audio');
@@ -76,55 +71,6 @@
         document.getElementById('pill-next-btn').addEventListener('click', (e) => { e.stopPropagation(); nextTrack(); });
         initAudio();
         syncPlayerUI();
-
-        // SPA 路由
-        document.addEventListener('click', (e) => {
-            const link = e.target.closest('a');
-            if (!link || !link.href || link.getAttribute('target') === '_blank') return;
-            if (link.origin !== window.location.origin) return;
-            const isStaticAsset = /\.(css|js|png|jpg|jpeg|ico|mp3|wav|xml|txt|json)$/i.test(link.href);
-            if (isStaticAsset) return;
-            e.preventDefault();
-            loadPage(link.href);
-        });
-        async function loadPage(url, skipPushState = false) {
-            document.body.style.cursor = 'wait';
-            try {
-                const res = await fetch(url);
-                if (!res.ok) throw new Error();
-                const html = await res.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const newContent = doc.getElementById('pjax-container');
-                if (!newContent) throw new Error();
-                const newStyles = doc.querySelectorAll('link[rel="stylesheet"]');
-                newStyles.forEach(newLink => {
-                    const href = newLink.getAttribute('href');
-                    if (!document.querySelector(`link[rel="stylesheet"][href="${href}"]`)) {
-                        const linkNode = document.createElement('link');
-                        linkNode.rel = 'stylesheet';
-                        linkNode.href = href;
-                        document.head.appendChild(linkNode);
-                    }
-                });
-                document.getElementById('pjax-container').innerHTML = newContent.innerHTML;
-                document.title = doc.title;
-                if (!skipPushState) history.pushState(null, null, url);
-                window.scrollTo(0, 0);
-                if (typeof reRunPageScripts === 'function') reRunPageScripts();
-            } catch (err) { window.location.href = url; }
-            finally { document.body.style.cursor = 'default'; }
-        }
-        window.addEventListener('popstate', () => { loadPage(window.location.href, true); });
-        function reRunPageScripts() {
-            const currentPath = window.location.pathname;
-            document.querySelectorAll('.vibe-navbar .nav-links a').forEach(a => {
-                const aHref = a.getAttribute('href');
-                a.classList.toggle('active', currentPath === aHref);
-            });
-            syncPlayerUI();
-        }
-        reRunPageScripts();
     </script>
 </body>
 </html>
