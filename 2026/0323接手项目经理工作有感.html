@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="/css/style.css">
     <style>
         .post-meta { font-size: 14px; color: #666; margin-bottom: 20px; }
-        .content { line-height: 1.8; }
-        .content ul, .content blockquote { margin: 1em 0; }
+        .content { line-height: 1.8; max-width: 800px; margin: 0 auto; }
+        .main-container { max-width: 1000px; margin: 0 auto; float: none; }
     </style>
 </head>
 <body>
@@ -23,7 +23,7 @@
         </div>
     </nav>
 
-    <audio id="global-audio"></audio>
+    <audio id="global-audio" preload="auto"></audio>
     <div class="floating-audio-pill" id="global-player">
         <div class="visualizer" id="pill-visualizer"><span></span><span></span><span></span></div>
         <div class="pill-track-info"><div class="pill-track-name" id="pill-title">Not Playing</div></div>
@@ -31,9 +31,9 @@
         <button class="pill-btn" id="pill-next-btn">⏭</button>
     </div>
 
-    <div class="container" id="pjax-container">
+    <div class="container">
         <div class="row">
-            <div class="col-sm-9 col-xs-12 main-container" id="main-container">
+            <div class="col-sm-9 col-xs-12 main-container">
                 <h1>接手项目经理工作有感</h1>
                 <p class="post-meta">Posted at 2026-03-23</p>
                 <div class="content">
@@ -47,19 +47,17 @@
                     <p>- [ ] 了解图纸、结构、工艺、材质、测试</p>
                     <p>- [ ] 阅读</p>
                 </div>
-                <p><a href="/thoughts.html">← 返回首页</a></p>
+                <p><a href="/thoughts.html">← 返回列表</a></p>
             </div>
         </div>
     </div>
 
-    <script src="/js/jquery-3.1.0.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
     <script>
         const playlist = [
             { title: 'PWLT', artist: 'Krystal', src: '/images/PWLT.mp3' },
             { title: '비행운', artist: 'MoonMoon', src: '/images/飞机云.mp3' },
-            { title: '위잉위잉 (WI ING WI ING) ', artist: '혁오 (Hyukoh) ', src: '/images/WIINGWIING.mp3' },
-            { title: 'Surf Boy', artist: '혁오 (Hyukoh) ', src: '/images/Surf_boy.mp3' }
+            { title: '위잉위잉', artist: 'Hyukoh', src: '/images/WIINGWIING.mp3' },
+            { title: 'Surf Boy', artist: 'Hyukoh', src: '/images/Surf_boy.mp3' }
         ];
         let currentTrackIdx = 0;
         const audio = document.getElementById('global-audio');
@@ -88,45 +86,6 @@
         document.getElementById('pill-next-btn').addEventListener('click', (e) => { e.stopPropagation(); nextTrack(); });
         initAudio();
         syncPlayerUI();
-
-        // SPA 路由
-        document.addEventListener('click', (e) => {
-            const link = e.target.closest('a');
-            if (!link || !link.href || link.getAttribute('target') === '_blank') return;
-            if (link.origin !== window.location.origin) return;
-            const isStaticAsset = /\.(css|js|png|jpg|jpeg|ico|mp3|wav|xml|txt|json)$/i.test(link.href);
-            if (isStaticAsset) return;
-            e.preventDefault();
-            loadPage(link.href);
-        });
-        async function loadPage(url, skipPushState = false) {
-            document.body.style.cursor = 'wait';
-            try {
-                const res = await fetch(url);
-                if (!res.ok) throw new Error();
-                const html = await res.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const newContent = doc.getElementById('pjax-container');
-                if (!newContent) throw new Error();
-                const newStyles = doc.querySelectorAll('link[rel="stylesheet"]');
-                newStyles.forEach(newLink => {
-                    const href = newLink.getAttribute('href');
-                    if (!document.querySelector(`link[rel="stylesheet"][href="${href}"]`)) {
-                        const linkNode = document.createElement('link');
-                        linkNode.rel = 'stylesheet';
-                        linkNode.href = href;
-                        document.head.appendChild(linkNode);
-                    }
-                });
-                document.getElementById('pjax-container').innerHTML = newContent.innerHTML;
-                document.title = doc.title;
-                if (!skipPushState) history.pushState(null, null, url);
-                window.scrollTo(0, 0);
-            } catch (err) { window.location.href = url; }
-            finally { document.body.style.cursor = 'default'; }
-        }
-        window.addEventListener('popstate', () => { loadPage(window.location.href, true); });
     </script>
 </body>
 </html>
