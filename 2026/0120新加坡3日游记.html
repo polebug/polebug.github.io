@@ -3,247 +3,216 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新加坡3日游记</title>
+    <title>新加坡3日游记 | WW.WIKI</title>
     <link rel="stylesheet" href="/css/style.css">
-    
-    <style>
-        /* ================= 核心悬浮音乐胶囊与动画样式（全站完全一致） ================= */
-        .floating-audio-pill {
-            position: fixed; bottom: 30px; right: 30px; z-index: 2000;
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 30px; padding: 8px 16px;
-            display: flex; align-items: center; gap: 12px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); user-select: none;
-        }
-        .floating-audio-pill:hover { transform: translateY(-3px); border-color: rgba(0, 0, 0, 0.15); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); }
-        .pill-track-info { max-width: 90px; overflow: hidden; }
-        .pill-track-name { font-size: 12px; font-weight: 700; color: #111115; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .pill-btn { background: none; border: none; font-size: 14px; cursor: pointer; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
-        .pill-btn:hover { background: rgba(0,0,0,0.05); }
-
-        .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 18px; width: 25px; }
-        .visualizer span { width: 3px; height: 3px; background: #111115; border-radius: 3px; transition: height 0.2s; }
-        .visualizer.playing span { animation: bounce 0.8s ease-in-out infinite alternate; }
-        .visualizer.playing span:nth-child(2) { animation-duration: 0.5s; animation-delay: 0.1s; }
-        .visualizer.playing span:nth-child(3) { animation-duration: 0.7s; animation-delay: 0.2s; }
-        @keyframes bounce { 0% { height: 3px; } 100% { height: 18px; } }
-    </style>
 </head>
 <body>
 
     <audio id="global-audio"></audio>
     <div class="floating-audio-pill" id="global-player">
         <div class="visualizer" id="pill-visualizer"><span></span><span></span><span></span></div>
-        <div class="pill-track-info">
-            <div class="pill-track-name" id="pill-title">Not Playing</div>
-        </div>
-        <button class="pill-btn" id="pill-play-btn" title="播放/暂停">▶</button>
-        <button class="pill-btn" id="pill-next-btn" title="下一首">⏭</button>
+        <div class="pill-track-info"><div class="pill-track-name" id="pill-title">Not Playing</div></div>
+        <button class="pill-btn" id="pill-play-btn">▶</button>
+        <button class="pill-btn" id="pill-next-btn">⏭</button>
     </div>
 
 <div class="container" id="pjax-container">
     <div class="row">
-        <div class="col-sm-9 col-xs-12 main-container" id="main-container">
-            <h1>新加坡3日游记</h1>
-            <p class="post-meta">Posted at 2026-01-20</p>
-            <div class="content">
-                <blockquote style="border-left: 4px solid #2e405b; padding-left: 15px; color: #555; background-color: #f9f9f9; padding: 10px 15px; margin: 20px 0;">
-    "旅行的意义不在于去了哪里，而在于在路上遇到了怎样的自己。" —— 2026 新加坡随想
+        <div class="col-sm-9 col-xs-12 main-container" id="main-container" style="max-width: 800px; margin: 0 auto; float: none;">
+            <p><a href="/thoughts.html" style="color: #888; text-decoration: none; font-size: 14px;">← 返回列表</a></p>
+            <h1 style="margin-top: 20px;">新加坡3日游记</h1>
+            <p class="post-meta" style="color: #999;">Posted at 2026-01-20</p>
+            
+            <div class="content" style="line-height: 1.8; color: #333; margin-top: 30px;">
+                <blockquote style="border-left: 4px solid #2e405b; background-color: #f9f9f9; padding: 10px 15px; margin: 20px 0;">
+                    "旅行的意义不在于去了哪里，而在于在路上遇到了怎样的自己。" —— 2026 新加坡随想
                 </blockquote>
                 <p>好诡异，为啥会在闹钟响前就隐约睡醒了呢，以前可不是这样的，包括前几天出去旅游也绝对不会。到了要早起的工作日就这样，是让自己觉察到身体的不适、还是精神的紧绷、还是年龄的增长呢。</p>
-                <p>还有很突如其来感冒，疯狂流鼻涕，喉咙痛得没边了。昨天一天三顿吃的全都很上火，附带一些甜不拉几的甜品和饮料，喉咙直接烧起来了。今天的鼻涕跟昨天相比稍微浓稠了些，应该也不是着凉，因为前几天都是热的要死的东南亚气候，全程只说太热，难道是风热？要么就是病毒性的。</p>
-                <p>新加坡好不好玩呢？好玩。新奇和城市景观漂亮以外，更多的还是跟我一起出发的朋友们好玩，意外的合拍，人多果然热闹。除此之外就是城市的面貌实在是太青春洋溢了，真的是在其他地方见不到的，吸收了满满的正能量，沉浸在其中能够让人充满斗志。还想再去玩一次吗？不太想了。首先是真的史无前例的贵，感觉是超越发达国家的贵，汇率太高了，如果是当地居民的话可能不会觉得如此贵，算下来是北上广深的3倍以上物价了。如果是冲着吸收能量的话倒是可以考虑再去。</p>
-                <p>返回之后最大的感想还是有关于他们的生活状态和精神面貌的，这个国家仿佛是一个巨大的国际学校，人种混合、崇尚运动和健康、且不失平等和谦卑，各种设计都十分超前和具有人性化考量。最喜欢的建筑就是PARKROYAL COLLECTION那个酒店的建筑，将建筑和绿植融合的非常好、太美了，酒店一楼的Lounge配上晚风和live，实在是把人生享受明白了。在国立美术馆中看到学生们的课余活动和他们的社交，真的让人感觉羡慕，太阳光了，这种面貌真的得在高度发达的国家才能看到。在金沙湾旁观赏初高中生一起拍tiktok短视频，回忆以前的学生时期，还有看无数人（男女老少都有）在岸边跑步和骑行，皮肤晒成完美的古铜色，身材也是完全的perfect fit，一直在感叹这才是我最向往的姿态。他们对于爱情的表达和对同性恋的包容也是十分令人惊讶，原以为国内超一线城市已经很先进了，但实地考察后才能发现差距如此之大。回来之后一直都在想这些感想，感触蛮大的，立马生出去徒步、去骑行、去跑步的想法了哈哈哈哈。精神面貌跟生活状态是互相反哺的，不难理解为啥纪梓翰的性格是那么完美，不难理解为啥他不乐意坐班，更不难理解为啥他敢想敢做。</p>
+                <p>还有很突如其来感冒，疯狂流鼻涕，喉咙痛得没边了。昨天一天三顿吃的全都很上火，附带一些甜不拉几的甜品和饮料，喉咙直接烧起来了。</p>
+                <p>新加坡好不好玩呢？好玩。新奇和城市景观漂亮以外，更多的还是跟我一起出发的朋友们好玩，意外的合拍，人多果然热闹。除此之外就是城市的面貌实在是太青春洋溢了，真的是在其他地方见不到的，吸收了满满的正能量，沉浸在其中能够让人充满斗志。</p>
+                <p>返回之后最大的感想还是有关于他们的生活状态和精神面貌的，这个国家仿佛是一个巨大的国际学校，人种混合、崇尚运动和健康、且不失平等和谦卑，各种设计都十分超前和具有人性化考量。最喜欢的建筑就是PARKROYAL COLLECTION那个酒店的建筑，将建筑和绿植融合的非常好、太美了。</p>
                 <p>而且他们其实不咋爱看手机诶，因为我一直身处室外所以看到的样本一定是爱户外的人，但是即使是在飞机上两旁的人也是全程没看手机的，只有我一直在用手机看视频。我也要专注于现生！身处宽广的环境，身心才能开阔。</p>
-                <p>所有人的英语都好好啊，虽然我在国人中英语也能算是很不错的了，但是真的差距还是太大了，不自觉的开始羡慕。尽管我知道他们的官方语言就是英语占大头，但是能够完美掌握一门外语真的很帅啊。学！</p>
-                <p>上上周末跟官琪进行了deep talk，感觉我们有很多能聊和共鸣的，这些想法感觉也可以跟她深入探讨一下。（主要目的当然还是让她陪我实行了哈哈顺便增进感情，户外活动我自己一个人怕是做不到，而且除了她没别人能陪了）</p>
-                <p>我的拍摄技术又双叒叕被夸了，实在是神。虽然我不知道为啥，只是凭感觉和眼睛看好不好看而已，居然都能超过大部分人，甚至超过一些努力想拍好的人。天赋在此？这可能就是传说中的全能型（又全不行），样样通样样松哈哈哈哈哈。</p>
-                <p>因为每周末都好多邀约、十分繁忙，所以一直都没有认真整理过自己的思绪，notion、日记都停更的状态，书也看得七零八落的，利用上班时间赶紧搞定。</p>
-                <p>财务计划再次告急。去新加坡三天，特价机票1043，酒店660，加上机酒大约是花了3660，四舍五入3700。金希美还喊我周末去顺德，官琪还想去景德镇，都想去但是真的告急……</p>   
-            <div style="clear: both;"></div>
-            <p><a href="/thoughts.html">← 返回列表</a></p>
+                <p>所有人的英语都好好啊，虽然我在国人中英语也能算是很不错的了，但是真的差距还是太大了，不自觉的开始羡慕。学！</p>
+            </div>
+            <div style="clear: both; margin-bottom: 50px;"></div>
         </div>
     </div>
 </div>
 
-<script src="/js/jquery-3.1.0.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-
 <script>
-    // 🎵 全站统一的 4 首音乐核心配置大脑
-    const playlist = [
-        { title: 'PWLT', artist: 'Krystal', src: '/images/PWLT.mp3' },
-        { title: '비행운', artist: 'MoonMoon', src: '/images/飞机云.mp3' },
-        { title: '위잉위잉 (WI ING WI ING) ', artist: '혁오 (Hyukoh) ', src: '/images/WIINGWIING.mp3' },
-        { title: 'Surf Boy', artist: '혁오 (Hyukoh) ', src: '/images/Surf_boy.mp3' }
-    ];
-    let currentTrackIdx = 0;
-    const audio = document.getElementById('global-audio');
+        const playlist = [
+            { title: 'PWLT', artist: 'Krystal', src: '/images/PWLT.mp3' },
+            { title: '비행운', artist: 'MoonMoon', src: '/images/飞机云.mp3' },
+            { title: '위잉위잉 (WI ING WI ING) ', artist: '혁오 (Hyukoh) ', src: '/images/WIINGWIING.mp3' },
+            { title: 'Surf Boy', artist: '혁오 (Hyukoh) ', src: '/images/Surf_boy.mp3' }
+        ];
+        let currentTrackIdx = 0;
+        const audio = document.getElementById('global-audio');
 
-    function initAudio() {
-        audio.src = playlist[currentTrackIdx].src;
-        audio.onended = () => { nextTrack(); };
-    }
-
-    function syncPlayerUI() {
-        const isPlaying = !audio.paused;
-        const currentTrack = playlist[currentTrackIdx];
-
-        document.getElementById('pill-title').innerText = currentTrack.title;
-        document.getElementById('pill-play-btn').innerText = isPlaying ? '⏸' : '▶';
-        document.getElementById('pill-visualizer').classList.toggle('playing', isPlaying);
-
-        // 如果局部刷新切回了主页，同步主页内部卡片组件
-        const homeTitle = document.getElementById('home-audio-title');
-        const homeArtist = document.getElementById('home-audio-artist');
-        const homeStatus = document.getElementById('home-player-status');
-        const homeVisualizer = document.getElementById('home-visualizer');
-        const homeDisc = document.getElementById('home-audio-disc');
-
-        if (homeTitle) {
-            homeTitle.innerText = currentTrack.title;
-            homeArtist.innerText = currentTrack.artist;
-            homeStatus.innerText = isPlaying ? 'Now Playing' : 'Music Paused';
-            homeVisualizer.classList.toggle('playing', isPlaying);
-            homeDisc.style.animationPlayState = isPlaying ? 'running' : 'paused';
-            homeTitle.style.color = isPlaying ? '#1a73e8' : '#111115';
+        function initAudio() {
+            audio.src = playlist[currentTrackIdx].src;
+            audio.onended = () => { nextTrack(); };
         }
-    }
 
-    function togglePlay() {
-        if (!audio.src) initAudio();
-        if (audio.paused) {
-            audio.play().then(syncPlayerUI).catch(e => console.log("等待交互:", e));
-        } else {
-            audio.pause();
+        function syncPlayerUI() {
+            const isPlaying = !audio.paused;
+            const currentTrack = playlist[currentTrackIdx];
+
+            document.getElementById('pill-title').innerText = currentTrack.title;
+            document.getElementById('pill-play-btn').innerText = isPlaying ? '⏸' : '▶';
+            document.getElementById('pill-visualizer').classList.toggle('playing', isPlaying);
+
+            const homeTitle = document.getElementById('home-audio-title');
+            const homeArtist = document.getElementById('home-audio-artist');
+            const homeStatus = document.getElementById('home-player-status');
+            const homeVisualizer = document.getElementById('home-visualizer');
+            const homeDisc = document.getElementById('home-audio-disc');
+
+            if (homeTitle) {
+                homeTitle.innerText = currentTrack.title;
+                homeArtist.innerText = currentTrack.artist;
+                homeStatus.innerText = isPlaying ? 'Now Playing' : 'Music Paused';
+                homeVisualizer.classList.toggle('playing', isPlaying);
+                if(homeDisc) homeDisc.style.animationPlayState = isPlaying ? 'running' : 'paused';
+                homeTitle.style.color = isPlaying ? '#1a73e8' : '#111115';
+            }
+        }
+
+        function togglePlay() {
+            if (!audio.src) initAudio();
+            if (audio.paused) {
+                audio.play().then(syncPlayerUI).catch(e => console.log("等待交互:", e));
+            } else {
+                audio.pause();
+                syncPlayerUI();
+            }
+        }
+
+        function nextTrack() {
+            currentTrackIdx = (currentTrackIdx + 1) % playlist.length;
+            audio.src = playlist[currentTrackIdx].src;
+            audio.play().then(syncPlayerUI).catch(e => console.log("切换歌曲自启失败:", e));
             syncPlayerUI();
         }
-    }
 
-    function nextTrack() {
-        currentTrackIdx = (currentTrackIdx + 1) % playlist.length;
-        audio.src = playlist[currentTrackIdx].src;
-        audio.play().then(syncPlayerUI).catch(e => console.log("切歌失败:", e));
+        document.getElementById('pill-play-btn').addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
+        document.getElementById('pill-next-btn').addEventListener('click', (e) => { e.stopPropagation(); nextTrack(); });
+        initAudio();
         syncPlayerUI();
-    }
 
-    document.getElementById('pill-play-btn').addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
-    document.getElementById('pill-next-btn').addEventListener('click', (e) => { e.stopPropagation(); nextTrack(); });
-    initAudio();
-    syncPlayerUI();
-
-    // 🚀 最终版 SPA 路由拦截器（加入了后缀过滤与空值防御）
+        // 🚀 SPA 终极路由拦截器
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a');
-            // 如果没有链接，或者链接是新窗口打开，直接跳过拦截
             if (!link || !link.href || link.getAttribute('target') === '_blank') return;
+            if (link.origin !== window.location.origin) return;
             
-            // 【添加这行】过滤：如果是静态资源，直接放行，不要拦截！
-            const isStaticAsset = /\.(css|js|png|jpg|ico|mp3|wav|xml|txt)$/.test(link.href);
-            
-            // 只有在是站内链接 且 不是静态资源时，才执行 PJAX 拦截
-            if (link.origin === window.location.origin && !isStaticAsset) {
-                e.preventDefault();
-                loadPage(link.href);
-            }
+            // 【过滤】放行跨域链接和所有静态资源（包含 .json）
+            const isStaticAsset = /\.(css|js|png|jpg|jpeg|ico|mp3|wav|xml|txt|json)$/i.test(link.href);
+            if (isStaticAsset) return;
+
+            e.preventDefault();
+            loadPage(link.href);
         });
-    
+
         async function loadPage(url, skipPushState = false) {
+            document.body.style.cursor = 'wait';
             try {
                 const res = await fetch(url);
-                if (!res.ok) throw new Error("网络错误");
+                if (!res.ok) throw new Error("HTTP Status " + res.status);
                 const html = await res.text();
                 
-                // 使用 DOMParser 将 HTML 字符串转换为可操作的文档对象
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-    
-                // 寻找核心内容区
+
                 const newContent = doc.getElementById('pjax-container');
-                if (!newContent) {
-                    // 如果找不到容器，说明这可能不是目标页面，直接跳转
-                    window.location.href = url;
-                    return;
-                }
-    
-                // 更新 DOM 和标题
+                if (!newContent) throw new Error("页面缺少 pjax-container 容器");
+
+                // --- 核心修复：动态加载目标页面的 CSS，彻底解决样式丢失 ---
+                const newStyles = doc.querySelectorAll('link[rel="stylesheet"]');
+                newStyles.forEach(newLink => {
+                    const href = newLink.getAttribute('href');
+                    if (!document.querySelector(`link[rel="stylesheet"][href="${href}"]`)) {
+                        const linkNode = document.createElement('link');
+                        linkNode.rel = 'stylesheet';
+                        linkNode.href = href;
+                        document.head.appendChild(linkNode);
+                    }
+                });
+
                 document.getElementById('pjax-container').innerHTML = newContent.innerHTML;
                 document.title = doc.title;
-    
+
                 if (!skipPushState) history.pushState(null, null, url);
-                
-                // 重新初始化所有页面的逻辑（导航、音乐播放器、动效等）
-                reRunPageScripts();
-                
-                // 滚动到顶部
                 window.scrollTo(0, 0);
+                if (typeof reRunPageScripts === 'function') reRunPageScripts();
                 
             } catch (err) {
-                console.error("加载失败，回退至原生跳转:", err);
-                window.location.href = url;
+                console.warn("异步加载失败，回退至原生跳转:", err);
+                window.location.href = url; // 终极兜底：报错就硬刷新，绝不卡死
+            } finally {
+                document.body.style.cursor = 'default';
             }
         }
 
-    window.addEventListener('popstate', () => { loadPage(window.location.href, true); });
+        window.addEventListener('popstate', () => { loadPage(window.location.href, true); });
 
-    // 🔄 切回其他页面时的脚本状态重激活中心
-    function reRunPageScripts() {
-        // 更新顶级导航激活状态
-        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-        document.querySelectorAll('.vibe-navbar .nav-links a').forEach(a => {
-            const aHref = a.getAttribute('href').replace(/^\//, '');
-            a.classList.toggle('active', aHref === currentPath);
-        });
-
-        // 恢复移动端导航逻辑
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navLinks = document.getElementById('nav-links');
-        if (mobileMenu && navLinks) {
-            mobileMenu.onclick = null;
-            mobileMenu.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-                mobileMenu.classList.toggle('open');
+        // 3. 🔄 页面专属脚本激活中心
+        function reRunPageScripts() {
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.vibe-navbar .nav-links a').forEach(a => {
+                const aHref = a.getAttribute('href');
+                if (currentPath === aHref || (currentPath === '/' && aHref === '/index.html')) {
+                    a.classList.add('active');
+                } else {
+                    a.classList.remove('active');
+                }
             });
-        }
 
-        // 联动主页特有卡片逻辑
-        const homeCard = document.getElementById('home-music-widget');
-        if (homeCard) {
-            homeCard.addEventListener('click', togglePlay);
-            document.querySelectorAll('.portal-card').forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const rotateX = (rect.height / 2 - (e.clientY - rect.top)) / 14;
-                    const rotateY = ((e.clientX - rect.left) - rect.width / 2) / 14;
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.getElementById('nav-links');
+            if (mobileMenu && navLinks) {
+                mobileMenu.onclick = null;
+                mobileMenu.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                    mobileMenu.classList.toggle('open');
                 });
-                card.addEventListener('mouseleave', () => card.style.transform = 'none');
-            });
-            const insights = ['"最敏锐的商业机会，往往藏在用户的原声数据里。"', '"跳出传统的问卷框架，去聆听真实世界的声音。"', '"适老化改造，不仅是硬件升级，更是尊严的重塑。"'];
-            let idx = 0;
-            document.getElementById('insight-box').addEventListener('click', () => {
-                idx = (idx + 1) % insights.length;
-                document.getElementById('insight-box').innerText = insights[idx];
-            });
-            let count = 108;
-            document.getElementById('like-btn').addEventListener('click', () => {
-                document.getElementById('like-count').innerText = ++count;
-            });
-        }
-        syncPlayerUI();
-    }
+            }
 
-    // 时钟
-    function updateClock() {
-        const clockEl = document.getElementById('clock');
-        if (clockEl) {
-            const options = { timeZone: 'Asia/Singapore', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-            clockEl.innerText = new Date().toLocaleTimeString('zh-CN', options);
+            const homeCard = document.getElementById('home-music-widget');
+            if (homeCard) {
+                homeCard.addEventListener('click', togglePlay);
+                const insights = ['"最敏锐的商业机会，往往藏在用户的原声数据里。"', '"跳出传统的问卷框架，去聆听真实世界的声音。"', '"适老化改造，不仅是硬件升级，更是尊严的重塑。"'];
+                let idx = 0;
+                const insightBox = document.getElementById('insight-box');
+                if(insightBox) {
+                    insightBox.onclick = null;
+                    insightBox.addEventListener('click', () => {
+                        idx = (idx + 1) % insights.length;
+                        insightBox.innerText = insights[idx];
+                    });
+                }
+                let count = 108;
+                const likeBtn = document.getElementById('like-btn');
+                if(likeBtn) {
+                    likeBtn.onclick = null;
+                    likeBtn.addEventListener('click', () => {
+                        const countEl = document.getElementById('like-count');
+                        if (countEl) countEl.innerText = ++count;
+                    });
+                }
+            }
+            syncPlayerUI();
         }
-    }
-    setInterval(updateClock, 1000);
 
-    reRunPageScripts();
-</script>
+        function updateClock() {
+            const clockEl = document.getElementById('clock');
+            if (clockEl) {
+                const options = { timeZone: 'Asia/Singapore', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+                clockEl.innerText = new Date().toLocaleTimeString('zh-CN', options);
+            }
+        }
+        if (!window.clockIntervalId) window.clockIntervalId = setInterval(updateClock, 1000);
+        reRunPageScripts();
+    </script>
 </body>
 </html>
