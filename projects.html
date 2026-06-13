@@ -7,101 +7,81 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
     <style>
-        /* 针对项目页面的定制轻量级卡片样式 */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+        /* 全局统一核心样式 */
+        :root { --bg-color: #fafafc; --text-main: #111111; --text-muted: #666666; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px; color: var(--text-main); line-height: 1.6; overflow-x: hidden;
         }
+        
+        /* 统一导航栏样式 */
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 25px 5vw; background: rgba(250,250,252,0.8);
+            backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main); text-decoration: none; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            text-decoration: none; color: var(--text-muted);
+            font-size: 15px; font-weight: 600; transition: color 0.3s ease;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
+        
+        /* 页面容器 */
+        .container { max-width: 900px; margin: 0 auto; padding: 80px 20px; animation: fadeIn 0.8s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 项目页面定制样式 */
+        .page-header { margin-bottom: 50px; }
+        .page-header h1 { font-size: 40px; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; }
+        .page-header p { color: var(--text-muted); font-size: 18px; max-width: 600px; }
+
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .project-card {
-            background: #fff;
-            border: 1px solid rgba(0,0,0,0.06);
-            border-radius: 20px;
-            padding: 35px;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
+            background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 20px;
+            padding: 35px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative; text-decoration: none; display: flex; flex-direction: column;
         }
-        .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            border-bottom-color: transparent;
-        }
-        .project-year {
-            font-size: 13px;
-            font-weight: 800;
-            color: #111;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-        }
-        .project-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: #111;
-            margin-bottom: 15px;
-            line-height: 1.3;
-        }
-        .project-desc {
-            font-size: 15px;
-            color: #666;
-            line-height: 1.7;
-            margin-bottom: 25px;
-            flex-grow: 1;
-        }
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .project-tag {
-            font-size: 12px;
-            font-weight: 600;
-            background: #f5f5f7;
-            color: #555;
-            padding: 6px 12px;
-            border-radius: 8px;
-        }
-        /* 卡片右上角的小箭头 */
+        .project-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+        .project-year { font-size: 13px; font-weight: 800; color: #111; margin-bottom: 15px; letter-spacing: 1px; }
+        .project-title { font-size: 22px; font-weight: 700; color: #111; margin-bottom: 15px; line-height: 1.3; }
+        .project-desc { font-size: 15px; color: #666; line-height: 1.7; margin-bottom: 25px; flex-grow: 1; }
+        .project-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+        .project-tag { font-size: 12px; font-weight: 600; background: #f5f5f7; color: #555; padding: 6px 12px; border-radius: 8px; }
+        
         .project-arrow {
-            position: absolute;
-            top: 35px;
-            right: 35px;
-            font-size: 20px;
-            color: #ccc;
+            position: absolute; top: 35px; right: 35px; font-size: 20px; color: #ccc;
             transition: color 0.3s ease, transform 0.3s ease;
         }
-        .project-card:hover .project-arrow {
-            color: #111;
-            transform: translate(3px, -3px);
-        }
+        .project-card:hover .project-arrow { color: #111; transform: translate(3px, -3px); }
+
+        @media (max-width: 768px) { .nav-links { display: none; } }
     </style>
 </head>
 <body>
 
-    <nav class="vibe-navbar">
-        <div class="logo">WW.WIKI</div>
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-        </div>
-        <div class="nav-links" id="nav-links">
-            <a href="/index.html">首页</a>
-            <a href="/projects.html" class="active">项目与洞察</a>
-            <a href="/thoughts.html">思考与生活</a>
-            <a href="/about.html">关于我</a>
+    <nav class="navbar">
+        <a href="index.html" class="logo">WW.WIKI</a>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="projects.html" class="active">项目与洞察</a>
+            <a href="thoughts.html">思考与生活</a>
+            <a href="about.html">关于我</a>
         </div>
     </nav>
 
-    <main class="article-container" style="max-width: 1000px; margin: 0 auto; padding: 60px 20px;">
-        <h1 style="font-size: 38px; font-weight: 800; margin-bottom: 15px; letter-spacing: -0.5px;">项目与洞察</h1>
-        <p style="color: #666; font-size: 18px; margin-bottom: 50px; max-width: 600px;">
-            跨越数字与物理世界的边界。这里收录了我在用户研究、数据分析以及前沿技术探索中的实践与成果。
-        </p>
+    <main class="container">
+        <header class="page-header">
+            <h1>项目与洞察</h1>
+            <p>跨越数字与物理世界的边界。这里收录了我在用户研究、数据分析以及前沿技术探索中的实践与成果。</p>
+        </header>
 
         <div class="project-grid">
             <!-- 项目 1 -->
@@ -109,28 +89,22 @@
                 <div class="project-arrow">↗</div>
                 <div class="project-year">2025 // 移动出行</div>
                 <h2 class="project-title">破局体验盲区：基于海量原声数据(VOC)的出行重塑</h2>
-                <p class="project-desc">
-                    跳出传统的问卷框架，通过对数万条真实用户乘车评价与客服录音进行 NLP 情感清洗与定性解码，精准定位了司乘交互过程中的“沉默痛点”。该研究成功推动了产品评价体系的迭代，使用户核心诉求的响应时间缩短了30%。最敏锐的商业机会，永远藏在第一手的声音里。
-                </p>
+                <p class="project-desc">跳出传统的问卷框架，通过对数万条真实用户乘车评价与客服录音进行 NLP 情感清洗与定性解码，精准定位了司乘交互过程中的“沉默痛点”。该研究成功推动了产品评价体系的迭代，使用户核心诉求的响应时间缩短了30%。最敏锐的商业机会，永远藏在第一手的声音里。</p>
                 <div class="project-tags">
                     <span class="project-tag">VOC 数据分析</span>
                     <span class="project-tag">用户体验研究</span>
-                    <span class="project-tag">业务增长</span>
                 </div>
             </a>
 
             <!-- 项目 2 -->
             <a href="#" class="project-card">
                 <div class="project-arrow">↗</div>
-                <div class="project-year">2026 // 适老化与包容性设计</div>
+                <div class="project-year">2026 // 适老化设计</div>
                 <h2 class="project-title">科技的温情：超越硬件的“适老化”重塑计划</h2>
-                <p class="project-desc">
-                    适老化改造，不仅是把字放大或加装扶手，更是尊严的重塑。通过深度入户跟访与行为观察，解构银发族在数字时代的真实困境。项目提出了一套融合“无意识交互”与“情感陪伴”的适老化服务蓝图，让科技真正以平视的角度服务于长者。
-                </p>
+                <p class="project-desc">适老化改造，不仅是把字放大或加装扶手，更是尊严的重塑。通过深度入户跟访与行为观察，解构银发族在数字时代的真实困境。项目提出了一套融合“无意识交互”与“情感陪伴”的适老化服务蓝图，让科技真正以平视的角度服务于长者。</p>
                 <div class="project-tags">
                     <span class="project-tag">定性调研</span>
                     <span class="project-tag">包容性设计</span>
-                    <span class="project-tag">人机交互</span>
                 </div>
             </a>
 
@@ -139,39 +113,13 @@
                 <div class="project-arrow">↗</div>
                 <div class="project-year">2026 // 个人技术力</div>
                 <h2 class="project-title">WW.WIKI：纯静态数字花园的从0到1</h2>
-                <p class="project-desc">
-                    摒弃了臃肿的现代前端框架与复杂的动态路由，通过 Vibe Coding 与纯原生 HTML/CSS/JS 构建的个人知识库。以最轻量的底层逻辑，实现了高流畅度的页面切换与 CSS 动画体验。在喧嚣的技术栈迭代中，留下一处安静解构生活与代码的极简数字花园。
-                </p>
+                <p class="project-desc">摒弃了臃肿的现代前端框架与复杂的动态路由，通过纯原生 HTML/CSS 构建的个人知识库。以最轻量的底层逻辑，实现了高流畅度的页面切换与极简的美学体验。在喧嚣的技术栈迭代中，留下一处安静解构生活与代码的数字花园。</p>
                 <div class="project-tags">
                     <span class="project-tag">前端开发</span>
-                    <span class="project-tag">UI/UX 设计</span>
                     <span class="project-tag">Vibe Coding</span>
                 </div>
             </a>
         </div>
     </main>
-
-    <!-- 统一的页面交互脚本 -->
-    <script>
-        // 动态设置导航栏高亮
-        const currentPath = window.location.pathname;
-        document.querySelectorAll('.vibe-navbar .nav-links a').forEach(a => {
-            if (currentPath === a.getAttribute('href') || (currentPath === '/' && a.getAttribute('href') === '/index.html')) {
-                a.classList.add('active');
-            } else {
-                a.classList.remove('active');
-            }
-        });
-
-        // 移动端菜单开关
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navLinks = document.getElementById('nav-links');
-        if (mobileMenu && navLinks) {
-            mobileMenu.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-                mobileMenu.classList.toggle('open');
-            });
-        }
-    </script>
 </body>
 </html>
