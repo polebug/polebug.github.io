@@ -54,10 +54,6 @@
         .thought-item span { font-size: 14px; color: #888; }
     </style>
     
-    #progress-bar {
-    position: fixed; top: 0; left: 0; width: 0%; height: 3px;
-    background: #111; z-index: 999; transition: width 0.1s ease-out;
-    }
 </head>
 <body>
 
@@ -92,15 +88,5 @@
         </div>
     </main>
 
-    <div id="progress-bar"></div>
-        <script>
-            window.addEventListener('scroll', () => {
-                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = (winScroll / height) * 100;
-                document.getElementById('progress-bar').style.width = scrolled + "%";
-            });
-        </script>
-    
 </body>
 </html>
