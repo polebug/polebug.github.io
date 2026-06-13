@@ -53,6 +53,11 @@
         .thought-item h3 { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 4px; }
         .thought-item span { font-size: 14px; color: #888; }
     </style>
+    
+    #progress-bar {
+    position: fixed; top: 0; left: 0; width: 0%; height: 3px;
+    background: #111; z-index: 999; transition: width 0.1s ease-out;
+    }
 </head>
 <body>
 
@@ -86,5 +91,16 @@
             <!-- 请在此处继续添加你原有的文章列表 -->
         </div>
     </main>
+
+    <div id="progress-bar"></div>
+        <script>
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progress-bar').style.width = scrolled + "%";
+            });
+        </script>
+    
 </body>
 </html>
