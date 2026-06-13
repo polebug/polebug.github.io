@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>项目名称 | WW.WIKI</title>
+    <meta name="description" content="项目简述。">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-color: #fafafc; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-color); line-height: 1.6; }
+        .container { max-width: 900px; margin: 60px auto; padding: 0 20px; }
+        .project-hero { margin-bottom: 60px; }
+        .grid-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
+        .card { background: #fff; padding: 30px; border: 1px solid #eee; border-radius: 16px; }
+        h3 { font-size: 14px; color: #888; text-transform: uppercase; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header class="project-hero">
+            <h1>项目名称</h1>
+            <p style="font-size: 20px; color: #666;">项目核心的一句话目标或洞察。</p>
+        </header>
+
+        <div class="grid-section">
+            <div class="card">
+                <h3>背景 (Context)</h3>
+                <p>描述为什么要做这个项目，解决了什么问题。</p>
+            </div>
+            <div class="card">
+                <h3>成果 (Result)</h3>
+                <p>量化数据或最终呈现的结果。</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
