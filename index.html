@@ -3,153 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WIKI | HOME</title>
+    <title>WW.WIKI | 首页</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        :root {
+            --bg-color: #fafafc;
+            --text-main: #111111;
+            --text-muted: #666666;
+            --accent: #000000;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            /* 高级感的网格背景 */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        /* 导航栏样式 */
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 25px 5vw; background: rgba(250,250,252,0.8);
+            backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main); text-decoration: none; }
+        .nav-links a {
+            margin-left: 30px; text-decoration: none; color: var(--text-muted);
+            font-size: 15px; font-weight: 600; transition: color 0.3s ease;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
+        
+        /* 核心布局容器 */
+        .container { max-width: 900px; margin: 0 auto; padding: 120px 20px; }
+        
+        /* 首页 Hero 区域 */
+        .hero-section { text-align: left; animation: fadeIn 1s ease-out; }
+        .hero-tag { display: inline-block; padding: 6px 14px; background: #eee; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 30px; }
+        .hero-title { font-size: 56px; font-weight: 800; line-height: 1.1; letter-spacing: -2px; margin-bottom: 30px; }
+        .hero-subtitle { font-size: 20px; color: var(--text-muted); max-width: 650px; margin-bottom: 50px; line-height: 1.7; }
+        
+        .cta-group { display: flex; gap: 20px; }
+        .btn { display: inline-block; padding: 16px 32px; border-radius: 12px; font-size: 16px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; }
+        .btn-primary { background: var(--text-main); color: #fff; border: 1px solid var(--text-main); }
+        .btn-primary:hover { background: transparent; color: var(--text-main); transform: translateY(-3px); }
+        .btn-secondary { background: transparent; color: var(--text-main); border: 1px solid rgba(0,0,0,0.1); }
+        .btn-secondary:hover { border-color: var(--text-main); transform: translateY(-3px); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        @media (max-width: 768px) {
+            .hero-title { font-size: 40px; }
+            .nav-links { display: none; } /* 移动端暂时隐藏菜单，保持极简 */
+        }
+    </style>
 </head>
 <body>
-
-    <nav class="vibe-navbar">
-        <div class="logo">WW.WIKI</div>
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-        <div class="nav-links" id="nav-links">
-            <a href="/index.html" class="active">首页</a>
-            <a href="/projects.html">项目与洞察</a>
-            <a href="/thoughts.html">思考与生活</a>
-            <a href="/about.html">关于我</a>
+    <nav class="navbar">
+        <a href="index.html" class="logo">WW.WIKI</a>
+        <div class="nav-links">
+            <a href="index.html" class="active">首页</a>
+            <a href="projects.html">项目与洞察</a>
+            <!-- <a href="thoughts.html">思考与生活</a> -->
+            <a href="about.html">关于我</a>
         </div>
     </nav>
 
-    <main class="home-container" id="pjax-container">
-        <header class="home-hero">
-            <h1 class="hero-title">RESEARCH.<br>THINK.<br>CREATE.</h1>
-            <p class="hero-subtitle">探索移动出行与适老化市场的专业数据洞察，在喧嚣的世界里留下一处安静解构生活的数字花园。</p>
-        </header>
-
-        <section class="home-portal-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px;">
-            <a href="/projects.html" class="portal-card item-projects" style="background:#111; color:#fff; padding:40px; border-radius:24px; text-decoration:none;">
-                <div class="portal-num">// 01</div>
-                <h2>项目与技术力</h2>
-                <div class="portal-arrow">→</div>
-            </a>
-            <a href="/thoughts.html" class="portal-card item-thoughts" style="background:#f5f5f7; color:#111; padding:40px; border-radius:24px; text-decoration:none;">
-                <div class="portal-num">// 02</div>
-                <h2>思考与生活</h2>
-                <div class="portal-arrow">→</div>
-            </a>
-            <a href="/about.html" class="portal-card item-about" style="background:#2f5ac4; color:#fff; padding:40px; border-radius:24px; text-decoration:none;">
-                <div class="portal-num">// 03</div>
-                <h2>关于我</h2>
-                <div class="portal-arrow">→</div>
-            </a>
-        </section>
-
-        <!-- 移除音乐模块后，调整为两列等宽网格 -->
-        <section class="widget-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top:25px;">
-            <div class="widget-card" style="background: #fff; padding: 25px; border-radius: 24px; border: 1px solid rgba(0,0,0,0.05);">
-                <div class="status-header">
-                    <div class="widget-label" style="font-size:11px; color:#999; font-weight:bold; text-transform: uppercase;">Availability</div>
-                </div>
-                <div class="live-time" id="clock" style="font-size:32px; font-weight:800; font-family:monospace; margin-top:10px;">00:00:00</div>
-                <div class="live-location" style="font-size:12px; color:#666; margin-top: 5px;">Singapore (SGT) — Delivering Insights</div>
-            </div>
-
-            <div class="widget-card" style="background: #fff; padding: 25px; border-radius: 24px; border: 1px solid rgba(0,0,0,0.05);">
-                <div class="widget-label" style="font-size:11px; color:#999; font-weight:bold; text-transform: uppercase;">Click to Shuffle Insight</div>
-                <div class="shuffler-text" id="insight-box" style="margin-top:15px; cursor:pointer; font-weight:bold; font-size:16px;">"最敏锐的商业机会，往往藏在用户的原声数据里。"</div>
-                <button id="like-btn" style="margin-top:15px; background:#111; color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-size:12px; font-weight:bold;">✨ 共鸣 <span id="like-count">108</span></button>
+    <main class="container">
+        <section class="hero-section">
+            <div class="hero-tag">Singapore Based 🇸🇬</div>
+            <h1 class="hero-title">
+                最敏锐的商业机会，<br>永远藏在用户的<br>原声数据里。
+            </h1>
+            <p class="hero-subtitle">
+                你好，这里是 WW.WIKI。<br>
+                我是一名前沿市场的研究者，专注于适老化市场 (Silver Economy)、移动出行与智能硬件。通过定性调研与社会化聆听，探寻商业增长与用户尊严的交汇点。
+            </p>
+            <div class="cta-group">
+                <a href="projects.html" class="btn btn-primary">查看项目洞察</a>
+                <a href="about.html" class="btn btn-secondary">了解更多关于我</a>
             </div>
         </section>
     </main>
-
-    <!-- 精简版交互脚本，所有页面共用 -->
-    <script>
-        // 1. 动态设置导航栏高亮
-        const currentPath = window.location.pathname;
-        document.querySelectorAll('.vibe-navbar .nav-links a').forEach(a => {
-            if (currentPath === a.getAttribute('href') || (currentPath === '/' && a.getAttribute('href') === '/index.html')) {
-                a.classList.add('active');
-            } else {
-                a.classList.remove('active');
-            }
-        });
-
-        // 2. 移动端菜单开关
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navLinks = document.getElementById('nav-links');
-        if (mobileMenu && navLinks) {
-            mobileMenu.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-                mobileMenu.classList.toggle('open');
-            });
-        }
-
-        // 3. 首页实时时钟
-        function updateClock() {
-            const clockEl = document.getElementById('clock');
-            if (clockEl) {
-                const options = { timeZone: 'Asia/Singapore', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-                clockEl.innerText = new Date().toLocaleTimeString('zh-CN', options);
-            }
-        }
-        if (document.getElementById('clock')) {
-            updateClock();
-            setInterval(updateClock, 1000);
-        }
-
-        // 4. 首页入口卡片 3D 悬浮特效
-        document.querySelectorAll('.portal-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const rotateX = (rect.height / 2 - (e.clientY - rect.top)) / 14;
-                const rotateY = ((e.clientX - rect.left) - rect.width / 2) / 14;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'none';
-                card.style.transition = 'transform 0.5s ease';
-            });
-            card.addEventListener('mouseenter', () => {
-                card.style.transition = 'none'; 
-            });
-        });
-
-        // 5. 首页文本打乱器与点赞
-        const insightBox = document.getElementById('insight-box');
-        if (insightBox) {
-            const insights = [
-                '"最敏锐的商业机会，往往藏在用户的原声数据里。"', 
-                '"跳出传统的问卷框架，去聆听真实世界的声音。"', 
-                '"适老化改造，不仅是硬件升级，更是尊严的重塑。"'
-            ];
-            let idx = 0;
-            insightBox.addEventListener('click', () => {
-                idx = (idx + 1) % insights.length;
-                insightBox.style.opacity = 0;
-                setTimeout(() => {
-                    insightBox.innerText = insights[idx];
-                    insightBox.style.opacity = 1;
-                }, 200);
-            });
-            insightBox.style.transition = "opacity 0.2s ease";
-        }
-
-        const likeBtn = document.getElementById('like-btn');
-        if (likeBtn) {
-            let count = 108;
-            likeBtn.addEventListener('click', () => {
-                document.getElementById('like-count').innerText = ++count;
-                likeBtn.style.transform = "scale(1.1)";
-                setTimeout(() => likeBtn.style.transform = "scale(1)", 150);
-            });
-            likeBtn.style.transition = "transform 0.15s ease";
-        }
-    </script>
 </body>
 </html>
