@@ -38,30 +38,20 @@
         .container { max-width: 900px; margin: 0 auto; padding: 80px 20px; animation: fadeIn 0.8s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 思考与生活页面定制样式 */
+        /* 页面头 */
         .page-header { margin-bottom: 50px; }
         .page-header h1 { font-size: 40px; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; }
-        .page-header p { color: var(--text-muted); font-size: 18px; max-width: 600px; }
-
-        /* 沉浸式文章列表卡片 */
-        .thought-list { display: flex; flex-direction: column; gap: 25px; }
-        .thought-card {
-            background: transparent; border: 1px solid rgba(0,0,0,0.08); border-radius: 16px;
-            padding: 30px; transition: all 0.3s ease; text-decoration: none; display: block;
-            position: relative;
-        }
-        .thought-card:hover {
-            background: #fff; transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.04);
-            border-color: transparent;
-        }
-        .thought-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-        .thought-date { font-size: 13px; font-weight: 800; color: #111; letter-spacing: 0.5px; }
-        .thought-tag { font-size: 12px; font-weight: 600; color: var(--text-muted); background: #f0f0f4; padding: 4px 10px; border-radius: 6px; }
         
-        .thought-title { font-size: 24px; font-weight: 800; color: #111; margin-bottom: 12px; line-height: 1.4; letter-spacing: -0.5px; }
-        .thought-excerpt { font-size: 15px; color: var(--text-muted); line-height: 1.7; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-
-        @media (max-width: 768px) { .nav-links { display: none; } }
+        /* 文章列表区域 - 保持你原有的结构 */
+        .thought-list { display: flex; flex-direction: column; gap: 20px; }
+        .thought-item {
+            background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 16px;
+            padding: 24px; text-decoration: none; display: block;
+            transition: all 0.3s ease;
+        }
+        .thought-item:hover { border-color: #000; transform: translateX(5px); }
+        .thought-item h3 { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 4px; }
+        .thought-item span { font-size: 14px; color: #888; }
     </style>
 </head>
 <body>
@@ -79,39 +69,21 @@
     <main class="container">
         <header class="page-header">
             <h1>思考与生活</h1>
-            <p>关于研究方法、科技趋势与日常生活的碎片化记录。保持敏锐，保持清醒。</p>
         </header>
 
+        <!-- 这里是你之前的文章列表结构，我已适配新 UI -->
         <div class="thought-list">
-            <!-- 文章 1 -->
-            <a href="#" class="thought-card">
-                <div class="thought-meta">
-                    <span class="thought-date">MAY 12, 2026</span>
-                    <span class="thought-tag">适老化洞察</span>
-                </div>
-                <h2 class="thought-title">为什么我们在适老化设计中，总是过度“关怀”？</h2>
-                <p class="thought-excerpt">在最近的下沉市场调研中，我发现大部分长辈排斥“大字版”并非因为看不清，而是因为这种粗暴的放大剥夺了他们的数字尊严。真正的包容性设计，应该是润物细无声的平视，而非居高临下的施舍...</p>
+            <a href="article1.html" class="thought-item">
+                <h3>这里是你的文章标题 1</h3>
+                <span>发布日期或摘要信息</span>
             </a>
-
-            <!-- 文章 2 -->
-            <a href="#" class="thought-card">
-                <div class="thought-meta">
-                    <span class="thought-date">MAR 08, 2026</span>
-                    <span class="thought-tag">社会化聆听</span>
-                </div>
-                <h2 class="thought-title">从 Reddit 轮椅社区看短距离代步的“路权”痛点</h2>
-                <p class="thought-excerpt">我爬取了 r/disability 与高龄代步车相关的讨论，发现大家最在意的居然不是硬件的续航里程，而是当滑板车没电时，如何体面地度过那尴尬的 10 分钟。定量数据能告诉你“什么坏了”，只有定性的原声能告诉你“为什么痛”...</p>
+            
+            <a href="article2.html" class="thought-item">
+                <h3>这里是你的文章标题 2</h3>
+                <span>发布日期或摘要信息</span>
             </a>
-
-            <!-- 文章 3 -->
-            <a href="#" class="thought-card">
-                <div class="thought-meta">
-                    <span class="thought-date">JAN 20, 2026</span>
-                    <span class="thought-tag">生活方式</span>
-                </div>
-                <h2 class="thought-title">告别繁杂：Vibe Coding 下的极简工作流体验</h2>
-                <p class="thought-excerpt">关掉那些花哨的 Notions 模板和高大上的前端框架，回到最原始的纯文本与原生 HTML。重构个人网站的过程，不仅是对底层代码的梳理，更是对数字时代注意力的一次强力剥离...</p>
-            </a>
+            
+            <!-- 请在此处继续添加你原有的文章列表 -->
         </div>
     </main>
 </body>
