@@ -3,108 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>关于我 | WW.WIKI</title>
+    <title>WW.WIKI | 关于我</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        :root { --bg-color: #fafafc; --text-main: #111; --text-muted: #666; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 25px 5vw; background: rgba(250,250,252,0.8);
+            backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main); text-decoration: none; }
+        .nav-links a { margin-left: 30px; text-decoration: none; color: var(--text-muted); font-size: 15px; font-weight: 600; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
+        
+        .container { max-width: 900px; margin: 0 auto; padding: 80px 20px; animation: fadeIn 0.8s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Vibe 音乐小组件 */
+        .vibe-player {
+            display: inline-flex; align-items: center; gap: 15px; padding: 10px 20px;
+            background: #fff; border: 1px solid rgba(0,0,0,0.08); border-radius: 50px;
+            margin-bottom: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+        .vibe-player span { font-size: 12px; font-weight: 800; letter-spacing: 1px; }
+        .vibe-player .controls { display: flex; gap: 8px; cursor: pointer; color: var(--text-muted); }
+
+        .about-header { border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 40px; margin-bottom: 40px; }
+        .about-header h1 { font-size: 48px; font-weight: 800; margin-bottom: 10px; letter-spacing: -1px; }
+        .about-header .subtitle { font-size: 18px; color: var(--text-muted); }
+
+        /* 内容网格布局 */
+        .about-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; }
+        @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; } }
+        
+        .photo-placeholder {
+            width: 100%; aspect-ratio: 1; background: #e5e5ea; border-radius: 24px;
+            display: flex; align-items: center; justify-content: center; color: #aaa;
+            font-weight: 600; font-size: 14px;
+        }
+
+        .role-title { font-size: 32px; font-weight: 800; line-height: 1.2; margin-bottom: 15px; letter-spacing: -0.5px; }
+        .focus-areas { color: var(--text-muted); font-size: 15px; margin-bottom: 30px; }
+        
+        .info-section { margin-bottom: 40px; }
+        .info-title { font-size: 12px; font-weight: 800; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 15px; text-transform: uppercase; }
+        
+        .profile-list { list-style: none; }
+        .profile-list li { margin-bottom: 10px; font-size: 15px; display: flex; gap: 15px;}
+        .profile-list li span:first-child { font-weight: 700; width: 60px; }
+        
+        .desc-text { font-size: 16px; line-height: 1.8; color: #444; margin-bottom: 15px; }
+        .highlight { font-weight: 700; color: #111; background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); padding: 0 4px; }
+    </style>
 </head>
 <body>
-
-    <nav class="vibe-navbar">
-        <div class="logo">WW.WIKI</div>
+    <nav class="navbar">
+        <a href="index.html" class="logo">WW.WIKI</a>
         <div class="nav-links">
-            <a href="/index.html">首页</a>
-            <a href="/projects.html">项目与洞察</a>
-            <a href="/thoughts.html">思考与生活</a>
-            <a href="/about.html" class="active">关于我</a>
+            <a href="index.html">首页</a>
+            <a href="projects.html">项目与洞察</a>
+            <a href="about.html" class="active">关于我</a>
         </div>
     </nav>
 
-    <audio id="global-audio" preload="auto"></audio>
-    <div class="floating-audio-pill" id="global-player">
-        <div class="visualizer" id="pill-visualizer"><span></span><span></span><span></span></div>
-        <div class="pill-track-info"><div class="pill-track-name" id="pill-title">Not Playing</div></div>
-        <button class="pill-btn" id="pill-play-btn">▶</button>
-        <button class="pill-btn" id="pill-next-btn">⏭</button>
-    </div>
+    <main class="container">
+        <!-- 截图中左上角的小彩蛋 -->
+        <div class="vibe-player">
+            <span>PWLT</span>
+            <div class="controls">▶️ ⏭️</div>
+        </div>
 
-    <main class="about-container">
         <header class="about-header">
-            <h1 class="about-title">HEY THERE.</h1>
-            <p class="about-subtitle">透过数据与聆听，寻找技术重塑生活的绝佳切入点。</p>
+            <h1>HEY THERE.</h1>
+            <p class="subtitle">透过数据与聆听，寻找技术重塑生活的绝佳切入点。</p>
         </header>
-        <div class="bento-grid">
-            <div class="bento-card bento-hero">
-                <div class="hero-avatar"><span class="avatar-placeholder">PHOTO</span></div>
-                <div class="hero-info">
-                    <h2>Market Researcher<br>& Consumer Insight Analyst</h2>
-                    <p>专注领域：适老化市场 (Silver Economy) / 移动出行 (E-Mobility) / 智能硬件</p>
+
+        <div class="about-grid">
+            <!-- 左侧：照片与基础档案 -->
+            <aside>
+                <div class="photo-placeholder">
+                    [ 头像 / 照片占位 ]
                 </div>
-            </div>
-            <div class="bento-card bento-profile dark-card">
-                <h3>PROFILE</h3>
-                <ul class="profile-list">
-                    <li><strong>BORN</strong> <span>2001.05.21</span></li>
-                    <li><strong>BASE</strong> <span>Singapore</span></li>
-                    <li><strong>VIBE</strong> <span>理性观察 / 细节控</span></li>
-                </ul>
-            </div>
-            <div class="bento-card bento-skills">
-                <h3>CORE SKILLS</h3>
-                <div class="skill-tags">
-                    <span>社会化聆听 (Social Listening)</span>
-                    <span>消费者痛点挖掘</span>
-                    <span>竞品深度剖析</span>
-                    <span>数据可视化</span>
+                <div class="info-section" style="margin-top: 30px;">
+                    <h3 class="info-title">PROFILE</h3>
+                    <ul class="profile-list">
+                        <li><span>BORN</span> 2001.05.21</li>
+                        <li><span>BASE</span> Singapore</li>
+                        <li><span>VIBE</span> 理性观察 / 细节控</li>
+                    </ul>
                 </div>
-            </div>
-            <div class="bento-card bento-methodology">
-                <div class="quote-icon">“</div>
-                <p>擅长跳出传统的问卷框架，通过深入 Reddit (如 r/disability)、Amazon 真实评论区进行<strong>社会化聆听</strong>。从北美高龄代步车的需求痛点，到集成 Find My 防盗网络的滑板车成本评估，我相信最敏锐的商业机会，永远藏在用户的原声数据里。</p>
-            </div>
-            <div class="bento-card bento-status gradient-card">
-                <div class="status-dot"></div>
-                <h3>CURRENTLY</h3>
-                <p>深入调研<strong>中国国内适老化电商市场</strong>，输出驱动业务增长与产品迭代的商业分析报告。</p>
-            </div>
+            </aside>
+
+            <!-- 右侧：职业详情与介绍 -->
+            <article>
+                <h2 class="role-title">Market Researcher<br>& Consumer Insight Analyst</h2>
+                <p class="focus-areas">专注领域：适老化市场 (Silver Economy) / 移动出行 (E-Mobility) / 智能硬件</p>
+                
+                <div class="info-section">
+                    <h3 class="info-title">CORE SKILLS</h3>
+                    <p class="desc-text">
+                        社会化聆听 (Social Listening) · 消费者痛点挖掘 · 竞品深度剖析 · 数据可视化
+                    </p>
+                    <p class="desc-text">
+                        擅长跳出传统的问卷框架，通过深入 Reddit (如 r/disability)、Amazon 真实评论区进行<span class="highlight">社会化聆听</span>。从北美高龄代步车的需求痛点，到集成 Find My 防盗网络的滑板车成本评估，我相信最敏锐的商业机会，永远藏在用户的原声数据里。
+                    </p>
+                </div>
+
+                <div class="info-section">
+                    <h3 class="info-title">CURRENTLY</h3>
+                    <p class="desc-text">
+                        深入调研<span class="highlight">中国国内适老化电商市场</span>，输出驱动业务增长与产品迭代的商业分析报告。
+                    </p>
+                </div>
+            </article>
         </div>
     </main>
-
-    <script>
-        const playlist = [
-            { title: 'PWLT', artist: 'Krystal', src: '/images/PWLT.mp3' },
-            { title: '비행운', artist: 'MoonMoon', src: '/images/飞机云.mp3' },
-            { title: '위잉위잉', artist: 'Hyukoh', src: '/images/WIINGWIING.mp3' },
-            { title: 'Surf Boy', artist: 'Hyukoh', src: '/images/Surf_boy.mp3' }
-        ];
-        let currentTrackIdx = 0;
-        const audio = document.getElementById('global-audio');
-
-        function initAudio() { audio.src = playlist[currentTrackIdx].src; audio.onended = () => { nextTrack(); }; }
-        function syncPlayerUI() {
-            const isPlaying = !audio.paused;
-            const currentTrack = playlist[currentTrackIdx];
-            document.getElementById('pill-title').innerText = currentTrack.title;
-            document.getElementById('pill-play-btn').innerText = isPlaying ? '⏸' : '▶';
-            document.getElementById('pill-visualizer').classList.toggle('playing', isPlaying);
-        }
-        function togglePlay() {
-            if (!audio.src) initAudio();
-            if (audio.paused) audio.play().then(syncPlayerUI).catch(e=>console.log);
-            else audio.pause();
-            syncPlayerUI();
-        }
-        function nextTrack() {
-            currentTrackIdx = (currentTrackIdx + 1) % playlist.length;
-            audio.src = playlist[currentTrackIdx].src;
-            audio.play().then(syncPlayerUI).catch(e=>console.log);
-            syncPlayerUI();
-        }
-        document.getElementById('pill-play-btn').addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
-        document.getElementById('pill-next-btn').addEventListener('click', (e) => { e.stopPropagation(); nextTrack(); });
-        initAudio();
-        syncPlayerUI();
-    </script>
 </body>
 </html>
