@@ -1,28 +1,77 @@
-# 个人博客操作手册
+# WW.WIKI
 
-### 创建新文章的 HTML 文件
-/2026内有“example”文件，直接复制粘贴到新文章.html
+WW.WIKI 是一个个人品牌站，定位是市场分析、用户洞察、项目推进和真实写作的组合展示。
 
-### 上传图片
-将图片放入 /images 文件夹，然后在文章中用 <img src="/images/图片名.jpg"> 引用。
+## 目录结构
 
-### 写新文章的实操步骤
+```text
+/index.html                  首页
+/about.html                  关于我
+/projects.html               项目与洞察列表
+/thoughts.html               博客列表
+/2026/                       真实博客文章
+/archive/                    项目案例详情
+/templates/                  新增内容模板
+/styles/site.css             全站统一样式
+```
 
-新建文章文件：在你的 GitHub 仓库根目录下，新建一个 .html 文件，名字自定义。比如写一篇关于 Lo-Fi 的随笔，文件可以叫 post-lofi.html。
+## 设计规则
 
-复制粘贴母版：把上面那段长长的《article-template》代码全部复制粘贴进这个新文件里。
+- 全站统一使用同一套网格背景、毛玻璃卡片、导航栏、按钮与间距系统。
+- 字体体系统一为 `Manrope` + `Noto Serif SC`。
+- 全站鼠标样式已经写进 `styles/site.css`，不需要额外脚本。
+- 新页面要继续复用 `styles/site.css`，不要在单页里重新发散一套样式。
 
-改字（只改两个地方）：
+## 新增博客文章
 
-改标签名：修改顶部的 <title>你的新文章标题 | WW.WIKI</title>。
+1. 复制 `templates/blog-post-template.html` 到 `2026/` 目录。
+2. 修改这几个位置：
+   - `<title>`
+   - `<p class="kicker">`
+   - `<h1 class="article-title">`
+   - `<p class="meta-line">`
+   - `<div class="rich-text">`
+3. 在 `thoughts.html` 和首页 `index.html` 里补上链接。
 
-改正文：直接定位到中间的 <main id="pjax-container"> 到 </main> 这一段，把这里面的标题、日期、正文 <p> 标签里的文字改成你真正要写的文章内容。
+推荐文件名：
 
-保存发布：点击 GitHub 的 Commit changes 保存。
+```text
+/2026/日期+标题.html
+```
 
-### 如何在列表页链接到这篇文章？
-文件建好后，你只需要在你的 thoughts.html（生活页）或者 projects.html（项目页）的里面，用普通的超链接指向它即可。
-例如，在 thoughts.html 的正文里加上一行：
+## 新增项目案例
 
-<a href="post-lofi.html">点击阅读我的新文章：关于Lo-Fi与数字花园</a>
-只要点击这个链接，我们的后台脚本就会立刻识别，自动把整篇新文章的内容丝滑地呈现在屏幕上，而右下角的悬浮音乐播放器连闪都不会闪一下，完美实现不间断轮播！
+1. 复制 `templates/project-case-template.html` 到 `archive/` 目录。
+2. 修改这几个位置：
+   - `<title>`
+   - `<p class="kicker">`
+   - `<h1 class="article-title">`
+   - `<p class="lead">`
+   - `<div class="chip-row">`
+   - `<div class="rich-text">`
+3. 在 `projects.html` 和首页 `index.html` 里补上链接。
+
+推荐文件名：
+
+```text
+/archive/slug.html
+```
+
+## 目录结构能不能改
+
+可以改，而且现在已经按更合理的方式整理好了：
+
+- 博客文章放在 `/2026/`
+- 项目案例放在 `/archive/`
+
+这样不会导致跳转异常，只要内部链接继续使用站内根路径或相对路径即可。
+
+## 如何提交
+
+```bash
+git add .
+git commit -m "Update content and templates"
+git push
+```
+
+如果你已经在 `brand-polish-homepage` 分支上，直接 `git push` 就会上传当前版本。

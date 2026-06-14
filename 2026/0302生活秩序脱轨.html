@@ -1,94 +1,52 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>生活秩序脱轨</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <style>
-        /* 胶囊音乐样式 */
-        .floating-audio-pill { position: fixed; bottom: 30px; right: 30px; z-index: 2000; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 30px; padding: 8px 16px; display: flex; align-items: center; gap: 12px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06); transition: all 0.4s; }
-        .pill-btn { background: none; border: none; cursor: pointer; }
-    </style>
+    <title>生活秩序脱轨 | WW.WIKI</title>
+    <link rel="stylesheet" href="/styles/site.css">
 </head>
 <body>
-
-    <audio id="global-audio"></audio>
-    <div class="floating-audio-pill" id="global-player">
-        <div id="pill-visualizer">▶</div>
-        <div class="pill-track-info"><div id="pill-title">Not Playing</div></div>
-        <button class="pill-btn" id="pill-play-btn">▶</button>
-        <button class="pill-btn" id="pill-next-btn">⏭</button>
-    </div>
-
-<div class="container" id="pjax-container">
-    <div class="row">
-        <div class="col-sm-9 col-xs-12 main-container" id="main-container">
-            <h1>生活秩序脱轨</h1>
-            <p class="post-meta">Posted at 2026-03-02</p>
-            <div class="content">
-                <p>1-2月因为爸爸回龙岗住导致生活秩序被严重打乱，什么时候才能做到不被影响呢，看来还是没能摆脱淫威。</p>
-                <p>前两个月出去旅游和游玩得过多了，这个3-4月要努力宅家和完成个人进步的追求。3月第一个周末预定了官琪来龙岗家里玩，这几天我要收拾屋子和打扫干净，尽早恢复原样。我出去玩好几趟的东西都没有好好收拾，乱七八糟一团乱。</p>
-                <p>之前在图书馆一共借了20本书，得要赶进度咯！前两个月一次性接连看了好几本刘震云的书，实在是好看，导致看别的书少了些乐趣，上周去图书馆的时候都看不太进去新开坑的书了。</p>
-                <p>还有预算！我每个月给自己的预算都是3000-3500，但没有一个月能够压到这么低，然后2月份更是超得离谱，一个月花了有1w+，真的得攒了！！</p>
-                <p>写日记和自我复盘的频率大幅降低，亟待恢复。</p>
-                <p>工作兴致一直不高，虽然感觉该完成的都完成了，但是不愿意起床和出门上班，这个月逐渐恢复，果然人得要有主体性，自己掌握自己的行踪！</p>
-                <p>独居时间真的不够用，要干想干的太多了，随便干了点事情就到了十一点多，实在是不够用！</p>
-                <p>开始看24年的电视剧《边水往事》，实在是好看，精彩！补完了前面的日记和记账本，还要看书《图解博弈论》，认真写读书笔记。</p>
-                <p>待办事项：</p>
-                <ul style="line-height: 1.8; background: rgba(46, 64, 91, 0.05); padding: 15px 40px; border-radius: 8px;">
-                    <li><b>预约保洁阿姨</b></li>
-                    <li><b>断舍离</b></li>
-                    <li><b>重新收纳</b></li>
-                    <li><b>整理妈妈的行李</b></li>
-                    <li><b>看书</b></li>
-                    <li><b>写读书笔记</b></li>
-                    <li><b>认真写日记，除了每日衣食住行外还要写内心感想</b></li>
-                    <li><b>适老化市场容量计算</b></li>
-                    <li><b>看收藏的纪录片和电影</b></li>
-                </ul>
-            </div>
-            <p><a href="/thoughts.html">← 返回首页</a></p>
+    <nav class="navbar">
+        <a class="logo" href="/index.html">WW.WIKI</a>
+        <div class="nav-links">
+            <a href="/index.html">首页</a>
+            <a href="/projects.html">项目与洞察</a>
+            <a class="active" href="/thoughts.html">思考与生活</a>
+            <a href="/about.html">关于我</a>
         </div>
-    </div>
-</div>
-
-<script src="/js/jquery-3.1.0.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script>
-    // 路由拦截逻辑：明确排除静态资源
-    document.addEventListener('click', (e) => {
-        const link = e.target.closest('a');
-        // 如果没有链接，或者链接是新窗口打开，直接跳过拦截
-        if (!link || !link.href || link.getAttribute('target') === '_blank') return;
-        
-        // 【添加这行】过滤：如果是静态资源，直接放行，不要拦截！
-        const isStaticAsset = /\.(css|js|png|jpg|ico|mp3|wav|xml|txt)$/.test(link.href);
-        
-        // 只有在是站内链接 且 不是静态资源时，才执行 PJAX 拦截
-        if (link.origin === window.location.origin && !isStaticAsset) {
-            e.preventDefault();
-            loadPage(link.href);
-        }
-    });
-
-    async function loadPage(url) {
-        try {
-            const res = await fetch(url);
-            if (!res.ok) throw new Error();
-            const html = await res.text();
-            const doc = new DOMParser().parseFromString(html, 'text/html');
-            const container = doc.getElementById('pjax-container');
-            if (container) {
-                document.getElementById('pjax-container').innerHTML = container.innerHTML;
-                document.title = doc.title;
-                history.pushState(null, null, url);
-                window.scrollTo(0, 0);
-            } else {
-                window.location.href = url;
-            }
-        } catch (err) { window.location.href = url; }
-    }
-</script>
+    </nav>
+    <main class="site-shell">
+        <section class="panel content-card">
+            <div class="stack-lg">
+                <p class="kicker">2026-03-02 · Daily Life</p>
+                <h1 class="article-title">生活秩序脱轨</h1>
+                <p class="meta-line">Posted at 2026-03-02</p>
+                <div class="rich-text">
+                    <p>1-2月因为爸爸回龙岗住导致生活秩序被严重打乱，什么时候才能做到不被影响呢，看来还是没能摆脱淫威。</p>
+                    <p>前两个月出去旅游和游玩得过多了，这个3-4月要努力宅家和完成个人进步的追求。3月第一个周末预定了官琪来龙岗家里玩，这几天我要收拾屋子和打扫干净，尽早恢复原样。我出去玩好几趟的东西都没有好好收拾，乱七八糟一团乱。</p>
+                    <p>之前在图书馆一共借了20本书，得要赶进度咯！前两个月一次性接连看了好几本刘震云的书，实在是好看，导致看别的书少了些乐趣，上周去图书馆的时候都看不太进去新开坑的书了。</p>
+                    <p>还有预算！我每个月给自己的预算都是3000-3500，但没有一个月能够压到这么低，然后2月份更是超得离谱，一个月花了有1w+，真的得攒了！！</p>
+                    <p>写日记和自我复盘的频率大幅降低，亟待恢复。</p>
+                    <p>工作兴致一直不高，虽然感觉该完成的都完成了，但是不愿意起床和出门上班，这个月逐渐恢复，果然人得要有主体性，自己掌握自己的行踪！</p>
+                    <p>独居时间真的不够用，要干想干的太多了，随便干了点事情就到了十一点多，实在是不够用！</p>
+                    <p>开始看24年的电视剧《边水往事》，实在是好看，精彩！补完了前面的日记和记账本，还要看书《图解博弈论》，认真写读书笔记。</p>
+                    <p>待办事项：</p>
+                    <ul>
+                        <li>预约保洁阿姨</li>
+                        <li>断舍离</li>
+                        <li>重新收纳</li>
+                        <li>整理妈妈的行李</li>
+                        <li>看书</li>
+                        <li>写读书笔记</li>
+                        <li>认真写日记，除了每日衣食住行外还要写内心感想</li>
+                        <li>适老化市场容量计算</li>
+                        <li>看收藏的纪录片和电影</li>
+                    </ul>
+                </div>
+                <a class="link-inline" href="/thoughts.html">← 返回列表</a>
+            </div>
+        </section>
+    </main>
 </body>
 </html>

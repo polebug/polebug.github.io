@@ -1,91 +1,43 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>接手项目经理工作有感</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <style>
-        .post-meta { font-size: 14px; color: #666; margin-bottom: 20px; }
-        .content { line-height: 1.8; max-width: 800px; margin: 0 auto; }
-        .main-container { max-width: 1000px; margin: 0 auto; float: none; }
-    </style>
+    <title>接手项目经理工作有感 | WW.WIKI</title>
+    <link rel="stylesheet" href="/styles/site.css">
 </head>
 <body>
-
-    <nav class="vibe-navbar">
-        <div class="logo">WW.WIKI</div>
+    <nav class="navbar">
+        <a class="logo" href="/index.html">WW.WIKI</a>
         <div class="nav-links">
             <a href="/index.html">首页</a>
             <a href="/projects.html">项目与洞察</a>
-            <a href="/thoughts.html">思考与生活</a>
+            <a class="active" href="/thoughts.html">思考与生活</a>
             <a href="/about.html">关于我</a>
         </div>
     </nav>
-
-    <audio id="global-audio" preload="auto"></audio>
-    <div class="floating-audio-pill" id="global-player">
-        <div class="visualizer" id="pill-visualizer"><span></span><span></span><span></span></div>
-        <div class="pill-track-info"><div class="pill-track-name" id="pill-title">Not Playing</div></div>
-        <button class="pill-btn" id="pill-play-btn">▶</button>
-        <button class="pill-btn" id="pill-next-btn">⏭</button>
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-9 col-xs-12 main-container">
-                <h1>接手项目经理工作有感</h1>
-                <p class="post-meta">Posted at 2026-03-23</p>
-                <div class="content">
+    <main class="site-shell">
+        <section class="panel content-card">
+            <div class="stack-lg">
+                <p class="kicker">2026-03-23 · Work</p>
+                <h1 class="article-title">接手项目经理工作有感</h1>
+                <p class="meta-line">Posted at 2026-03-23</p>
+                <div class="rich-text">
                     <p>我觉得他人厉害的点，是他们有将所做的东西变成真实的物体的能力。惊觉自己学什么、做什么，都没有将它落成实物，所以总有一种无力感和焦虑感。我害怕虚无缥缈的东西，例如软件制作、虚拟金融。从这个角度来看，市场调研或者说是行业分析，也很空虚，因此我开始觉得有些不利了。项目管理对于我而言，稍微接近，但也不太全面，而我不具备作为产品经理的能力，朝这个方向走！</p>
                     <p>结构设计师我不知道他们怎么想的，但我觉得也有法子用AI实现，他们不会很焦虑，这可能是技术带给的底气。他们所拥有的技术可以真的使产品被制作出来，正是想到这点才让我意识到我从来没有真正意义上做到过。</p>
                     <p>英语也很重要，好想成为能够精通英语的人（口语和听力都很牛那种程度）</p>
                     <p>接手了项目经理的工作之后每天都变得好忙，都没多少摸鱼的时间了，一直在不断切换工作任务，而这只是一丢丢卫浴+家具的项目而已。不过往好了想，我要对接的人指数型增长了哈哈哈哈，环评再也不怕找不到人了，给我无趣的工作任务增添了点新意。</p>
                     <p>晚上回家待办事项：</p>
-                    <p>- [×] 点外卖+热饭+酸奶</p>
-                    <p>- [×] 剪辑日本VLOG（激情剪辑，两晚上搞定）</p>
-                    <p>- [ ] 了解图纸、结构、工艺、材质、测试</p>
-                    <p>- [ ] 阅读</p>
+                    <ul>
+                        <li>[×] 点外卖+热饭+酸奶</li>
+                        <li>[×] 剪辑日本VLOG（激情剪辑，两晚上搞定）</li>
+                        <li>[ ] 了解图纸、结构、工艺、材质、测试</li>
+                        <li>[ ] 阅读</li>
+                    </ul>
                 </div>
-                <p><a href="/thoughts.html">← 返回列表</a></p>
+                <a class="link-inline" href="/thoughts.html">← 返回列表</a>
             </div>
-        </div>
-    </div>
-
-    <script>
-        const playlist = [
-            { title: 'PWLT', artist: 'Krystal', src: '/images/PWLT.mp3' },
-            { title: '비행운', artist: 'MoonMoon', src: '/images/飞机云.mp3' },
-            { title: '위잉위잉', artist: 'Hyukoh', src: '/images/WIINGWIING.mp3' },
-            { title: 'Surf Boy', artist: 'Hyukoh', src: '/images/Surf_boy.mp3' }
-        ];
-        let currentTrackIdx = 0;
-        const audio = document.getElementById('global-audio');
-
-        function initAudio() { audio.src = playlist[currentTrackIdx].src; audio.onended = () => { nextTrack(); }; }
-        function syncPlayerUI() {
-            const isPlaying = !audio.paused;
-            const currentTrack = playlist[currentTrackIdx];
-            document.getElementById('pill-title').innerText = currentTrack.title;
-            document.getElementById('pill-play-btn').innerText = isPlaying ? '⏸' : '▶';
-            document.getElementById('pill-visualizer').classList.toggle('playing', isPlaying);
-        }
-        function togglePlay() {
-            if (!audio.src) initAudio();
-            if (audio.paused) audio.play().then(syncPlayerUI).catch(e=>console.log);
-            else audio.pause();
-            syncPlayerUI();
-        }
-        function nextTrack() {
-            currentTrackIdx = (currentTrackIdx + 1) % playlist.length;
-            audio.src = playlist[currentTrackIdx].src;
-            audio.play().then(syncPlayerUI).catch(e=>console.log);
-            syncPlayerUI();
-        }
-        document.getElementById('pill-play-btn').addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
-        document.getElementById('pill-next-btn').addEventListener('click', (e) => { e.stopPropagation(); nextTrack(); });
-        initAudio();
-        syncPlayerUI();
-    </script>
+        </section>
+    </main>
 </body>
 </html>
