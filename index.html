@@ -4,140 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WW.WIKI | 首页</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #f6f3ee;
-            --bg-soft: rgba(255, 255, 255, 0.64);
-            --text: #101010;
-            --muted: #5f5f66;
-            --line: rgba(16, 16, 16, 0.08);
-            --shadow: 0 20px 60px rgba(16, 16, 16, 0.08);
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            color: var(--text);
-            background:
-                linear-gradient(rgba(16,16,16,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(16,16,16,0.03) 1px, transparent 1px),
-                radial-gradient(circle at top, rgba(255,255,255,0.85), transparent 45%),
-                var(--bg);
-            background-size: 28px 28px, 28px 28px, 100% 100%, auto;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        a { color: inherit; }
-        .navbar {
-            position: sticky; top: 0; z-index: 50;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 5vw;
-            background: rgba(246, 243, 238, 0.74);
-            backdrop-filter: blur(18px);
-            border-bottom: 1px solid var(--line);
-        }
-        .logo { text-decoration: none; font-size: 22px; font-weight: 800; letter-spacing: -0.04em; }
-        .nav-links { display: flex; gap: 26px; }
-        .nav-links a { text-decoration: none; color: var(--muted); font-size: 15px; font-weight: 600; }
-        .nav-links a.active, .nav-links a:hover { color: var(--text); }
-        .container { max-width: 1120px; margin: 0 auto; padding: 72px 20px 96px; }
-        .hero {
-            display: grid; gap: 28px;
-            padding: 56px;
-            background: var(--bg-soft);
-            border: 1px solid rgba(255,255,255,0.75);
-            border-radius: 32px;
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(20px);
-        }
-        .eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
-        h1 { font-size: clamp(42px, 7vw, 86px); line-height: 0.94; letter-spacing: -0.07em; max-width: 10ch; }
-        .subtitle { max-width: 760px; font-size: 18px; color: var(--muted); }
-        .signature {
-            display: flex; gap: 18px; flex-wrap: wrap;
-            color: var(--muted); font-size: 14px;
-        }
-        .signature span {
-            padding: 8px 12px;
-            border-radius: 999px;
-            background: rgba(16,16,16,0.04);
-            border: 1px solid rgba(16,16,16,0.06);
-        }
-        .cta { display: flex; flex-wrap: wrap; gap: 14px; }
-        .btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            min-height: 48px; padding: 0 20px; border-radius: 999px;
-            text-decoration: none; font-size: 15px; font-weight: 700;
-            border: 1px solid var(--line);
-        }
-        .btn.primary { background: var(--text); color: #fff; border-color: var(--text); }
-        .section { margin-top: 28px; }
-        .card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-        .card {
-            background: var(--bg-soft);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.7);
-            border-radius: 24px;
-            padding: 26px;
-            box-shadow: var(--shadow);
-            text-decoration: none;
-        }
-        .card h2 { font-size: 22px; margin-top: 10px; margin-bottom: 10px; }
-        .card p { color: var(--muted); font-size: 15px; }
-        .meta { font-size: 13px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
-        @media (max-width: 900px) {
-            .card-grid { grid-template-columns: 1fr; }
-            .nav-links { display:none; }
-            .hero { padding: 30px; }
-        }
-    </style>
+    <link rel="stylesheet" href="styles/site.css">
 </head>
 <body>
     <nav class="navbar">
         <a class="logo" href="index.html">WW.WIKI</a>
         <div class="nav-links">
             <a class="active" href="index.html">首页</a>
-            <a href="projects.html">项目洞察</a>
+            <a href="projects.html">项目与洞察</a>
             <a href="thoughts.html">思考与生活</a>
             <a href="about.html">关于我</a>
         </div>
     </nav>
-    <main class="container">
-        <section class="hero">
-            <div class="eyebrow">Research-led blog / product notes / personal archive</div>
-            <h1>把观察写成方法，<br>把方法沉淀成品牌。</h1>
-            <p class="subtitle">WW.WIKI 是我的个人知识站：围绕用户研究、项目洞察、生活观察与技术实验，把分散的思考整理成稳定、可复用、可持续更新的内容系统。</p>
-            <div class="signature">
-                <span>Insight-driven</span>
-                <span>Design-conscious</span>
-                <span>Long-form thinking</span>
+
+    <main class="site-shell">
+        <section class="panel hero-grid">
+            <div class="stack-lg">
+                <p class="kicker">Personal Brand Site / Research Portfolio</p>
+                <h1 class="display-title wide">把市场、用户与项目，整理成可执行的增长判断。</h1>
+                <p class="lead">这里不是一个只做展示的博客，而是一份持续更新的个人品牌样本。它聚焦我如何理解市场、提炼用户洞察、组织分析结构，以及把跨团队项目推进到更清晰的状态。</p>
+                <div class="chip-row">
+                    <span class="chip">市场分析师</span>
+                    <span class="chip">数据分析师</span>
+                    <span class="chip">消费者洞察</span>
+                    <span class="chip">项目管理视角</span>
+                </div>
+                <div class="button-group">
+                    <a class="button primary" href="projects.html">查看项目与洞察</a>
+                    <a class="button" href="thoughts.html">阅读真实博客</a>
+                    <a class="button" href="about.html">了解我的工作方式</a>
+                </div>
             </div>
-            <div class="cta">
-                <a class="btn primary" href="projects.html">Browse projects</a>
-                <a class="btn" href="thoughts.html">Read articles</a>
-                <a class="btn" href="about.html">About me</a>
+            <aside class="panel-inset sidebar-card">
+                <div class="stack-md">
+                    <p class="eyebrow">Positioning</p>
+                    <h2 class="section-title">Market Researcher<br>Consumer Insight Analyst<br>Project-minded Builder</h2>
+                    <ul class="detail-list">
+                        <li><span>核心能力</span><strong>问题定义 · 洞察提炼 · 证据组织 · 项目推进</strong></li>
+                        <li><span>关注领域</span><strong>适老化、移动出行、智能硬件、研究自动化</strong></li>
+                        <li><span>适合岗位</span><strong>市场分析 / 用户研究 / 商业分析 / 项目经理</strong></li>
+                    </ul>
+                </div>
+            </aside>
+        </section>
+
+        <section class="section-block">
+            <div class="section-head">
+                <p class="kicker">Capability</p>
+                <h2 class="section-title">这不是“会写报告”，而是完整的判断与推进能力。</h2>
+            </div>
+            <div class="three-col-grid">
+                <article class="card">
+                    <p class="eyebrow">Research framing</p>
+                    <h3 class="card-title">先把问题定义清楚</h3>
+                    <p>面对模糊需求时，我擅长拆出真正要回答的问题，明确对象、边界、优先级和输出形式。</p>
+                </article>
+                <article class="card">
+                    <p class="eyebrow">Insight synthesis</p>
+                    <h3 class="card-title">把信息组织成判断</h3>
+                    <p>我习惯把定性观察、评论语料、市场信息和项目现场反馈，连接成同一条有说服力的逻辑链。</p>
+                </article>
+                <article class="card">
+                    <p class="eyebrow">Project delivery</p>
+                    <h3 class="card-title">让分析对团队有用</h3>
+                    <p>无论是项目管理还是分析工作，我都关注节奏、协同和落地，不让内容停在“写完了”这一步。</p>
+                </article>
             </div>
         </section>
-        <section class="section card-grid">
-            <a class="card" href="thoughts.html">
-                <div class="meta">Blog / 06 articles</div>
-                <h2>文章列表已补齐</h2>
-                <p>围绕研究、设计、效率与生活观察，补全可点击的文章索引与详情页。</p>
+
+        <section class="section-block two-col-grid">
+            <a class="list-card" href="project-voc.html">
+                <p class="eyebrow">Featured project</p>
+                <h3 class="card-title">移动出行 VOC 洞察体系</h3>
+                <p>从评论、客服、社媒讨论里识别真实抱怨与需求，建立更贴近产品决策的用户声音分析框架。</p>
+                <span class="link-inline">查看案例 →</span>
             </a>
-            <a class="card" href="projects.html">
-                <div class="meta">Projects / case studies</div>
-                <h2>项目页面统一规范</h2>
-                <p>补齐项目卡片的有效跳转，并为部分项目增加详情页，避免站内死链。</p>
-            </a>
-            <a class="card" href="about.html">
-                <div class="meta">About / contact</div>
-                <h2>全站视觉一致</h2>
-                <p>四大导航模块、字号层级与按钮系统保持一致，适合后续继续扩展。</p>
+            <a class="list-card" href="project-notes.html">
+                <p class="eyebrow">Featured project</p>
+                <h3 class="card-title">跨团队项目推进与协同管理</h3>
+                <p>把复杂协作拆成节点、角色和信息流，让需求沟通与交付推进不再靠个人硬扛。</p>
+                <span class="link-inline">查看案例 →</span>
             </a>
         </section>
+
+        <section class="section-block">
+            <div class="section-head">
+                <p class="kicker">Latest writing</p>
+                <h2 class="section-title">真实写作，比“人设”更能说明一个人的判断方式。</h2>
+            </div>
+            <div class="three-col-grid">
+                <a class="card" href="essay-first-blog.html">
+                    <p class="eyebrow">2026-05-22</p>
+                    <h3 class="card-title">我的第一个博客网站</h3>
+                    <p>记录网站从搭建到搬运完文章时的兴奋，也保留了当时最真实的创作冲动。</p>
+                </a>
+                <a class="card" href="essay-vibe-coding.html">
+                    <p class="eyebrow">2026-04-17</p>
+                    <h3 class="card-title">Vibe Coding 初体验</h3>
+                    <p>从自动打标到 AI 工具的感受，文章里能看到我对技术趋势的直觉和判断。</p>
+                </a>
+                <a class="card" href="essay-project-manager.html">
+                    <p class="eyebrow">2026-03-23</p>
+                    <h3 class="card-title">接手项目经理工作有感</h3>
+                    <p>写的是工作变化，但也透露出我如何看待实物、协作和职业能力的形成。</p>
+                </a>
+            </div>
+        </section>
+
+        <p class="footer">WW.WIKI 将个人品牌、案例沉淀与真实写作放在同一个框架里，便于长期更新和展示职业判断。</p>
     </main>
 </body>
 </html>
