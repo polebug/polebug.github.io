@@ -35,7 +35,7 @@ html {
 body {
     font-family: var(--ui-font);
     color: var(--text);
-    cursor: var(--cursor-dot), auto;
+    cursor: auto;
     background:
         linear-gradient(rgba(59, 47, 35, 0.04) 1px, transparent 1px),
         linear-gradient(90deg, rgba(59, 47, 35, 0.04) 1px, transparent 1px),
@@ -49,6 +49,9 @@ body {
 
 a {
     color: inherit;
+}
+
+a[href] {
     cursor: var(--cursor-link), pointer;
 }
 
@@ -264,7 +267,13 @@ img {
 .list-card,
 .link-inline,
 .nav-links a,
-button {
+button,
+.button,
+summary,
+[role="button"],
+[tabindex]:not([tabindex="-1"]),
+input,
+label {
     cursor: var(--cursor-link), pointer;
 }
 
