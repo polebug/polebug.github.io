@@ -6,87 +6,76 @@
     <title>思考与生活 | WW.WIKI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* 全局统一核心样式 */
-        :root { --bg-color: #fafafc; --text-main: #111111; --text-muted: #666666; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
-            background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px; color: var(--text-main); line-height: 1.6; overflow-x: hidden;
-        }
-        
-        /* 统一导航栏样式 */
-        .navbar {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 25px 5vw; background: rgba(250,250,252,0.8);
-            backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-        .logo { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main); text-decoration: none; }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a {
-            text-decoration: none; color: var(--text-muted);
-            font-size: 15px; font-weight: 600; transition: color 0.3s ease;
-        }
-        .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
-        
-        /* 页面容器 */
-        .container { max-width: 900px; margin: 0 auto; padding: 80px 20px; animation: fadeIn 0.8s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* 页面头 */
-        .page-header { margin-bottom: 50px; }
-        .page-header h1 { font-size: 40px; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; }
-        
-        /* 文章列表区域 - 保持你原有的结构 */
-        .thought-list { display: flex; flex-direction: column; gap: 20px; }
-        .thought-item {
-            background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 16px;
-            padding: 24px; text-decoration: none; display: block;
-            transition: all 0.3s ease;
-        }
-        .thought-item:hover { border-color: #000; transform: translateX(5px); }
-        .thought-item h3 { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 4px; }
-        .thought-item span { font-size: 14px; color: #888; }
+        :root { --bg:#f6f3ee; --bg-soft:rgba(255,255,255,.68); --text:#101010; --muted:#5f5f66; --line:rgba(16,16,16,.08); --shadow:0 20px 60px rgba(16,16,16,.08); }
+        * { box-sizing:border-box; margin:0; padding:0; }
+        body { font-family:'Plus Jakarta Sans',sans-serif; color:var(--text); background:linear-gradient(rgba(16,16,16,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(16,16,16,.03) 1px,transparent 1px),var(--bg); background-size:28px 28px,28px 28px,auto; overflow-x:hidden; }
+        .navbar { position:sticky; top:0; z-index:50; display:flex; justify-content:space-between; align-items:center; padding:20px 5vw; background:rgba(246,243,238,.74); backdrop-filter:blur(18px); border-bottom:1px solid var(--line); }
+        .logo { text-decoration:none; font-size:22px; font-weight:800; letter-spacing:-.04em; }
+        .nav-links { display:flex; gap:26px; }
+        .nav-links a { text-decoration:none; color:var(--muted); font-size:15px; font-weight:600; }
+        .nav-links a.active, .nav-links a:hover { color:var(--text); }
+        .container { max-width:1120px; margin:0 auto; padding:72px 20px 96px; }
+        .page-head { display:grid; gap:14px; margin-bottom:28px; }
+        h1 { font-size:clamp(34px,5vw,58px); line-height:.98; letter-spacing:-.05em; }
+        .intro { max-width:760px; color:var(--muted); font-size:18px; }
+        .list { display:grid; gap:16px; }
+        .item { display:block; text-decoration:none; padding:24px 26px; border-radius:24px; background:var(--bg-soft); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,.72); box-shadow:var(--shadow); transition:transform .2s ease, border-color .2s ease; }
+        .item:hover { transform:translateY(-3px); border-color:rgba(16,16,16,.2); }
+        .item .kicker { font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+        .item h2 { margin-top:8px; font-size:22px; line-height:1.25; }
+        .item p { margin-top:10px; color:var(--muted); font-size:15px; }
+        @media (max-width:900px){ .nav-links{display:none;} }
     </style>
-    
 </head>
 <body>
-
-    <nav class="navbar">
-        <a href="index.html" class="logo">WW.WIKI</a>
-        <div class="nav-links">
-            <a href="index.html">首页</a>
-            <a href="projects.html">项目与洞察</a>
-            <a href="thoughts.html" class="active">思考与生活</a>
-            <a href="about.html">关于我</a>
-        </div>
-    </nav>
-
-    <main class="container">
-        <header class="page-header">
-            <h1>思考与生活</h1>
-        </header>
-
-        <!-- 这里是你之前的文章列表结构，我已适配新 UI -->
-        <div class="thought-list">
-            <a href="article1.html" class="thought-item">
-                <h3>这里是你的文章标题 1</h3>
-                <span>发布日期或摘要信息</span>
-            </a>
-            
-            <a href="article2.html" class="thought-item">
-                <h3>这里是你的文章标题 2</h3>
-                <span>发布日期或摘要信息</span>
-            </a>
-            
-            <!-- 请在此处继续添加你原有的文章列表 -->
-        </div>
-    </main>
-
+<nav class="navbar">
+    <a class="logo" href="index.html">WW.WIKI</a>
+    <div class="nav-links">
+        <a href="index.html">首页</a>
+        <a href="projects.html">项目洞察</a>
+        <a class="active" href="thoughts.html">思考与生活</a>
+        <a href="about.html">关于我</a>
+    </div>
+</nav>
+<main class="container">
+    <header class="page-head">
+        <h1>思考与生活</h1>
+        <p class="intro">这里整理关于研究方法、设计判断、效率习惯与日常观察的文章。所有条目都已接好链接，可以直接进入阅读。</p>
+    </header>
+    <section class="list">
+        <a class="item" href="post-research-notes.html">
+            <div class="kicker">2026-06-14 · Research</div>
+            <h2>如何把碎片化观察整理成可行动的用户洞察</h2>
+            <p>从原始访谈、评论区和社交媒体笔记中提炼模式，建立一套可复用的整理框架。</p>
+        </a>
+        <a class="item" href="post-ux-rhythm.html">
+            <div class="kicker">2026-06-12 · UX</div>
+            <h2>界面节奏感：为什么留白和节奏会决定高级感</h2>
+            <p>讨论信息密度、视觉重心和版式节奏如何影响一个博客的阅读体验。</p>
+        </a>
+        <a class="item" href="post-systems.html">
+            <div class="kicker">2026-06-10 · System</div>
+            <h2>一个个人博客该如何建立长期可维护的内容系统</h2>
+            <p>把导航、文章模板、列表页和详情页统一成同一套规则，减少未来维护成本。</p>
+        </a>
+        <a class="item" href="post-focus.html">
+            <div class="kicker">2026-06-08 · Life</div>
+            <h2>我如何保持连续工作：环境、习惯与分心控制</h2>
+            <p>记录我在信息噪声很高的情况下，维持专注和稳定输出的一些做法。</p>
+        </a>
+        <a class="item" href="post-tools.html">
+            <div class="kicker">2026-06-06 · Tools</div>
+            <h2>写作与研究工具栈：只保留真正能提高质量的部分</h2>
+            <p>不是工具越多越好，而是要让工具链服务于清晰表达和信息整理。</p>
+        </a>
+        <a class="item" href="post-longform.html">
+            <div class="kicker">2026-06-04 · Essay</div>
+            <h2>为什么我越来越喜欢长文，而不是只看短结论</h2>
+            <p>关于背景、结构、证据与推理链条，长文仍然是最适合沉淀认知的形式。</p>
+        </a>
+    </section>
+</main>
 </body>
 </html>

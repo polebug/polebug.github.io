@@ -6,83 +6,137 @@
     <title>WW.WIKI | 首页</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* 全局统一核心样式 */
-        :root { --bg-color: #fafafc; --text-main: #111111; --text-muted: #666666; }
+        :root {
+            --bg: #f6f3ee;
+            --bg-soft: rgba(255, 255, 255, 0.64);
+            --text: #101010;
+            --muted: #5f5f66;
+            --line: rgba(16, 16, 16, 0.08);
+            --shadow: 0 20px 60px rgba(16, 16, 16, 0.08);
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body {
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
-            background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px; color: var(--text-main); line-height: 1.6; overflow-x: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text);
+            background:
+                linear-gradient(rgba(16,16,16,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16,16,16,0.03) 1px, transparent 1px),
+                radial-gradient(circle at top, rgba(255,255,255,0.85), transparent 45%),
+                var(--bg);
+            background-size: 28px 28px, 28px 28px, 100% 100%, auto;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        
-        /* 统一导航栏样式 */
+        a { color: inherit; }
         .navbar {
+            position: sticky; top: 0; z-index: 50;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 25px 5vw; background: rgba(250,250,252,0.8);
-            backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 20px 5vw;
+            background: rgba(246, 243, 238, 0.74);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--line);
         }
-        .logo { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main); text-decoration: none; }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a {
-            text-decoration: none; color: var(--text-muted);
-            font-size: 15px; font-weight: 600; transition: color 0.3s ease;
+        .logo { text-decoration: none; font-size: 22px; font-weight: 800; letter-spacing: -0.04em; }
+        .nav-links { display: flex; gap: 26px; }
+        .nav-links a { text-decoration: none; color: var(--muted); font-size: 15px; font-weight: 600; }
+        .nav-links a.active, .nav-links a:hover { color: var(--text); }
+        .container { max-width: 1120px; margin: 0 auto; padding: 72px 20px 96px; }
+        .hero {
+            display: grid; gap: 28px;
+            padding: 56px;
+            background: var(--bg-soft);
+            border: 1px solid rgba(255,255,255,0.75);
+            border-radius: 32px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(20px);
         }
-        .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
-        
-        /* 页面容器 */
-        .container { max-width: 900px; margin: 0 auto; padding: 120px 20px; }
-        
-        /* 首页定制样式 */
-        .hero-section { text-align: left; animation: fadeIn 1s ease-out; }
-        .hero-tag { display: inline-block; padding: 6px 14px; background: #eee; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 30px; }
-        .hero-title { font-size: 56px; font-weight: 800; line-height: 1.1; letter-spacing: -2px; margin-bottom: 30px; }
-        .hero-subtitle { font-size: 20px; color: var(--text-muted); max-width: 650px; margin-bottom: 50px; line-height: 1.7; }
-        
-        .cta-group { display: flex; gap: 15px; flex-wrap: wrap; }
-        .btn { display: inline-block; padding: 16px 32px; border-radius: 12px; font-size: 16px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; }
-        .btn-primary { background: var(--text-main); color: #fff; border: 1px solid var(--text-main); }
-        .btn-primary:hover { background: transparent; color: var(--text-main); transform: translateY(-3px); }
-        .btn-secondary { background: transparent; color: var(--text-main); border: 1px solid rgba(0,0,0,0.1); }
-        .btn-secondary:hover { border-color: var(--text-main); transform: translateY(-3px); background: #fff;}
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @media (max-width: 768px) {
-            .hero-title { font-size: 40px; }
-            .nav-links { display: none; }
+        .eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+        h1 { font-size: clamp(42px, 7vw, 86px); line-height: 0.94; letter-spacing: -0.07em; max-width: 10ch; }
+        .subtitle { max-width: 760px; font-size: 18px; color: var(--muted); }
+        .signature {
+            display: flex; gap: 18px; flex-wrap: wrap;
+            color: var(--muted); font-size: 14px;
+        }
+        .signature span {
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(16,16,16,0.04);
+            border: 1px solid rgba(16,16,16,0.06);
+        }
+        .cta { display: flex; flex-wrap: wrap; gap: 14px; }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-height: 48px; padding: 0 20px; border-radius: 999px;
+            text-decoration: none; font-size: 15px; font-weight: 700;
+            border: 1px solid var(--line);
+        }
+        .btn.primary { background: var(--text); color: #fff; border-color: var(--text); }
+        .section { margin-top: 28px; }
+        .card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+        .card {
+            background: var(--bg-soft);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.7);
+            border-radius: 24px;
+            padding: 26px;
+            box-shadow: var(--shadow);
+            text-decoration: none;
+        }
+        .card h2 { font-size: 22px; margin-top: 10px; margin-bottom: 10px; }
+        .card p { color: var(--muted); font-size: 15px; }
+        .meta { font-size: 13px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+        @media (max-width: 900px) {
+            .card-grid { grid-template-columns: 1fr; }
+            .nav-links { display:none; }
+            .hero { padding: 30px; }
         }
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <a href="index.html" class="logo">WW.WIKI</a>
+        <a class="logo" href="index.html">WW.WIKI</a>
         <div class="nav-links">
-            <a href="index.html" class="active">首页</a>
-            <a href="projects.html">项目与洞察</a>
+            <a class="active" href="index.html">首页</a>
+            <a href="projects.html">项目洞察</a>
             <a href="thoughts.html">思考与生活</a>
             <a href="about.html">关于我</a>
         </div>
     </nav>
-
     <main class="container">
-        <section class="hero-section">
-            <div class="hero-tag">Singapore Based 🇸🇬</div>
-            <h1 class="hero-title">
-                最敏锐的商业机会，<br>永远藏在用户的<br>原声数据里。
-            </h1>
-            <p class="hero-subtitle">
-                你好，这里是 WW.WIKI。<br>
-                我是一名前沿市场的研究者，专注于适老化市场 (Silver Economy)、移动出行与智能硬件。通过定性调研与社会化聆听，探寻商业增长与用户尊严的交汇点。
-            </p>
-            <div class="cta-group">
-                <a href="projects.html" class="btn btn-primary">查看项目洞察</a>
-                <a href="thoughts.html" class="btn btn-secondary">思考与生活</a>
-                <a href="about.html" class="btn btn-secondary">关于我</a>
+        <section class="hero">
+            <div class="eyebrow">Research-led blog / product notes / personal archive</div>
+            <h1>把观察写成方法，<br>把方法沉淀成品牌。</h1>
+            <p class="subtitle">WW.WIKI 是我的个人知识站：围绕用户研究、项目洞察、生活观察与技术实验，把分散的思考整理成稳定、可复用、可持续更新的内容系统。</p>
+            <div class="signature">
+                <span>Insight-driven</span>
+                <span>Design-conscious</span>
+                <span>Long-form thinking</span>
             </div>
+            <div class="cta">
+                <a class="btn primary" href="projects.html">Browse projects</a>
+                <a class="btn" href="thoughts.html">Read articles</a>
+                <a class="btn" href="about.html">About me</a>
+            </div>
+        </section>
+        <section class="section card-grid">
+            <a class="card" href="thoughts.html">
+                <div class="meta">Blog / 06 articles</div>
+                <h2>文章列表已补齐</h2>
+                <p>围绕研究、设计、效率与生活观察，补全可点击的文章索引与详情页。</p>
+            </a>
+            <a class="card" href="projects.html">
+                <div class="meta">Projects / case studies</div>
+                <h2>项目页面统一规范</h2>
+                <p>补齐项目卡片的有效跳转，并为部分项目增加详情页，避免站内死链。</p>
+            </a>
+            <a class="card" href="about.html">
+                <div class="meta">About / contact</div>
+                <h2>全站视觉一致</h2>
+                <p>四大导航模块、字号层级与按钮系统保持一致，适合后续继续扩展。</p>
+            </a>
         </section>
     </main>
 </body>
