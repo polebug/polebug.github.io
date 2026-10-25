@@ -1,0 +1,13 @@
+# Cloudflare Pages response headers.
+# House assets are requested with ?v=<build>, so a new export gets new URLs: cache them for a year.
+/house/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Requested without a version: keep these short so a new build shows up.
+/house/assets/poster.webp
+  ! Cache-Control
+  Cache-Control: public, max-age=3600
+
+/house/assets/scene.json
+  ! Cache-Control
+  Cache-Control: no-cache

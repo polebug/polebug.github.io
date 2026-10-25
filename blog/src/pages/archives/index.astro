@@ -1,0 +1,7 @@
+---
+import Archive from '../../components/Archive.astro';
+import { getPosts } from '../../lib/posts';
+
+const posts = await getPosts();
+---
+<Archive posts={posts} />

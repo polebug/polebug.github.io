@@ -1,0 +1,32 @@
+# Dependencies and build output
+node_modules/
+blog/dist/
+blog/.astro/
+
+# Local secrets (R2 keys, Gitalk secret)
+.env
+*.env.local
+
+# Drafts never leave this computer
+blog/drafts/
+
+# Post media lives in R2 (img.polebug.com), not in git: keep only the markdown
+blog/posts/*/*
+!blog/posts/*/index.md
+
+# Processed media waiting for upload
+blog/.media-cache/
+
+# Design sources and process notes stay private
+*.blend
+*.blend1
+*.exr
+docs/
+
+# Editors and OS
+.claude/
+.obsidian/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

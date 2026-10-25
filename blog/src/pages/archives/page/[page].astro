@@ -1,0 +1,12 @@
+---
+import Archive from '../../../components/Archive.astro';
+import { getPosts, PER_PAGE } from '../../../lib/posts';
+
+// The old archive was split into pages of 10; the new one fits on one page, so old page links show it whole.
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const pages = Math.ceil(posts.length / PER_PAGE);
+  return Array.from({ length: Math.max(0, pages - 1) }, (_, i) => ({ params: { page: String(i + 2) }, props: { posts } }));
+}
+---
+<Archive posts={Astro.props.posts} />

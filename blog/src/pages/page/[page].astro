@@ -1,0 +1,15 @@
+---
+import BlogIndex from '../../components/BlogIndex.astro';
+import { getPosts, PER_PAGE } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const pages = Math.ceil(posts.length / PER_PAGE);
+  return Array.from({ length: Math.max(0, pages - 1) }, (_, i) => ({
+    params: { page: String(i + 2) },
+    props: { posts },
+  }));
+}
+const { posts } = Astro.props;
+---
+<BlogIndex posts={posts} page={Number(Astro.params.page)} />

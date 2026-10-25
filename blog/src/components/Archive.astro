@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import type { Post } from '../lib/posts';
+
+// Posts grouped by year. /archives/, /archives/2025/ and /archives/2025/07/ all use this.
+const { posts, heading = 'Archive' } = Astro.props as { posts: Post[]; heading?: string };
+const years = [...new Set(posts.map((p) => p.ymd.year))];
+---
+<Base nav="archive" title={heading === 'Archive' ? 'Archive' : `Archive · ${heading}`}>
+  <h1 class="page-title">{heading}</h1>
+  <p class="motto">共 {posts.length} 篇</p>
+  {years.map((year) => (
+    <section>
+      <h2 class="archive-year">{year}</h2>
+      <ul class="archive-list">
+        {posts.filter((p) => p.ymd.year === year).map((p) => (
+          <li>
+            <time datetime={p.data.date.toISOString()}>{p.ymd.month}-{p.ymd.day}</time>
+            <a href={p.url}>{p.data.title}</a>
+            {p.draft && <span class="draft-badge">草稿</span>}
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</Base>

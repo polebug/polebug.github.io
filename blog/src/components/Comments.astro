@@ -1,0 +1,64 @@
+---
+import { SITE } from '../site';
+
+// Gitalk, set up exactly as on the old Hexo site so existing comment issues are found again:
+// issue id = md5(location.pathname), same repo, same labels.
+const { title } = Astro.props as { title: string };
+const g = SITE.gitalk;
+const config = g.clientSecret ? { ...g, title } : null;
+---
+{config ? (
+  <section class="comments" aria-label="Comments">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+    <div id="gitalk"></div>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+    <script is:inline define:vars={{ config }}>
+      new Gitalk({
+        clientID: config.clientID,
+        clientSecret: config.clientSecret,
+        repo: config.repo,
+        owner: config.owner,
+        admin: config.admin,
+        id: md5(location.pathname),
+        distractionFreeMode: true,
+        proxy: config.proxy,
+        title: config.title,
+      }).render('gitalk');
+    </script>
+  </section>
+) : (
+  import.meta.env.DEV && <p class="comments-off">评论：本地没有配置 PUBLIC_GITALK_CLIENT_SECRET，已跳过。</p>
+)}
+
+<style is:global>
+  .comments { margin-top: 64px; }
+  .comments-off { margin-top: 48px; color: var(--faint); font-size: 13px; }
+  /* Gitalk ships a light theme; repaint it in the site's ink and paper. */
+  #gitalk .gt-container { color: var(--body); font-family: var(--serif); font-size: 15px; }
+  #gitalk .gt-container a, #gitalk .gt-container .gt-link { color: var(--accent); border: 0; }
+  #gitalk .gt-container a:hover { color: var(--ink); }
+  #gitalk .gt-container .gt-header-textarea { background: var(--paper-2); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; }
+  #gitalk .gt-container .gt-header-textarea:hover, #gitalk .gt-container .gt-header-textarea:focus { background: var(--paper-2); border-color: var(--accent); }
+  #gitalk .gt-container .gt-header-preview { background: var(--paper-2); border-color: var(--line); }
+  #gitalk .gt-container .gt-btn { background: var(--accent); border-color: var(--accent); color: var(--paper); border-radius: 6px; }
+  #gitalk .gt-container .gt-btn-preview { background: transparent; color: var(--accent); }
+  #gitalk .gt-container .gt-btn:hover, #gitalk .gt-container .gt-btn-preview:hover { background: #d48a7a; border-color: #d48a7a; color: var(--paper); }
+  #gitalk .gt-container .gt-comment-content { background: var(--paper-2); border: 1px solid var(--line); border-radius: 6px; }
+  #gitalk .gt-container .gt-comment-content:hover { box-shadow: none; }
+  #gitalk .gt-container .gt-comment-admin .gt-comment-content { background: #26231f; }
+  #gitalk .gt-container .gt-comment-body { color: var(--body) !important; }
+  #gitalk .gt-container .gt-comment-username { color: var(--ink); }
+  #gitalk .gt-container .gt-comment-text, #gitalk .gt-container .gt-comment-date, #gitalk .gt-container .gt-counts { color: var(--muted); }
+  #gitalk .gt-container .gt-header-controls-tip, #gitalk .gt-container .gt-svg svg { color: var(--muted); fill: var(--muted); }
+  #gitalk .gt-container .gt-meta { border-bottom-color: var(--line); }
+  #gitalk .gt-container .gt-popup { background: var(--paper-2); border-color: var(--line); }
+  #gitalk .gt-container .markdown-body { color: var(--body); }
+  #gitalk .gt-container .gt-comment-body a, #gitalk .gt-container .gt-comment-username, #gitalk .gt-container .gt-comment-username:hover { color: var(--ink); }
+  #gitalk .gt-container .gt-comment-body blockquote { border-left-color: var(--accent-soft); color: var(--muted); }
+  #gitalk .gt-container .gt-ico-text { color: var(--paper); }
+  #gitalk .gt-container .gt-svg svg { fill: var(--accent); }
+  #gitalk .gt-container .gt-avatar img { border-radius: 50%; }
+  #gitalk .gt-container .gt-comment-content::before, #gitalk .gt-container .gt-comment-content::after { display: none; }
+  #gitalk .gt-container .markdown-body pre, #gitalk .gt-container .markdown-body code { background: var(--paper); }
+</style>

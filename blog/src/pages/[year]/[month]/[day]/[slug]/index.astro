@@ -1,0 +1,35 @@
+---
+import { render } from 'astro:content';
+import Base from '../../../../../layouts/Base.astro';
+import Comments from '../../../../../components/Comments.astro';
+import { formatDate, getPosts, type Post } from '../../../../../lib/posts';
+import '../../../../../styles/prose.css';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post, i) => ({
+    params: { ...post.ymd, slug: post.id },
+    props: { post, newer: posts[i - 1], older: posts[i + 1] },
+  }));
+}
+const { post, newer, older } = Astro.props as { post: Post; newer?: Post; older?: Post };
+const { Content } = await render(post);
+---
+<Base title={post.data.title} description={post.excerpt}>
+  <article>
+    <header class="post-header">
+      <h1>{post.data.title}{post.draft && <span class="draft-badge">草稿</span>}</h1>
+      <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+  {(newer || older) && (
+    <nav class="post-nav" aria-label="More posts">
+      {older && <a class="prev" href={older.url}><small>← 上一篇</small>{older.data.title}</a>}
+      {newer && <a class="next" href={newer.url}><small>下一篇 →</small>{newer.data.title}</a>}
+    </nav>
+  )}
+  {post.data.comments && !post.draft && <Comments title={post.data.title} />}
+</Base>

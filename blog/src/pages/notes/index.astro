@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import slides from '../../data/slides.json';
+
+// Talks and slide decks. Each deck is a static page under public/slides/<name>/; list it in data/slides.json.
+---
+<Base nav="notes" title="Notes">
+  <h1 class="page-title">Notes</h1>
+  <p class="motto">分享与幻灯片</p>
+  <div class="slide-grid">
+    {slides.map((s) => (
+      <a class="slide-card" href={s.url} title={s.title}>
+        <img src={s.cover} alt="" loading="lazy">
+        <p>{s.title}</p>
+      </a>
+    ))}
+  </div>
+</Base>

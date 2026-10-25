@@ -1,0 +1,1033 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Companion House</title>
+<style>
+  :root { --panel: rgba(255,255,255,.86); --ink: #3a332b; --accent: #b0643c; }
+  html, body { margin: 0; height: 100%; background: linear-gradient(#cfd8e3 50%, #8fa36e 50%); color: var(--ink); font: 14px/1.4 system-ui, sans-serif; overflow: hidden; }
+  canvas { display: block; }
+  #ui { position: fixed; left: 12px; top: 12px; right: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+  #ui button { border: 1px solid #c9bba8; background: var(--panel); padding: 6px 10px; border-radius: 6px; cursor: pointer; color: var(--ink); }
+  #ui button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  #stats { position: fixed; left: 12px; bottom: 12px; background: var(--panel); padding: 6px 10px; border-radius: 6px; font-variant-numeric: tabular-nums; }
+  #ui { transition: opacity .8s; }
+  #ui.wait { opacity: 0; pointer-events: none; }
+  /* while house.glb downloads: a quiet caption and a hairline under it */
+  #build { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); text-align: center;
+    color: #fff; text-shadow: 0 1px 3px rgba(40,50,60,.45); letter-spacing: .08em; transition: opacity 1.2s; pointer-events: none; }
+  #build i { display: block; width: 180px; height: 2px; margin: 8px auto 0; background: rgba(255,255,255,.35); }
+  #build i b { display: block; height: 100%; width: 0; background: #fff; transition: width .3s; }
+  #build.done { opacity: 0; }
+  /* the first picture: the landscape rendered from the overview camera (render_poster.py). The camera
+     keeps its horizontal angle, so at full width and centred vertically it lines up with the 3D view */
+  #poster { position: fixed; left: 0; top: 50%; width: 100vw; height: auto; transform: translateY(-50%);
+    z-index: 1; pointer-events: none; transition: opacity 1s; }
+  #poster.gone { opacity: 0; }
+  #ui, #stats, #build { z-index: 2; }
+  html.embedded #poster { top: calc(50% - 5vw); }
+  html.embedded #ui, html.embedded #stats { display: none; }
+</style>
+<script>if (new URLSearchParams(location.search).has('embed')) document.documentElement.classList.add('embedded');</script>
+<link rel="preload" as="image" href="assets/poster.webp" fetchpriority="high">
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+               "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }
+</script>
+</head>
+<body>
+<img id="poster" src="assets/poster.webp" alt="" fetchpriority="high">
+<div id="ui" class="wait"></div>
+<div id="stats">loading…</div>
+<div id="build"><span>Building the house</span><i><b></b></i></div>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { createFloorNavigation } from './floor-navigation.js';
+import { hasCachedHouse, fillHouseCache } from './asset-cache.js?v=20261023';   // new name: browsers keep .js 4 h
+
+const A = 'assets/';
+// Extend the embedded frame downward by 10% of its width, keeping the house scale.
+const lawnExtension = document.documentElement.classList.contains('embedded') ? .1 : 0;
+const stats = document.getElementById('stats');
+const t0 = 0;                                                   // times are from the start of navigation
+const cfg = await (await fetch(A + 'scene.json', { cache: 'no-store' })).json();
+const V = '?v=' + (cfg.build || Date.now());                    // a new export is never served from cache
+const b2t = (x, y, z) => new THREE.Vector3(x, z, -y);          // Blender z-up -> three y-up
+
+// Loading doesn't wait for this (a first visit spent up to 3 s on the worker): only the skip below needs it
+const cachedHouseP = hasCachedHouse(cfg, V);
+cachedHouseP.then(hit => { if (hit) document.querySelector('#build span').textContent = 'Opening your home…'; });
+
+// The page opens in steps (2026-10-22). The HTML shows poster.webp at once: the landscape without the
+// house, rendered in Cycles (render_poster.py). Over it the owner stands on the lawn and the house is a
+// pale blueprint (intro.bin, ~0.5 MB, export_intro.py). Meanwhile the 3D landscape loads and replaces the
+// picture when it is complete, and house.glb and the yard plants download: the blueprint fills in with
+// their progress, and the real house rises in its place.
+const introP = Promise.all([fetch(A + 'intro.json' + V).then(r => r.json()), fetch(A + 'intro.bin' + V).then(r => r.arrayBuffer())]);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.autoClear = false;                                    // landscape, poster, then the rest: see the loop
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.AgXToneMapping;                   // for the lit parts (glass, leaves, owner)
+renderer.toneMappingExposure = cfg.exposure;
+renderer.localClippingEnabled = true;                          // the house rises through a clipping plane
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();                               // blueprint, owner, house, yard
+const land = new THREE.Scene();                                // sky, backdrop, ground, lake, tree cards
+const camera = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, 0.05, 6000);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.enabled = false;
+
+// aerial haze as in the render's compositor: 30 % of the haze colour reached 1600 m past 120 m
+const hz = cfg.haze;
+land.fog = scene.fog = new THREE.Fog(0xb7c3d0, hz.start, hz.start + hz.depth / hz.amount);
+// until the sky HDRI is in, a plain sky-and-grass light for the owner
+const hemi = new THREE.HemisphereLight(0xdfe8f2, 0x8a9a6a, 1.6);
+scene.add(hemi);
+
+// sun for the lit parts; the baked parts already carry the noon light
+const sunTo = new THREE.Vector3(...cfg.sunTo);
+const sun = new THREE.DirectionalLight(0xfff4e6, 2.0);
+sun.position.copy(b2t(sunTo.x, sunTo.y, sunTo.z).multiplyScalar(40));
+scene.add(sun);
+
+const [intro, introBin] = await introP;
+const block = name => { const b = intro.blocks[name];
+  return b.type === 'f32' ? new Float32Array(introBin, b.offset, b.count) : new Uint32Array(introBin, b.offset, b.count); };
+const toY = () => new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -Math.PI / 2);
+// the overview camera, as in house.glb (which arrives later)
+const overview = { pos: new THREE.Vector3(...intro.camera.pos),
+  quat: toY().multiply(new THREE.Quaternion(intro.camera.quat[1], intro.camera.quat[2], intro.camera.quat[3], intro.camera.quat[0])),
+  hfov: intro.camera.hfov };
+
+// ---------------------------------------------------------------- poster
+// the HTML picture, drawn in the canvas from the first frame on (same pixels: full width, centred
+// vertically, its end rows stretched past its ends) and faded out while the house rises
+const posterImg = document.getElementById('poster');
+await posterImg.decode().catch(() => {});
+const posterTex = new THREE.Texture(posterImg);
+posterTex.colorSpace = THREE.SRGBColorSpace;
+posterTex.needsUpdate = true;
+const POSTER = { shift: { value: 0 }, k: { value: 1 }, alpha: { value: 1 }, map: { value: posterTex } };
+const posterScene = new THREE.Scene(), posterCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+posterScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial({
+  uniforms: POSTER, transparent: true, depthTest: false, depthWrite: false,
+  vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
+  fragmentShader: `
+    uniform sampler2D map; uniform float k, alpha, shift; varying vec2 vUv;
+    void main() {
+      float v = 0.5 + (vUv.y - 0.5 - shift) * k;                             // k: window h/w over picture h/w
+      vec3 c = texture2D(map, vec2(vUv.x, clamp(v, 0.001, 0.999))).rgb;
+      gl_FragColor = vec4(c, alpha);
+      #include <colorspace_fragment>
+    }`,
+})));
+const posterFit = () => { POSTER.shift.value = lawnExtension * innerWidth / (2 * innerHeight); POSTER.k.value = (innerHeight / innerWidth) * (posterImg.naturalWidth / posterImg.naturalHeight); };
+posterFit();
+
+let tris = 0;
+const gltfLoader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);   // house, plants and owner are meshopt-compressed
+let cards = 0, landReady = false, posterFade = -1, landMs = 0;
+// ---------------------------------------------------------------- the 3D landscape (replaces the poster)
+async function loadLandscape() {
+// sky: the noon HDRI, already turned in the export
+const sky = await new RGBELoader().loadAsync(A + cfg.skyFile + V);
+sky.mapping = THREE.EquirectangularReflectionMapping;
+land.background = sky;
+// ---------------------------------------------------------------- lake
+// the lake: Cycles' own picture of it from the overview camera (reflections, colour, softness),
+// projected back onto the water from that camera; plain water colour where the picture has no lake
+const lake = new THREE.Mesh(new THREE.BufferGeometry()
+  .setAttribute('position', new THREE.BufferAttribute(block('lakePos'), 3))
+  .setIndex(new THREE.BufferAttribute(block('lakeIdx'), 1)));
+land.add(lake);
+if (cfg.lake) {
+  const L = cfg.lake;
+  const ltex = await new THREE.TextureLoader().loadAsync(A + L.file + V);
+  ltex.colorSpace = THREE.SRGBColorSpace;
+  const pc = new THREE.PerspectiveCamera(THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(L.hfov / 2) / L.aspect)), L.aspect, 0.1, 6000);
+  const qb = new THREE.Quaternion(L.quat[1], L.quat[2], L.quat[3], L.quat[0]);
+  pc.quaternion.copy(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -Math.PI / 2).multiply(qb));
+  pc.position.copy(b2t(...L.pos));
+  pc.updateMatrixWorld(true);
+  const projView = new THREE.Matrix4().multiplyMatrices(pc.projectionMatrix, pc.matrixWorldInverse);
+  lake.material = new THREE.ShaderMaterial({
+    uniforms: { map: { value: ltex }, projView: { value: projView }, water: { value: new THREE.Color(0x6fb2c8) } },
+    vertexShader: `
+      uniform mat4 projView; varying vec4 vProj;
+      void main() {
+        vec4 w = modelMatrix * vec4(position, 1.0);
+        vProj = projView * w;
+        gl_Position = projectionMatrix * viewMatrix * w;
+      }`,
+    fragmentShader: `
+      uniform sampler2D map; uniform vec3 water; varying vec4 vProj;
+      void main() {
+        vec2 uv = vProj.xy / vProj.w * 0.5 + 0.5;
+        vec4 c = (vProj.w > 0.0 && all(greaterThan(uv, vec2(0.0))) && all(lessThan(uv, vec2(1.0)))) ? texture2D(map, uv) : vec4(0.0);
+        gl_FragColor = vec4(mix(water, c.rgb, c.a), 1.0);
+        #include <colorspace_fragment>
+      }`,
+  });
+  lake.position.y += 0.03;                                      // clear of the ground pictures
+}
+
+
+// ---------------------------------------------------------------- ground
+const g = cfg.ground;
+const gtex = await new THREE.TextureLoader().loadAsync(A + g.file + V);
+gtex.colorSpace = THREE.SRGBColorSpace;
+gtex.anisotropy = 8;
+const gw = g.x1 - g.x0, gh = g.y1 - g.y0;
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(gw, gh), new THREE.MeshBasicMaterial({ map: gtex, toneMapped: false, alphaTest: 0.5 }));   // the lake is a hole in it
+ground.rotation.x = -Math.PI / 2;
+ground.position.copy(b2t((g.x0 + g.x1) / 2, (g.y0 + g.y1) / 2, -0.012));   // under the path slabs, set ~1 cm proud
+land.add(ground);
+// ---------------------------------------------------------------- backdrop
+// foothills, snow mountains, their forests and the sky: one Cycles picture from the overview camera,
+// hung far behind everything (drawn first, never in front)
+const bd = cfg.backdrop;
+if (bd) {
+  const btex = await new THREE.TextureLoader().loadAsync(A + bd.file + V);
+  btex.colorSpace = THREE.SRGBColorSpace;
+  const w = 2 * bd.distance * Math.tan(bd.hfov / 2), h = w / bd.aspect;
+  const plate = new THREE.Mesh(new THREE.PlaneGeometry(w, h).translate(0, 0, -bd.distance),
+    new THREE.MeshBasicMaterial({ map: btex, toneMapped: false, fog: false, depthWrite: false }));
+  const qb = new THREE.Quaternion(bd.quat[1], bd.quat[2], bd.quat[3], bd.quat[0]);      // Blender w,x,y,z
+  const toY = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -Math.PI / 2);
+  plate.quaternion.copy(toY.multiply(qb));
+  plate.position.copy(b2t(...bd.pos));
+  plate.renderOrder = -10;
+  land.add(plate);
+}
+// near ground beyond the lawn picture, up to the forest edge; further out the backdrop shows the land
+const outside = new THREE.Mesh(new THREE.PlaneGeometry(340, 340),
+  new THREE.MeshBasicMaterial({ color: new THREE.Color().setRGB(...g.outside, THREE.SRGBColorSpace), toneMapped: false }));
+outside.rotation.x = -Math.PI / 2;
+outside.position.copy(b2t(0, 60, -0.03));
+land.add(outside);
+
+// ---------------------------------------------------------------- tree cards
+// each type is one picture rendered from the front; cards turn about the vertical to face the camera
+function billboardMaterial(map) {
+  // real alpha blending for soft needle edges; every tree is its own mesh placed at the tree, so three.js
+  // draws them back to front
+  const m = new THREE.MeshBasicMaterial({ map, transparent: true, alphaTest: 0.01, depthWrite: true,
+                                          toneMapped: false, side: THREE.DoubleSide });
+  m.onBeforeCompile = sh => {
+    sh.vertexShader = sh.vertexShader.replace('#include <project_vertex>', `
+      vec3 inst = (modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+      float sc = length(instanceMatrix[0].xyz);
+      vec3 toCam = cameraPosition - inst; toCam.y = 0.0; toCam = normalize(toCam);
+      vec3 right = vec3(toCam.z, 0.0, -toCam.x);
+      vec3 wp = inst + (right * position.x + vec3(0.0, 1.0, 0.0) * position.y) * sc;
+      vec4 mvPosition = viewMatrix * vec4(wp, 1.0);
+      gl_Position = projectionMatrix * mvPosition;`);
+  };
+  return m;
+}
+const loader = new THREE.TextureLoader();
+const byType = {};
+for (const r of cfg.trees.instances) (byType[r[0]] ||= []).push(r);
+await Promise.all(Object.entries(byType).map(async ([type, rows]) => {
+  const t = cfg.trees.types[type];
+  const map = await loader.loadAsync(A + t.file + V);
+  map.colorSpace = THREE.SRGBColorSpace;
+  const geo = new THREE.PlaneGeometry(1, 1).translate(-t.cx / t.size, t.cz / t.size, 0);
+  const mesh = new THREE.InstancedMesh(geo, billboardMaterial(map), rows.length);
+  const m = new THREE.Matrix4();
+  mesh.position.copy(b2t(rows[0][1], rows[0][2], rows[0][3]));      // sorting key for the blending
+  rows.forEach((r, i) => {
+    const s = t.size * r[4];
+    m.makeScale(s, s, s).setPosition(b2t(r[1], r[2], r[3]).sub(mesh.position));
+    mesh.setMatrixAt(i, m);
+  });
+  mesh.frustumCulled = false;
+  land.add(mesh);
+  cards += rows.length;
+}));
+// all in: light the owner and glass with the sky. The picture stays until the house rises: the ground
+// picture carries the house's shadow, so the two change over together
+scene.environment = sky;
+scene.remove(hemi);
+landReady = true;
+landMs = Math.round(performance.now());
+}
+const landP = loadLandscape();
+
+// ---------------------------------------------------------------- house
+const cams = {};
+// The house goes up a floor at a time (user, 10-22): the floor's boards, walls and windows rise through
+// a clipping plane (rising: the shell), then its furniture drops in piece by piece, left to right
+// (furniture: each floor's baked furniture, the rugs, lamp glass, and the curtains and pot plants of
+// plants.glb); the roof comes last. The yard and the land around fade in (fading).
+// FLOORS holds each floor's height range.
+const RISE = new THREE.Plane(new THREE.Vector3(0, -1, 0), intro.house.yMin - 0.05);
+const rising = [], fading = [], furniture = [], yardParts = [], yardTwigs = [], FLOORS = [];
+let fringeMat = null;
+const isFurniture = name => /^BAKED_(floor\d|rugs)$/.test(name) || /^(LIT_)?(F\d|PH)_/.test(name);
+// the yard drops in too, after the house (user, 10-22): its baked things, and the plants of plants.glb
+const isYard = name => name === 'BAKED_yard' || /^(LIT|BRANCH|FERN)_G_/.test(name);
+// board colour (display sRGB 0-255); ?wood=r,g,b overrides it, ?compare shows the candidates side by side
+const WOOD_DEFAULT = [140, 98, 64];          // D 暖胡桃 (user, 10-22)
+const woodArg = new URLSearchParams(location.search).get('wood');
+const WOOD = { value: new THREE.Vector3(...(woodArg ? woodArg.split(',').map(Number) : WOOD_DEFAULT)).divideScalar(255) };
+// rugs: off-white linen (user, 10-22); ?linen=r,g,b overrides the colour of an average lit rug (display sRGB)
+const LINEN_DEFAULT = [178, 163, 140];                      // oat off-white, after the user's photo
+const linenArg = new URLSearchParams(location.search).get('linen');
+const LINEN = { value: new THREE.Vector3(...(linenArg ? linenArg.split(',').map(Number) : LINEN_DEFAULT)).divideScalar(255) };
+function setupHouse(gltf, linenMap) {
+linenMap.colorSpace = THREE.NoColorSpace;                         // a detail factor in display values
+linenMap.wrapS = linenMap.wrapT = THREE.RepeatWrapping;
+linenMap.anisotropy = renderer.capabilities.getMaxAnisotropy();
+function meanLit(tex) {                                           // mean display luminance of the baked texels
+  const im = tex.image, cv = document.createElement('canvas'), w = cv.width = 256, h = cv.height = 256;
+  const cx = cv.getContext('2d'); cx.drawImage(im, 0, 0, w, h);
+  const d = cx.getImageData(0, 0, w, h).data; let s = 0, n = 0;
+  for (let i = 0; i < d.length; i += 4) { const l = (0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]) / 255; if (l > 0.02) { s += l; n++; } }
+  return n ? s / n : 0.5;
+}
+gltf.scene.traverse(o => {
+  if (o.isCamera) cams[o.name.replace(/\d{3}$/, '')] = o;            // copies in the export carry a .001 suffix
+  if (!o.isMesh) return;
+  tris += o.geometry.index ? o.geometry.index.count / 3 : o.geometry.attributes.position.count / 3;
+  if (o.name.startsWith('BAKED_')) {
+    const map = o.material.map;
+    o.material = new THREE.MeshBasicMaterial({ map, toneMapped: false });
+    // floor boards: the lightmap reads a little paler and cooler than Cycles' own render of the rooms;
+    // matched to it (measured on the floor-2 view, sRGB: bake 116/92/61 vs render 91/69/49)
+    if (o.name === 'BAKED_boards') {
+      // light walnut (user, 10-22): the baked light and grain kept as brightness, the hue set to a
+      // soft red-brown; WALNUT is the colour of an average lit board (display sRGB)
+      o.material.onBeforeCompile = sh => {
+        sh.uniforms.WALNUT = WOOD;
+        sh.fragmentShader = 'uniform vec3 WALNUT;\n' + sh.fragmentShader.replace('#include <colorspace_fragment>', `#include <colorspace_fragment>
+          float lum_ = dot(gl_FragColor.rgb, vec3(0.299, 0.587, 0.114)) / 0.37;   // 0.37: mean board lum
+          lum_ = pow(lum_, 0.55);              // closer range: the sunny floor 2 and the attic read as one wood
+          gl_FragColor.rgb = mix(gl_FragColor.rgb, WALNUT * lum_, 0.9);`);
+      };
+    }
+    if (o.name === 'BAKED_rugs') {
+      // the rugs' own lightmap gives the light (as brightness), the weave comes from the tiled linen
+      // picture laid in world metres from above; its cord rows run parallel to the fringed ends (the rugs' short
+      // sides, at their ends along x)
+      const mean = meanLit(map);
+      o.material.onBeforeCompile = sh => {
+        Object.assign(sh.uniforms, { LINEN, LINEN_MAP: { value: linenMap }, RUG_MEAN: { value: mean } });
+        sh.vertexShader = 'varying vec3 vW_;\n' + sh.vertexShader.replace('#include <project_vertex>',
+          '#include <project_vertex>\n  vW_ = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+        sh.fragmentShader = 'uniform vec3 LINEN; uniform sampler2D LINEN_MAP; uniform float RUG_MEAN; varying vec3 vW_;\n' +
+          sh.fragmentShader.replace('#include <colorspace_fragment>', `#include <colorspace_fragment>
+          float lum_ = dot(gl_FragColor.rgb, vec3(0.299, 0.587, 0.114)) / RUG_MEAN;
+          lum_ = pow(lum_, 0.6);                // matte: sunny patches don't glare
+          vec3 weave_ = texture2D(LINEN_MAP, vW_.zx / 0.24).rgb / vec3(0.646, 0.625, 0.588);   // / its mean
+          gl_FragColor.rgb = LINEN * lum_ * mix(vec3(1.0), weave_, 0.6);`);
+      };
+    }
+  } else if (/^Lake(\d{3})?$/.test(o.name)) {                     // export copies may carry a .001 suffix
+    o.visible = false;                                              // the first screen's lake stays
+  } else if (o.material && o.material.name.startsWith('Glass')) {
+    // clear glass: a faint sheen only, so the windows show the lake and forest behind (Blender's glass
+    // came out as an opaque chrome mirror)
+    o.material = new THREE.MeshBasicMaterial({ color: 0xe8f2f4, transparent: true, opacity: 0.08,
+                                               depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
+  }
+});
+gltf.scene.traverse(o => {
+  if (!o.isMesh || !o.visible) return;
+  if (isFurniture(o.name)) furniture.push(o);
+  else if (isYard(o.name)) yardParts.push(o);
+  else (/^BAKED_(yard|land|far)/.test(o.name) ? fading : rising).push(o.material);
+  const f = /^BAKED_floor(\d)$/.exec(o.name);
+  if (f) { const b = new THREE.Box3().setFromObject(o); FLOORS[f[1] - 1] = [b.min.y, b.max.y]; }
+});
+scene.add(gltf.scene);
+// rug fringes (user's photo): knotted tassels along each rug's two short ends. The rugs are found in
+// BAKED_rugs by their height (one per floor); all three lie with their length along x
+const rugMesh = gltf.scene.getObjectByName('BAKED_rugs');
+if (rugMesh) {
+  rugMesh.updateWorldMatrix(true, false);
+  const P = rugMesh.geometry.attributes.position, v = new THREE.Vector3(), rugs = [];
+  for (let i = 0; i < P.count; i++) {
+    v.fromBufferAttribute(P, i).applyMatrix4(rugMesh.matrixWorld);
+    let r = rugs.find(r => Math.abs(r.y - v.y) < 0.5);
+    if (!r) rugs.push(r = { y: v.y, box: new THREE.Box3() });
+    r.box.expandByPoint(v);
+  }
+  const tassel = new THREE.ConeGeometry(0.011, 0.075, 6, 1, true);       // a spreading tuft, knot at the tip
+  tassel.translate(0, -0.0375, 0); tassel.rotateZ(Math.PI / 2); tassel.scale(1, 0.35, 1);   // lies flat, points +x
+  const knot = new THREE.SphereGeometry(0.0075, 8, 6); knot.scale(1.2, 0.8, 1.2);
+  const geo = mergeGeometries([tassel.toNonIndexed(), knot.toNonIndexed()].map(g => { g.deleteAttribute('normal'); return g; }));
+  const mat = new THREE.MeshBasicMaterial({ map: linenMap, toneMapped: false,
+    color: new THREE.Color(...LINEN.value.clone().multiplyScalar(0.82 / 0.62).toArray()) });
+  const spots = [];
+  for (const { box } of rugs) {
+    const top = box.max.y, z0 = box.min.z + 0.03, z1 = box.max.z - 0.03, n = Math.round((z1 - z0) / 0.045);
+    for (const [x, dir] of [[box.min.x, -1], [box.max.x, 1]])
+      for (let k = 0; k <= n; k++) spots.push([x, top - 0.003, z0 + (z1 - z0) * k / n, dir]);
+  }
+  const im = new THREE.InstancedMesh(geo, mat, spots.length), m4 = new THREE.Matrix4(), q = new THREE.Quaternion();
+  spots.forEach(([x, y, z, dir], i) => {
+    const wob = Math.sin(i * 12.9898) * 0.5;                          // tufts lie a little unevenly
+    q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), (dir > 0 ? 0 : Math.PI) + wob * 0.25);
+    m4.compose(new THREE.Vector3(x, y, z), q, new THREE.Vector3(1 + wob * 0.15, 1, 1));
+    im.setMatrixAt(i, m4);
+  });
+  scene.add(im);
+  fringeMat = mat;
+  tris += spots.length * geo.attributes.position.count / 3;
+}
+}
+
+// ---------------------------------------------------------------- yard plants (real 3D)
+// branches and ferns carry their Cycles light as vertex colours; leaf twigs are one mesh per kind,
+// drawn instanced with a per-twig matrix and baked colour
+// (the six Searsia shrubs were removed, 10-23; their slots in pieces.json stay empty)
+function setupPlants(pg, twigs) {
+  const C = new THREE.Matrix4().set(1, 0, 0, 0,  0, 0, 1, 0,  0, -1, 0, 0,  0, 0, 0, 1);   // Blender -> three
+  const Ci = C.clone().invert();
+  const twigGeo = {};
+  pg.scene.traverse(o => {
+    if (!o.isMesh) return;
+    const name = /^(TWIG|FERN|BRANCH)_/.test(o.name) ? o.name : o.parent.name;   // multi-material meshes nest one level
+    if (name.startsWith('TWIG_')) {                 // meshopt keeps positions in a unit box, scaled by the node
+      o.updateWorldMatrix(true, false);
+      twigGeo[name.slice(5).replace(/_/g, ' ')] = o.geometry.clone().applyMatrix4(o.matrixWorld);
+      return;
+    }
+    // LIT_: leaf cards, gauze, cane, pot plants: own texture or colour x baked light factor;
+    // BRANCH_: the baked colour itself
+    const lit = name.startsWith('LIT_');
+    const src = o.material;
+    o.material = new THREE.MeshBasicMaterial({ vertexColors: true, toneMapped: false, side: THREE.DoubleSide,
+      map: lit ? src.map : null, color: lit && !src.map ? src.color : 0xffffff,
+      alphaTest: lit && src.map && src.transparent !== undefined ? 0.5 : 0, transparent: false });
+    const own = /^(LIT|BRANCH|FERN)_/.test(o.name) ? o.name : name;   // single-material meshes sit right under the scene
+    o.userData.pieceName = own;
+    if (isFurniture(own)) furniture.push(o);                        // curtains, the cane chair, pot plants
+    else if (isYard(own)) yardParts.push(o);                        // maples, shrubs, ferns
+    else fading.push(o.material);                                   // the lake shore
+  });
+  for (const o of [...pg.scene.children]) if (o.name.startsWith('TWIG_')) pg.scene.remove(o);
+  scene.add(pg.scene);
+  const M = new THREE.Matrix4(), col = new THREE.Color();
+  for (const [src, rows] of Object.entries(twigs)) {
+    const geo = twigGeo[src] || twigGeo[src.replace(/ /g, '_')];
+    if (!geo) { console.warn('no twig mesh', src); continue; }
+    const mesh = new THREE.InstancedMesh(geo, new THREE.MeshBasicMaterial({ toneMapped: false, side: THREE.DoubleSide }), rows.length);
+    rows.forEach((r, i) => {
+      M.set(r[0], r[1], r[2], r[3],  r[4], r[5], r[6], r[7],  r[8], r[9], r[10], r[11],  0, 0, 0, 1);
+      mesh.setMatrixAt(i, C.clone().multiply(M).multiply(Ci));
+      mesh.setColorAt(i, col.setRGB(r[12], r[13], r[14], THREE.SRGBColorSpace));
+      tris += geo.index ? geo.index.count / 3 : 0;
+    });
+    mesh.frustumCulled = false;
+    yardTwigs.push(mesh);                                           // each twig drops with its plant
+    scene.add(mesh);
+  }
+}
+
+// ---------------------------------------------------------------- blueprint
+// the shell's drawn edges and its faces, pale and see-through; below BUILD (the height the download
+// has reached) they fill in, above it they stay a faint sketch. FADE takes the whole drawing away
+const BUILD = { value: intro.house.yMin }, FADE = { value: 1 }, CUT = { value: -100 };   // CUT: the real house is up to here
+function blueprint(m, below, above) {
+  m.onBeforeCompile = sh => {
+    Object.assign(sh.uniforms, { BUILD, FADE, CUT });
+    sh.vertexShader = 'varying float vY_;\n' + sh.vertexShader.replace('#include <project_vertex>',
+      '#include <project_vertex>\n  vY_ = (modelMatrix * vec4(transformed, 1.0)).y;');
+    sh.fragmentShader = 'uniform float BUILD, FADE, CUT; varying float vY_;\n' + sh.fragmentShader.replace('#include <colorspace_fragment>',
+      `#include <colorspace_fragment>
+      gl_FragColor.a *= FADE * smoothstep(CUT - 0.05, CUT + 0.05, vY_) * mix(${above.toFixed(2)}, ${below.toFixed(2)}, smoothstep(BUILD + 0.12, BUILD - 0.12, vY_));`);
+  };
+  return m;
+}
+const bpLines = new THREE.LineSegments(new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(block('lines'), 3)),
+  blueprint(new THREE.LineBasicMaterial({ color: 0xf6fbff, transparent: true, depthWrite: false, toneMapped: false, fog: false }), 0.95, 0.4));
+// faces: a depth-only pass first, so only the nearest wall tints (stacked walls would add up to white);
+// the lines go before both, so the far side shows dimmed through the near walls
+const faceGeo = new THREE.BufferGeometry()
+  .setAttribute('position', new THREE.BufferAttribute(block('facePos'), 3))
+  .setIndex(new THREE.BufferAttribute(block('faceIdx'), 1));
+const bpDepth = new THREE.Mesh(faceGeo, new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }));
+const bpFaces = new THREE.Mesh(faceGeo,
+  blueprint(new THREE.MeshBasicMaterial({ color: 0xd6e6f5, transparent: true, depthWrite: false, depthFunc: THREE.LessEqualDepth,
+                                          toneMapped: false, fog: false, side: THREE.DoubleSide }), 0.38, 0.05));
+bpLines.renderOrder = 1; bpDepth.renderOrder = 2; bpFaces.renderOrder = 3;
+scene.add(bpLines, bpDepth, bpFaces);
+
+// ---------------------------------------------------------------- owner
+// owner.glb: owner-character-v18.glb resampled, textures to webp and meshopt-compressed (3.7 MB -> 0.7 MB):
+//   npx @gltf-transform/cli@4.1.1 resample | webp | meshopt
+const owner = await gltfLoader.loadAsync(A + 'owner.glb' + V);
+owner.scene.traverse(o => { if (o.name === 'Book') o.visible = false; });
+scene.add(owner.scene);
+const mixer = new THREE.AnimationMixer(owner.scene);
+const acts = Object.fromEntries(owner.animations.map(a => [a.name, mixer.clipAction(a)]));
+let actNow = null;
+function act(name, fade = 0.25) {
+  const a = acts[name] || acts.Idle;
+  if (a === actNow) return;
+  a.reset().play();
+  if (actNow) actNow.crossFadeTo(a, fade, false);
+  actNow = a;
+}
+// while the house downloads she stands on the lawn and watches it go up; when it is done she walks in
+// and sits down on the sofa (Blender coords, then three)
+const WATCH = b2t(-1.75, -2.2, 0), DOOR = b2t(0, -1.2, 0);   // beside the path lights: in frame on a 16:9 screen too
+const WALK_SPEED = 0.55;                                              // m/s, as the Walk cycle is keyed
+owner.scene.position.copy(WATCH);
+owner.scene.rotation.y = Math.atan2(-WATCH.x * 0.3, -1);             // facing the house, a little toward its middle
+act('Idle', 0);
+let goingIn = false;
+function goHome() { goingIn = true; }
+function updateOwner(dt) {
+  if (!goingIn) return;
+  const o = owner.scene, d = DOOR.clone().sub(o.position); d.y = 0;
+  const len = d.length();
+  if (len < 0.03) { sitOnSofa(); return; }
+  act('Walk');
+  o.rotation.y = turn(o.rotation.y, Math.atan2(d.x, d.z), dt);
+  o.position.addScaledVector(d.normalize(), Math.min(len, WALK_SPEED * dt));
+}
+function turn(a, b, dt) {                                             // ease the heading, the short way round
+  const d = Math.atan2(Math.sin(b - a), Math.cos(b - a));
+  return a + d * Math.min(1, dt * 6);
+}
+let seated = false;
+function sitOnSofa() {
+  // on the ground-floor sofa (it faces the TV, -x; backrest at x -1.0): root on the floor at the seat's
+  // front edge, x -1.92, facing -x. SofaSit is keyed for a 0.44 m seat, this one is 0.38 m
+  owner.scene.position.copy(b2t(-1.58, 2.5, 0.6 - 0.06));   // SofaSit leans back with the legs along the cushion: root well inside
+  owner.scene.rotation.y = -Math.PI / 2;
+  act('SofaSit', 0);
+  seated = true;
+}
+
+// ---------------------------------------------------------------- cameras
+const views = { '总览': 'Cam_Overview', '一层': 'Cam_Room_F1', '二层': 'Cam_Room_F2', '三层': 'Cam_Room_F3' };   // only these views exist: off-view terrain is not exported
+let floorNavigation = null;
+let overviewFraming = true;
+let hfov = overview.hfov;                                         // Blender cameras fit horizontally
+function place(pos, q, fovH, outside) {
+  camera.position.copy(pos);
+  const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(q);
+  controls.target.copy(pos).addScaledVector(dir, outside ? 24 : 0.05);   // rooms: the camera turns in place
+  // A 1.2x focal scale enlarges room details by 20% without moving through furniture.
+  hfov = outside ? fovH : 2 * Math.atan(Math.tan(fovH / 2) / 1.2);
+  overviewFraming = outside;
+  fit();
+}
+function useView(label) {
+  const c = cams[views[label]];
+  if (!c) return;
+  c.updateWorldMatrix(true, false);
+  const pos = new THREE.Vector3(), q = new THREE.Quaternion();
+  c.matrixWorld.decompose(pos, q, new THREE.Vector3());
+  const outside = label === '总览';
+  floorNavigation?.setView(label);
+  place(pos, q, 2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(c.fov) / 2) * c.aspect), outside);
+  controls.enabled = !outside;                                    // the overview is a fixed picture; rooms can be looked around
+  controls.enablePan = false;
+  controls.minAzimuthAngle = -Infinity; controls.maxAzimuthAngle = Infinity;
+  controls.minPolarAngle = 0; controls.maxPolarAngle = Math.PI; controls.minDistance = 0; controls.maxDistance = Infinity;
+  controls.update();
+  // look around the room only: turn and tilt a little, no flying through the floor or out of the house
+  if (!outside) {
+  const az = controls.getAzimuthalAngle(), pol = controls.getPolarAngle(), D = THREE.MathUtils.degToRad;
+  controls.minAzimuthAngle = az - D(50); controls.maxAzimuthAngle = az + D(50);
+  controls.minPolarAngle = Math.max(D(20), pol - D(35)); controls.maxPolarAngle = Math.min(D(110), pol + D(25));
+  controls.minDistance = controls.maxDistance = 0.05;
+  controls.enableZoom = false;
+  controls.rotateSpeed = 0.35;
+  }
+  document.querySelectorAll('#ui button').forEach(b => b.classList.toggle('on', b.dataset.view === label));
+}
+function fit() {
+  camera.aspect = innerWidth / innerHeight;
+  camera.fov = THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(hfov / 2) / camera.aspect));
+  if (overviewFraming && lawnExtension) {
+    camera.setViewOffset(innerWidth, innerHeight, 0, innerWidth * lawnExtension / 2, innerWidth, innerHeight);
+  } else {
+    camera.clearViewOffset();
+  }
+  camera.updateProjectionMatrix();
+}
+const ui = document.getElementById('ui');
+for (const label of Object.keys(views)) {
+  const b = document.createElement('button');
+  b.dataset.view = label;
+  b.textContent = { '总览': 'Overview', '一层': '1F', '二层': '2F', '三层': '3F' }[label];
+  b.onclick = () => useView(label);
+  ui.appendChild(b);
+}
+place(overview.pos, overview.quat, overview.hfov, true);
+controls.update();
+addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); fit(); posterFit(); });
+
+// ---------------------------------------------------------------- the house downloads
+// byte progress over everything still to come; sizes are estimates until each response's length is known
+const buildUI = document.getElementById('build'), buildBar = buildUI.querySelector('b');
+const firstMs = Math.round(performance.now() - t0);
+let got = 0, real = 0;
+async function download(files) {
+  const gotEach = files.map(() => 0), size = files.map(f => f.est);
+  return Promise.all(files.map(async (f, i) => {
+    const r = await fetch(A + f.file + V);
+    const n = +r.headers.get('content-length');
+    if (n) size[i] = n;
+    const reader = r.body.getReader(), parts = [];
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      parts.push(value);
+      gotEach[i] += value.length;
+      real = gotEach.reduce((a, b) => a + b) / size.reduce((a, b) => a + b);
+    }
+    const buf = new Uint8Array(gotEach[i]);
+    let off = 0;
+    for (const p of parts) { buf.set(p, off); off += p.length; }
+    return buf.buffer;
+  }));
+}
+const MB = 1 << 20;
+const piecesP = fetch(A + 'pieces.json' + V).then(r => r.json());     // furniture boxes (export_pieces.py)
+let piecesCfg = null;
+piecesP.then(p => { piecesCfg = p; });
+const timing = { firstScreen: firstMs };                            // ms since the page script started
+const arrived = download([
+  { file: 'house.glb', est: 15 * MB }, { file: cfg.plants.file, est: 11 * MB },
+  { file: cfg.plants.twigsFile, est: 2.6 * MB }, { file: 'linen.webp', est: 0.06 * MB },
+]).then(async ([houseBuf, plantsBuf, twigsBuf, linenBuf]) => {
+  timing.downloaded = Math.round(performance.now() - t0);
+  await piecesP;
+  const linenUrl = URL.createObjectURL(new Blob([linenBuf], { type: 'image/webp' }));
+  const emptyP = Promise.all(['house', 'floors', 'boards', 'rugs'].map(g =>
+    new THREE.TextureLoader().loadAsync(A + `empty_${g}.webp` + V).then(t => {
+      t.colorSpace = THREE.SRGBColorSpace; t.flipY = false;            // laid out like the glb's own maps
+      emptyMaps['BAKED_' + g] = t;
+    }).catch(() => {})));
+  const [gltf, pg, linenMap] = await Promise.all([gltfLoader.parseAsync(houseBuf, A), gltfLoader.parseAsync(plantsBuf, A),
+                                                  new THREE.TextureLoader().loadAsync(linenUrl), emptyP]);
+  setupHouse(gltf, linenMap);
+  setupPlants(pg, JSON.parse(new TextDecoder().decode(twigsBuf)));
+  for (const m of rising) { m.clippingPlanes = [RISE]; }
+  setupPieces(piecesCfg);
+  for (const m of fading) { m.userData.opaque = !m.transparent; m.transparent = true; m.opacity = 0; }
+  timing.parsed = Math.round(performance.now() - t0);
+  return true;
+});
+
+// the drawing never runs ahead of the download, and takes at least MIN_BUILD s (a returning visitor skips it all)
+const MIN_BUILD = 2.5;                                            // the blueprint takes ~4 s in all (user, 10-22)
+// then, floor by floor: the shell's band rises (SHELL_TIME), the rug drops, the furniture drops in left
+// to right over FURNISH_TIME, each piece falling DROP_H m in FALL_TIME s; the roof last
+const SHELL_TIME = 1.3, ROOF_TIME = 2.2, RUG_LEAD = 0.45, FURNISH_TIME = 3.0, FALL_TIME = 0.55, DROP_H = 0.9;
+const YARD_GAP = 4.0 / 56, SINGLE_GAP = 0.12;                     // the yard's things, before the house: their pace
+const POSTER_TIME = 2.5;                                          // the picture gives way to the 3D landscape
+const POSTER_TIME_CACHED = 0.6;                                   // ... faster when the build is skipped
+const FLOOR_NAMES = ['the first floor', 'the second floor', 'the third floor'];
+const HOLD = new URLSearchParams(location.search).get('build');    // ?build=0.4 stops the drawing there (for review)
+const AT = new URLSearchParams(location.search).get('at');         // ?at=3 freezes the build 3 s in (for review)
+let shown = 0, introT = 0, ready = false, buildT = -1, loadMs = 0, introT0 = -1;
+// Skip construction when all required versioned assets are cached.
+const Q = new URLSearchParams(location.search);
+let skipBuild = false;
+Promise.all([arrived, landP, cachedHouseP]).then(([, , cachedHouse]) => {
+  if (!cachedHouse) fillHouseCache(cfg, V);                       // so the next visit can skip the build
+  skipBuild = Q.has('skip') || (cachedHouse && !Q.has('build') && !Q.has('at'));
+  document.documentElement.dataset.houseCache = cachedHouse ? 'hit' : 'miss';
+  document.documentElement.dataset.houseAnimation = skipBuild ? 'skipped' : 'playing';
+  ready = true;
+});
+function finishNow() {                                              // straight to the finished house
+  FILL_ON.value = 0;
+  EMPTY_MIX.value.set(1, 1, 1);
+  buildT = 0; posterFade = 0; loadMs = Math.round(performance.now() - t0);
+  RISE.constant = 1e4; FILL_ON.value = 0; EMPTY_MIX.value.set(1, 1, 1);
+  for (const p of allPieces) p.t = 99;
+  updatePieces(0);
+  FRINGE.constant = 100;
+  for (const m of fading) { m.opacity = 1; if (m.userData.opaque) m.transparent = false; }
+  scene.remove(bpLines, bpDepth, bpFaces);
+  buildUI.classList.add('done');
+  ui.classList.remove('wait'); ui.classList.add('done');
+  if (!floorNavigation) floorNavigation = createFloorNavigation({ THREE, scene, camera, renderer, floors: FLOORS, top: intro.house.yMax, useView });
+  useView('总览');
+  sitOnSofa();
+}
+
+// ---------------------------------------------------------------- furniture pieces
+// a piece: one item (sofa, lamp, pot plant...) or a floor's rug. Baked furniture moves in the vertex
+// shader (each vertex carries its piece number, each floor's material a DROPS array: <0 hidden, else the
+// height above its place); separate meshes (curtains, plants, lamp glass) move as a whole
+const allPieces = [], floorPieces = [[], [], [], []], MAXP = 160;  // floors 1-3, then the yard (56 things)
+function dropMaterial(m, attr) {
+  const DROPS = { value: new Float32Array(MAXP).fill(-1) };
+  const prev = m.onBeforeCompile;
+  m.onBeforeCompile = (sh, r) => {
+    if (prev) prev(sh, r);
+    Object.assign(sh.uniforms, { DROPS });
+    // lifted in world metres, after any node scale or instance matrix; a hidden piece is dropped per
+    // fragment: a triangle shared with a neighbouring piece must not stretch
+    // packed four to a vec4: a float array would take a whole uniform register per element
+    sh.vertexShader = `attribute float ${attr}; uniform vec4 DROPS[${MAXP / 4}]; varying float vHid_;\n` +
+      sh.vertexShader.replace('#include <project_vertex>', `#include <project_vertex>
+      int i_ = int(${attr} + 0.5);
+      float d_ = DROPS[i_ / 4][i_ % 4];
+      vHid_ = d_ < 0.0 ? 1.0 : 0.0;
+      mvPosition.xyz += (viewMatrix * vec4(0.0, max(d_, 0.0), 0.0, 0.0)).xyz;
+      gl_Position = projectionMatrix * mvPosition;`);
+    sh.fragmentShader = 'varying float vHid_;\n' + sh.fragmentShader.replace('#include <clipping_planes_fragment>',
+      '#include <clipping_planes_fragment>\n  if (vHid_ > 0.001) discard;');
+  };
+  m.customProgramCacheKey = () => 'drop-' + attr + (prev ? prev.toString().length : 0);
+  m.needsUpdate = true;
+  return { DROPS };
+}
+// While the house builds, the furniture is missing from the rooms, and the walls and floors behind and
+// under it, and the backs of the furniture already in, show their unlit, near-black lightmap. FILL_ON swaps those texels for the colour around them:
+// a copy of the lightmap with the black texels made transparent, mipmapped, read a few levels down
+// (the GPU's own push-pull). Off once the build is over, when the furniture covers them again
+const FILL_ON = { value: 1 };
+const fillQuad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial({
+  uniforms: { src: { value: null } },
+  vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
+  fragmentShader: `uniform sampler2D src; varying vec2 vUv;
+    void main() { vec3 c = texture2D(src, vUv).rgb; float m = step(0.02, dot(c, vec3(0.299, 0.587, 0.114)));
+                  gl_FragColor = vec4(c * m, m); }`,
+}));
+const fillScene = new THREE.Scene().add(fillQuad);
+function fillMaterial(m, below) {           // below: the luminance under which a texel counts as unlit
+  const map = m.map, w = map.image.width >> 1, h = map.image.height >> 1;
+  const rt = new THREE.WebGLRenderTarget(w, h, { type: THREE.HalfFloatType, generateMipmaps: true,
+    minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter, depthBuffer: false });
+  fillQuad.material.uniforms.src.value = map;
+  renderer.setRenderTarget(rt); renderer.render(fillScene, posterCam); renderer.setRenderTarget(null);
+  const prev = m.onBeforeCompile;
+  m.onBeforeCompile = (sh, r) => {
+    if (prev) prev(sh, r);
+    Object.assign(sh.uniforms, { FILL: { value: rt.texture }, FILL_ON });
+    sh.fragmentShader = 'uniform sampler2D FILL; uniform float FILL_ON;\n' + sh.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
+      if (FILL_ON > 0.5 && dot(diffuseColor.rgb, vec3(0.299, 0.587, 0.114)) < ${below.toFixed(4)}) {
+        vec4 f_ = vec4(0.0);
+        for (int i = 2; i <= 8; i++) { f_ = textureLod(FILL, vMapUv, float(i)); if (f_.a > 0.3) break; }
+        if (f_.a > 0.0) diffuseColor.rgb = f_.rgb / f_.a;
+      }`);
+  };
+  m.customProgramCacheKey = () => 'fill' + below + (prev ? prev.toString().length : 0);
+  m.needsUpdate = true;
+}
+// the timber steps go one part at a time, from the bottom tread up (user, 10-22: "单一物品落下，不要一堆
+// 一堆"). They keep their place in the yard's left to right order, following each other SINGLE_GAP s apart
+const SINGLE = [
+  { test: n => /^G timber steps \d+$/.test(n), within: (a, b) => a.box.min.y - b.box.min.y || b.c.z - a.c.z },
+];
+function singleOrder(pieces, centre, boxes) {
+  const order = pieces.map((_, i) => i).sort((a, b) => pieces[a].key - pieces[b].key);
+  for (const S of SINGLE) {
+    const ids = order.filter(i => S.test(pieces[i].name));
+    if (!ids.length) continue;
+    const c = new THREE.Vector3();
+    ids.forEach(i => c.add(centre[i])); c.divideScalar(ids.length);
+    const info = i => ({ i, box: boxes[i], c: centre[i], angle: Math.atan2(centre[i].z - c.z, centre[i].x - c.x),
+                         kind: /tree ring/.test(pieces[i].name) ? 0 : /ring stone/.test(pieces[i].name) ? 1 : 2 });
+    const sorted = ids.map(info).sort(S.within).map(o => o.i);
+    const at = order.indexOf(ids[0]);
+    const rest = order.filter(i => !ids.includes(i));
+    rest.splice(at, 0, ...sorted);
+    order.splice(0, order.length, ...rest);
+    sorted.forEach(i => { pieces[i].single = true; });
+  }
+  order.forEach((i, k) => { pieces[i].key = k; });
+}
+// Empty rooms: export_web.py (WEB_EMPTY=1) bakes the walls, slabs, boards and rugs again with no
+// furniture in the house (empty_to_web.py: empty_<group>.webp). While the build runs they show that light,
+// so nothing behind or under a piece still to come is black; once a floor's furniture is all in,
+// EMPTY_MIX for that floor (by height, FLOOR_Y) goes to 1 and the furnished light (shadows) comes back
+const EMPTY_MIX = { value: new THREE.Vector3(0, 0, 0) }, FLOOR_Y = { value: new THREE.Vector2(3, 5.3) };
+const emptyMaps = {};
+function emptyMaterial(m, tex) {
+  const prev = m.onBeforeCompile;
+  m.onBeforeCompile = (sh, r) => {
+    if (prev) prev(sh, r);
+    Object.assign(sh.uniforms, { EMPTY_MAP: { value: tex }, EMPTY_MIX, FLOOR_Y });
+    sh.vertexShader = 'varying float vWy_;\n' + sh.vertexShader.replace('#include <project_vertex>',
+      '#include <project_vertex>\n  vWy_ = (modelMatrix * vec4(transformed, 1.0)).y;');
+    sh.fragmentShader = 'uniform sampler2D EMPTY_MAP; uniform vec3 EMPTY_MIX; uniform vec2 FLOOR_Y; varying float vWy_;\n' +
+      sh.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
+      float k_ = vWy_ < FLOOR_Y.x ? EMPTY_MIX.x : vWy_ < FLOOR_Y.y ? EMPTY_MIX.y : EMPTY_MIX.z;
+      if (k_ < 1.0) diffuseColor.rgb = mix(texture2D(EMPTY_MAP, vMapUv).rgb, diffuseColor.rgb, k_);`);
+  };
+  m.customProgramCacheKey = () => 'empty' + (prev ? prev.toString().length : 0);
+  m.needsUpdate = true;
+}
+function setupPieces(cfg) {
+  // the shell and rugs: anything near black; the furniture: only the truly unlit, so the black TV glass
+  // and iron stay as they are
+  for (const [n, below] of [['BAKED_floor1', 0.002], ['BAKED_floor2', 0.002], ['BAKED_floor3', 0.002], ['BAKED_yard', 0.002]]) {
+    const o = scene.getObjectByName(n);
+    if (o && o.material.map) fillMaterial(o.material, below);
+  }
+  // the walls, slabs, boards and rugs: lit as empty rooms while the furniture is out (user, 10-22)
+  FLOOR_Y.value.set(FLOORS[1][0], FLOORS[2][0]);
+  for (const [n, tex] of Object.entries(emptyMaps)) {
+    const o = scene.getObjectByName(n);
+    if (o && tex) emptyMaterial(o.material, tex);
+  }
+  const v = new THREE.Vector3(), s = new THREE.Vector3();
+  // groups 0-2: the floors' furniture; 3: the yard. Each: its baked mesh, its separate meshes, and (yard)
+  // the instanced leaf twigs of its plants
+  const GROUPS = [
+    { key: 'floor1', baked: 'BAKED_floor1', parts: furniture, match: n => n.startsWith('F1 ') || n.startsWith('PH ') },
+    { key: 'floor2', baked: 'BAKED_floor2', parts: furniture, match: n => n.startsWith('F2 ') || n.startsWith('PH ') },
+    { key: 'floor3', baked: 'BAKED_floor3', parts: furniture, match: n => n.startsWith('F3 ') || n.startsWith('PH ') },
+    { key: 'yard', baked: 'BAKED_yard', parts: yardParts, match: n => n.startsWith('G '), twigs: yardTwigs },
+  ];
+  GROUPS.forEach((G, f) => {
+    const list = cfg[G.key] || [], parts = G.parts;
+    const mesh = parts.find(o => o.name === G.baked);
+    const boxes = list.map(p => new THREE.Box3(new THREE.Vector3(...p.min), new THREE.Vector3(...p.max)).expandByScalar(0.02));
+    const vol = boxes.map(b => b.getSize(s).x * s.y * s.z);
+    // left to right; a thing standing on or in another (a jug on a shelf) after what holds it
+    const centre = boxes.map(b => b.getCenter(new THREE.Vector3()));
+    const root = boxes.map((_, i) => { let r = i;
+      boxes.forEach((b, j) => { if (vol[j] > vol[r] && b.containsPoint(centre[i])) r = j; }); return r; });
+    const order = list.map((_, i) => i).sort((a, b) => centre[root[a]].x - centre[root[b]].x || vol[b] - vol[a]);
+    const pieces = list.map((p, i) => ({ name: p.name, floor: f, t: -1, slot: i, us: [], meshes: [], key: order.indexOf(i) }));
+    const pieceOf = (p, among = null) => {                // the smallest box holding p, else the nearest one
+      let best = -1, bestV = Infinity, near = 0, nearD = Infinity;
+      for (let i = 0; i < boxes.length; i++) {
+        if (among && !among[i]) continue;
+        if (boxes[i].containsPoint(p)) { if (vol[i] < bestV) { bestV = vol[i]; best = i; } }
+        else { const d = boxes[i].distanceToPoint(p); if (d < nearD) { nearD = d; near = i; } }
+      }
+      return best >= 0 ? best : near;
+    };
+    if (mesh) {                                          // baked: every vertex to its item
+      mesh.updateWorldMatrix(true, false);
+      const P = mesh.geometry.attributes.position, ids = new Float32Array(P.count);
+      for (let k = 0; k < P.count; k++) ids[k] = pieceOf(v.fromBufferAttribute(P, k).applyMatrix4(mesh.matrixWorld));
+      mesh.geometry.setAttribute('piece', new THREE.BufferAttribute(ids, 1));
+      const u = dropMaterial(mesh.material, 'piece');
+      pieces.forEach(p => p.us.push(u.DROPS));
+    }
+    // leaf twigs: each instance to the plant it grows on (maples, shrubs, the periwinkle)
+    const plants = list.map(p => /^G (maple|shrub|periwinkle)/.test(p.name));
+    for (const tm of G.twigs || []) {
+      const ids = new Float32Array(tm.count), M = new THREE.Matrix4();
+      for (let k = 0; k < tm.count; k++) { tm.getMatrixAt(k, M); ids[k] = pieceOf(v.setFromMatrixPosition(M), plants); }
+      tm.geometry.setAttribute('piece', new THREE.InstancedBufferAttribute(ids, 1));
+      const u = dropMaterial(tm.material, 'piece');
+      pieces.forEach(p => p.us.push(u.DROPS));
+    }
+    // separate meshes (curtains, pot plants, lamp glass; maple and shrub branches, ferns): by name, to the
+    // item whose name starts theirs
+    for (const o of parts.filter(o => !o.name.startsWith('BAKED_'))) {
+      const n = (o.userData.pieceName || o.name).replace(/^(LIT|BRANCH|FERN)_/, '').replace(/_/g, ' ');
+      if (!G.match(n) || (n.startsWith('PH ') && !list.some(p => n.startsWith(p.name)))) continue;
+      const p = pieces.filter(p => n.startsWith(p.name)).sort((a, b) => b.name.length - a.name.length)[0];
+      if (!p) continue;
+      o.userData.y0 = o.position.y;
+      o.visible = false;
+      p.meshes.push(o);
+    }
+    if (G.key === 'yard') singleOrder(pieces, centre, boxes);
+    pieces.sort((a, b) => a.key - b.key);
+    floorPieces[f].push(...pieces);
+  });
+  // rugs: one per floor in BAKED_rugs, told apart by height; each floor's goes down first
+  const rugMesh = furniture.find(o => o.name === 'BAKED_rugs');
+  if (rugMesh) {
+    rugMesh.updateWorldMatrix(true, false);
+    const P = rugMesh.geometry.attributes.position, ids = new Float32Array(P.count);
+    for (let k = 0; k < P.count; k++) {
+      v.fromBufferAttribute(P, k).applyMatrix4(rugMesh.matrixWorld);
+      ids[k] = FLOORS.reduce((best, r, i) => (v.y >= r[0] - 0.2 ? i : best), 0);
+    }
+    rugMesh.geometry.setAttribute('rug', new THREE.BufferAttribute(ids, 1));
+    const u = dropMaterial(rugMesh.material, 'rug');
+    for (let f = 0; f < 3; f++) floorPieces[f].unshift({ name: 'rug', floor: f, t: -1, slot: f, us: [u.DROPS], meshes: [], rug: true });
+  }
+  if (fringeMat) fringeMat.clippingPlanes = [FRINGE];
+  for (const ps of floorPieces) allPieces.push(...ps);
+}
+const FRINGE = new THREE.Plane(new THREE.Vector3(0, -1, 0), -10);   // tassels show up to the last landed rug
+function dropOf(t) {                                                // height above its place, t s after it starts
+  if (t < 0) return -1;
+  if (t < FALL_TIME) { const k = t / FALL_TIME; return DROP_H * (1 - k * k); }   // falling, faster and faster
+  const b = t - FALL_TIME;
+  return b < 0.2 ? 0.035 * Math.sin(Math.PI * b / 0.2) : 0;          // one small bounce
+}
+function updatePieces(dt) {
+  for (const p of allPieces) {
+    if (p.t >= 0) p.t += dt;                                          // -1: not started yet
+    const d = dropOf(p.t);
+    for (const u of p.us) u.value[p.slot] = d;
+    for (const o of p.meshes) { o.visible = d >= 0; o.position.y = o.userData.y0 + Math.max(0, d); }
+    if (p.rug && p.t > FALL_TIME) FRINGE.constant = Math.max(FRINGE.constant, FLOORS[p.floor][0] + 0.3);
+  }
+}
+
+// the timeline once everything is in: per floor, its shell band, then its pieces
+let plan = null;
+const furnished = [];                                               // per floor: when its furniture is all in
+function slabBottom(f) {                 // underside of the slab under floor f + 1: the lowest floor-structure point near it
+  const m = scene.getObjectByName('BAKED_floors'), v = new THREE.Vector3(), top = FLOORS[f][0];
+  if (!m) return top - 0.25;
+  m.updateWorldMatrix(true, false);
+  const P = m.geometry.attributes.position;
+  let lo = top;
+  for (let i = 0; i < P.count; i++) {
+    v.fromBufferAttribute(P, i).applyMatrix4(m.matrixWorld);
+    if (v.y > top - 0.6 && v.y < lo) lo = v.y;
+  }
+  return lo - 0.02;
+}
+function makePlan() {
+  const H = intro.house, base = FLOORS.map(r => r[0]);
+  // each band stops under the slab above (user, 10-22): that slab, the ceiling below and the floor above,
+  // comes with the next floor. The top floor is the exception: its band takes the attic ceiling and the
+  // roof straight away, before its furniture
+  const slab = [slabBottom(1), slabBottom(2)];
+  const bands = [[H.yMin - 0.05, slab[0]], [slab[0], slab[1]], [slab[1], H.yMax + 0.6]];
+  const steps = [];
+  let t = 0;
+  // first the yard, left to right (user, 10-22: before the ground floor): path slabs, steps, trees,
+  // shrubs, ferns, lights, the woodpile
+  const yard = floorPieces[3], y0 = t;
+  for (const p of yard) { p.at = t; t += p.single ? SINGLE_GAP : YARD_GAP; }
+  steps.push({ t0: y0, t1: t + FALL_TIME, label: 'Planting the garden' });
+  t += FALL_TIME;
+  bands.forEach(([lo, hi], f) => {
+    const shell = f === 2 ? ROOF_TIME : SHELL_TIME;
+    steps.push({ t0: t, t1: t + shell, lo, hi, label: f === 2 ? 'Building the third floor and roof' : 'Building ' + FLOOR_NAMES[f] });
+    t += shell;
+    const ps = floorPieces[f], rug = ps.find(p => p.rug), rest = ps.filter(p => !p.rug);
+    if (rug) rug.at = t;
+    const gap = FURNISH_TIME / Math.max(1, rest.length);
+    rest.forEach((p, i) => { p.at = t + RUG_LEAD + i * gap; });
+    steps.push({ t0: t, t1: t + RUG_LEAD + FURNISH_TIME + FALL_TIME, label: 'Furnishing ' + FLOOR_NAMES[f] });
+    t += RUG_LEAD + FURNISH_TIME + FALL_TIME;
+    furnished[f] = t + 0.2;                                         // the last piece has landed (and bounced)
+  });
+  return { steps, end: t + 0.3 };
+}
+
+function updateBuild(dt) {
+  if (introT0 < 0) introT0 = performance.now();
+  introT = (performance.now() - introT0) / 1000;                   // wall time: a long frame (the parse) doesn't stretch it
+  const target = HOLD !== null ? +HOLD : Math.min(ready ? 1 : real * 0.97, introT / MIN_BUILD);
+  shown += (target - shown) * Math.min(1, dt * 2.5);
+  const H = intro.house;
+  BUILD.value = H.yMin + (H.yMax - H.yMin + 0.3) * shown;
+  buildBar.style.width = (shown * 100).toFixed(1) + '%';
+  if (ready && skipBuild && buildT < 0) { finishNow(); return; }
+  if (ready && buildT < 0 && shown > 0.985) {
+    buildT = 0; posterFade = 0; plan = makePlan(); loadMs = Math.round(performance.now() - t0);
+    if (AT !== null) { buildT = +AT; for (const p of allPieces) if (p.at !== undefined && p.at <= buildT) p.t = Math.min(buildT - p.at, 2); }
+  }
+  if (buildT < 0 || ui.classList.contains('done')) return;
+  if (AT !== null) dt = 0;
+  buildT += dt;
+  // the land around (near terrain, far hills, the lake shore) comes in with the first floor, as the picture goes
+  const kf = Math.min(1, buildT / POSTER_TIME);
+  for (const m of fading) m.opacity = kf;
+  if (kf === 1) for (const m of fading) if (m.userData.opaque && m.transparent) m.transparent = false;
+  // the shell: the current band's plane; the blueprint shows only above what is built
+  const step = plan.steps.filter(s => s.t0 <= buildT).pop();
+  buildUI.querySelector('span').textContent = step.label;
+  for (const s of plan.steps) if (s.lo !== undefined && s.t0 <= buildT) {
+    const k = Math.min(1, (buildT - s.t0) / (s.t1 - s.t0)), e = k * k * (3 - 2 * k);
+    RISE.constant = s.lo + (s.hi - s.lo) * e;
+  }
+  CUT.value = RISE.constant;
+  EMPTY_MIX.value.set(...furnished.map(t => Math.min(1, Math.max(0, (buildT - t) / 1.0))));
+  // the furniture: each piece starts at its time
+  for (const p of allPieces) if (p.t === -1 && p.at !== undefined && buildT >= p.at) p.t = 0;
+  updatePieces(dt);
+  if (buildT >= plan.end) {
+    RISE.constant = 1e4;
+    EMPTY_MIX.value.set(1, 1, 1);
+    FILL_ON.value = 0;
+    scene.remove(bpLines, bpDepth, bpFaces);
+    buildUI.querySelector('span').textContent = 'Welcome home';
+    setTimeout(() => buildUI.classList.add('done'), 1200);
+    ui.classList.remove('wait'); ui.classList.add('done');
+    if (!floorNavigation) floorNavigation = createFloorNavigation({ THREE, scene, camera, renderer, floors: FLOORS, top: intro.house.yMax, useView });
+    useView('总览');
+    goHome();
+  }
+}
+
+const clock = new THREE.Clock();
+let frames = 0, acc = 0, fps = 0, firstFrame = true;
+renderer.setAnimationLoop(() => {
+  const dt = Math.min(clock.getDelta(), 0.1);
+  const sz = renderer.getSize(new THREE.Vector2());
+  if (sz.x !== innerWidth || sz.y !== innerHeight) { renderer.setSize(innerWidth, innerHeight); fit(); posterFit(); }
+  updateBuild(dt);
+  if (!seated) updateOwner(dt);
+  mixer.update(dt);
+  controls.update();
+  floorNavigation?.update();
+  // the 3D landscape once it is complete, the poster over it (fading out after that), then the rest
+  if (posterFade >= 0 && POSTER.alpha.value > 0) POSTER.alpha.value = Math.max(0, 1 - (posterFade += dt) / (skipBuild ? POSTER_TIME_CACHED : POSTER_TIME));
+  renderer.clear();
+  if (landReady && POSTER.alpha.value < 1) renderer.render(land, camera);
+  if (POSTER.alpha.value > 0) renderer.render(posterScene, posterCam);
+  renderer.render(scene, camera);
+  if (firstFrame) {                                                 // the canvas now shows the picture itself
+    firstFrame = false;
+    posterImg.style.visibility = 'hidden';
+  }
+  frames++; acc += dt;
+  if (acc > 0.5) { fps = frames / acc; frames = 0; acc = 0; }
+  stats.textContent = `${Math.round(tris).toLocaleString()} tris · ${cards.toLocaleString()} tree cards · ${renderer.info.render.calls} draw calls · ${fps.toFixed(0)} fps · first screen ${firstMs} ms · landscape ${landMs || '…'} ms` +
+    (loadMs ? ` · house ${loadMs} ms` : ` · house ${(real * 100).toFixed(0)} %`);
+});
+if (new URLSearchParams(location.search).has('compare')) arrived.then(() => {
+  ready = true; buildT = 1e9; FADE.value = 0; POSTER.alpha.value = 0;
+  renderer.autoClear = true; scene.background = land.background;
+  RISE.constant = 1e4;
+  for (const p of allPieces) p.t = 99;
+  updatePieces(0);
+  FRINGE.constant = 100;
+  for (const m of fading) { m.opacity = 1; if (m.userData.opaque) m.transparent = false; }
+  const C = [['A 浅蜂蜜', [168, 128, 88]], ['B 浅胡桃', [146, 112, 80]], ['C 现在', [136, 104, 74]],
+             ['D 暖胡桃', [140, 98, 64]], ['E 中胡桃', [120, 88, 62]], ['F 灰调胡桃', [128, 104, 84]], ['G 接近 Blender 原图', [158, 106, 64]]];
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'position:fixed;inset:0;overflow:auto;background:#f4efe6;padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px;font:14px system-ui;color:#3a332b;z-index:5';
+  document.body.appendChild(wrap);
+  renderer.setAnimationLoop(null);
+  renderer.setSize(840, 520);
+  for (const [name, rgb] of C) {
+    WOOD.value.set(...rgb).divideScalar(255);
+    const card = document.createElement('div');
+    card.innerHTML = `<div style="font-weight:600;margin:4px 0 6px">${name} <span style="font-weight:400;opacity:.7">rgb(${rgb.join(', ')})</span></div>`;
+    for (const v of ['二层', '三层']) {
+      useView(v); controls.update();
+      camera.aspect = 840 / 520;
+      camera.fov = THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(hfov / 2) / camera.aspect));
+      camera.updateProjectionMatrix();
+      renderer.render(scene, camera);
+      const img = new Image(); img.src = renderer.domElement.toDataURL('image/jpeg', 0.9);
+      img.style.cssText = 'width:100%;display:block;margin-bottom:6px;border-radius:6px';
+      card.appendChild(img);
+    }
+    wrap.appendChild(card);
+  }
+});
+window.__house = { debug: () => ({ buildT, steps: plan && plan.steps.map(s => [s.label, +s.t0.toFixed(1)]), f3: floorPieces[2].map(p => [p.name, p.at && +p.at.toFixed(1), +p.t.toFixed(2), p.meshes.length]), yard: floorPieces[3].map(p => [p.name, p.at && +p.at.toFixed(2), p.meshes.length]) }), land, landP, POSTER, posterScene, posterCam, scene, camera, controls, renderer, cams, THREE, useView, owner, timing };
+</script>
+</body>
+</html>

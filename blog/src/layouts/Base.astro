@@ -1,0 +1,53 @@
+---
+import '@fontsource/lato/400.css';
+import '@fontsource/lato/700.css';
+import '@fontsource/noto-serif-sc/400.css';
+import '@fontsource/noto-serif-sc/600.css';
+import '../styles/global.css';
+import { SITE } from '../site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  nav?: 'blog' | 'archive' | 'notes';
+}
+const { title, description = SITE.description, nav } = Astro.props;
+const pageTitle = title ? `${title} · Polebug` : `Polebug · Blog`;
+// In `npm run dev` the homepage runs on port 8000 of the same machine.
+const homeUrl = import.meta.env.DEV ? `http://${Astro.url.hostname}:8000/` : SITE.homeUrl;
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{pageTitle}</title>
+  <meta name="description" content={description}>
+  <meta property="og:title" content={title ?? 'Polebug · Blog'}>
+  <meta property="og:description" content={description}>
+  <link rel="icon" href="/avatar.png">
+  <link rel="alternate" type="application/atom+xml" title={SITE.title} href="/atom.xml">
+  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)}>
+  <slot name="head" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-mark" href={homeUrl} aria-label="Polebug home"><img src="/avatar.png" alt="Polebug's avatar" width="52" height="52"></a>
+    <nav aria-label="Main navigation">
+      <a href={homeUrl}>About</a>
+      <a href="/" aria-current={nav === 'blog' ? 'page' : undefined}>Blog</a>
+      <a href="/archives/" aria-current={nav === 'archive' ? 'page' : undefined}>Archive</a>
+      <a href="/notes/" aria-current={nav === 'notes' ? 'page' : undefined}>Notes</a>
+      <a href={SITE.github} target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+  <main>
+    <slot />
+  </main>
+  <footer class="site-footer">
+    <span>© 2024–{year} Polebug · 文章与照片采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener license">CC BY-NC-SA 4.0</a></span>
+    <span><a href="/atom.xml">RSS</a> · <a href="https://github.com/polebug/polebug.github.io" target="_blank" rel="noopener">Source</a></span>
+  </footer>
+</body>
+</html>

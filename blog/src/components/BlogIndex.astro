@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import PostList from './PostList.astro';
+import { PER_PAGE, type Post } from '../lib/posts';
+
+// One page of the post list: / is page 1, /page/2/ and on follow (as on the old site).
+const { posts, page } = Astro.props as { posts: Post[]; page: number };
+const pages = Math.max(1, Math.ceil(posts.length / PER_PAGE));
+const shown = posts.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+const href = (n: number) => (n === 1 ? '/' : `/page/${n}/`);
+---
+<Base nav="blog" title={page > 1 ? `Blog · 第 ${page} 页` : undefined}>
+  <h1 class="page-title">Blog</h1>
+  <p class="motto">保持思考 · 等待 · 斋戒</p>
+  <PostList posts={shown} />
+  {pages > 1 && (
+    <nav class="pagination" aria-label="Pages">
+      <span>{page > 1 && <a href={href(page - 1)}>← 较新的文章</a>}</span>
+      <span>{page} / {pages}</span>
+      <span>{page < pages && <a href={href(page + 1)}>更早的文章 →</a>}</span>
+    </nav>
+  )}
+</Base>

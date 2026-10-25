@@ -1,0 +1,18 @@
+---
+import Archive from '../../../../components/Archive.astro';
+import { getPosts, type Post } from '../../../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const months = [...new Set(posts.map((p) => `${p.ymd.year}/${p.ymd.month}`))];
+  return months.map((ym) => {
+    const [year, month] = ym.split('/');
+    return {
+      params: { year, month },
+      props: { posts: posts.filter((p) => p.ymd.year === year && p.ymd.month === month) },
+    };
+  });
+}
+const { posts } = Astro.props as { posts: Post[] };
+---
+<Archive posts={posts} heading={`${Astro.params.year}.${Astro.params.month}`} />
