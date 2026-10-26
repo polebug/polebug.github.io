@@ -3,6 +3,10 @@
 /house/assets/*
   Cache-Control: public, max-age=31536000, immutable
 
+# three.js, self-hosted under a versioned folder (2026-10-26, was jsdelivr): never changes.
+/house/vendor/*
+  Cache-Control: public, max-age=31536000, immutable
+
 # Requested without a version: keep these short so a new build shows up.
 /house/assets/poster.webp
   ! Cache-Control

@@ -31,9 +31,42 @@
 </style>
 <script>if (new URLSearchParams(location.search).has('embed')) document.documentElement.classList.add('embedded');</script>
 <link rel="preload" as="image" href="assets/poster.webp" fetchpriority="high">
+<script>
+// The downloads start here, not after three.js and the page script (2026-10-26: they began ~8 s in).
+// Each body is read as it arrives (an unread one stalls), counting bytes for the blueprint's progress;
+// the module below takes each file once (houseEarly.take). The big ones go at low priority so the
+// poster, three.js and the blueprint still come first.
+window.houseEarly = fetch('assets/scene.json', { cache: 'no-store' }).then(r => r.json()).then(cfg => {
+  const V = '?v=' + (cfg.build || Date.now());                  // a new export is never served from cache
+  const read = (f, low) => {
+    const e = { got: 0, size: 0 };
+    e.buf = fetch('assets/' + f + V, low ? { priority: 'low' } : {}).then(async r => {
+      e.size = +r.headers.get('content-length');
+      const reader = r.body.getReader(), parts = [];
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        parts.push(value);
+        e.got += value.length;
+      }
+      const buf = new Uint8Array(e.got);
+      let off = 0;
+      for (const p of parts) { buf.set(p, off); off += p.length; }
+      return buf.buffer;
+    });
+    e.buf.catch(() => {});                                       // a failure shows where the page uses it
+    return e;
+  };
+  const low = ['house.glb', cfg.plants.file, cfg.plants.twigsFile];
+  const got = {};
+  for (const f of ['intro.json', 'intro.bin', ...low, 'linen.webp']) got[f] = read(f, low.includes(f));
+  const take = f => { const e = got[f] || read(f); delete got[f]; return e; };
+  return { cfg, V, take };
+});
+</script>
 <script type="importmap">
-{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
-               "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }
+{ "imports": { "three": "./vendor/three@0.170.0/build/three.module.min.js",
+               "three/addons/": "./vendor/three@0.170.0/examples/jsm/" } }
 </script>
 </head>
 <body>
@@ -56,8 +89,7 @@ const A = 'assets/';
 const lawnExtension = document.documentElement.classList.contains('embedded') ? .1 : 0;
 const stats = document.getElementById('stats');
 const t0 = 0;                                                   // times are from the start of navigation
-const cfg = await (await fetch(A + 'scene.json', { cache: 'no-store' })).json();
-const V = '?v=' + (cfg.build || Date.now());                    // a new export is never served from cache
+const { cfg, V, take } = await window.houseEarly;               // scene.json and the early downloads (head)
 const b2t = (x, y, z) => new THREE.Vector3(x, z, -y);          // Blender z-up -> three y-up
 
 // Loading doesn't wait for this (a first visit spent up to 3 s on the worker): only the skip below needs it
@@ -69,7 +101,7 @@ cachedHouseP.then(hit => { if (hit) document.querySelector('#build span').textCo
 // pale blueprint (intro.bin, ~0.5 MB, export_intro.py). Meanwhile the 3D landscape loads and replaces the
 // picture when it is complete, and house.glb and the yard plants download: the blueprint fills in with
 // their progress, and the real house rises in its place.
-const introP = Promise.all([fetch(A + 'intro.json' + V).then(r => r.json()), fetch(A + 'intro.bin' + V).then(r => r.arrayBuffer())]);
+const introP = Promise.all([take('intro.json').buf.then(b => JSON.parse(new TextDecoder().decode(b))), take('intro.bin').buf]);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.autoClear = false;                                    // landscape, poster, then the rest: see the loop
@@ -580,24 +612,10 @@ const buildUI = document.getElementById('build'), buildBar = buildUI.querySelect
 const firstMs = Math.round(performance.now() - t0);
 let got = 0, real = 0;
 async function download(files) {
-  const gotEach = files.map(() => 0), size = files.map(f => f.est);
-  return Promise.all(files.map(async (f, i) => {
-    const r = await fetch(A + f.file + V);
-    const n = +r.headers.get('content-length');
-    if (n) size[i] = n;
-    const reader = r.body.getReader(), parts = [];
-    for (;;) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      parts.push(value);
-      gotEach[i] += value.length;
-      real = gotEach.reduce((a, b) => a + b) / size.reduce((a, b) => a + b);
-    }
-    const buf = new Uint8Array(gotEach[i]);
-    let off = 0;
-    for (const p of parts) { buf.set(p, off); off += p.length; }
-    return buf.buffer;
-  }));
+  const each = files.map(f => take(f.file));                         // read since the head (houseEarly)
+  const update = () => { real = each.reduce((a, e) => a + e.got, 0) / each.reduce((a, e, i) => a + (e.size || files[i].est), 0); };
+  const timer = setInterval(update, 50);
+  try { return await Promise.all(each.map(e => e.buf)); } finally { clearInterval(timer); update(); }
 }
 const MB = 1 << 20;
 const piecesP = fetch(A + 'pieces.json' + V).then(r => r.json());     // furniture boxes (export_pieces.py)
