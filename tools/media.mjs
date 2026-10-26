@@ -148,13 +148,26 @@ async function r2() {
     endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
     credentials: { accessKeyId: process.env.R2_ACCESS_KEY_ID, secretAccessKey: process.env.R2_SECRET_ACCESS_KEY },
   });
+  // Long uploads over flaky networks or local proxies get reset now and then: retry with a pause.
+  async function send(makeCommand) {
+    for (let attempt = 1; ; attempt++) {
+      try { return await client.send(makeCommand()); }
+      catch (e) {
+        const status = e.$metadata?.httpStatusCode;
+        if (status && status < 500) throw e;
+        if (attempt >= 5) throw e;
+        console.log(`    retry ${attempt}/4 after ${e.code || e.name}`);
+        await new Promise((r) => setTimeout(r, 2000 * attempt));
+      }
+    }
+  }
   return {
     async exists(bucket, key) {
-      try { await client.send(new HeadObjectCommand({ Bucket: bucket, Key: key })); return true; }
+      try { await send(() => new HeadObjectCommand({ Bucket: bucket, Key: key })); return true; }
       catch (e) { if (e.$metadata?.httpStatusCode === 404 || e.name === 'NotFound') return false; throw e; }
     },
     async put(bucket, key, file, cacheControl) {
-      await client.send(new PutObjectCommand({
+      await send(() => new PutObjectCommand({
         Bucket: bucket, Key: key, Body: fs.createReadStream(file), ContentLength: fs.statSync(file).size,
         ContentType: contentType(key), CacheControl: cacheControl,
       }));
@@ -162,7 +175,7 @@ async function r2() {
     async usage(bucket) {
       let bytes = 0, count = 0, token;
       do {
-        const r = await client.send(new ListObjectsV2Command({ Bucket: bucket, ContinuationToken: token }));
+        const r = await send(() => new ListObjectsV2Command({ Bucket: bucket, ContinuationToken: token }));
         for (const o of r.Contents || []) { bytes += o.Size; count++; }
         token = r.IsTruncated ? r.NextContinuationToken : undefined;
       } while (token);
