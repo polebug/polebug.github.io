@@ -82,7 +82,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { createFloorNavigation } from './floor-navigation.js';
-import { hasCachedHouse, fillHouseCache } from './asset-cache.js?v=20261023';   // new name: browsers keep .js 4 h
+import { hasCachedHouse, fillHouseCache } from './asset-cache.js?v=20261026';   // new name: browsers keep .js 4 h
 
 const A = 'assets/';
 // Extend the embedded frame downward by 10% of its width, keeping the house scale.
@@ -247,8 +247,19 @@ const outside = new THREE.Mesh(new THREE.PlaneGeometry(340, 340),
 outside.rotation.x = -Math.PI / 2;
 outside.position.copy(b2t(0, 60, -0.03));
 land.add(outside);
+// all in: light the owner and glass with the sky. The picture stays until the house rises: the ground
+// picture carries the house's shadow, so the two change over together
+scene.environment = sky;
+scene.remove(hemi);
+landReady = true;
+landMs = Math.round(performance.now());
+}
+const landP = loadLandscape();
 
 // ---------------------------------------------------------------- tree cards
+// Nothing waits for these (user, 10-26): 140 small pictures load once the house's files are in (see
+// arrived below); one that turns up after the poster has gone fades in over TREE_FADE s
+const TREE_FADE = 0.8, treeFades = [];
 // each type is one picture rendered from the front; cards turn about the vertical to face the camera
 function billboardMaterial(map) {
   // real alpha blending for soft needle edges; every tree is its own mesh placed at the tree, so three.js
@@ -267,15 +278,36 @@ function billboardMaterial(map) {
   };
   return m;
 }
+// all the pictures sit in one atlas (tree_atlas.mjs: trees.atlas, each type's rect), one request instead
+// of 140 (user, 10-26); without it each type loads its own file
+async function loadTrees() {
 const loader = new THREE.TextureLoader();
 const byType = {};
 for (const r of cfg.trees.instances) (byType[r[0]] ||= []).push(r);
-await Promise.all(Object.entries(byType).map(async ([type, rows]) => {
-  const t = cfg.trees.types[type];
-  const map = await loader.loadAsync(A + t.file + V);
+const at = cfg.trees.atlas;
+let atlasMat = null;
+if (at) {
+  const map = await loader.loadAsync(A + at.file + V);
   map.colorSpace = THREE.SRGBColorSpace;
+  atlasMat = billboardMaterial(map);
+  if (POSTER.alpha.value < 1) { atlasMat.opacity = 0; treeFades.push(atlasMat); }
+}
+return Promise.all(Object.entries(byType).map(async ([type, rows]) => {
+  const t = cfg.trees.types[type];
+  let mat = atlasMat;
+  if (!mat) {
+    const map = await loader.loadAsync(A + t.file + V);
+    map.colorSpace = THREE.SRGBColorSpace;
+    mat = billboardMaterial(map);
+    if (POSTER.alpha.value < 1) { mat.opacity = 0; treeFades.push(mat); }
+  }
   const geo = new THREE.PlaneGeometry(1, 1).translate(-t.cx / t.size, t.cz / t.size, 0);
-  const mesh = new THREE.InstancedMesh(geo, billboardMaterial(map), rows.length);
+  if (at) {                                                          // the type's rect (from the top left)
+    const uv = geo.attributes.uv, [x, y, w, h] = t.rect;
+    for (let i = 0; i < uv.count; i++)
+      uv.setXY(i, (x + uv.getX(i) * w) / at.w, 1 - (y + (1 - uv.getY(i)) * h) / at.h);
+  }
+  const mesh = new THREE.InstancedMesh(geo, mat, rows.length);
   const m = new THREE.Matrix4();
   mesh.position.copy(b2t(rows[0][1], rows[0][2], rows[0][3]));      // sorting key for the blending
   rows.forEach((r, i) => {
@@ -287,14 +319,7 @@ await Promise.all(Object.entries(byType).map(async ([type, rows]) => {
   land.add(mesh);
   cards += rows.length;
 }));
-// all in: light the owner and glass with the sky. The picture stays until the house rises: the ground
-// picture carries the house's shadow, so the two change over together
-scene.environment = sky;
-scene.remove(hemi);
-landReady = true;
-landMs = Math.round(performance.now());
 }
-const landP = loadLandscape();
 
 // ---------------------------------------------------------------- house
 const cams = {};
@@ -644,6 +669,7 @@ const arrived = download([
   timing.parsed = Math.round(performance.now() - t0);
   return true;
 });
+arrived.then(loadTrees);                                             // the tree cards, after the big files
 
 // the drawing never runs ahead of the download, and takes at least MIN_BUILD s (a returning visitor skips it all)
 const MIN_BUILD = 2.5;                                            // the blueprint takes ~4 s in all (user, 10-22)
@@ -1000,6 +1026,8 @@ renderer.setAnimationLoop(() => {
   floorNavigation?.update();
   // the 3D landscape once it is complete, the poster over it (fading out after that), then the rest
   if (posterFade >= 0 && POSTER.alpha.value > 0) POSTER.alpha.value = Math.max(0, 1 - (posterFade += dt) / (skipBuild ? POSTER_TIME_CACHED : POSTER_TIME));
+  for (let i = treeFades.length - 1; i >= 0; i--)
+    if ((treeFades[i].opacity = Math.min(1, treeFades[i].opacity + dt / TREE_FADE)) === 1) treeFades.splice(i, 1);
   renderer.clear();
   if (landReady && POSTER.alpha.value < 1) renderer.render(land, camera);
   if (POSTER.alpha.value > 0) renderer.render(posterScene, posterCam);

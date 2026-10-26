@@ -2,7 +2,8 @@ const CACHE = 'polebug-house-assets-v1';
 const houseFiles = cfg => ['intro.json', 'intro.bin', 'owner.glb', 'house.glb', 'pieces.json', 'linen.webp',
   ...['house', 'floors', 'boards', 'rugs'].map(n => `empty_${n}.webp`),
   cfg.skyFile, cfg.ground.file, cfg.lake?.file, cfg.backdrop?.file,
-  cfg.plants.file, cfg.plants.twigsFile, ...Object.values(cfg.trees.types).map(t => t.file)].filter(Boolean);
+  cfg.plants.file, cfg.plants.twigsFile,
+  ...(cfg.trees.atlas ? [cfg.trees.atlas.file] : Object.values(cfg.trees.types).map(t => t.file))].filter(Boolean);   // one tree atlas (10-26)
 const fileUrl = (file, version) => new URL('assets/' + file + version, location.href).href;
 
 // Check real cached responses, not a visit flag; a new build naturally gets new keys.
