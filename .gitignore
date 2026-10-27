@@ -3,7 +3,7 @@ node_modules/
 blog/dist/
 blog/.astro/
 
-# Local secrets (R2 keys, Gitalk secret)
+# Local secrets (R2 keys)
 .env
 *.env.local
 

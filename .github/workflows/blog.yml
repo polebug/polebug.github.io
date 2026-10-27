@@ -31,8 +31,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-        env:
-          PUBLIC_GITALK_CLIENT_SECRET: ${{ secrets.GITALK_CLIENT_SECRET }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: blog/dist

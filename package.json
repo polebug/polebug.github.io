@@ -11,7 +11,8 @@
     "new": "node tools/new-post.mjs",
     "media": "node tools/media.mjs",
     "upload": "node tools/media.mjs --upload",
-    "check": "node tools/check.mjs"
+    "check": "node tools/check.mjs",
+    "comments-map": "node tools/comments-map.mjs"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.1156.0",

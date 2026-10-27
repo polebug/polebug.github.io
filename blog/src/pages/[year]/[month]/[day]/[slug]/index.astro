@@ -31,5 +31,5 @@ const { Content } = await render(post);
       {newer && <a class="next" href={newer.url}><small>下一篇 →</small>{newer.data.title}</a>}
     </nav>
   )}
-  {post.data.comments && !post.draft && <Comments title={post.data.title} />}
+  {post.data.comments && !post.draft && <Comments url={post.url} />}
 </Base>

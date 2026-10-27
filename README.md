@@ -46,13 +46,15 @@ To publish:
 
 A post that references a file which was never uploaded fails the build, so nothing goes live half-broken.
 
-Upload needs R2 keys in `.env` (see `.env.example`); comments need `blog/.env` (see `blog/.env.example`).
+Upload needs R2 keys in `.env` (see `.env.example`).
 On a new computer without the original files, the preview falls back to the uploaded copies.
 
 ## Comments
 
-Gitalk, storing comments as issues in this repository, with the same issue ids as the old Hexo site
-(`md5(location.pathname)`), so old comments carry over.
+[utterances](https://utteranc.es), storing comments as issues in this repository. Readers sign in through
+the utterances GitHub App, which gets no access to their own repositories. Posts from the old Hexo site keep
+their old Gitalk issues: `npm run comments-map` writes `blog/comments.json` from the issues' labels
+(`md5(pathname)`); a post without an entry gets a new issue, titled with its path, on its first comment.
 
 ## License
 
