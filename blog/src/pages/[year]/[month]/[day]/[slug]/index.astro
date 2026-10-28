@@ -31,7 +31,7 @@ const minutes = Math.max(1, Math.round(cjk / 400 + words / 200));
 const talk = post.data.comments && !post.draft;
 ---
 <Base title={post.data.title} description={post.excerpt} wide>
-  <Reader headings={headings} label={post.data.title}>
+  <Reader headings={headings} label={post.data.title} back={post.url}>
     <header class="post-cover" slot="cover">
       <time datetime={post.data.date.toISOString()}>{stamp(post.data.date)}</time>
       <h1>{post.data.title}{post.draft && <span class="draft-badge">Draft</span>}</h1>

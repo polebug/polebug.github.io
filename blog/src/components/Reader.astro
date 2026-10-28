@@ -11,15 +11,23 @@ import { stamp, type Post } from '../lib/posts';
 // `start` is the index of the block (.entry, or a block of the post) to open at. The catalogue
 // lists `posts` (the index) or `headings` (a post's own sections), and jumps within the flow. A
 // "cover" slot (a post's title page) takes the first column, the text starting beside it, as a
-// book's cover does in WeRead; a "rail" slot adds buttons to the rail.
+// book's cover does in WeRead; a "rail" slot adds buttons to the rail. `back` (a post's own URL)
+// puts a button beside the running head that returns to the index, opened at that post's entry.
 interface Heading { depth: number; slug: string; text: string }
-interface Props { posts?: Post[]; headings?: Heading[]; start?: number; label: string }
-const { posts, headings, start = 0, label } = Astro.props;
+interface Props { posts?: Post[]; headings?: Heading[]; start?: number; label: string; back?: string }
+const { posts, headings, start = 0, label, back } = Astro.props;
 ---
 <div class="reading">
   <section class="reader" aria-label={label} data-start={start}>
     <header class="reader-head">
-      <span class="running">Blog</span>
+      <span class="running">
+        {back && (
+          <a class="back" href="/" data-post={back} title="Back to posts" aria-label="Back to posts">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          </a>
+        )}
+        Blog
+      </span>
       <span class="motto-sm">保持思考 · 等待 · 斋戒</span>
     </header>
 
@@ -168,7 +176,15 @@ const { posts, headings, start = 0, label } = Astro.props;
   let mode: 'page' | 'scroll' = 'page';
   try { if (localStorage.getItem('reader-mode') === 'scroll') mode = 'scroll'; } catch {}
   reader.classList.add('ready');
-  setMode(mode, marks[Number(reader.dataset.start) || 0] ?? null);
+  // Back from a post (the button by its running head): open the index at that post's entry, and mark it.
+  let returnedTo: HTMLElement | undefined;
+  try {
+    const from = sessionStorage.getItem('reader-back');
+    sessionStorage.removeItem('reader-back');
+    if (from) returnedTo = entries.find((e) => e.querySelector<HTMLAnchorElement>('h2 a')?.pathname === from);
+  } catch {}
+  setMode(mode, returnedTo ?? marks[Number(reader.dataset.start) || 0] ?? null);
+  if (returnedTo) goTo(returnedTo, true);
   document.fonts?.ready.then(() => layout(onScreen()));
   addEventListener('resize', () => layout(onScreen()));
   // Images settling into their sizes change the pagination; keep the place.
@@ -238,6 +254,9 @@ const { posts, headings, start = 0, label } = Astro.props;
     if (e.key === 'ArrowLeft') show(current - 1);
     if (e.key === 'ArrowRight') show(current + 1);
   });
+  document.querySelector<HTMLAnchorElement>('.reader-head .back')?.addEventListener('click', (e) => {
+    try { sessionStorage.setItem('reader-back', (e.currentTarget as HTMLAnchorElement).dataset.post!); } catch {}
+  });
   modeButton.addEventListener('click', () => setMode(paged() ? 'scroll' : 'page', onScreen()));
 
   // The catalogue: the index's posts, or a post's section headings. Each item has its target in
@@ -284,8 +303,12 @@ const { posts, headings, start = 0, label } = Astro.props;
     border: 1px solid var(--panel-edge);
     border-radius: 16px;
   }
-  .reader-head { flex: none; display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 28px; }
+  .reader-head { flex: none; position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 28px; }
   .running { font: 700 13px/1 "Lato", sans-serif; letter-spacing: 1.5px; text-transform: uppercase; color: var(--faint); }
+  /* The way back to the index, a small round button before the running head. */
+  .running .back { display: inline-grid; place-items: center; width: 28px; height: 28px; margin: -8px 10px -8px -2px; vertical-align: middle; border: 1px solid var(--line); border-radius: 50%; color: var(--muted); }
+  .running .back:hover { color: var(--accent); border-color: var(--accent); }
+  .running .back svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
   .motto-sm { font: 400 12px/1 "Noto Serif SC", serif; letter-spacing: 2px; color: var(--faint); }
 
   /* The flow is set in columns the height of the window, running off to the right; a window shows
