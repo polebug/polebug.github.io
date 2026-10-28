@@ -185,6 +185,52 @@ const { posts, headings, start = 0, label } = Astro.props;
     m.addEventListener('play', () => { for (const o of media) if (o !== m) o.pause(); });
   }
 
+  // The quality menu on each video that has smaller copies (data-qualities, largest first; the
+  // page's src is the 1080p one). The pick is remembered and applies to every video: the copy of
+  // that height, or the nearest smaller one. Switching keeps the place and whether it was playing.
+  interface Quality { label: string; height: number; src: string }
+  let wanted = 1080;
+  try { wanted = Number(localStorage.getItem('video-quality')) || 1080; } catch {}
+  const pickFor = (qs: Quality[]) => qs.find((q) => q.height <= wanted) ?? qs[qs.length - 1];
+  const pickers: (() => void)[] = [];
+  for (const v of flow.querySelectorAll<HTMLVideoElement>('video[data-qualities]')) {
+    const frame = v.parentElement!;
+    const qs: Quality[] = JSON.parse(v.dataset.qualities!);
+    const box = document.createElement('div');
+    box.className = 'vq-pick';
+    box.innerHTML = `<button type="button" aria-haspopup="menu" aria-label="Quality"></button><ul role="menu">${qs.map((q, i) =>
+      `<li><button type="button" role="menuitemradio" data-i="${i}">${q.label}</button></li>`).join('')}</ul>`;
+    frame.append(box);
+    const toggle = box.querySelector<HTMLButtonElement>(':scope > button')!;
+    const items = [...box.querySelectorAll<HTMLButtonElement>('li > button')];
+    const use = (q: Quality) => {
+      toggle.textContent = q.label;
+      items.forEach((b, i) => b.setAttribute('aria-checked', String(qs[i] === q)));
+      if (v.getAttribute('src') === q.src) return;
+      const at = v.currentTime, playing = !v.paused;
+      v.src = q.src;
+      if (at > 0 || playing) {
+        v.addEventListener('loadedmetadata', () => { v.currentTime = at; if (playing) v.play(); }, { once: true });
+        v.load();
+      }
+    };
+    use(pickFor(qs));
+    pickers.push(() => use(pickFor(qs)));
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); box.classList.toggle('open'); });
+    items.forEach((b, i) => b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      box.classList.remove('open');
+      wanted = qs[i].height;
+      try { localStorage.setItem('video-quality', String(wanted)); } catch {}
+      use(qs[i]);
+      // The others follow, without interrupting them (they're paused: only one plays at a time).
+      pickers.forEach((p) => p());
+    }));
+    v.addEventListener('play', () => frame.classList.add('playing'));
+    v.addEventListener('pause', () => frame.classList.remove('playing'));
+  }
+  addEventListener('click', () => { for (const b of flow.querySelectorAll('.vq-pick.open')) b.classList.remove('open'); });
+
   prev.addEventListener('click', () => show(current - 1));
   next.addEventListener('click', () => show(current + 1));
   addEventListener('keydown', (e) => {

@@ -5,7 +5,8 @@
 //
 // Images become WebP (long edge ≤ 2000px, EXIF and GPS stripped). Videos become H.264 MP4 with
 // faststart and a WebP poster, at the source resolution (up to 4K); quality="1080" or quality="720"
-// on the tag scales a video down.
+// on the tag scales a video down. Each video also gets 1080p and 720p copies (those below its own
+// size), which the reader's quality menu switches between; 1080p is what plays by default.
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
@@ -23,6 +24,8 @@ const ONLY = args.includes('--post') ? args[args.indexOf('--post') + 1] : null;
 // Bump when the video settings change: videos are encoded again under new file names
 // (R2 copies are cached as immutable, so a changed file must not reuse an old name).
 const VIDEO_ENCODING = 'v2';
+// The smaller copies, by their short edge, and the peak bitrate of each.
+const VARIANTS = { 1080: '6000k', 720: '3000k' };
 const WARN_BYTES = 8 * 1024 ** 3;
 
 loadEnv(path.join(ROOT, '.env'));
@@ -112,6 +115,7 @@ async function processVideo(src, outKey, posterKey, quality) {
     out,
   ], { stdio: 'inherit' });
   const outInfo = probe(out);
+  const variants = await processVariants(src, outKey, outInfo);
   const posterPng = path.join(os.tmpdir(), `${crypto.randomUUID()}.png`);
   execFileSync('ffmpeg', ['-y', '-v', 'error', '-ss', String(Math.min(1, duration / 2)), '-i', out, '-frames:v', '1', posterPng]);
   const posterOut = path.join(CACHE, posterKey);
@@ -122,8 +126,33 @@ async function processVideo(src, outKey, posterKey, quality) {
     height: outInfo.height,
     duration: Math.round(duration),
     profile: `${Math.min(outInfo.width, outInfo.height)}p`,
+    variants,
     bytes: fs.statSync(out).size,
   };
+}
+
+// The heights below the full copy's that a video lacks; `entry.variants` maps each to its key.
+const variantsDue = (entry) => Object.keys(VARIANTS).filter((h) => Number(h) < Math.min(entry.width, entry.height) && !entry.variants?.[h]);
+const variantKey = (key, h) => key.replace(/\.mp4$/, `.${h}p.mp4`);
+
+// Scale by the short edge, so a portrait video's 720p is 720 wide.
+async function processVariants(src, key, entry) {
+  entry.variants ??= {};
+  for (const h of variantsDue(entry)) {
+    const k = variantKey(key, h);
+    execFileSync('ffmpeg', [
+      '-y', '-v', 'error', '-i', src,
+      '-map', '0:v:0', '-map', '0:a:0?', '-map_metadata', '-1',
+      '-vf', `scale='if(gte(iw,ih),-2,${h})':'if(gte(iw,ih),${h},-2)'`,
+      '-c:v', 'libx264', '-preset', 'medium', '-crf', '21', '-maxrate', VARIANTS[h], '-bufsize', `${parseInt(VARIANTS[h]) * 2}k`,
+      '-profile:v', 'high', '-pix_fmt', 'yuv420p',
+      '-c:a', 'aac', '-b:a', '128k',
+      '-movflags', '+faststart',
+      path.join(CACHE, k),
+    ], { stdio: 'inherit' });
+    entry.variants[h] = k;
+  }
+  return entry.variants;
 }
 
 // ---------- R2 ----------
@@ -197,7 +226,7 @@ async function processFile(slug, file, local, hash, quality) {
     const key = `${base}.${VIDEO_ENCODING}.mp4`;
     const poster = `${base}.${VIDEO_ENCODING}.poster.webp`;
     const r = await processVideo(local, key, poster, quality);
-    entry = { kind, key, poster, width: r.width, height: r.height, duration: r.duration, profile: r.profile, quality, encoding: VIDEO_ENCODING, bytes: r.bytes, hash, original: file };
+    entry = { kind, key, poster, variants: r.variants, width: r.width, height: r.height, duration: r.duration, profile: r.profile, quality, encoding: VIDEO_ENCODING, bytes: r.bytes, hash, original: file };
   }
   console.log(`${(entry.bytes / 1024 / 1024).toFixed(1)} MB`);
   return entry;
@@ -207,6 +236,7 @@ async function processFile(slug, file, local, hash, quality) {
 function queue(entry, source) {
   toUpload.push({ key: entry.key, source });
   if (entry.poster) toUpload.push({ key: entry.poster, source });
+  for (const key of Object.values(entry.variants || {})) toUpload.push({ key, source });
 }
 
 // ---------- main ----------
@@ -239,6 +269,13 @@ for (const slug of slugs) {
     if (!fresh) {
       if (DRY) { report.push(`  would process ${id}`); continue; }
       manifest[id] = await processFile(slug, file, local, hash, quality);
+      processed++;
+    } else if (entry.kind === 'video' && variantsDue(entry).length) {
+      // Encoded before the smaller copies existed: add just those.
+      if (DRY) { report.push(`  would add ${variantsDue(entry).map((h) => `${h}p`).join(' and ')} of ${id}`); continue; }
+      process.stdout.write(`  video ${id}: ${variantsDue(entry).map((h) => `${h}p`).join(', ')} … `);
+      await processVariants(local, entry.key, entry);
+      console.log('done');
       processed++;
     }
     queue(manifest[id], { slug, file, local, hash, quality });

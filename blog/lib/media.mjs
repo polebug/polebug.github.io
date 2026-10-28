@@ -107,7 +107,8 @@ export function createMediaPlugins({ dev, base = process.env.MEDIA_BASE_URL || D
       const done = manifest[`${post.slug}/${file}`];
       if (mediaKind(file) === 'video' && done && fs.existsSync(path.join(CACHE_DIR, done.key))) {
         const cached = (key) => `${LOCAL_PREFIX}cache/${key.split('/').map(encodeURIComponent).join('/')}`;
-        return { src: cached(done.key), poster: done.poster && cached(done.poster), width: done.width, height: done.height, processed: true };
+        const variants = Object.fromEntries(Object.entries(done.variants || {}).filter(([, k]) => fs.existsSync(path.join(CACHE_DIR, k))).map(([h, k]) => [h, cached(k)]));
+        return { src: cached(done.key), poster: done.poster && cached(done.poster), variants, width: done.width, height: done.height, processed: true };
       }
       if (fs.existsSync(local)) {
         const group = post.draft ? 'drafts' : 'posts';
@@ -119,6 +120,7 @@ export function createMediaPlugins({ dev, base = process.env.MEDIA_BASE_URL || D
       return {
         src: mediaUrl(base, entry.key),
         poster: entry.poster && mediaUrl(base, entry.poster),
+        variants: Object.fromEntries(Object.entries(entry.variants || {}).map(([h, k]) => [h, mediaUrl(base, k)])),
         width: entry.width,
         height: entry.height,
       };
@@ -146,7 +148,7 @@ export function createMediaPlugins({ dev, base = process.env.MEDIA_BASE_URL || D
       const post = postOf(vfile.path);
       tree = raw(tree, vfile) || tree;
       if (!post) return tree;
-      visit(tree, 'element', (node) => {
+      visit(tree, 'element', (node, index, parent) => {
         const p = node.properties || {};
         if (node.tagName === 'img') {
           const file = postRelativeFile(p.src);
@@ -170,6 +172,15 @@ export function createMediaPlugins({ dev, base = process.env.MEDIA_BASE_URL || D
             if (!file) continue;
             const r = resolve(post, el.properties.src, file);
             el.properties.src = r.src;
+            // The full copy and its smaller ones, largest first, for the reader's quality menu;
+            // 1080p plays unless the viewer picks another.
+            if (el === node && r.variants && Object.keys(r.variants).length) {
+              const full = Math.min(r.width, r.height);
+              const qualities = [[full, r.src], ...Object.entries(r.variants).map(([h, u]) => [Number(h), u]).sort((a, b) => b[0] - a[0])]
+                .map(([h, src]) => ({ label: h >= 2160 ? '4K' : `${h}p`, height: h, src }));
+              p.src = (qualities.find((q) => q.height === 1080) ?? qualities[0]).src;
+              p.dataQualities = JSON.stringify(qualities);
+            }
             if (!dev || r.processed || !r.src.startsWith(LOCAL_PREFIX)) {
               if (el.tagName === 'source') el.properties.type = 'video/mp4';
               if (r.poster) p.poster ??= r.poster;
@@ -185,8 +196,15 @@ export function createMediaPlugins({ dev, base = process.env.MEDIA_BASE_URL || D
             const file = postRelativeFile(p.poster);
             if (file) p.poster = resolve(post, p.poster, file).src;
           }
-          p.preload ??= 'metadata';
+          // Nothing until play: even "metadata" let Chrome stream several MB of each video ahead, and
+          // polebug.com shares img.polebug.com's connection (same Cloudflare certificate), so on a slow
+          // line a post with ten videos held up the next page by up to a minute. The poster shows meanwhile.
+          p.preload ??= 'none';
           p.playsInline = true;
+          // A frame for the quality button (see Reader.astro); a span, since the video may sit in a <p>.
+          if (p.dataQualities && parent && parent.properties?.className?.[0] !== 'vq') {
+            parent.children[index] = { type: 'element', tagName: 'span', properties: { className: ['vq'] }, children: [node] };
+          }
         }
       });
       return tree;

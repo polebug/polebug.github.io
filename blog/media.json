@@ -668,7 +668,11 @@
     "encoding": "v2",
     "bytes": 14277122,
     "hash": "4aeba136036decef27a8dd947e05745067bd9bb3c43dcffa0a2f7654d90a6571",
-    "original": "wxv_4630367704078811139.mp4"
+    "original": "wxv_4630367704078811139.mp4",
+    "variants": {
+      "720": "plog_202604-08/wxv_4630367704078811139-4aeba136.v2.720p.mp4",
+      "1080": "plog_202604-08/wxv_4630367704078811139-4aeba136.v2.1080p.mp4"
+    }
   },
   "plog_202604-08/wxv_4630371674255704066.mp4": {
     "kind": "video",
@@ -682,7 +686,11 @@
     "encoding": "v2",
     "bytes": 24925401,
     "hash": "33ffecac607c11bc9f3456990ec08ddcefe4d136d94c3abe5496dcb7d3927283",
-    "original": "wxv_4630371674255704066.mp4"
+    "original": "wxv_4630371674255704066.mp4",
+    "variants": {
+      "720": "plog_202604-08/wxv_4630371674255704066-33ffecac.v2.720p.mp4",
+      "1080": "plog_202604-08/wxv_4630371674255704066-33ffecac.v2.1080p.mp4"
+    }
   },
   "plog_202604-08/wxv_4630405379917627395.mp4": {
     "kind": "video",
@@ -696,7 +704,11 @@
     "encoding": "v2",
     "bytes": 15339197,
     "hash": "be45d9d480fc31dbe01aaef745205a083aca4221c83a92120cba126f1af95246",
-    "original": "wxv_4630405379917627395.mp4"
+    "original": "wxv_4630405379917627395.mp4",
+    "variants": {
+      "720": "plog_202604-08/wxv_4630405379917627395-be45d9d4.v2.720p.mp4",
+      "1080": "plog_202604-08/wxv_4630405379917627395-be45d9d4.v2.1080p.mp4"
+    }
   },
   "plog_202604-08/wxv_4650526633043542017.mp4": {
     "kind": "video",
@@ -710,7 +722,11 @@
     "encoding": "v2",
     "bytes": 56268105,
     "hash": "107bf67b36a6c9958815d033d744090b23605d18f21f297ef8c2385ce2a95544",
-    "original": "wxv_4650526633043542017.mp4"
+    "original": "wxv_4650526633043542017.mp4",
+    "variants": {
+      "720": "plog_202604-08/wxv_4650526633043542017-107bf67b.v2.720p.mp4",
+      "1080": "plog_202604-08/wxv_4650526633043542017-107bf67b.v2.1080p.mp4"
+    }
   },
   "plog_202604-08/wxv_4650535030459416580.mp4": {
     "kind": "video",
@@ -724,7 +740,11 @@
     "encoding": "v2",
     "bytes": 94114612,
     "hash": "eb2ab44aefa77bcb65cda8da217a0c048b2952c3448771732cb069f68e84a5db",
-    "original": "wxv_4650535030459416580.mp4"
+    "original": "wxv_4650535030459416580.mp4",
+    "variants": {
+      "720": "plog_202604-08/wxv_4650535030459416580-eb2ab44a.v2.720p.mp4",
+      "1080": "plog_202604-08/wxv_4650535030459416580-eb2ab44a.v2.1080p.mp4"
+    }
   },
   "plog_202604-08/wxv_4650565685721694210.mp4": {
     "kind": "video",
@@ -738,7 +758,11 @@
     "encoding": "v2",
     "bytes": 71968385,
     "hash": "1098d02ee7aaed7a3898fd4b5cfa28884d5ffcfedd47bad2403ec47179c8fb05",
-    "original": "wxv_4650565685721694210.mp4"
+    "original": "wxv_4650565685721694210.mp4",
+    "variants": {
+      "720": "plog_202604-08/wxv_4650565685721694210-1098d02e.v2.720p.mp4",
+      "1080": "plog_202604-08/wxv_4650565685721694210-1098d02e.v2.1080p.mp4"
+    }
   },
   "plog_202604-08/wxv_4650593206546481153.mp4": {
     "kind": "video",
@@ -752,7 +776,11 @@
     "encoding": "v2",
     "bytes": 118027141,
     "hash": "8afbe85aab4dfc237bdd66c4f6908b27a7303dace069d99d8b4a14a06a0dc2dd",
-    "original": "wxv_4650593206546481153.mp4"
+    "original": "wxv_4650593206546481153.mp4",
+    "variants": {
+      "720": "plog_202604-08/wxv_4650593206546481153-8afbe85a.v2.720p.mp4",
+      "1080": "plog_202604-08/wxv_4650593206546481153-8afbe85a.v2.1080p.mp4"
+    }
   },
   "plog_202604-08/wxv_4650920396752715776.mp4": {
     "kind": "video",
@@ -766,7 +794,11 @@
     "encoding": "v2",
     "bytes": 52141353,
     "hash": "7e0de2a7a32fb5e0f7c9ec8856d6168442473c4321fdd9df4e36f2b494b55a0c",
-    "original": "wxv_4650920396752715776.mp4"
+    "original": "wxv_4650920396752715776.mp4",
+    "variants": {
+      "720": "plog_202604-08/wxv_4650920396752715776-7e0de2a7.v2.720p.mp4",
+      "1080": "plog_202604-08/wxv_4650920396752715776-7e0de2a7.v2.1080p.mp4"
+    }
   },
   "plog_202604-08/wxv_4650978653823057920.mp4": {
     "kind": "video",
@@ -780,7 +812,10 @@
     "encoding": "v2",
     "bytes": 8888818,
     "hash": "b7dd89393724efc2e158c75e55392b86d3b381875c560963b0095da24fbbdf12",
-    "original": "wxv_4650978653823057920.mp4"
+    "original": "wxv_4650978653823057920.mp4",
+    "variants": {
+      "720": "plog_202604-08/wxv_4650978653823057920-b7dd8939.v2.720p.mp4"
+    }
   },
   "plog_202604-08/wxv_4662221250646261766.mp4": {
     "kind": "video",
@@ -794,7 +829,11 @@
     "encoding": "v2",
     "bytes": 74984529,
     "hash": "9c374bccb32b32b349d47e2c659878eeebe81b94a1dd0894ac6dddb629aae022",
-    "original": "wxv_4662221250646261766.mp4"
+    "original": "wxv_4662221250646261766.mp4",
+    "variants": {
+      "720": "plog_202604-08/wxv_4662221250646261766-9c374bcc.v2.720p.mp4",
+      "1080": "plog_202604-08/wxv_4662221250646261766-9c374bcc.v2.1080p.mp4"
+    }
   },
   "plog_3/DSCF4063.jpg": {
     "kind": "image",
@@ -907,7 +946,10 @@
     "encoding": "v2",
     "bytes": 7080433,
     "hash": "b651b019987f185cfffaf36989fb29b0e410e41a33562ad0a67f8e863796f579",
-    "original": "IMG_9880.MOV"
+    "original": "IMG_9880.MOV",
+    "variants": {
+      "720": "plog_5_job_hunting_anecdotes/IMG_9880-b651b019.v2.720p.mp4"
+    }
   },
   "plog_5_job_hunting_anecdotes/Pasted image 20250717182203.png": {
     "kind": "image",

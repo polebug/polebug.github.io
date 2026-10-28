@@ -25,6 +25,20 @@
 .prose video { background: #000; width: 100%; height: auto; }
 /* Images and videos standing on their own line (not inside a paragraph or a layout div) */
 .prose > img, .prose > video { display: block; margin: 1.6em auto; }
+/* A video with smaller copies sits in a frame holding its quality button (see Reader.astro). */
+.prose .vq { display: block; position: relative; width: fit-content; max-width: 100%; margin: 1.6em auto; break-inside: avoid; }
+.prose .vq > video { display: block; margin: 0; }
+.vq-pick { position: absolute; top: 10px; right: 10px; font: 700 12px/1 "Lato", sans-serif; letter-spacing: .5px; transition: opacity .2s; }
+.vq-pick > button { padding: 6px 10px; border: 0; border-radius: 14px; background: #000000a6; color: #fff; font: inherit; cursor: pointer; }
+.vq-pick > button::after { content: " ▾"; font-size: 10px; }
+.vq-pick > button:hover, .vq-pick.open > button { background: #000000d9; }
+.vq-pick ul { position: absolute; top: calc(100% + 6px); right: 0; margin: 0; padding: 4px; list-style: none; border-radius: 10px; background: #000000d9; }
+.vq-pick:not(.open) ul { display: none; }
+.vq-pick li > button { display: block; width: 100%; padding: 7px 14px 7px 24px; border: 0; border-radius: 6px; background: none; color: #fff; font: inherit; text-align: left; white-space: nowrap; cursor: pointer; }
+.vq-pick li > button:hover { background: #ffffff26; }
+.vq-pick li > [aria-checked="true"]::before { content: "✓"; position: absolute; margin-left: -14px; }
+/* Out of the way while the video plays, back on hover or once paused. */
+.vq.playing:not(:hover) .vq-pick:not(.open):not(:focus-within) { opacity: 0; pointer-events: none; }
 .prose img[data-missing] { outline: 1px dashed var(--accent); min-height: 40px; }
 .prose code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .86em; background: var(--paper-2); border: 1px solid var(--line); border-radius: 4px; padding: .1em .35em; }
 .prose pre { background: var(--paper-2) !important; border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; overflow-x: auto; line-height: 1.6; font-size: 13px; }
