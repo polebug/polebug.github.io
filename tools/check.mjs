@@ -74,7 +74,7 @@ const rows = [];
 for (const file of pages) {
   const pageUrl = '/' + path.relative(DIST, file).replace(/index\.html$/, '');
   const html = fs.readFileSync(file, 'utf8');
-  const prose = html.match(/<div class="prose">([\s\S]*?)<\/div>\s*<\/article>/)?.[1];
+  const prose = html.match(/<div class="prose"[^>]*>([\s\S]*?)<\/div>\s*<\/article>/)?.[1];
   let images = 0, videos = 0, failed = 0;
 
   for (const m of html.matchAll(/<(img|video|source|a|link|script)\b[^>]*>/gi)) {

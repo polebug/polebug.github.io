@@ -42,3 +42,6 @@
   font-display: swap;
   src: url(assets/fonts/lato-1.ttf) format('truetype');
 }
+
+/* Stand-in while Lato loads: local Arial scaled to Lato's size and line metrics, so text barely moves when Lato arrives. */
+@font-face{font-family:"Lato fallback";src:local("Arial"),local("ArialMT");size-adjust:97.38%;ascent-override:101.3%;descent-override:21.87%;line-gap-override:0%}

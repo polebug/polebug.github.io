@@ -1,5 +1,5 @@
 /* Original homepage styling inspired by Shiro's washi, ink and vermilion. */
-:root{color-scheme:dark;--paper:#191a18;--ink:#dedbd2;--body:#c8c5bd;--muted:#aaa69c;--faint:#858279;--accent:#c67868;--accent-soft:#c6786880;--serif:"Lato","Noto Serif SC",serif}
+:root{color-scheme:dark;--paper:#191a18;--ink:#dedbd2;--body:#c8c5bd;--muted:#aaa69c;--faint:#858279;--accent:#c67868;--accent-soft:#c6786880;--serif:"Lato","Lato fallback","Noto Serif SC",serif}
 /* Light scheme (theme.js): only the page's background and text change; the house keeps its look. Same values as the blog. */
 :root[data-theme="light"]{color-scheme:light;--paper:#f3f3f0;--ink:#26261f;--body:#3b3b36;--muted:#6b6b65;--faint:#91918a;--accent:#b55f4e;--accent-soft:#b55f4e80}
 *{box-sizing:border-box}
@@ -16,6 +16,8 @@ a{color:inherit;text-decoration:none}a:hover{color:var(--accent)}a:focus-visible
 .house-frame{padding:0;background:transparent;border:0;border-radius:16px;overflow:hidden;box-shadow:0 4px 10px -4px #00000059,0 14px 30px -12px #00000073;container-type:inline-size}
 /* The house's poster sits behind the frame until its page paints: placed like html.embedded #poster (full width, centre raised 5% of the width) */
 iframe{width:100%;height:auto;aspect-ratio:20/17;display:block;border:0;border-radius:inherit;background:#cfd8e3 url(house/assets/poster.webp) no-repeat center calc(50% - 5cqw)/100% auto}
+/* The house page has no colour scheme of its own; matching it keeps the frame see-through (a mismatch makes Chrome paint it opaque), so this background shows until the house paints. */
+iframe{color-scheme:normal}
 
 @media(max-width:1100px){.site-header,.home{max-width:calc(100% - 56px)}.intro-house{gap:30px}.intro{font-size:14px}.intro br{display:none}.intro .hello{font-size:17px}}
 @media(max-width:700px){.site-header{min-height:82px;max-width:calc(100% - 36px);gap:20px}.site-header nav{gap:16px;font-size:14px}.site-mark{width:42px;height:42px}.home{max-width:calc(100% - 36px);margin-top:23px;padding-bottom:64px}.name{font-size:34px;margin-bottom:29px}.intro-house{grid-template-columns:1fr;gap:24px}.intro{font-size:14px;line-height:1.9}.intro p{margin-bottom:17px}.intro .hello{margin-bottom:17px}.intro .motto{margin-top:23px;margin-bottom:8px}.house-frame{padding:0;border-radius:12px}iframe{aspect-ratio:1 / .9695652174}}

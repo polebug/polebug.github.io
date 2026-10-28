@@ -28,6 +28,13 @@
   #ui, #stats, #build { z-index: 2; }
   html.embedded #poster { top: calc(50% - 5vw); }
   html.embedded #ui, html.embedded #stats { display: none; }
+  /* embedded: see-through until the page's own pictures are decoded, so the frame's background (the
+     About page's poster or saved frame) shows instead of the flat sky/grass for a few frames */
+  html.embedded, html.embedded body { background: transparent; }
+  /* a returning visitor: the finished house as last seen, over everything until the 3D house takes over */
+  #snapshot { position: fixed; left: 0; top: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; transition: opacity .4s; }
+  #snapshot.gone { opacity: 0; }
+  html.snapshot #build { visibility: hidden; }
 </style>
 <script>if (new URLSearchParams(location.search).has('embed')) document.documentElement.classList.add('embedded');</script>
 <link rel="preload" as="image" href="assets/poster.webp" fetchpriority="high">
@@ -71,6 +78,20 @@ window.houseEarly = fetch('assets/scene.json', { cache: 'no-store' }).then(r => 
 </head>
 <body>
 <img id="poster" src="assets/poster.webp" alt="" fetchpriority="high">
+<img id="snapshot" alt="" hidden>
+<script>
+// A returning visitor sees the finished house from the first paint: the frame saved when it was last
+// finished at this size (saveSnapshot below; polebug.com's About page shows it too, behind this page).
+// Without it the empty landscape showed for ~2 s while house.glb was parsed, then the house popped in.
+try {
+  const s = JSON.parse(localStorage.getItem('polebug-house-snapshot'));
+  if (s && s.w === innerWidth && s.h === innerHeight && s.dpr === devicePixelRatio && !/[?&](build|at)=/.test(location.search)) {
+    const im = document.getElementById('snapshot');
+    im.src = s.src; im.dataset.v = s.v; im.hidden = false;
+    document.documentElement.classList.add('snapshot');
+  }
+} catch { /* no storage: the usual opening */ }
+</script>
 <div id="ui" class="wait"></div>
 <div id="stats">loading…</div>
 <div id="build"><span>Building the house</span><i><b></b></i></div>
@@ -81,6 +102,7 @@ import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { clone as cloneSkinned } from 'three/addons/utils/SkeletonUtils.js';
 import { createFloorNavigation } from './floor-navigation.js';
 import { hasCachedHouse, fillHouseCache } from './asset-cache.js?v=20261026';   // new name: browsers keep .js 4 h
 
@@ -95,6 +117,22 @@ const b2t = (x, y, z) => new THREE.Vector3(x, z, -y);          // Blender z-up -
 // Loading doesn't wait for this (a first visit spent up to 3 s on the worker): only the skip below needs it
 const cachedHouseP = hasCachedHouse(cfg, V);
 cachedHouseP.then(hit => { if (hit) document.querySelector('#build span').textContent = 'Opening your home…'; });
+// The saved frame of the finished house (#snapshot, shown before this script): drawn off-screen once per
+// build and size as soon as the house and trees are in (saveFinishedFrame), so it also marks a returning
+// visitor where the asset worker can't (it fails to register in some browsers, and then the build played
+// on every visit).
+const SNAP_KEY = 'polebug-house-snapshot';
+const snapImg = document.getElementById('snapshot');
+let snapShown = !snapImg.hidden, viewNow = '';
+function dropSnapshot(rebuild) {
+  if (!snapShown) return;
+  snapShown = false;
+  if (rebuild) document.documentElement.classList.remove('snapshot');
+  snapImg.classList.add('gone');
+  setTimeout(() => snapImg.remove(), 600);
+}
+if (snapShown && snapImg.dataset.v !== V) dropSnapshot(true);
+const seenFinished = snapShown;
 
 // The page opens in steps (2026-10-22). The HTML shows poster.webp at once: the landscape without the
 // house, rendered in Cycles (render_poster.py). Over it the owner stands on the lawn and the house is a
@@ -114,6 +152,13 @@ document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();                               // blueprint, owner, house, yard
 const land = new THREE.Scene();                                // sky, backdrop, ground, lake, tree cards
+// A returning visitor (the asset worker already controls the page) whose house is cached goes straight
+// from the picture to the finished house: the blueprint and the owner on the lawn, the start of a first
+// visit's build, stay hidden until finishNow (they showed for ~2 s, then the house jumped in).
+if ((navigator.serviceWorker?.controller || seenFinished) && !/[?&](build|at)=/.test(location.search)) {
+  scene.visible = false;
+  cachedHouseP.then(hit => { if (!hit && !seenFinished) scene.visible = true; });
+}
 const camera = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, 0.05, 6000);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
@@ -168,6 +213,28 @@ posterFit();
 
 let tris = 0;
 const gltfLoader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);   // house, plants and owner are meshopt-compressed
+// Pictures (ground, backdrop, lake, tree cards, lightmaps) are decoded off the main thread with
+// createImageBitmap: TextureLoader's <img> is decoded inside the first GPU upload, which held the
+// page (and clicks on the page around it) for seconds. Same textures as TextureLoader gave; flipY
+// false for maps laid out like the glb's own. Old Safari / Firefox, whose ImageBitmaps three.js
+// avoids too, keep TextureLoader.
+const bitmapOk = typeof createImageBitmap === 'function'
+  && !(/^((?!chrome|android).)*safari/i.test(navigator.userAgent) && +(navigator.userAgent.match(/version\/(\d+)/i) || [0, 0])[1] < 17)
+  && !(+(navigator.userAgent.match(/firefox\/(\d+)/i) || [0, 999])[1] < 98);
+async function loadTexture(url, flipY = true) {
+  if (!bitmapOk) {
+    const t = await new THREE.TextureLoader().loadAsync(url);
+    t.flipY = flipY;
+    return t;
+  }
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${r.status} ${url}`);
+  const bitmap = await createImageBitmap(await r.blob(), { imageOrientation: flipY ? 'flipY' : 'from-image', premultiplyAlpha: 'none', colorSpaceConversion: 'none' });
+  const t = new THREE.Texture(bitmap);
+  t.flipY = false;                                               // ImageBitmaps ignore it: flipped above
+  t.needsUpdate = true;
+  return t;
+}
 let cards = 0, landReady = false, posterFade = -1, landMs = 0;
 // ---------------------------------------------------------------- the 3D landscape (replaces the poster)
 async function loadLandscape() {
@@ -184,7 +251,7 @@ const lake = new THREE.Mesh(new THREE.BufferGeometry()
 land.add(lake);
 if (cfg.lake) {
   const L = cfg.lake;
-  const ltex = await new THREE.TextureLoader().loadAsync(A + L.file + V);
+  const ltex = await loadTexture(A + L.file + V);
   ltex.colorSpace = THREE.SRGBColorSpace;
   const pc = new THREE.PerspectiveCamera(THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(L.hfov / 2) / L.aspect)), L.aspect, 0.1, 6000);
   const qb = new THREE.Quaternion(L.quat[1], L.quat[2], L.quat[3], L.quat[0]);
@@ -216,7 +283,7 @@ if (cfg.lake) {
 
 // ---------------------------------------------------------------- ground
 const g = cfg.ground;
-const gtex = await new THREE.TextureLoader().loadAsync(A + g.file + V);
+const gtex = await loadTexture(A + g.file + V);
 gtex.colorSpace = THREE.SRGBColorSpace;
 gtex.anisotropy = 8;
 const gw = g.x1 - g.x0, gh = g.y1 - g.y0;
@@ -229,7 +296,7 @@ land.add(ground);
 // hung far behind everything (drawn first, never in front)
 const bd = cfg.backdrop;
 if (bd) {
-  const btex = await new THREE.TextureLoader().loadAsync(A + bd.file + V);
+  const btex = await loadTexture(A + bd.file + V);
   btex.colorSpace = THREE.SRGBColorSpace;
   const w = 2 * bd.distance * Math.tan(bd.hfov / 2), h = w / bd.aspect;
   const plate = new THREE.Mesh(new THREE.PlaneGeometry(w, h).translate(0, 0, -bd.distance),
@@ -260,6 +327,7 @@ const landP = loadLandscape();
 // Nothing waits for these (user, 10-26): 140 small pictures load once the house's files are in (see
 // arrived below); one that turns up after the poster has gone fades in over TREE_FADE s
 const TREE_FADE = 0.8, treeFades = [];
+let treesDone = false;
 // each type is one picture rendered from the front; cards turn about the vertical to face the camera
 function billboardMaterial(map) {
   // real alpha blending for soft needle edges; every tree is its own mesh placed at the tree, so three.js
@@ -281,13 +349,12 @@ function billboardMaterial(map) {
 // all the pictures sit in one atlas (tree_atlas.mjs: trees.atlas, each type's rect), one request instead
 // of 140 (user, 10-26); without it each type loads its own file
 async function loadTrees() {
-const loader = new THREE.TextureLoader();
 const byType = {};
 for (const r of cfg.trees.instances) (byType[r[0]] ||= []).push(r);
 const at = cfg.trees.atlas;
 let atlasMat = null;
 if (at) {
-  const map = await loader.loadAsync(A + at.file + V);
+  const map = await loadTexture(A + at.file + V);
   map.colorSpace = THREE.SRGBColorSpace;
   atlasMat = billboardMaterial(map);
   if (POSTER.alpha.value < 1) { atlasMat.opacity = 0; treeFades.push(atlasMat); }
@@ -296,7 +363,7 @@ return Promise.all(Object.entries(byType).map(async ([type, rows]) => {
   const t = cfg.trees.types[type];
   let mat = atlasMat;
   if (!mat) {
-    const map = await loader.loadAsync(A + t.file + V);
+    const map = await loadTexture(A + t.file + V);
     map.colorSpace = THREE.SRGBColorSpace;
     mat = billboardMaterial(map);
     if (POSTER.alpha.value < 1) { mat.opacity = 0; treeFades.push(mat); }
@@ -591,6 +658,7 @@ function useView(label) {
   const pos = new THREE.Vector3(), q = new THREE.Quaternion();
   c.matrixWorld.decompose(pos, q, new THREE.Vector3());
   const outside = label === '总览';
+  viewNow = label;
   floorNavigation?.setView(label);
   place(pos, q, 2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(c.fov) / 2) * c.aspect), outside);
   controls.enabled = !outside;                                    // the overview is a fixed picture; rooms can be looked around
@@ -655,12 +723,12 @@ const arrived = download([
   await piecesP;
   const linenUrl = URL.createObjectURL(new Blob([linenBuf], { type: 'image/webp' }));
   const emptyP = Promise.all(['house', 'floors', 'boards', 'rugs'].map(g =>
-    new THREE.TextureLoader().loadAsync(A + `empty_${g}.webp` + V).then(t => {
-      t.colorSpace = THREE.SRGBColorSpace; t.flipY = false;            // laid out like the glb's own maps
+    loadTexture(A + `empty_${g}.webp` + V, false).then(t => {          // laid out like the glb's own maps
+      t.colorSpace = THREE.SRGBColorSpace;
       emptyMaps['BAKED_' + g] = t;
     }).catch(() => {})));
   const [gltf, pg, linenMap] = await Promise.all([gltfLoader.parseAsync(houseBuf, A), gltfLoader.parseAsync(plantsBuf, A),
-                                                  new THREE.TextureLoader().loadAsync(linenUrl), emptyP]);
+                                                  loadTexture(linenUrl), emptyP]);
   setupHouse(gltf, linenMap);
   setupPlants(pg, JSON.parse(new TextDecoder().decode(twigsBuf)));
   for (const m of rising) { m.clippingPlanes = [RISE]; }
@@ -669,7 +737,7 @@ const arrived = download([
   timing.parsed = Math.round(performance.now() - t0);
   return true;
 });
-arrived.then(loadTrees);                                             // the tree cards, after the big files
+arrived.then(loadTrees).finally(() => { treesDone = true; });        // the tree cards, after the big files
 
 // the drawing never runs ahead of the download, and takes at least MIN_BUILD s (a returning visitor skips it all)
 const MIN_BUILD = 2.5;                                            // the blueprint takes ~4 s in all (user, 10-22)
@@ -688,12 +756,14 @@ const Q = new URLSearchParams(location.search);
 let skipBuild = false;
 Promise.all([arrived, landP, cachedHouseP]).then(([, , cachedHouse]) => {
   if (!cachedHouse) fillHouseCache(cfg, V);                       // so the next visit can skip the build
-  skipBuild = Q.has('skip') || (cachedHouse && !Q.has('build') && !Q.has('at'));
+  skipBuild = Q.has('skip') || ((cachedHouse || seenFinished) && !Q.has('build') && !Q.has('at'));
+  if (!skipBuild) dropSnapshot(true);
   document.documentElement.dataset.houseCache = cachedHouse ? 'hit' : 'miss';
   document.documentElement.dataset.houseAnimation = skipBuild ? 'skipped' : 'playing';
   ready = true;
 });
 function finishNow() {                                              // straight to the finished house
+  scene.visible = true;
   FILL_ON.value = 0;
   EMPTY_MIX.value.set(1, 1, 1);
   buildT = 0; posterFade = 0; loadMs = Math.round(performance.now() - t0);
@@ -1015,6 +1085,64 @@ function updateBuild(dt) {
 
 const clock = new THREE.Clock();
 let frames = 0, acc = 0, fps = 0, firstFrame = true;
+// ---------------------------------------------------------------- the saved frame (see #snapshot)
+// The finished house as a returning visitor first sees it (overview, everything in, the owner on the
+// sofa), drawn into the canvas for one frame that is never shown: the build state is set to the end,
+// the owner swapped for a seated copy, and everything put back before the frame's real drawing. Done as
+// soon as the house and trees are in, so leaving during the build (~30 s) still leaves a frame for the
+// way back. The frame fades out once the 3D house under it is complete.
+let seatedOwner = null;
+function seatedCopy() {                                             // the owner as sitOnSofa leaves her
+  if (seatedOwner) return seatedOwner;
+  seatedOwner = cloneSkinned(owner.scene);
+  const m = new THREE.AnimationMixer(seatedOwner);
+  m.clipAction(owner.animations.find(a => a.name === 'SofaSit') || owner.animations[0]).play();
+  m.update(0);
+  seatedOwner.position.copy(b2t(-1.58, 2.5, 0.6 - 0.06));
+  seatedOwner.rotation.y = -Math.PI / 2;
+  seatedOwner.visible = false;
+  scene.add(seatedOwner);
+  return seatedOwner;
+}
+function saveFinishedFrame() {
+  const w = innerWidth, h = innerHeight, dpr = devicePixelRatio;
+  try {
+    const s = JSON.parse(localStorage.getItem(SNAP_KEY));
+    if (s && s.v === V && s.w === w && s.h === h && s.dpr === dpr) return;
+  } catch { return; }
+  const seat = seatedCopy();
+  const keep = { rise: RISE.constant, fill: FILL_ON.value, empty: EMPTY_MIX.value.clone(), fringe: FRINGE.constant,
+    t: allPieces.map(p => p.t), fading: fading.map(m => [m.opacity, m.transparent]), trees: treeFades.map(m => m.opacity),
+    bp: [bpLines.visible, bpDepth.visible, bpFaces.visible], owner: owner.scene.visible, scene: scene.visible };
+  RISE.constant = 1e4; FILL_ON.value = 0; EMPTY_MIX.value.set(1, 1, 1);
+  for (const p of allPieces) p.t = 99;
+  updatePieces(0);
+  FRINGE.constant = 100;
+  for (const m of fading) { m.opacity = 1; if (m.userData.opaque) m.transparent = false; }
+  for (const m of treeFades) m.opacity = 1;
+  bpLines.visible = bpDepth.visible = bpFaces.visible = false;
+  owner.scene.visible = false; seat.visible = true; scene.visible = true;
+  renderer.clear();
+  renderer.render(land, camera);
+  renderer.render(scene, camera);
+  try {
+    localStorage.setItem(SNAP_KEY, JSON.stringify({ v: V, w, h, dpr, src: renderer.domElement.toDataURL('image/jpeg', 0.85) }));
+    timing.snapshot = Math.round(performance.now() - t0);
+  } catch { /* quota or no storage: no saved frame */ }
+  RISE.constant = keep.rise; FILL_ON.value = keep.fill; EMPTY_MIX.value.copy(keep.empty);
+  allPieces.forEach((p, i) => { p.t = keep.t[i]; });
+  updatePieces(0);
+  FRINGE.constant = keep.fringe;
+  fading.forEach((m, i) => { [m.opacity, m.transparent] = keep.fading[i]; });
+  treeFades.forEach((m, i) => { m.opacity = keep.trees[i]; });
+  [bpLines.visible, bpDepth.visible, bpFaces.visible] = keep.bp;
+  owner.scene.visible = keep.owner; seat.visible = false; scene.visible = keep.scene;
+}
+let frameSaved = false;
+function snapshotTick() {
+  if (!frameSaved && ready && treesDone && landReady && (viewNow === '' || viewNow === '总览')) { frameSaved = true; saveFinishedFrame(); }
+  if (snapShown && skipBuild && buildT >= 0 && POSTER.alpha.value === 0 && treesDone && !treeFades.length && landReady) dropSnapshot();
+}
 renderer.setAnimationLoop(() => {
   const dt = Math.min(clock.getDelta(), 0.1);
   const sz = renderer.getSize(new THREE.Vector2());
@@ -1028,6 +1156,7 @@ renderer.setAnimationLoop(() => {
   if (posterFade >= 0 && POSTER.alpha.value > 0) POSTER.alpha.value = Math.max(0, 1 - (posterFade += dt) / (skipBuild ? POSTER_TIME_CACHED : POSTER_TIME));
   for (let i = treeFades.length - 1; i >= 0; i--)
     if ((treeFades[i].opacity = Math.min(1, treeFades[i].opacity + dt / TREE_FADE)) === 1) treeFades.splice(i, 1);
+  snapshotTick();                                                   // may draw the saved frame first, unseen
   renderer.clear();
   if (landReady && POSTER.alpha.value < 1) renderer.render(land, camera);
   if (POSTER.alpha.value > 0) renderer.render(posterScene, posterCam);

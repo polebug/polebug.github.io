@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Polebug's blog.">
   <title>Polebug · Home</title>
+  <link rel="preload" as="font" type="font/ttf" href="assets/fonts/lato-0.ttf" crossorigin>
   <link rel="stylesheet" href="fonts.css">
   <link rel="stylesheet" href="style.css">
   <script src="theme.js"></script>
@@ -45,6 +46,14 @@
     <section class="house-section" aria-label="Companion house">
       <div class="house-frame">
         <iframe id="house" src="house/?embed" title="Companion house: overview and three floors" allow="fullscreen"></iframe>
+        <script>
+          // A returning visitor: the house's saved frame (house/index.html, #snapshot) behind the frame, so
+          // the finished house shows even before the house page paints.
+          try {
+            const s = JSON.parse(localStorage.getItem('polebug-house-snapshot')), f = document.getElementById('house');
+            if (s && Math.abs(s.w - f.clientWidth) <= 1 && Math.abs(s.h - f.clientHeight) <= 1 && s.dpr === devicePixelRatio) f.style.background = `url(${s.src}) 0 0 / 100% 100% no-repeat`;
+          } catch { /* the poster, as usual */ }
+        </script>
       </div>
     </section>
     </div>
