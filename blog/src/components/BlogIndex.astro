@@ -1,23 +1,77 @@
 ---
 import Base from '../layouts/Base.astro';
-import PostList from './PostList.astro';
-import { PER_PAGE, type Post } from '../lib/posts';
+import Reader from './Reader.astro';
+import { PER_PAGE, stamp, type Post } from '../lib/posts';
 
-// One page of the post list: / is page 1, /page/2/ and on follow (as on the old site).
-const { posts, page } = Astro.props as { posts: Post[]; page: number };
-const pages = Math.max(1, Math.ceil(posts.length / PER_PAGE));
-const shown = posts.slice((page - 1) * PER_PAGE, page * PER_PAGE);
-const href = (n: number) => (n === 1 ? '/' : `/page/${n}/`);
+// The blog index: every post's opening, read in the Reader. /page/N/ (the old list's pages) opens
+// at post (N-1)*PER_PAGE.
+const { page } = Astro.props as { posts: Post[]; page: number };
+const posts = (Astro.props.posts as Post[]).filter((p) => !p.draft);
+const start = Math.min((page - 1) * PER_PAGE, Math.max(0, posts.length - 1));
 ---
-<Base nav="blog" title={page > 1 ? `Blog · 第 ${page} 页` : undefined}>
-  <h1 class="page-title">Blog</h1>
-  <p class="motto">保持思考 · 等待 · 斋戒</p>
-  <PostList posts={shown} />
-  {pages > 1 && (
-    <nav class="pagination" aria-label="Pages">
-      <span>{page > 1 && <a href={href(page - 1)}>← 较新的文章</a>}</span>
-      <span>{page} / {pages}</span>
-      <span>{page < pages && <a href={href(page + 1)}>更早的文章 →</a>}</span>
-    </nav>
-  )}
+<Base nav="blog" title={page > 1 ? `Blog · Page ${page}` : undefined} wide>
+  <h1 class="visually-hidden">Blog</h1>
+  <Reader posts={posts} start={start} label="Posts">
+    {posts.map((post) => (
+      <article class="entry">
+        <time datetime={post.data.date.toISOString()}>{stamp(post.data.date)}</time>
+        <h2><a href={post.url}>{post.data.title}</a></h2>
+        {post.summary && <div class="summary" set:html={post.summary} />}
+        <a class="more" href={post.url}>Continue reading →</a>
+      </article>
+    ))}
+    <p class="end">— The End —</p>
+  </Reader>
 </Base>
+
+<style>
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  .entry { --marker: rgba(122, 168, 108, .5); --landing: rgba(229, 138, 74, .045);
+    display: flow-root; padding-bottom: 28px; margin-bottom: 28px; border-bottom: 1.5px solid transparent; }
+  .entry:last-of-type { border-bottom: 0; }
+  /* Landing from the catalogue: the date in accent, the marker turning orange and sliding
+     up into the title, the summary brightening; all of it settling back after a moment. */
+  .entry.landed { animation: landed 2.8s ease-out; border-radius: 14px; }
+  /* The wash: a rounded panel reaching 24px out to the sides and about 38px above the date and
+     below the link (the shadow is shifted up to balance the entry's own bottom padding). */
+  @keyframes landed {
+    0%, 50% { background: var(--landing); box-shadow: 0 -14px 0 24px var(--landing); }
+    100% { background: transparent; box-shadow: 0 -14px 0 24px transparent; }
+  }
+  .entry time { transition: color .5s; }
+  .entry.landed time { color: var(--accent); }
+  .entry.landed h2 a { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 60' preserveAspectRatio='none'%3E%3Cpath fill='%23e58a4a' fill-opacity='.45' d='M5 25C40 17 85 22 125 18 165 14 205 19 245 15 272 12 290 15 297 19L299 43C280 50 248 45 215 49 175 54 135 47 95 52 58 56 28 51 7 53L2 38Z'/%3E%3Cpath fill='%23e58a4a' fill-opacity='.25' d='M14 28C62 23 118 26 176 22 226 19 266 23 292 26L294 40C258 45 202 42 150 46 100 50 52 46 16 47Z'/%3E%3C/svg%3E"); background-position: 5px 82%; }
+  .entry .summary { transition: color .5s; }
+  .entry.landed .summary { color: var(--body); }
+  .entry time { display: block; break-after: avoid; font: 700 12px/1 "Lato", sans-serif; letter-spacing: 1.2px; color: var(--faint); margin-bottom: 12px; }
+
+  /* Title in full, with a marker stroke drawn loosely under it: a wobbly, slightly tilted shape that
+     runs past the words, one stroke per line. On hover the stroke turns orange and slides up into the words. */
+  .entry h2 { break-after: avoid; margin: 0 0 14px; font: 600 22px/1.65 "Noto Serif SC", serif; color: var(--ink); }
+  .entry h2 a {
+    padding: .02em .38em .3em; margin: 0 -.38em;
+    -webkit-box-decoration-break: clone; box-decoration-break: clone;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 60' preserveAspectRatio='none'%3E%3Cpath fill='%237aa86c' fill-opacity='.45' d='M5 25C40 17 85 22 125 18 165 14 205 19 245 15 272 12 290 15 297 19L299 43C280 50 248 45 215 49 175 54 135 47 95 52 58 56 28 51 7 53L2 38Z'/%3E%3Cpath fill='%237aa86c' fill-opacity='.25' d='M14 28C62 23 118 26 176 22 226 19 266 23 292 26L294 40C258 45 202 42 150 46 100 50 52 46 16 47Z'/%3E%3C/svg%3E") 0 100% / 100% 62% no-repeat;
+    transition: background-position .35s cubic-bezier(.2, .7, .2, 1);
+  }
+  .entry h2 a:hover { color: var(--ink); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 60' preserveAspectRatio='none'%3E%3Cpath fill='%23e58a4a' fill-opacity='.45' d='M5 25C40 17 85 22 125 18 165 14 205 19 245 15 272 12 290 15 297 19L299 43C280 50 248 45 215 49 175 54 135 47 95 52 58 56 28 51 7 53L2 38Z'/%3E%3Cpath fill='%23e58a4a' fill-opacity='.25' d='M14 28C62 23 118 26 176 22 226 19 266 23 292 26L294 40C258 45 202 42 150 46 100 50 52 46 16 47Z'/%3E%3C/svg%3E"); background-position: 5px 82%; }
+
+  /* The summary at its own length, list-sized; its last lines fade out just above the link. */
+  .summary { font-size: 15px; line-height: 1.85; color: var(--muted); }
+  .summary :global(.tail) { --link: 28px; break-inside: avoid;
+    -webkit-mask-image: linear-gradient(#000 calc(100% - var(--link) - 3.2em), transparent calc(100% - var(--link)), #000 calc(100% - var(--link)));
+    mask-image: linear-gradient(#000 calc(100% - var(--link) - 3.2em), transparent calc(100% - var(--link)), #000 calc(100% - var(--link))); }
+  .summary :global(.tail) > :global(.more) { display: block; width: max-content; box-sizing: border-box; height: var(--link); margin: 0; padding-top: 6px; line-height: 22px; }
+  .summary :global(p), .summary :global(ul), .summary :global(ol), .summary :global(blockquote) { margin: 0 0 .7em; }
+  .summary :global(ul), .summary :global(ol) { padding-left: 1.3em; }
+  .summary :global(blockquote) { margin-left: 0; padding-left: .9em; border-left: 2px solid var(--line); color: var(--muted); }
+  .summary :global(strong), .summary :global(.summary-heading) { color: var(--ink); font-weight: 600; }
+  .summary :global(a) { border-bottom: 1px solid var(--line); }
+  .more { display: inline-block; margin-top: 4px; font-size: 13px; letter-spacing: 1px; color: var(--accent); }
+  .more:hover { color: var(--accent); border-bottom: 1.5px solid var(--accent); }
+  .end { margin: 48px 0 0; text-align: center; font: 400 15px/2 "Lato", sans-serif; letter-spacing: 2px; color: var(--faint); }
+  :global(.reader[data-mode="scroll"]) .end { margin-bottom: 24px; }
+
+  @media (max-width: 700px) { .entry { padding-bottom: 22px; margin-bottom: 22px; } }
+</style>

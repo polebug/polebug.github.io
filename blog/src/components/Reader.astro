@@ -1,0 +1,298 @@
+---
+import { stamp, type Post } from '../lib/posts';
+
+// The reader, in the manner of WeRead's web reader: one panel the height of the window, with
+// whatever is slotted in (the index's entries, or a post) flowing through it two columns at a
+// time, paged with the buttons in the bottom corners (CSS columns laid out sideways; the script
+// slides the flow one window at a time). A rail beside it holds the catalogue (a drawer listing
+// every post) and the 翻页 / 滚动 switch, which turns the panel into a single scrolling column
+// instead. Without JavaScript the whole flow shows at once.
+//
+// `start` is the index of the block (.entry, or a block of the post) to open at. The catalogue
+// lists `posts` (the index) or `headings` (a post's own sections), and jumps within the flow. A
+// "cover" slot (a post's title page) takes the first column, the text starting beside it, as a
+// book's cover does in WeRead; a "rail" slot adds buttons to the rail.
+interface Heading { depth: number; slug: string; text: string }
+interface Props { posts?: Post[]; headings?: Heading[]; start?: number; label: string }
+const { posts, headings, start = 0, label } = Astro.props;
+---
+<div class="reading">
+  <section class="reader" aria-label={label} data-start={start}>
+    <header class="reader-head">
+      <span class="running">Blog</span>
+      <span class="motto-sm">保持思考 · 等待 · 斋戒</span>
+    </header>
+
+    <div class="pages">
+      <div class="flow">
+        {Astro.slots.has('cover') && <div class="cover"><slot name="cover" /></div>}
+        <slot />
+      </div>
+    </div>
+
+    <nav class="reader-foot" aria-label="Pages">
+      <button type="button" class="prev">‹ Prev</button>
+      <span class="where" aria-live="polite"></span>
+      <button type="button" class="next">Next ›</button>
+    </nav>
+  </section>
+
+  <nav class="rail" aria-label="Reading controls">
+    <button type="button" class="toc-open" title="Contents" aria-label="Contents">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+    </button>
+    <button type="button" class="mode" title="Switch to scrolling" aria-label="Switch to scrolling">
+      <svg class="ico-scroll" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M12 3 8.5 6.5M12 3l3.5 3.5M12 21l-3.5-3.5M12 21l3.5-3.5"/></svg>
+      <svg class="ico-page" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h7v14H4zM13 5h7v14h-7z"/></svg>
+    </button>
+    <slot name="rail" />
+  </nav>
+</div>
+<script is:inline>
+  // Before the first paint: mark the reader as scripted and apply the remembered mode, so the page
+  // doesn't flash the no-JS layout (the whole flow at once) before the module below runs.
+  (function () {
+    var r = document.querySelector('.reader');
+    if (!r) return;
+    r.classList.add('ready');
+    try { if (localStorage.getItem('reader-mode') === 'scroll') r.dataset.mode = 'scroll'; } catch (e) {}
+    // Tie each "Continue reading" to the last block of its summary, so a column break can't part
+    // them and the fade (see .tail in BlogIndex) sits just above the link. Here, not in the module
+    // below, so the first paint already has the fade and the final columns.
+    r.querySelectorAll('.entry').forEach(function (e) {
+      var summary = e.querySelector('.summary'), last = summary && summary.lastElementChild, more = e.querySelector('.more');
+      if (!last || !more) return;
+      var tail = document.createElement('div');
+      tail.className = 'tail';
+      summary.append(tail);
+      tail.append(last, more);
+    });
+  })();
+</script>
+
+<dialog class="drawer toc" aria-label="Contents">
+  <header>
+    <span class="running">Contents</span>
+    <span class="drawer-count">{posts ? `${posts.length} posts` : `${headings?.length ?? 0} sections`}</span>
+    <button type="button" class="drawer-close" aria-label="Close">×</button>
+  </header>
+  <ol>
+    {posts?.map((post, i) => (
+      <li><button type="button" data-i={i}><time>{stamp(post.data.date)}</time><span>{post.data.title}</span></button></li>
+    ))}
+    {headings?.map((h) => (
+      <li class={`depth-${h.depth}`}><button type="button" data-id={h.slug}><span>{h.text}</span></button></li>
+    ))}
+    {!posts && !headings?.length && <li class="none">This post has no section headings.</li>}
+  </ol>
+</dialog>
+
+<script>
+  const reader = document.querySelector<HTMLElement>('.reader')!;
+  const pages = reader.querySelector<HTMLElement>('.pages')!;
+  const flow = reader.querySelector<HTMLElement>('.flow')!;
+  const where = reader.querySelector<HTMLElement>('.reader-foot .where')!;
+  const prev = reader.querySelector<HTMLButtonElement>('.reader-foot .prev')!;
+  const next = reader.querySelector<HTMLButtonElement>('.reader-foot .next')!;
+  const entries = [...flow.querySelectorAll<HTMLElement>('.entry')];
+  // The blocks the reader keeps its place by: the index's entries, or a post's header and paragraphs.
+  const marks = entries.length ? entries : [...flow.querySelectorAll<HTMLElement>('.cover, .prose > *, .post-nav')];
+  const modeButton = document.querySelector<HTMLButtonElement>('.rail .mode')!;
+  const toc = document.querySelector<HTMLDialogElement>('dialog.toc')!;
+  let current = 0;
+  let count = 1;
+
+  const paged = () => reader.dataset.mode !== 'scroll';
+  // One window of the flow is its own width (two columns) plus one column gap.
+  const step = () => flow.clientWidth + parseFloat(getComputedStyle(flow).columnGap);
+  // The left edge of the window (the pages box, inside its padding).
+  const edge = () => pages.getBoundingClientRect().left + parseFloat(getComputedStyle(pages).paddingLeft);
+  const show = (n: number) => {
+    current = Math.max(0, Math.min(n, count - 1));
+    flow.style.setProperty('--p', String(current));
+    where.textContent = `${current + 1} / ${count}`;
+    prev.disabled = current === 0;
+    next.disabled = current >= count - 1;
+  };
+  // Where a block sits along the flow, in windows. (Measured with the flow slid back to the start
+  // and its transition off, since a rect taken mid-slide would be partway along.)
+  const windowOf = (el: Element) => Math.floor((el.getBoundingClientRect().left - edge() + 1) / step());
+  // Measure the flow afresh (on load, resize and mode change) and open at the given block.
+  const layout = (keep?: Element | null) => {
+    if (!paged()) return;
+    flow.style.transition = 'none';
+    flow.style.setProperty('--p', '0');
+    count = Math.max(1, Math.round((flow.scrollWidth + step() - flow.clientWidth) / step()));
+    show(keep ? windowOf(keep) : current);
+    void flow.offsetWidth;
+    flow.style.transition = '';
+  };
+  // The first block in view: at the window's left edge when paged, below the panel's top when scrolling.
+  const onScreen = () => {
+    // A slide may be under way: snap it to its end before measuring.
+    if (paged()) { flow.style.transition = 'none'; void flow.offsetWidth; }
+    const r = pages.getBoundingClientRect();
+    const left = edge();
+    const found = marks.find((e) => {
+      const b = e.getBoundingClientRect();
+      return paged() ? b.left >= left - 1 : b.bottom > r.top + 1;
+    }) ?? null;
+    flow.style.transition = '';
+    return found;
+  };
+  const goTo = (el: HTMLElement | null, mark = false) => {
+    if (!el) return;
+    if (paged()) layout(el);
+    else {
+      // 40px of headroom, so the landing wash isn't cut at the top.
+      pages.scrollTop = el.offsetTop - 40;
+      // Once more after paint: images above it may still be settling into their sizes.
+      requestAnimationFrame(() => { pages.scrollTop = el.offsetTop - 40; });
+    }
+    if (mark) {
+      // Show where we landed: the entry lights up for a moment.
+      el.classList.remove('landed');
+      void el.offsetWidth;
+      el.classList.add('landed');
+      el.addEventListener('animationend', () => el.classList.remove('landed'), { once: true });
+    }
+  };
+  const setMode = (mode: 'page' | 'scroll', keep: HTMLElement | null) => {
+    reader.dataset.mode = mode;
+    const toScroll = mode === 'page';
+    modeButton.title = modeButton.ariaLabel = toScroll ? 'Switch to scrolling' : 'Switch to pages';
+    try { localStorage.setItem('reader-mode', mode); } catch {}
+    goTo(keep);
+  };
+
+  let mode: 'page' | 'scroll' = 'page';
+  try { if (localStorage.getItem('reader-mode') === 'scroll') mode = 'scroll'; } catch {}
+  reader.classList.add('ready');
+  setMode(mode, marks[Number(reader.dataset.start) || 0] ?? null);
+  document.fonts?.ready.then(() => layout(onScreen()));
+  addEventListener('resize', () => layout(onScreen()));
+  // Images settling into their sizes change the pagination; keep the place.
+  for (const img of flow.querySelectorAll('img')) img.addEventListener('load', () => layout(onScreen()), { once: true });
+
+  prev.addEventListener('click', () => show(current - 1));
+  next.addEventListener('click', () => show(current + 1));
+  addEventListener('keydown', (e) => {
+    if (!paged() || document.querySelector('dialog[open]') || e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+    if (e.key === 'ArrowLeft') show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+  });
+  modeButton.addEventListener('click', () => setMode(paged() ? 'scroll' : 'page', onScreen()));
+
+  // The catalogue: the index's posts, or a post's section headings. Each item has its target in
+  // the flow (an entry, or a heading by id); the one in view is marked, and picking one opens the
+  // reader there.
+  const items = [...toc.querySelectorAll<HTMLButtonElement>('li > button')];
+  const targetOf = (b: HTMLButtonElement) => b.dataset.id ? document.getElementById(b.dataset.id) : entries[Number(b.dataset.i)];
+  // The item in view: the entry on screen, or the last heading at or before the reading position.
+  const itemInView = () => {
+    if (entries.length) { const here = onScreen(); return here ? entries.indexOf(here) : -1; }
+    const here = onScreen();
+    if (!here) return -1;
+    const pos = here.compareDocumentPosition.bind(here);
+    let at = -1;
+    items.forEach((b, i) => { const t = targetOf(b); if (t && (t === here || pos(t) & Node.DOCUMENT_POSITION_PRECEDING)) at = i; });
+    return at;
+  };
+  document.querySelector('.rail .toc-open')?.addEventListener('click', () => {
+    const at = itemInView();
+    items.forEach((b, i) => { if (i === at) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+    toc.showModal();
+    items[Math.max(0, at)]?.scrollIntoView({ block: 'center' });
+  });
+  // Every drawer (the catalogue, and a post's comments) closes by its × or a click on the backdrop.
+  for (const d of document.querySelectorAll<HTMLDialogElement>('dialog.drawer')) {
+    d.querySelector('.drawer-close')?.addEventListener('click', () => d.close());
+    d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
+  }
+  items.forEach((b) => b.addEventListener('click', () => { toc.close(); goTo(targetOf(b), !!entries.length); }));
+</script>
+
+<style>
+  /* The panel and its rail fill the window below the header. */
+  .reading { display: flex; align-items: stretch; gap: 20px; height: calc(100dvh - 104px - 28px); min-height: 520px; }
+  .reader {
+    --gap: 80px;
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 64px 22px;
+    background: var(--panel);
+    border: 1px solid var(--panel-edge);
+    border-radius: 16px;
+  }
+  .reader-head { flex: none; display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 28px; }
+  .running { font: 700 13px/1 "Lato", sans-serif; letter-spacing: 1.5px; text-transform: uppercase; color: var(--faint); }
+  .motto-sm { font: 400 12px/1 "Noto Serif SC", serif; letter-spacing: 2px; color: var(--faint); }
+
+  /* The flow is set in columns the height of the window, running off to the right; a window shows
+     two of them, and --p slides the flow one window (two columns and a gap) at a time. The box
+     clips them a little wider than the text (padding pushed out by negative margins), so the
+     index's landing wash isn't cut at the edges. */
+  .pages { flex: 1 1 auto; min-height: 0; overflow: hidden; margin: -40px -28px -12px; padding: 40px 28px 12px; position: relative; }
+  /* The cover: the whole first column, its text centred a little above the middle. */
+  .cover { height: 100%; break-after: column; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 0 14%; }
+  .flow { height: 100%; columns: 2; column-gap: var(--gap); column-fill: auto;
+    transform: translateX(calc(var(--p, 0) * (-100% - var(--gap)))); transition: transform .4s cubic-bezier(.2, .7, .2, 1); }
+  @media (prefers-reduced-motion: reduce) { .flow { transition: none; } }
+
+  .reader-foot { flex: none; display: flex; justify-content: space-between; align-items: center; margin-top: 16px; font-size: 14px; letter-spacing: 1px; color: var(--muted); }
+  .reader-foot button { font: inherit; color: inherit; padding: 6px 14px; border: 1px solid var(--line); border-radius: 20px; background: transparent; cursor: pointer; }
+  .reader-foot button:hover:not(:disabled) { color: var(--ink); border-color: var(--muted); }
+  .reader-foot button:disabled { visibility: hidden; }
+  .where { font-variant-numeric: tabular-nums; color: var(--faint); }
+  .reader:not(.ready) .where, .reader:not(.ready) .reader-foot button { visibility: hidden; }
+
+  /* 滚动: one column of reading width, scrolling inside the panel; no page buttons. */
+  .reader[data-mode="scroll"] .pages { overflow-y: auto; margin: 0 -28px; padding: 0 28px; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+  .reader[data-mode="scroll"] .flow { height: auto; columns: auto; width: min(100%, 760px); margin: 0 auto; transform: none; transition: none; }
+  .reader[data-mode="scroll"] .reader-foot { display: none; }
+  .reader[data-mode="scroll"] .cover { height: auto; min-height: 60vh; padding: 8% 0 12%; }
+
+  /* The rail: the catalogue and the 翻页 / 滚动 switch beside the panel, round buttons. */
+  .rail { flex: none; align-self: center; display: flex; flex-direction: column; gap: 16px; }
+  .rail :global(button) { width: 44px; height: 44px; padding: 0; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--panel); color: var(--muted); cursor: pointer; }
+  .rail :global(button:hover) { color: var(--accent); border-color: var(--accent); }
+  .rail :global(svg) { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .rail .ico-page, .reader[data-mode="scroll"] ~ .rail .ico-scroll { display: none; }
+  .reader[data-mode="scroll"] ~ .rail .ico-page { display: block; }
+
+  /* The catalogue, in a drawer (see .drawer in global.css). */
+  .toc ol { flex: 1 1 auto; min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line) transparent; list-style: none; margin: 0; padding: 10px 0 24px; }
+  .toc li > * { display: block; width: 100%; padding: 11px 28px; border: 0; background: transparent; color: var(--body); font: inherit; text-align: left; cursor: pointer; }
+  .toc li > :hover { color: var(--accent); background: var(--paper-2); }
+  .toc li > [aria-current] { color: var(--ink); background: var(--paper-2); box-shadow: 3px 0 0 var(--accent) inset; }
+  .toc li time { display: block; font: 700 11px/1 "Lato", sans-serif; letter-spacing: 1.2px; color: var(--faint); margin-bottom: 5px; }
+  .toc li span { display: block; font: 400 15px/1.5 "Noto Serif SC", serif; }
+  .toc li.depth-2 > button { padding-left: 44px; }
+  .toc li.depth-3 > button { padding-left: 60px; }
+  .toc li.depth-3 span, .toc li.depth-4 span { font-size: 14px; color: var(--muted); }
+  .toc li.none { padding: 24px 28px; font-size: 14px; color: var(--faint); }
+
+  /* Without JavaScript: the whole flow, in two balanced columns, on a panel as tall as it needs. */
+  .reading:has(.reader:not(.ready)) { height: auto; }
+  .reader:not(.ready) .pages { overflow: visible; margin: 0; padding: 0; }
+  .reader:not(.ready) .cover { height: auto; break-after: auto; padding: 40px 0 64px; }
+  .reader:not(.ready) .flow { height: auto; column-fill: balance; transform: none; }
+
+  @media (max-width: 1100px) { .reader { padding: 28px 44px 20px; --gap: 56px; } }
+  @media (max-width: 860px) { .flow { columns: 1; } }
+  @media (max-width: 700px) {
+    .reading { flex-direction: column-reverse; gap: 12px; height: calc(100dvh - 82px - 20px); min-height: 0; }
+    .rail { align-self: stretch; flex-direction: row; justify-content: flex-end; gap: 10px; }
+    .rail :global(button) { width: 36px; height: 36px; }
+    .rail :global(svg) { width: 17px; height: 17px; }
+    .reader { padding: 22px 22px 16px; border-radius: 12px; --gap: 40px; }
+    .reader-head { margin-bottom: 20px; }
+    .reader-foot button { padding: 5px 11px; }
+    .toc li > * { padding: 10px 20px; }
+    .toc li.depth-2 > button { padding-left: 32px; }
+    .toc li.depth-3 > button { padding-left: 44px; }
+  }
+</style>

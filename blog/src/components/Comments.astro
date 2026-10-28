@@ -4,7 +4,8 @@ import { SITE } from '../site';
 import issues from '../../comments.json';
 
 // utterances: comments are GitHub issues in this repo, posted through the utterances GitHub App,
-// so readers grant no access to their own repositories.
+// so readers grant no access to their own repositories. This is only the host element with the
+// issue's coordinates; the post page loads utterances into it when the comments drawer opens.
 // Posts from the old sites reuse their Gitalk issue (labelled md5(pathname), see tools/comments-map.mjs);
 // other posts get an issue titled with their path on the first comment.
 const { url } = Astro.props as { url: string };
@@ -12,12 +13,4 @@ const id = createHash('md5').update(encodeURI(url)).digest('hex');
 const known = (issues as Record<string, { issue: number }>)[id];
 const attrs = known ? { 'issue-number': String(known.issue) } : { 'issue-term': url };
 ---
-<section class="comments" aria-label="Comments">
-  <script is:inline src="https://utteranc.es/client.js" repo={SITE.comments.repo} {...attrs}
-    theme="github-dark" crossorigin="anonymous" async></script>
-</section>
-
-<style is:global>
-  .comments { margin-top: 64px; }
-  .comments .utterances { max-width: none; }
-</style>
+<section class="comments" aria-label="Comments" data-repo={SITE.comments.repo} {...Object.fromEntries(Object.entries(attrs).map(([k, v]) => [`data-${k}`, v]))}></section>

@@ -1,8 +1,11 @@
-/* Same palette, type and header as polebug.com (home/style.css): washi dark paper, ink, vermilion. */
+/* Same palette, type and header as polebug.com (home/style.css): washi dark paper, ink, vermilion.
+   The header's toggle switches to a light scheme (remembered in a polebug.com cookie "theme", shared with the homepage, and localStorage). */
 :root {
   color-scheme: dark;
   --paper: #191a18;
   --paper-2: #20211f;
+  --panel: #1e1f1d;
+  --panel-edge: #26272400;
   --line: #34352f;
   --ink: #dedbd2;
   --body: #c8c5bd;
@@ -10,9 +13,25 @@
   --faint: #858279;
   --accent: #c67868;
   --accent-soft: #c6786880;
-  --serif: "Lato", "Noto Serif SC", serif;
+  --serif: "Lato", "Lato fallback", "Noto Serif SC", serif;
   --measure: 720px;
 }
+:root[data-theme="light"] {
+  color-scheme: light;
+  --paper: #f3f3f0;
+  --paper-2: #e9e9e5;
+  --panel: #ffffff;
+  --panel-edge: #e6e6e1;
+  --line: #e1e1dc;
+  --ink: #26261f;
+  --body: #3b3b36;
+  --muted: #6b6b65;
+  --faint: #91918a;
+  --accent: #b55f4e;
+  --accent-soft: #b55f4e80;
+}
+/* Stand-in while Lato loads: local Arial scaled to Lato's size and line metrics, so text barely moves when Lato arrives. */
+@font-face { font-family: "Lato fallback"; src: local("Arial"), local("ArialMT"); size-adjust: 97.38%; ascent-override: 101.3%; descent-override: 21.87%; line-gap-override: 0%; }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body {
@@ -30,7 +49,7 @@ a { color: inherit; text-decoration: none; }
 a:hover { color: var(--accent); }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
 
-/* Header: identical to the homepage */
+/* Header: the homepage's, plus the theme toggle at the end of the nav */
 .site-header { width: 1440px; max-width: calc(100% - 96px); margin: 0 auto; min-height: 104px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .site-mark { display: block; flex: none; width: 52px; height: 52px; border-radius: 50%; overflow: hidden; }
 .site-mark img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -38,34 +57,32 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .site-header nav a { white-space: nowrap; }
 .site-header nav a[aria-current] { color: var(--ink); }
 .site-header nav span { font-size: 10px; margin-left: 3px; }
+.theme-toggle { width: 34px; height: 34px; margin-left: -6px; padding: 0; display: grid; place-items: center; border: 0; border-radius: 50%; background: transparent; color: var(--muted); cursor: pointer; }
+.theme-toggle:hover { color: var(--accent); }
+.theme-toggle svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.theme-toggle .sun, :root[data-theme="light"] .theme-toggle .moon { display: none; }
+:root[data-theme="light"] .theme-toggle .sun { display: block; }
 
 main { flex: 1; width: var(--measure); max-width: calc(100% - 48px); margin: 40px auto 0; padding-bottom: 96px; }
+/* As wide as the header (the journal on the blog index) */
+main.wide { width: 1440px; max-width: calc(100% - 96px); margin-top: 0; padding-bottom: 48px; }
 
 .page-title { font: 400 42px/1.2 "Lato", "Noto Serif SC", sans-serif; letter-spacing: -.6px; margin: 0 0 12px; }
 .motto { font-family: "Noto Serif SC", serif; font-weight: 400; font-size: 13px; letter-spacing: 2px; color: var(--muted); margin: 0 0 56px; }
 
-/* Post list */
-.post-list { list-style: none; margin: 0; padding: 0; }
-.post-list > li { padding: 0 0 36px; margin: 0 0 36px; border-bottom: 1px solid var(--line); }
-.post-list > li:last-child { border-bottom: 0; }
-.post-list time { display: block; font-size: 13px; letter-spacing: 1px; color: var(--faint); margin-bottom: 8px; }
-.post-list h2 { font-size: 22px; line-height: 1.45; font-weight: 600; margin: 0 0 10px; color: var(--ink); }
-/* Summary: the post's opening in its own formatting, smaller and dimmer than the article, fading out at the bottom */
-.summary { position: relative; max-height: 13.5em; overflow: hidden; color: var(--muted); font-size: 15px; line-height: 1.85;
-  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent); mask-image: linear-gradient(to bottom, #000 62%, transparent); }
-.summary p, .summary ul, .summary ol, .summary blockquote { margin: 0 0 .7em; }
-.summary ul, .summary ol { padding-left: 1.3em; }
-.summary li { margin: .15em 0; }
-.summary li::marker { color: var(--faint); }
-.summary blockquote { margin-left: 0; padding-left: .9em; border-left: 2px solid var(--accent-soft); }
-.summary strong, .summary .summary-heading { color: var(--body); font-weight: 600; }
-.summary a { border-bottom: 1px solid var(--accent-soft); }
-.read-more { display: inline-block; margin-top: 4px; font-size: 13px; letter-spacing: 1px; color: var(--accent); }
-.read-more:hover { color: var(--ink); }
 .draft-badge { display: inline-block; vertical-align: 3px; margin-left: 10px; padding: 0 8px; font-size: 12px; line-height: 20px; font-weight: 400; border: 1px solid var(--accent); color: var(--accent); border-radius: 10px; }
 
-.pagination { display: flex; justify-content: space-between; gap: 16px; margin-top: 8px; color: var(--muted); font-size: 15px; }
-.pagination a { border-bottom: 1px solid var(--accent-soft); padding-bottom: 3px; }
+
+/* Drawers: panels sliding in from the right edge, as WeRead's (the reader's catalogue, a post's comments). */
+.drawer { position: fixed; inset: 0 0 0 auto; margin: 0; width: min(480px, 100%); max-width: none; max-height: none; height: 100dvh; padding: 0;
+  display: flex; flex-direction: column; background: var(--panel); color: var(--ink); border: 0; border-left: 1px solid var(--line); box-shadow: -12px 0 40px rgba(0, 0, 0, .18); }
+.drawer:not([open]) { display: none; }
+.drawer::backdrop { background: rgba(0, 0, 0, .35); }
+.drawer > header { flex: none; display: flex; align-items: baseline; gap: 12px; padding: 28px 28px 18px; border-bottom: 1px solid var(--line); }
+.drawer-count { font: 400 12px/1 "Lato", sans-serif; letter-spacing: 1px; color: var(--faint); }
+.drawer-close { margin-left: auto; align-self: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--muted); font: 300 24px/1 "Lato", sans-serif; cursor: pointer; }
+.drawer-close:hover { color: var(--accent); }
+.drawer-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line) transparent; padding: 20px 28px 32px; }
 
 /* Archive */
 .archive-year { font: 400 26px/1.2 "Lato", sans-serif; color: var(--ink); margin: 48px 0 18px; }
@@ -87,16 +104,19 @@ main { flex: 1; width: var(--measure); max-width: calc(100% - 48px); margin: 40p
 .site-footer a { border-bottom: 1px solid transparent; }
 .site-footer a:hover { border-color: var(--accent-soft); }
 
-@media (max-width: 1100px) { .site-header { max-width: calc(100% - 56px); } }
+@media (max-width: 1100px) { .site-header, main.wide { max-width: calc(100% - 56px); } }
 @media (max-width: 700px) {
   .site-header { min-height: 82px; max-width: calc(100% - 36px); gap: 14px; }
+  main.wide { max-width: calc(100% - 36px); }
+  .drawer > header { padding: 22px 20px 14px; }
+  .drawer-body { padding: 16px 20px 28px; }
   .site-header nav { gap: 13px; font-size: 14px; }
+  .theme-toggle { width: 28px; height: 28px; margin-left: -4px; }
+  .theme-toggle svg { width: 17px; height: 17px; }
   .site-mark { width: 42px; height: 42px; }
   main { max-width: calc(100% - 36px); margin-top: 23px; padding-bottom: 64px; }
   .site-footer { max-width: calc(100% - 36px); }
   .page-title { font-size: 34px; }
   .motto { font-size: 12px; margin-bottom: 40px; }
-  .post-list > li { padding-bottom: 28px; margin-bottom: 28px; }
-  .post-list h2 { font-size: 19px; }
 }
 @media (max-width: 370px) { .site-header nav { gap: 9px; font-size: 12px; } }

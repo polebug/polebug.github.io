@@ -1,10 +1,16 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../../../../layouts/Base.astro';
+import Reader from '../../../../../components/Reader.astro';
 import Comments from '../../../../../components/Comments.astro';
-import { formatDate, getPosts, type Post } from '../../../../../lib/posts';
+import { getPosts, stamp, type Post } from '../../../../../lib/posts';
 import '../../../../../styles/prose.css';
 
+// A post, read in the same Reader as the index: page 1 is the cover (date, title, and a line of
+// reading time, views and comments), the text follows two pages at a time (or scrolling), and the
+// comments open in a drawer from the rail.
+// Views come from the visitor counter (stats/, filled in by Base.astro); comments are counted from
+// the post's GitHub issue.
 export async function getStaticPaths() {
   const posts = await getPosts();
   return posts.map((post, i) => ({
@@ -13,23 +19,146 @@ export async function getStaticPaths() {
   }));
 }
 const { post, newer, older } = Astro.props as { post: Post; newer?: Post; older?: Post };
-const { Content } = await render(post);
+const { Content, headings: all } = await render(post);
+// The catalogue: the post's H1–H3 (its H4s when it has nothing above that, as some older posts).
+const top = all.filter((h) => h.depth <= 3);
+const headings = top.length ? top : all.filter((h) => h.depth === 4);
+// Reading time: Chinese at about 400 characters a minute, other words at 200.
+const body = post.body ?? '';
+const cjk = (body.match(/[㐀-鿿]/g) ?? []).length;
+const words = (body.replace(/[㐀-鿿]/g, ' ').match(/[A-Za-z0-9]+/g) ?? []).length;
+const minutes = Math.max(1, Math.round(cjk / 400 + words / 200));
+const talk = post.data.comments && !post.draft;
 ---
-<Base title={post.data.title} description={post.excerpt}>
-  <article>
-    <header class="post-header">
-      <h1>{post.data.title}{post.draft && <span class="draft-badge">草稿</span>}</h1>
-      <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+<Base title={post.data.title} description={post.excerpt} wide>
+  <Reader headings={headings} label={post.data.title}>
+    <header class="post-cover" slot="cover">
+      <time datetime={post.data.date.toISOString()}>{stamp(post.data.date)}</time>
+      <h1>{post.data.title}{post.draft && <span class="draft-badge">Draft</span>}</h1>
+      <p class="meta">
+        <span>{minutes} min read</span>
+        <span data-stats hidden><span data-stat="views" data-unit="view"></span></span>
+        {talk && <span><span class="comment-count">–</span> comments</span>}
+      </p>
     </header>
-    <div class="prose">
-      <Content />
-    </div>
-  </article>
-  {(newer || older) && (
-    <nav class="post-nav" aria-label="More posts">
-      {older && <a class="prev" href={older.url}><small>← 上一篇</small>{older.data.title}</a>}
-      {newer && <a class="next" href={newer.url}><small>下一篇 →</small>{newer.data.title}</a>}
-    </nav>
+
+    <article>
+      <div class="prose">
+        <Content />
+      </div>
+    </article>
+    {(newer || older) && (
+      <nav class="post-nav" aria-label="More posts">
+        {older && <a class="prev" href={older.url}><small>← Older</small>{older.data.title}</a>}
+        {newer && <a class="next" href={newer.url}><small>Newer →</small>{newer.data.title}</a>}
+      </nav>
+    )}
+
+    {talk && (
+      <button slot="rail" type="button" class="talk-open" title="Comments" aria-label="Comments">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H9l-4.2 3.4c-.3.3-.8 0-.8-.4V5.5Z"/></svg>
+      </button>
+    )}
+  </Reader>
+
+  {talk && (
+    <dialog class="drawer talk" aria-label="Comments">
+      <header>
+        <span class="running">Comments</span>
+        <button type="button" class="drawer-close" aria-label="Close">×</button>
+      </header>
+      <div class="drawer-body">
+        <p class="loading">Loading comments…</p>
+        <Comments url={post.url} />
+      </div>
+    </dialog>
   )}
-  {post.data.comments && !post.draft && <Comments url={post.url} />}
 </Base>
+
+<script>
+  const talk = document.querySelector<HTMLDialogElement>('dialog.talk');
+  const host = talk?.querySelector<HTMLElement>('.comments');
+  if (talk && host) {
+    // utterances is loaded the first time the drawer opens, in the current colour scheme
+    // (Base.astro's toggle keeps it in step afterwards).
+    let mounted = false;
+    const mount = () => {
+      if (mounted) return;
+      mounted = true;
+      const s = document.createElement('script');
+      s.src = 'https://utteranc.es/client.js';
+      s.crossOrigin = 'anonymous';
+      s.async = true;
+      s.setAttribute('repo', host.dataset.repo!);
+      if (host.dataset.issueNumber) s.setAttribute('issue-number', host.dataset.issueNumber);
+      else s.setAttribute('issue-term', host.dataset.issueTerm!);
+      s.setAttribute('theme', document.documentElement.dataset.theme === 'light' ? 'github-light' : 'github-dark');
+      host.appendChild(s);
+    };
+    // Loaded ahead of time, once the page has settled, so the drawer isn't dark when it opens.
+    if ('requestIdleCallback' in window) requestIdleCallback(mount, { timeout: 3000 });
+    else setTimeout(mount, 1500);
+
+    // The comment box sits at the foot of the thread, so the drawer opens scrolled to it, and
+    // follows the frame as utterances resizes it, until the reader scrolls on their own. The
+    // "loading" line goes once the frame has a height.
+    const body = talk.querySelector<HTMLElement>('.drawer-body')!;
+    const loading = talk.querySelector<HTMLElement>('.loading')!;
+    let follow = false;
+    const toBox = () => body.scrollTo({ top: body.scrollHeight });
+    const settle = () => {
+      const frame = host.querySelector<HTMLIFrameElement>('iframe');
+      if (frame && frame.offsetHeight > 0) loading.hidden = true;
+      if (follow && talk.open) toBox();
+    };
+    new ResizeObserver(settle).observe(host);
+    for (const ev of ['wheel', 'touchmove', 'keydown'] as const) body.addEventListener(ev, () => { follow = false; }, { passive: true });
+    document.querySelector('.rail .talk-open')?.addEventListener('click', () => {
+      talk.showModal();
+      mount();
+      follow = true;
+      settle();
+      toBox();
+    });
+
+    // The comment count on the cover, from the issue (or, for a post without one yet, a search).
+    const count = document.querySelector<HTMLElement>('.comment-count');
+    (async () => {
+      try {
+        const repo = host.dataset.repo;
+        let n: number;
+        if (host.dataset.issueNumber) {
+          const r = await fetch(`https://api.github.com/repos/${repo}/issues/${host.dataset.issueNumber}`);
+          if (!r.ok) throw new Error(r.statusText);
+          n = (await r.json()).comments;
+        } else {
+          const q = encodeURIComponent(`repo:${repo} in:title "${host.dataset.issueTerm}"`);
+          const r = await fetch(`https://api.github.com/search/issues?q=${q}`);
+          if (!r.ok) throw new Error(r.statusText);
+          n = (await r.json()).items?.[0]?.comments ?? 0;
+        }
+        if (count) count.textContent = String(n);
+      } catch {
+        count?.parentElement?.remove();
+      }
+    })();
+  }
+</script>
+
+<style>
+  /* The cover: the same date and title as an entry on the index, with a line of figures beneath. */
+  .post-cover { width: min(100%, 760px); }
+  .post-cover time { display: block; font: 700 12px/1 "Lato", sans-serif; letter-spacing: 1.2px; color: var(--faint); margin-bottom: 18px; }
+  .post-cover h1 { margin: 0 0 22px; font: 600 26px/1.6 "Noto Serif SC", serif; color: var(--ink); }
+  .meta { margin: 0; font: 400 13px/1 "Lato", sans-serif; letter-spacing: 1px; color: var(--faint); display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 0; }
+  .meta > span + span::before { content: "·"; margin: 0 12px; }
+  .meta [data-stat], .comment-count { font-variant-numeric: tabular-nums; }
+
+  .talk { width: min(560px, 100%); }
+  .loading { margin: 0 0 16px; font: 400 13px/1.6 "Lato", sans-serif; letter-spacing: .5px; color: var(--faint); }
+  .talk :global(.utterances) { max-width: none; margin: 0; }
+
+  @media (max-width: 700px) {
+    .post-cover h1 { font-size: 22px; }
+  }
+</style>

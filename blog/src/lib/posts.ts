@@ -62,6 +62,13 @@ export function formatDate(date: Date) {
   return `${year}-${month}-${day}`;
 }
 
+// The date as the reader shows it: "13 SEP 2026".
+const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+export function stamp(date: Date) {
+  const { year, month, day } = beijingParts(date);
+  return `${Number(day)} ${MONTHS[Number(month) - 1]} ${year}`;
+}
+
 function excerptOf(body = '', desc?: string | null) {
   if (desc?.trim()) return desc.trim();
   const text = body

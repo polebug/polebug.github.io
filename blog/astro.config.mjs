@@ -11,7 +11,8 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkMedia],
     rehypePlugins: [rehypeMedia],
-    shikiConfig: { theme: 'vitesse-dark' },
+    // Both schemes are emitted as CSS variables; prose.css picks one by the <html> theme.
+    shikiConfig: { themes: { light: 'vitesse-light', dark: 'vitesse-dark' }, defaultColor: false },
   },
   integrations: [integration],
   devToolbar: { enabled: false },

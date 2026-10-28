@@ -1,16 +1,13 @@
-/* Long-form reading: the article body. */
-.post-header { margin-bottom: 44px; }
-.post-header h1 { font-size: 32px; line-height: 1.4; font-weight: 600; margin: 0 0 14px; color: var(--ink); letter-spacing: -.2px; }
-.post-header time { font-size: 13px; letter-spacing: 1px; color: var(--faint); }
-
-.prose { font-size: 17px; line-height: 1.95; color: var(--body); overflow-wrap: break-word; }
+/* Long-form reading: the article body, set like the index's entries, in the Reader's columns. */
+.prose { font-size: 16px; line-height: 1.85; color: var(--body); overflow-wrap: break-word; }
 .prose > :first-child { margin-top: 0; }
 .prose p, .prose ul, .prose ol, .prose blockquote, .prose table, .prose pre { margin: 0 0 1.35em; }
 .prose h1, .prose h2, .prose h3, .prose h4 { color: var(--ink); font-weight: 600; line-height: 1.45; margin: 2.1em 0 .8em; }
-.prose h1 { font-size: 26px; }
-.prose h2 { font-size: 23px; }
-.prose h3 { font-size: 19px; }
-.prose h4 { font-size: 17px; }
+.prose h1 { font-size: 21px; }
+.prose h2 { font-size: 20px; }
+.prose h3 { font-size: 18px; }
+.prose h4 { font-size: 16px; }
+.prose h1, .prose h2, .prose h3, .prose h4 { break-after: avoid; }
 .prose strong { color: var(--ink); font-weight: 600; }
 .prose a { color: var(--ink); border-bottom: 1px solid var(--accent-soft); padding-bottom: 2px; }
 .prose a:hover { color: var(--accent); }
@@ -20,25 +17,29 @@
 .prose blockquote { margin-left: 0; padding: .2em 0 .2em 1.1em; border-left: 2px solid var(--accent-soft); color: var(--muted); }
 .prose blockquote p { margin: .4em 0; }
 .prose hr { border: 0; height: 1px; background: var(--line); margin: 2.6em 0; }
-.prose img, .prose video { max-width: 100%; height: auto; border-radius: 6px; vertical-align: middle; }
+.prose img, .prose video { max-width: 100%; height: auto; border-radius: 6px; vertical-align: middle; break-inside: avoid; }
+/* In the pages, nothing taller than a column: pictures are capped and code wraps instead of scrolling. */
+.reader:not([data-mode="scroll"]) .prose img, .reader:not([data-mode="scroll"]) .prose video { max-height: calc(100dvh - 104px - 28px - 160px); width: auto; max-width: 100%; }
+.reader:not([data-mode="scroll"]) .prose pre { overflow: visible; white-space: pre-wrap; overflow-wrap: anywhere; }
+.reader:not([data-mode="scroll"]) .prose table { display: table; overflow: visible; }
 .prose video { background: #000; width: 100%; height: auto; }
 /* Images and videos standing on their own line (not inside a paragraph or a layout div) */
 .prose > img, .prose > video { display: block; margin: 1.6em auto; }
 .prose img[data-missing] { outline: 1px dashed var(--accent); min-height: 40px; }
 .prose code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .86em; background: var(--paper-2); border: 1px solid var(--line); border-radius: 4px; padding: .1em .35em; }
-.prose pre { background: var(--paper-2) !important; border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; overflow-x: auto; line-height: 1.6; font-size: 14px; }
+.prose pre { background: var(--paper-2) !important; border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; overflow-x: auto; line-height: 1.6; font-size: 13px; }
 .prose pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.prose pre, .prose pre span { color: var(--shiki-dark); }
+:root[data-theme="light"] .prose pre, :root[data-theme="light"] .prose pre span { color: var(--shiki-light); }
 .prose table { border-collapse: collapse; width: 100%; font-size: 15px; display: block; overflow-x: auto; }
 .prose th, .prose td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; }
 .prose th { color: var(--ink); background: var(--paper-2); font-weight: 600; }
 
-.post-nav { display: flex; justify-content: space-between; gap: 24px; margin: 64px 0 0; padding-top: 28px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+.post-nav { display: flex; justify-content: space-between; gap: 24px; margin: 48px 0 0; padding-top: 24px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); break-inside: avoid; }
 .post-nav a { display: block; max-width: 48%; }
 .post-nav small { display: block; font-size: 12px; color: var(--faint); letter-spacing: 1px; margin-bottom: 4px; }
 .post-nav .next { text-align: right; margin-left: auto; }
 
 @media (max-width: 700px) {
-  .post-header h1 { font-size: 25px; }
-  .prose { font-size: 16px; line-height: 1.9; }
-  .prose h2 { font-size: 20px; }
+  .reader:not([data-mode="scroll"]) .prose img, .reader:not([data-mode="scroll"]) .prose video { max-height: calc(100dvh - 82px - 20px - 130px); }
 }
