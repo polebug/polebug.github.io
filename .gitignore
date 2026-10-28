@@ -30,3 +30,7 @@ docs/
 .vscode/
 .DS_Store
 Thumbs.db
+
+# Visitor counter: local database and dev secrets
+stats/.wrangler/
+stats/.dev.vars

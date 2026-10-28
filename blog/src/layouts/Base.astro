@@ -47,7 +47,23 @@ const year = new Date().getFullYear();
   </main>
   <footer class="site-footer">
     <span>© 2024–{year} Polebug · 文章与照片采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener license">CC BY-NC-SA 4.0</a></span>
-    <span><a href="/atom.xml">RSS</a> · <a href="https://github.com/polebug/polebug.github.io" target="_blank" rel="noopener">Source</a></span>
+    <span><span data-stats hidden><span data-stat="site-visitors" data-unit="visitor"></span> · <span data-stat="site-views" data-unit="view"></span> · </span><a href="/atom.xml">RSS</a> · <a href="https://github.com/polebug/polebug.github.io" target="_blank" rel="noopener">Source</a></span>
   </footer>
+  <script>
+    // Count this view (stats/, the visitor counter) and fill in the figures: the site's in the
+    // footer, the page's on a post's cover. Without an answer they stay hidden.
+    const stats = location.hostname.endsWith('polebug.com') ? 'https://stats.polebug.com' : `http://${location.hostname}:8787`;
+    fetch(`${stats}/hit`, { method: 'POST', body: JSON.stringify({ site: 'blog', path: location.pathname }) })
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((n) => {
+        const figures: Record<string, number> = { views: n.views, visitors: n.visitors, 'site-views': n.site.views, 'site-visitors': n.site.visitors };
+        document.querySelectorAll<HTMLElement>('[data-stat]').forEach((el) => {
+          const k = figures[el.dataset.stat!];
+          el.textContent = `${k.toLocaleString('en')} ${el.dataset.unit}${k === 1 ? '' : 's'}`;
+        });
+        document.querySelectorAll<HTMLElement>('[data-stats]').forEach((el) => { el.hidden = false; });
+      })
+      .catch(() => {});
+  </script>
 </body>
 </html>

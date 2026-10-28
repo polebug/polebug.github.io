@@ -1,0 +1,19 @@
+# Visitor counter for polebug.com and blog.polebug.com (stats.polebug.com).
+# Local: started by `npm run dev` on http://localhost:8787 with a local database.
+# First deploy: `npx wrangler@4.152.0 d1 create polebug-stats`, put the id below,
+# `npx wrangler@4.152.0 d1 migrations apply polebug-stats --remote`,
+# `npx wrangler@4.152.0 secret put SALT`, then `npx wrangler@4.152.0 deploy`.
+name = "polebug-stats"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = false
+routes = [{ pattern = "stats.polebug.com", custom_domain = true }]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "polebug-stats"
+database_id = "c03b9937-052e-46c7-8978-99e5e3f31f13"
+
+# Daily: forget yesterday-but-one's visitor hashes; they are only kept to count a person once a day.
+[triggers]
+crons = ["17 3 * * *"]
