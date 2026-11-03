@@ -47,6 +47,8 @@ To publish:
 A post that references a file which was never uploaded fails the build, so nothing goes live half-broken.
 
 Upload needs R2 keys in `.env` (see `.env.example`).
+To publish a post's images unchanged, use `npm run upload -- --post <slug> --original-images`.
+This preserves the original image files, including their resolution and metadata; later uploads remember this choice for those images. Browser-compatible PNG, JPEG, WebP, GIF and AVIF files are supported.
 On a new computer without the original files, the preview falls back to the uploaded copies.
 
 ## Comments

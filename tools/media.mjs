@@ -1,7 +1,7 @@
 // Post media → R2.
 //   npm run media    process new or changed images/videos into blog/.media-cache and update blog/media.json
 //   npm run upload   the same, then upload what R2 is missing (and the untouched originals to the backup bucket)
-// Options: --post <slug> (only that post), --dry-run (report only)
+// Options: --post <slug> (only that post), --dry-run (report only), --original-images (keep image bytes)
 //
 // Images become WebP (long edge ≤ 2000px, EXIF and GPS stripped). Videos become H.264 MP4 with
 // faststart and a WebP poster, at the source resolution (up to 4K); quality="1080" or quality="720"
@@ -21,6 +21,8 @@ const args = process.argv.slice(2);
 const UPLOAD = args.includes('--upload');
 const DRY = args.includes('--dry-run');
 const ONLY = args.includes('--post') ? args[args.indexOf('--post') + 1] : null;
+const ORIGINAL_IMAGES = args.includes('--original-images');
+if (ORIGINAL_IMAGES && !ONLY) { console.error('--original-images requires --post <slug>.'); process.exit(1); }
 // Bump when the video settings change: videos are encoded again under new file names
 // (R2 copies are cached as immutable, so a changed file must not reuse an old name).
 const VIDEO_ENCODING = 'v2';
@@ -213,15 +215,29 @@ async function r2() {
   };
 }
 
-async function processFile(slug, file, local, hash, quality) {
+async function processFile(slug, file, local, hash, quality, originalImage = false) {
   const kind = mediaKind(file);
   const base = `${slug}/${safeStem(file)}-${hash.slice(0, 8)}`;
   process.stdout.write(`  ${kind} ${slug}/${file} … `);
   let entry;
   if (kind === 'image') {
-    const key = `${base}.webp`;
-    const r = await processImage(local, key);
-    entry = { kind, key, width: r.width, height: r.height, bytes: r.bytes, hash, original: file };
+    if (originalImage) {
+      const ext = path.extname(file).toLowerCase();
+      if (!['.png', '.jpg', '.jpeg', '.webp', '.gif', '.avif'].includes(ext)) {
+        throw new Error(`Original image format is not browser-compatible: ${file}`);
+      }
+      const key = `${base}.original${ext}`;
+      const out = path.join(CACHE, key);
+      fs.mkdirSync(path.dirname(out), { recursive: true });
+      fs.copyFileSync(local, out);
+      const r = await sharp(local, { animated: true }).metadata();
+      const dimensions = r.autoOrient || r;
+      entry = { kind, key, width: dimensions.width, height: r.pageHeight || dimensions.height, bytes: fs.statSync(local).size, hash, original: file, encoding: 'original' };
+    } else {
+      const key = `${base}.webp`;
+      const r = await processImage(local, key);
+      entry = { kind, key, width: r.width, height: r.height, bytes: r.bytes, hash, original: file };
+    }
   } else {
     const key = `${base}.${VIDEO_ENCODING}.mp4`;
     const poster = `${base}.${VIDEO_ENCODING}.poster.webp`;
@@ -258,17 +274,24 @@ for (const slug of slugs) {
     const id = `${slug}/${file}`;
     const local = path.join(dir, file);
     const entry = manifest[id];
+    // Once selected, keep originals on later uploads and when rebuilding a missing cache.
+    const originalImage = mediaKind(file) === 'image' && (ORIGINAL_IMAGES || entry?.encoding === 'original');
     if (!fs.existsSync(local)) {
+      if (originalImage && entry?.encoding !== 'original') {
+        problems.push(`${id}: original image requested but the local file is missing`);
+        continue;
+      }
       if (entry) { kept++; continue; } // uploaded earlier, original not on this computer
       problems.push(`${id}: referenced but the file is not in blog/posts/${slug}/`);
       continue;
     }
     const hash = sha256(local);
     const fresh = entry && entry.hash === hash && (entry.quality ?? null) === quality
+      && (!originalImage || entry.encoding === 'original')
       && (entry.kind !== 'video' || entry.encoding === VIDEO_ENCODING);
     if (!fresh) {
       if (DRY) { report.push(`  would process ${id}`); continue; }
-      manifest[id] = await processFile(slug, file, local, hash, quality);
+      manifest[id] = await processFile(slug, file, local, hash, quality, originalImage);
       processed++;
     } else if (entry.kind === 'video' && variantsDue(entry).length) {
       // Encoded before the smaller copies existed: add just those.
@@ -278,7 +301,7 @@ for (const slug of slugs) {
       console.log('done');
       processed++;
     }
-    queue(manifest[id], { slug, file, local, hash, quality });
+    queue(manifest[id], { slug, file, local, hash, quality, originalImage });
     originals.push({ key: `${slug}/${hash.slice(0, 8)}/${file}`, file: local });
   }
   const unused = fs.readdirSync(dir).filter((f) => f !== 'index.md' && f !== '.DS_Store' && !refs.has(f));
@@ -303,7 +326,7 @@ if (UPLOAD && !DRY) {
   for (const { key, source } of toUpload) {
     if (await store.exists(pub, key)) continue;
     const file = path.join(CACHE, key);
-    if (!fs.existsSync(file)) manifest[`${source.slug}/${source.file}`] = await processFile(source.slug, source.file, source.local, source.hash, source.quality);
+    if (!fs.existsSync(file)) manifest[`${source.slug}/${source.file}`] = await processFile(source.slug, source.file, source.local, source.hash, source.quality, source.originalImage);
     await store.put(pub, key, file, 'public, max-age=31536000, immutable');
     console.log(`  ↑ ${key}`);
     sent++;

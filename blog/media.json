@@ -835,6 +835,76 @@
       "1080": "plog_202604-08/wxv_4662221250646261766-9c374bcc.v2.1080p.mp4"
     }
   },
+  "plog_202607-202610/image-1.png": {
+    "kind": "image",
+    "key": "plog_202607-202610/image-1-f4e27f4d.original.png",
+    "width": 1094,
+    "height": 976,
+    "bytes": 222275,
+    "hash": "f4e27f4d0b44e89d699cf2743c17791bce0f0893bf400d15e7ca79c889d8a720",
+    "original": "image-1.png",
+    "encoding": "original"
+  },
+  "plog_202607-202610/image-2.png": {
+    "kind": "image",
+    "key": "plog_202607-202610/image-2-ce7150c4.original.png",
+    "width": 1080,
+    "height": 1280,
+    "bytes": 188702,
+    "hash": "ce7150c4ccef2672c0d3a989b05a2013eaa12b96760fa67431dfd151f899e1e0",
+    "original": "image-2.png",
+    "encoding": "original"
+  },
+  "plog_202607-202610/image-3.png": {
+    "kind": "image",
+    "key": "plog_202607-202610/image-3-341f856f.original.png",
+    "width": 3684,
+    "height": 2116,
+    "bytes": 3912943,
+    "hash": "341f856f0f7d28e6303d335a79f6ffacde8334ac0cb038cc7f26be72971239ae",
+    "original": "image-3.png",
+    "encoding": "original"
+  },
+  "plog_202607-202610/image-4.png": {
+    "kind": "image",
+    "key": "plog_202607-202610/image-4-5eb26df9.original.png",
+    "width": 1940,
+    "height": 1632,
+    "bytes": 3091894,
+    "hash": "5eb26df9643d9274f36fc7033bc90134244ec9cd0951be2eb9e17522896f1ce9",
+    "original": "image-4.png",
+    "encoding": "original"
+  },
+  "plog_202607-202610/image.png": {
+    "kind": "image",
+    "key": "plog_202607-202610/image-0cf4fa42.original.png",
+    "width": 1086,
+    "height": 946,
+    "bytes": 223509,
+    "hash": "0cf4fa42757adac7c63c451de01e23227624f69aec479613a9fbd4b9c8cec7f7",
+    "original": "image.png",
+    "encoding": "original"
+  },
+  "plog_202607-202610/Screenshot 2026-10-28 at 19.43.30.png": {
+    "kind": "image",
+    "key": "plog_202607-202610/Screenshot-2026-10-28-at-19.43.30-8a8c868d.original.png",
+    "width": 3518,
+    "height": 2412,
+    "bytes": 1654139,
+    "hash": "8a8c868d21da7e1a5a2ecb34c4bc96abc94a0543aa857c96d9af74c02b71c6c3",
+    "original": "Screenshot 2026-10-28 at 19.43.30.png",
+    "encoding": "original"
+  },
+  "plog_202607-202610/telegram-cloud-photo-size-5-6280502468055603092-y.jpg": {
+    "kind": "image",
+    "key": "plog_202607-202610/telegram-cloud-photo-size-5-6280502468055603092-y-44cd93bd.original.jpg",
+    "width": 1280,
+    "height": 720,
+    "bytes": 124905,
+    "hash": "44cd93bd39c746f1d5371bae775eb1268ac1fdfa83ad49ac95561df78be2c5ed",
+    "original": "telegram-cloud-photo-size-5-6280502468055603092-y.jpg",
+    "encoding": "original"
+  },
   "plog_3/DSCF4063.jpg": {
     "kind": "image",
     "key": "plog_3/DSCF4063-6acb5f27.webp",
