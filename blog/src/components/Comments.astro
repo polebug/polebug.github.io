@@ -5,7 +5,7 @@ import issues from '../../comments.json';
 
 // utterances: comments are GitHub issues in this repo, posted through the utterances GitHub App,
 // so readers grant no access to their own repositories. This is only the host element with the
-// issue's coordinates; the post page loads utterances into it when the comments drawer opens.
+// issue's coordinates; the post page preloads utterances into it while the article is being read.
 // Posts from the old sites reuse their Gitalk issue (labelled md5(pathname), see tools/comments-map.mjs);
 // other posts get an issue titled with their path on the first comment.
 const { url } = Astro.props as { url: string };
