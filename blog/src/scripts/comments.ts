@@ -11,6 +11,7 @@ function init(root: HTMLElement) {
   const api = root.dataset.api!, documentId = root.dataset.document!;
   const el = <T extends HTMLElement = HTMLElement>(s: string) => root.querySelector<T>(s)!;
   const form = el<HTMLFormElement>('.comment-form');
+  const composerHome = el('.composer-home');
   const input = form.elements.namedItem('body') as HTMLTextAreaElement;
   const name = form.elements.namedItem('name') as HTMLInputElement;
   const submit = el<HTMLButtonElement>('.submit-comment');
@@ -37,6 +38,19 @@ function init(root: HTMLElement) {
     // The drawer may be closed when data arrives; resize again when it opens.
     if(input.getClientRects().length){input.style.height='auto';input.style.height=`${Math.min(parseFloat(getComputedStyle(input).maxHeight),input.scrollHeight)}px`;}
   }
+  function placeComposer() {
+    const target = !el('.public-panel').hidden && parentId
+      ? Array.from(el('.comment-list').querySelectorAll<HTMLElement>('.comment-item')).find(node=>node.dataset.commentId===parentId)
+      : null;
+    if(target) target.insertBefore(form,target.querySelector(':scope > .comment-replies'));
+    else composerHome.append(form);
+    composerHome.hidden=!!target;
+    form.classList.toggle('inline-reply',!!target);
+  }
+  function focusComposer() {
+    input.focus({preventScroll:true});
+    form.scrollIntoView({block:'nearest'});
+  }
   function setReply(c:Pick<Comment,'id'|'author'|'body'>|null,save=true) {
     parentId=c?.id??null;requestId=crypto.randomUUID();
     el('.reply-to').hidden=!c;
@@ -44,7 +58,7 @@ function init(root: HTMLElement) {
     el('.reply-excerpt').textContent=c?.body.replace(/\s+/g,' ').slice(0,180)??'';
     input.placeholder=c?`回复 ${c.author.name}…`:'聊聊你的想法…';
     if(save)try{if(c)sessionStorage.setItem(replyDraftKey,JSON.stringify({id:c.id,author:c.author,body:c.body.slice(0,180)}));else sessionStorage.removeItem(replyDraftKey);}catch{}
-    feedback();updateComposer();
+    placeComposer();feedback();updateComposer();
   }
   // OAuth navigation or a refresh must not silently turn a reply draft into a new thread.
   try {
@@ -100,7 +114,7 @@ function init(root: HTMLElement) {
     if(c.parentId){const reply=document.createElement('p');reply.className='parent-label';reply.textContent=comments.has(c.parentId)?`回复 ${comments.get(c.parentId)!.author.name}`:'回复较早的评论';li.append(reply);}
     const content=document.createElement('p');content.className='comment-body';content.textContent=c.status==='deleted'&&!admin?'这条评论已删除。':c.body;li.append(content);
     const actions=document.createElement('div');actions.className='comment-actions';
-    if(!admin&&c.status==='published'&&writable)actions.append(action('回复',()=>{if(sending)return;setReply(c);input.focus({preventScroll:true});}));
+    if(!admin&&c.status==='published'&&writable)actions.append(action('回复',()=>{if(sending)return;setReply(c);focusComposer();}));
     if(!admin&&c.mine&&c.status!=='deleted')actions.append(action('删除',async()=>{await request(`/v1/comments/${c.id}`,{method:'DELETE'});await loadFeed();}));
     if(admin){
       if(c.status!=='published')actions.append(action('发布',async()=>{await moderate(c,'published');}));
@@ -134,7 +148,11 @@ function init(root: HTMLElement) {
       }
       fragment.append(thread);
     }
+    // Move the existing form out before replacing the list: preserve its draft,
+    // event handlers and verification widget through feed refreshes.
+    composerHome.append(form);
     el('.comment-list').replaceChildren(fragment);
+    placeComposer();
   }
   async function loadFeed(more=false) {
     el('.feed-retry').hidden=true;el<HTMLButtonElement>('.load-more').disabled=true;
@@ -187,10 +205,11 @@ function init(root: HTMLElement) {
       } catch { finish('','人机校验未能加载，请重新发送。'); }
     });
   }
-  el('.cancel-reply').addEventListener('click',()=>{if(sending)return;setReply(null);input.focus({preventScroll:true});});
+  el('.cancel-reply').addEventListener('click',()=>{if(sending)return;setReply(null);focusComposer();});
   form.addEventListener('submit',async event=>{
     event.preventDefault();if(sending||!writable||!input.value.trim())return;
     if(sessionLoaded&&!auth.user&&!name.value.trim()){feedback('先填一个昵称吧。','error');name.focus();return;}
+    const wasReply=!!parentId;
     sending=true;updateComposer();input.disabled=true;name.disabled=true;el<HTMLButtonElement>('.cancel-reply').disabled=true;feedback();
     try{
       await ensureSession();
@@ -203,14 +222,16 @@ function init(root: HTMLElement) {
       try{sessionStorage.removeItem(draftKey);}catch{}
       await loadFeed();
       feedback('✓ 已发布，谢谢你的分享。','success');
-      formStatus.focus({preventScroll:true});formStatus.scrollIntoView({block:'nearest'});
       const posted=Array.from(el('.comment-list').querySelectorAll<HTMLElement>('.comment-item')).find(node=>node.dataset.commentId===data.id);
       posted?.classList.add('just-posted');
+      if(wasReply&&posted){posted.tabIndex=-1;posted.focus({preventScroll:true});posted.scrollIntoView({block:'nearest'});}
+      else{formStatus.focus({preventScroll:true});formStatus.scrollIntoView({block:'nearest'});}
     }catch(e){feedback(errorText(e),'error');}
     finally{sending=false;input.disabled=false;name.disabled=false;el<HTMLButtonElement>('.cancel-reply').disabled=false;clearChallenge();updateComposer();if(!auth.user&&!name.value.trim())name.focus();}
   });
   function showPanel(admin:boolean) {
     el('.public-panel').hidden=admin;el('.admin-panel').hidden=!admin;
+    placeComposer();updateComposer();
     el('.show-admin').classList.toggle('selected',admin);el('.show-public').classList.toggle('selected',!admin);
     el('.show-admin').setAttribute('aria-pressed',String(admin));el('.show-public').setAttribute('aria-pressed',String(!admin));
   }

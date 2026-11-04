@@ -92,6 +92,12 @@ const api = import.meta.env.PUBLIC_COMMENTS_API || (import.meta.env.DEV ? `http:
   .native-comments :global(.comment-item.just-posted) { animation: comment-arrive 1.5s ease-out; }
   @keyframes comment-arrive { from { background: var(--paper-2); } to { background: transparent; } }
   .comment-form { margin: 0; }
+  .comment-form.inline-reply { margin: 12px 0 4px; scroll-margin-block: 12px; }
+  .inline-reply .reply-to { border: 0; padding-left: 0; margin-top: 10px; }
+  .inline-reply .reply-excerpt { display: none; }
+  .inline-reply .comment-label textarea { min-height: 88px; }
+  .inline-reply .identity-row { flex-wrap: wrap; }
+  .inline-reply .identity { max-width: 45%; }
   .composer-surface { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; transition: border-color .15s, box-shadow .15s; }
   .composer-surface:focus-within { border-color: var(--accent-soft); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 8%, transparent); }
   .identity-row { display: flex; align-items: center; gap: 8px; padding: 14px 16px 0; min-width: 0; }
@@ -132,11 +138,13 @@ const api = import.meta.env.PUBLIC_COMMENTS_API || (import.meta.env.DEV ? `http:
     .keyboard-hint { display: none; }
     .native-comments :global(.comment-replies) { margin-left: -28px; padding-left: 12px; }
     .composer-home { margin-bottom: 16px; }
+    .comment-form.inline-reply { margin-left: -32px; }
     .form-bottom .submit-comment { min-height: 40px; }
   }
   @media(max-height:600px) {
     .composer-home { margin-bottom: 10px; }
     .comment-label textarea { min-height: 64px; max-height: 64px; }
+    .inline-reply .comment-label textarea { min-height: 64px; }
     .identity-row { padding-top: 8px; }
     .reply-to { margin-top: 6px; }
     .reply-excerpt { display: none; }
