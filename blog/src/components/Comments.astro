@@ -5,6 +5,31 @@ const api = import.meta.env.PUBLIC_COMMENTS_API || (import.meta.env.DEV ? `http:
 ---
 <section class="comments native-comments" aria-label="文章评论" data-document={documentId} data-api={api}>
   {import.meta.env.DEV && import.meta.env.PUBLIC_COMMENTS_PREVIEW === 'true' && <p class="preview-note">本地交互预览 · 示例评论不会发布到线上</p>}
+  <div class="composer-home">
+    <form class="comment-form" novalidate>
+      <div class="composer-surface">
+        <div class="identity-row">
+          <span class="identity-avatar" aria-hidden="true">访</span>
+          <span class="identity">访客</span>
+          <label class="guest-name"><span class="sr-only">昵称</span><input name="name" maxlength="40" autocomplete="nickname" placeholder="你的昵称" /></label>
+          <button type="button" class="logout" hidden>退出登录</button>
+          <a class="github-login" href={`${api}/auth/github?document=${documentId}`} hidden>GitHub 登录 <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="reply-to" hidden>
+          <div class="reply-context"><span class="reply-name"></span><p class="reply-excerpt"></p></div>
+          <button type="button" class="cancel-reply" aria-label="取消回复" title="取消回复">×</button>
+        </div>
+        <label class="comment-label"><span class="sr-only">写下你的想法</span><textarea name="body" rows="3" maxlength="6000" required placeholder="聊聊你的想法…" aria-describedby="comment-hint comment-status"></textarea></label>
+        <div class="form-bottom">
+          <small id="comment-hint"><span class="keyboard-hint">⌘ / Ctrl + Enter 发送</span><span class="character-count" hidden></span></small>
+          <button type="submit" class="submit-comment" disabled><span class="submit-label">发送评论</span><svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16" fill="none"><path d="m5 10 5-5 5 5M10 5v11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+        </div>
+        <div class="human-check" hidden></div>
+      </div>
+      <p class="guest-notice">发送后直接公开 · 访客昵称未经认证</p>
+      <p id="comment-status" class="form-status" role="status" aria-live="polite" tabindex="-1"></p>
+    </form>
+  </div>
   <div class="comment-tabs">
     <button type="button" class="show-public selected" aria-pressed="true">评论 <span class="native-count"></span></button>
     <button type="button" class="show-admin" aria-pressed="false" hidden>管理评论</button>
@@ -14,31 +39,6 @@ const api = import.meta.env.PUBLIC_COMMENTS_API || (import.meta.env.DEV ? `http:
     <button type="button" class="feed-retry" hidden>重新加载</button>
     <ol class="comment-list"></ol>
     <button type="button" class="load-more" hidden>更多评论</button>
-    <div class="composer-home">
-      <form class="comment-form">
-        <div class="composer-surface">
-          <div class="identity-row">
-            <span class="identity-avatar" aria-hidden="true">访</span>
-            <span class="identity">访客</span>
-            <label class="guest-name"><span class="sr-only">昵称</span><input name="name" maxlength="40" autocomplete="nickname" placeholder="你的昵称" /></label>
-            <a class="github-login" href={`${api}/auth/github?document=${documentId}`} hidden>GitHub 登录 <span aria-hidden="true">↗</span></a>
-            <button type="button" class="logout" hidden>退出</button>
-          </div>
-          <div class="reply-to" hidden>
-            <div class="reply-context"><span class="reply-name"></span><p class="reply-excerpt"></p></div>
-            <button type="button" class="cancel-reply" aria-label="取消回复" title="取消回复">×</button>
-          </div>
-          <label class="comment-label"><span class="sr-only">写下你的想法</span><textarea name="body" rows="3" maxlength="6000" required placeholder="聊聊你的想法…" aria-describedby="comment-hint comment-status"></textarea></label>
-          <div class="form-bottom">
-            <small id="comment-hint"><span class="keyboard-hint">⌘ / Ctrl + Enter 发送</span><span class="character-count" hidden></span></small>
-            <button type="submit" class="submit-comment" disabled><span class="submit-label">发送评论</span><svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16" fill="none"><path d="m5 10 5-5 5 5M10 5v11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
-          </div>
-          <div class="human-check" hidden></div>
-        </div>
-        <p class="guest-notice">发送后直接公开 · 访客昵称未经认证</p>
-        <p id="comment-status" class="form-status" role="status" aria-live="polite" tabindex="-1"></p>
-      </form>
-    </div>
   </div>
   <div class="admin-panel" hidden>
     <label>查看 <select class="moderation-filter"><option value="published">已发布</option><option value="hidden">已隐藏</option><option value="deleted">已删除</option></select></label>
@@ -51,16 +51,18 @@ const api = import.meta.env.PUBLIC_COMMENTS_API || (import.meta.env.DEV ? `http:
   import '../scripts/comments';
 </script>
 <style>
-  .native-comments { font: 400 14px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; color: var(--body); }
+  .native-comments { height: 100%; min-height: 0; display: flex; flex-direction: column; overflow: hidden; font: 400 14px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; color: var(--body); }
   .native-comments :global([hidden]) { display: none !important; }
-  .preview-note { margin: 0 0 18px; color: var(--muted); font-size: 11px; }
+  .preview-note { flex: none; margin: 0 0 8px; color: var(--muted); font-size: 11px; }
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
   .native-comments :global(button), .native-comments :global(input), .native-comments :global(textarea), .native-comments :global(select) { font: inherit; }
   .native-comments :global(button) { cursor: pointer; background: transparent; color: var(--muted); border: 0; border-radius: 6px; padding: 6px 10px; transition: color .15s, background .15s; }
   .native-comments :global(button:hover:not(:disabled)), .github-login:hover { color: var(--ink); background: var(--paper-2); }
   .native-comments :global(button:focus-visible), .github-login:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .native-comments :global(button:disabled) { opacity: .4; cursor: default; }
-  .comment-tabs { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--line); }
+  .composer-home { flex: 0 0 auto; max-height: 60%; overflow-y: auto; padding: 2px; margin: 0 0 20px; scrollbar-width: thin; }
+  .public-panel, .admin-panel { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+  .comment-tabs { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--line); }
   .comment-tabs button { border-radius: 0; padding: 0 0 14px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
   .comment-tabs .show-public { font-size: 16px; font-weight: 600; }
   .comment-tabs .show-admin { font-size: 12px; }
@@ -85,20 +87,21 @@ const api = import.meta.env.PUBLIC_COMMENTS_API || (import.meta.env.DEV ? `http:
   .native-comments :global(.comment-source) { color: var(--faint); }
   .native-comments :global(.comment-item.just-posted) { animation: comment-arrive 1.5s ease-out; }
   @keyframes comment-arrive { from { background: var(--paper-2); } to { background: transparent; } }
-  .comment-form { margin-top: 24px; scroll-margin-block: 24px; }
-  .native-comments :global(.comment-item .comment-form) { margin-top: 14px; }
+  .comment-form { margin: 0; }
   .composer-surface { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; transition: border-color .15s, box-shadow .15s; }
   .composer-surface:focus-within { border-color: var(--accent-soft); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 8%, transparent); }
   .identity-row { display: flex; align-items: center; gap: 8px; padding: 14px 16px 0; min-width: 0; }
   .identity-avatar { width: 26px; height: 26px; font-size: 11px; }
-  .identity { color: var(--ink); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .github-login, .identity-row .logout { margin-left: auto; color: var(--muted); font-size: 11px; white-space: nowrap; padding: 4px 0 4px 6px; }
+  .identity { min-width: 0; color: var(--ink); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .github-login, .identity-row .logout { flex-shrink: 0; color: var(--muted); font-size: 11px; white-space: nowrap; padding: 4px 0 4px 6px; }
+  .github-login { margin-left: auto; }
+  .identity-row .logout:last-child, .identity-row .logout:has(+ .github-login[hidden]) { margin-left: auto; }
   .guest-name { min-width: 0; flex: 1; }
   .guest-name input { background: transparent; color: var(--ink); border: 0; border-bottom: 1px solid transparent; border-radius: 0; padding: 4px 0; width: 100%; font-size: 13px; }
   .guest-name input:focus { outline: none; border-bottom-color: var(--accent-soft); }
   .guest-name input::placeholder, .comment-label textarea::placeholder { color: var(--faint); opacity: 1; }
   .comment-label { display: block; }
-  .comment-label textarea { display: block; width: 100%; background: transparent; color: var(--ink); border: 0; border-radius: 0; padding: 14px 16px 8px; line-height: 1.8; resize: none; min-height: 112px; max-height: 280px; }
+  .comment-label textarea { display: block; width: 100%; background: transparent; color: var(--ink); border: 0; border-radius: 0; padding: 14px 16px 8px; line-height: 1.8; resize: none; min-height: 112px; max-height: clamp(80px, 20dvh, 200px); }
   .comment-label textarea:focus { outline: none; box-shadow: none; }
   .form-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 12px 12px 16px; }
   .form-bottom small { font-size: 11px; color: var(--faint); }
@@ -123,8 +126,17 @@ const api = import.meta.env.PUBLIC_COMMENTS_API || (import.meta.env.DEV ? `http:
   @media(max-width:700px) {
     .comment-label textarea, .guest-name input { font-size: 16px; }
     .keyboard-hint { display: none; }
-    .native-comments :global(.comment-item .comment-form) { margin-left: -44px; }
+    .composer-home { margin-bottom: 16px; }
     .form-bottom .submit-comment { min-height: 40px; }
+  }
+  @media(max-height:600px) {
+    .composer-home { margin-bottom: 10px; }
+    .comment-label textarea { min-height: 64px; max-height: 64px; }
+    .identity-row { padding-top: 8px; }
+    .reply-to { margin-top: 6px; }
+    .reply-excerpt { display: none; }
+    .form-bottom { padding-top: 4px; padding-bottom: 8px; }
+    .comment-tabs button { padding-bottom: 8px; }
   }
   @media(prefers-reduced-motion:reduce) { .native-comments :global(*) { animation: none !important; transition: none !important; } }
 </style>

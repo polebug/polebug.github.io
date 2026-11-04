@@ -89,7 +89,8 @@ const talk = post.data.comments && !post.draft;
   .meta > span + span::before { content: "·"; margin: 0 12px; }
   .meta [data-stat], .comment-count { font-variant-numeric: tabular-nums; }
 
-  .talk { width: min(560px, 100%); }
+  .talk { width: min(560px, 100%); overflow: hidden; }
+  .talk .drawer-body { overflow: hidden; padding-bottom: max(16px, env(safe-area-inset-bottom)); }
 
   @media (max-width: 700px) {
     .post-cover h1 { font-size: 22px; overflow-wrap: anywhere; }

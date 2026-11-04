@@ -15,7 +15,6 @@ function init(root: HTMLElement) {
   const name = form.elements.namedItem('name') as HTMLInputElement;
   const submit = el<HTMLButtonElement>('.submit-comment');
   const formStatus = el('.form-status'), feedStatus = el('.feed-status');
-  const composerHome = el('.composer-home');
   let auth: Session = {user:null,csrf:null,githubEnabled:false,turnstileSiteKey:null,verificationRequired:true,humanVerifiedUntil:0};
   let nextCursor: string | null = null, adminCursor: string | null = null, parentId: string | null = null;
   let widget: string | undefined, challengeLoad: Promise<void> | null = null;
@@ -36,7 +35,7 @@ function init(root: HTMLElement) {
     count.textContent=`${input.value.length} / 6000`;
     el('.keyboard-hint').hidden=!count.hidden;
     // The drawer may be closed when data arrives; resize again when it opens.
-    if(input.getClientRects().length){input.style.height='auto';input.style.height=`${Math.min(280,input.scrollHeight)}px`;}
+    if(input.getClientRects().length){input.style.height='auto';input.style.height=`${Math.min(parseFloat(getComputedStyle(input).maxHeight),input.scrollHeight)}px`;}
   }
   function setReply(c:Pick<Comment,'id'|'author'|'body'>|null,save=true) {
     parentId=c?.id??null;requestId=crypto.randomUUID();
@@ -44,8 +43,6 @@ function init(root: HTMLElement) {
     el('.reply-name').textContent=c?`回复 ${c.author.name}`:'';
     el('.reply-excerpt').textContent=c?.body.replace(/\s+/g,' ').slice(0,180)??'';
     input.placeholder=c?`回复 ${c.author.name}…`:'聊聊你的想法…';
-    const target=c?Array.from(el('.comment-list').children).find(node=>(node as HTMLElement).dataset.commentId===c.id):null;
-    (target??composerHome).append(form);
     if(save)try{if(c)sessionStorage.setItem(replyDraftKey,JSON.stringify({id:c.id,author:c.author,body:c.body.slice(0,180)}));else sessionStorage.removeItem(replyDraftKey);}catch{}
     feedback();updateComposer();
   }
@@ -76,6 +73,7 @@ function init(root: HTMLElement) {
     el('.identity-avatar').textContent=Array.from(auth.user?.name||'访')[0].toUpperCase();
     el('.github-login').hidden=!auth.githubEnabled || auth.user?.kind==='github';
     el('.logout').hidden=!auth.user;
+    el('.logout').textContent=auth.user?.kind==='guest'?'换个昵称':'退出登录';
     el('.guest-name').hidden=!!auth.user;
     el('.guest-notice').hidden=auth.user?.kind==='github';
     if(!auth.verificationRequired)clearChallenge();
@@ -102,7 +100,7 @@ function init(root: HTMLElement) {
     if(c.parentId){const reply=document.createElement('p');reply.className='parent-label';reply.textContent=comments.has(c.parentId)?`回复 ${comments.get(c.parentId)!.author.name}`:'回复较早的评论';li.append(reply);}
     const content=document.createElement('p');content.className='comment-body';content.textContent=c.status==='deleted'&&!admin?'这条评论已删除。':c.body;li.append(content);
     const actions=document.createElement('div');actions.className='comment-actions';
-    if(!admin&&c.status==='published'&&writable)actions.append(action('回复',()=>{if(sending)return;setReply(c);input.focus({preventScroll:true});form.scrollIntoView({block:'nearest'});}));
+    if(!admin&&c.status==='published'&&writable)actions.append(action('回复',()=>{if(sending)return;setReply(c);input.focus({preventScroll:true});}));
     if(!admin&&c.mine&&c.status!=='deleted')actions.append(action('删除',async()=>{await request(`/v1/comments/${c.id}`,{method:'DELETE'});await loadFeed();}));
     if(admin){
       if(c.status!=='published')actions.append(action('发布',async()=>{await moderate(c,'published');}));
@@ -117,10 +115,9 @@ function init(root: HTMLElement) {
     try {
       const data=await request<Feed>(`/v1/comments?document=${encodeURIComponent(documentId)}${more&&nextCursor?`&cursor=${encodeURIComponent(nextCursor)}`:''}`);
       writable=data.writable;updateComposer();
-      if(!more){composerHome.append(form);el('.comment-list').replaceChildren();comments.clear();}
+      if(!more){el('.comment-list').replaceChildren();comments.clear();}
       for(const c of data.comments)comments.set(c.id,c);
       for(const c of data.comments)el('.comment-list').append(render(c));
-      if(parentId){const target=Array.from(el('.comment-list').children).find(node=>(node as HTMLElement).dataset.commentId===parentId);target?.append(form);}
       nextCursor=data.nextCursor;el('.load-more').hidden=!nextCursor;
       el('.native-count').textContent=String(data.total);
       document.querySelectorAll('.comment-count').forEach(node=>node.textContent=String(data.total));
@@ -162,7 +159,7 @@ function init(root: HTMLElement) {
       } catch { finish('','人机校验未能加载，请重新发送。'); }
     });
   }
-  el('.cancel-reply').addEventListener('click',()=>{if(sending)return;setReply(null);input.focus({preventScroll:true});form.scrollIntoView({block:'nearest'});});
+  el('.cancel-reply').addEventListener('click',()=>{if(sending)return;setReply(null);input.focus({preventScroll:true});});
   form.addEventListener('submit',async event=>{
     event.preventDefault();if(sending||!writable||!input.value.trim())return;
     if(sessionLoaded&&!auth.user&&!name.value.trim()){feedback('先填一个昵称吧。','error');name.focus();return;}
@@ -189,7 +186,7 @@ function init(root: HTMLElement) {
     el('.show-admin').classList.toggle('selected',admin);el('.show-public').classList.toggle('selected',!admin);
     el('.show-admin').setAttribute('aria-pressed',String(admin));el('.show-public').setAttribute('aria-pressed',String(!admin));
   }
-  el('.logout').addEventListener('click',async()=>{if(sending)return;try{await request('/v1/logout',{method:'POST'});auth.user=null;auth.csrf=null;auth.verificationRequired=true;auth.humanVerifiedUntil=0;clearChallenge();showSession();feedback();el('.admin-list').replaceChildren();showPanel(false);await loadFeed();}catch(e){feedback(errorText(e),'error');}});
+  el('.logout').addEventListener('click',async()=>{if(sending)return;const guestName=auth.user?.kind==='guest'?auth.user.name:null;try{await request('/v1/logout',{method:'POST'});auth.user=null;auth.csrf=null;auth.verificationRequired=true;auth.humanVerifiedUntil=0;clearChallenge();showSession();feedback();el('.admin-list').replaceChildren();showPanel(false);if(guestName!==null){name.value=guestName;name.focus({preventScroll:true});name.select();}await loadFeed();}catch(e){feedback(errorText(e),'error');}});
   el('.feed-retry').addEventListener('click',()=>{loadFeed();if(!sessionLoaded)loadSession().catch(e=>{formStatus.textContent=errorText(e);});});
   el('.load-more').addEventListener('click',()=>{loadFeed(true);});
   async function loadAdmin(more=false){
