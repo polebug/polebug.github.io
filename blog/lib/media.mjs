@@ -112,7 +112,7 @@ export function createMediaPlugins({ dev, base = process.env.MEDIA_BASE_URL || D
       }
       if (fs.existsSync(local)) {
         const group = post.draft ? 'drafts' : 'posts';
-        return { src: `${LOCAL_PREFIX}${group}/${encodeURIComponent(post.slug)}/${encodeURIComponent(file)}` };
+        return { src: `${LOCAL_PREFIX}${group}/${encodeURIComponent(post.slug)}/${encodeURIComponent(file)}`, width: done?.width, height: done?.height };
       }
     }
     const entry = manifest[`${post.slug}/${file}`];
@@ -136,7 +136,14 @@ export function createMediaPlugins({ dev, base = process.env.MEDIA_BASE_URL || D
       if (!post) return;
       visit(tree, 'image', (node) => {
         const file = postRelativeFile(node.url);
-        if (file && mediaKind(file)) node.url = resolve(post, node.url, file).src;
+        if (file && mediaKind(file)) {
+          const r = resolve(post, node.url, file);
+          node.url = r.src;
+          if (r.width && r.height) {
+            node.data ??= {};
+            node.data.hProperties = { ...node.data.hProperties, width: r.width, height: r.height, loading: 'lazy', decoding: 'async' };
+          }
+        }
       });
     };
   }

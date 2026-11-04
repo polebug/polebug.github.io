@@ -105,6 +105,7 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   const where = reader.querySelector<HTMLElement>('.reader-foot .where')!;
   const prev = reader.querySelector<HTMLButtonElement>('.reader-foot .prev')!;
   const next = reader.querySelector<HTMLButtonElement>('.reader-foot .next')!;
+  const pendingImages = new Set(flow.querySelectorAll<HTMLImageElement>('img[loading="lazy"]'));
   const entries = [...flow.querySelectorAll<HTMLElement>('.entry')];
   // The blocks the reader keeps its place by: the index's entries, or a post's header and paragraphs.
   const marks = entries.length ? entries : [...flow.querySelectorAll<HTMLElement>('.cover, .prose > *, .post-nav')];
@@ -112,6 +113,29 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   const toc = document.querySelector<HTMLDialogElement>('dialog.toc')!;
   let current = 0;
   let count = 1;
+  let fontsReady = false;
+  // Use real dimensions from the media manifest, not whether an image has downloaded yet.
+  // Save author styles so scroll mode (including mobile) keeps its original sizing.
+  const sizedMedia = [...flow.querySelectorAll<HTMLImageElement | HTMLVideoElement>('img[width][height], video[width][height]')]
+    .map(element => ({ element, width: Number(element.getAttribute('width')), height: Number(element.getAttribute('height')), styleWidth: element.style.width, styleHeight: element.style.height }))
+    .filter(item => item.width > 0 && item.height > 0);
+  const sizePageMedia = () => {
+    const columnWidth = (flow.clientWidth - parseFloat(getComputedStyle(flow).columnGap)) / 2;
+    for (const item of sizedMedia) {
+      const { element, width, height } = item;
+      if (!paged()) {
+        element.style.width = item.styleWidth;
+        element.style.height = item.styleHeight;
+        continue;
+      }
+      const ratio = width / height;
+      const maxHeight = Math.min(flow.clientHeight, parseFloat(getComputedStyle(element).maxHeight) || Infinity);
+      element.style.width = `${Math.min(width, columnWidth, maxHeight * ratio)}px`;
+      // Let the original max-width and the containing block constrain the width first.
+      // Explicit pixel height then stays identical before and after decoding the image.
+      element.style.height = `${element.getBoundingClientRect().width / ratio}px`;
+    }
+  };
 
   // Keep this breakpoint in sync with the mobile layout below. Phones use document scrolling;
   // a desktop reading preference must never put them back into the paginated container.
@@ -121,12 +145,28 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   const step = () => flow.clientWidth + parseFloat(getComputedStyle(flow).columnGap);
   // The left edge of the window (the pages box, inside its padding).
   const edge = () => pages.getBoundingClientRect().left + parseFloat(getComputedStyle(pages).paddingLeft);
+  const loadPageImages = () => {
+    if (!paged() || !pendingImages.size) return;
+    // Native lazy loading can miss images in off-screen CSS columns moved by a transform.
+    // Use flow-relative positions so even a rapid click mid-transition loads the destination
+    // spread and the next one. Keep distant images lazy, especially in photo-heavy posts.
+    const origin = flow.getBoundingClientRect().left;
+    const from = current * step();
+    const until = from + 2 * step();
+    for (const img of pendingImages) {
+      if ([...img.getClientRects()].some((box) => box.right - origin > from && box.left - origin < until)) {
+        img.loading = 'eager';
+        pendingImages.delete(img);
+      }
+    }
+  };
   const show = (n: number) => {
     current = Math.max(0, Math.min(n, count - 1));
     flow.style.setProperty('--p', String(current));
-    where.textContent = `${current + 1} / ${count}`;
+    where.textContent = fontsReady ? `${current + 1} / ${count}` : '排版中…';
     prev.disabled = current === 0;
     next.disabled = current >= count - 1;
+    loadPageImages();
   };
   // Where a block sits along the flow, in windows. (Measured with the flow slid back to the start
   // and its transition off, since a rect taken mid-slide would be partway along.)
@@ -136,6 +176,7 @@ const { posts, headings, start = 0, label, back } = Astro.props;
     if (!paged()) return;
     flow.style.transition = 'none';
     flow.style.setProperty('--p', '0');
+    sizePageMedia();
     count = Math.max(1, Math.round((flow.scrollWidth + step() - flow.clientWidth) / step()));
     show(keep ? windowOf(keep) : current);
     void flow.offsetWidth;
@@ -175,6 +216,7 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   };
   const setMode = (mode: 'page' | 'scroll', keep: HTMLElement | null) => {
     reader.dataset.mode = mobile.matches ? 'scroll' : mode;
+    if (!paged()) sizePageMedia();
     const toScroll = paged();
     modeButton.title = modeButton.ariaLabel = toScroll ? 'Switch to scrolling' : 'Switch to pages';
     pages.scrollTop = 0;
@@ -195,15 +237,16 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   const start = Number(reader.dataset.start) || 0;
   setMode(mode, returnedTo ?? (start > 0 ? marks[start] : null) ?? null);
   if (returnedTo) goTo(returnedTo, true);
-  document.fonts?.ready.then(() => layout(onScreen()));
+  document.fonts.ready.then(() => { fontsReady = true; layout(onScreen()); });
   addEventListener('resize', () => {
     const keep = onScreen();
     const expected = mobile.matches ? 'scroll' : mode;
     if (reader.dataset.mode !== expected) setMode(mode, keep);
     else layout(keep);
   });
-  // Images settling into their sizes change the pagination; keep the place.
-  for (const img of flow.querySelectorAll('img')) img.addEventListener('load', () => layout(onScreen()), { once: true });
+  // Only unmeasured external images need another layout. Known media already has its final box.
+  const measured = new Set(sizedMedia.map(item => item.element));
+  for (const img of flow.querySelectorAll('img')) if (!measured.has(img)) img.addEventListener('load', () => layout(onScreen()), { once: true });
 
   // A video plays only while it's in view: paging (or scrolling) it out of the window pauses it,
   // and starting one pauses any other, so two never play over each other.
