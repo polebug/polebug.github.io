@@ -85,6 +85,10 @@ const api = import.meta.env.PUBLIC_COMMENTS_API || (import.meta.env.DEV ? `http:
   .native-comments :global(.comment-actions button) { padding: 5px 0; min-height: 32px; }
   .native-comments :global(.comment-actions button:hover:not(:disabled)) { color: var(--accent); background: transparent; }
   .native-comments :global(.comment-source) { color: var(--faint); }
+  .native-comments :global(.comment-replies) { list-style: none; margin: 14px 0 0; padding: 0 0 0 14px; border-left: 1px solid var(--accent-soft); }
+  .native-comments :global(.comment-replies > .comment-item) { padding: 16px 0 4px 32px; border-bottom: 0; }
+  .native-comments :global(.comment-replies > .comment-item + .comment-item) { margin-top: 12px; border-top: 1px solid var(--line); }
+  .native-comments :global(.comment-replies .comment-avatar) { width: 24px; height: 24px; top: 16px; font-size: 11px; }
   .native-comments :global(.comment-item.just-posted) { animation: comment-arrive 1.5s ease-out; }
   @keyframes comment-arrive { from { background: var(--paper-2); } to { background: transparent; } }
   .comment-form { margin: 0; }
@@ -126,6 +130,7 @@ const api = import.meta.env.PUBLIC_COMMENTS_API || (import.meta.env.DEV ? `http:
   @media(max-width:700px) {
     .comment-label textarea, .guest-name input { font-size: 16px; }
     .keyboard-hint { display: none; }
+    .native-comments :global(.comment-replies) { margin-left: -28px; padding-left: 12px; }
     .composer-home { margin-bottom: 16px; }
     .form-bottom .submit-comment { min-height: 40px; }
   }

@@ -110,14 +110,42 @@ function init(root: HTMLElement) {
     if(c.sourceUrl?.startsWith('https://github.com/polebug/polebug.github.io/issues/')){const a=document.createElement('a');a.className='comment-source';a.textContent='原评论';a.href=c.sourceUrl;a.target='_blank';a.rel='noopener noreferrer';actions.append(a);}
     li.append(actions);return li;
   }
+  function renderThreads() {
+    // Keep every conversation together, with one indentation level even for replies to replies.
+    const threads=new Map<string,{root:Comment;replies:Comment[]}>();
+    for(const c of comments.values()) {
+      let first=c;
+      const seen=new Set([c.id]);
+      while(first.parentId&&comments.has(first.parentId)) {
+        if(seen.has(first.parentId)){first=c;break;}
+        seen.add(first.parentId);first=comments.get(first.parentId)!;
+      }
+      if(!threads.has(first.id))threads.set(first.id,{root:first,replies:[]});
+      if(c.id!==first.id)threads.get(first.id)!.replies.push(c);
+    }
+    const fragment=document.createDocumentFragment();
+    for(const {root:parent,replies} of threads.values()) {
+      const thread=render(parent);
+      if(replies.length) {
+        const list=document.createElement('ol');list.className='comment-replies';
+        list.setAttribute('aria-label',`回复 ${parent.author.name} 的讨论`);
+        for(const reply of replies)list.append(render(reply));
+        thread.append(list);
+      }
+      fragment.append(thread);
+    }
+    el('.comment-list').replaceChildren(fragment);
+  }
   async function loadFeed(more=false) {
     el('.feed-retry').hidden=true;el<HTMLButtonElement>('.load-more').disabled=true;
     try {
       const data=await request<Feed>(`/v1/comments?document=${encodeURIComponent(documentId)}${more&&nextCursor?`&cursor=${encodeURIComponent(nextCursor)}`:''}`);
       writable=data.writable;updateComposer();
-      if(!more){el('.comment-list').replaceChildren();comments.clear();}
+      if(!more)comments.clear();
       for(const c of data.comments)comments.set(c.id,c);
-      for(const c of data.comments)el('.comment-list').append(render(c));
+      const scrollTop=el('.public-panel').scrollTop;
+      renderThreads();
+      el('.public-panel').scrollTop=scrollTop;
       nextCursor=data.nextCursor;el('.load-more').hidden=!nextCursor;
       el('.native-count').textContent=String(data.total);
       document.querySelectorAll('.comment-count').forEach(node=>node.textContent=String(data.total));
@@ -176,7 +204,7 @@ function init(root: HTMLElement) {
       await loadFeed();
       feedback('✓ 已发布，谢谢你的分享。','success');
       formStatus.focus({preventScroll:true});formStatus.scrollIntoView({block:'nearest'});
-      const posted=Array.from(el('.comment-list').children).find(node=>(node as HTMLElement).dataset.commentId===data.id);
+      const posted=Array.from(el('.comment-list').querySelectorAll<HTMLElement>('.comment-item')).find(node=>node.dataset.commentId===data.id);
       posted?.classList.add('just-posted');
     }catch(e){feedback(errorText(e),'error');}
     finally{sending=false;input.disabled=false;name.disabled=false;el<HTMLButtonElement>('.cancel-reply').disabled=false;clearChallenge();updateComposer();if(!auth.user&&!name.value.trim())name.focus();}

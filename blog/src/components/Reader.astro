@@ -113,7 +113,7 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   const toc = document.querySelector<HTMLDialogElement>('dialog.toc')!;
   let current = 0;
   let count = 1;
-  let fontsReady = false;
+  let paginationReady = false;
   // Use real dimensions from the media manifest, not whether an image has downloaded yet.
   // Save author styles so scroll mode (including mobile) keeps its original sizing.
   const sizedMedia = [...flow.querySelectorAll<HTMLImageElement | HTMLVideoElement>('img[width][height], video[width][height]')]
@@ -163,7 +163,7 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   const show = (n: number) => {
     current = Math.max(0, Math.min(n, count - 1));
     flow.style.setProperty('--p', String(current));
-    where.textContent = fontsReady ? `${current + 1} / ${count}` : '排版中…';
+    where.textContent = paginationReady ? `${current + 1} / ${count}` : '排版中…';
     prev.disabled = current === 0;
     next.disabled = current >= count - 1;
     loadPageImages();
@@ -237,7 +237,14 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   const start = Number(reader.dataset.start) || 0;
   setMode(mode, returnedTo ?? (start > 0 ? marks[start] : null) ?? null);
   if (returnedTo) goTo(returnedTo, true);
-  document.fonts.ready.then(() => { fontsReady = true; layout(onScreen()); });
+  // Fonts can remain pending on a slow connection. Briefly allow the initial font swap,
+  // then expose the already measured fallback layout instead of hiding page numbers forever.
+  const fontWait = setTimeout(() => { paginationReady = true; show(current); }, 1500);
+  document.fonts.ready.then(() => {
+    clearTimeout(fontWait);
+    paginationReady = true;
+    layout(onScreen());
+  });
   addEventListener('resize', () => {
     const keep = onScreen();
     const expected = mobile.matches ? 'scroll' : mode;
