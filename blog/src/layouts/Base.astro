@@ -1,15 +1,11 @@
 ---
-import '@fontsource/lato/400.css';
-import '@fontsource/lato/700.css';
-import '@fontsource/noto-serif-sc/400.css';
-import '@fontsource/noto-serif-sc/600.css';
+import 'virtual:blog-fonts.css';
+import subsetManifest from 'virtual:blog-font-subsets';
 import '../styles/global.css';
-// Lato and Noto Serif SC's Latin letters (titles, summaries) are preloaded so they are usually ready
-// for the first paint: no swap from the fallback, no re-wrapping titles.
-import lato400 from '@fontsource/lato/files/lato-latin-400-normal.woff2?url';
-import serifLatin400 from '@fontsource/noto-serif-sc/files/noto-serif-sc-latin-400-normal.woff2?url';
-import serifLatin600 from '@fontsource/noto-serif-sc/files/noto-serif-sc-latin-600-normal.woff2?url';
 import { SITE } from '../site';
+import { FONT_ORIGIN, getFontBundle, getPageFontStyles } from '../../lib/fonts.mjs';
+const { preloads: fontPreloads } = getFontBundle();
+const subsetStyles = getPageFontStyles(Astro.url.pathname, { dev: import.meta.env.DEV, published: subsetManifest });
 
 interface Props {
   title?: string;
@@ -32,9 +28,9 @@ const year = new Date().getFullYear();
   <meta name="description" content={description}>
   <meta property="og:title" content={title ?? 'Polebug · Blog'}>
   <meta property="og:description" content={description}>
-  <link rel="preload" as="font" type="font/woff2" href={lato400} crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href={serifLatin400} crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href={serifLatin600} crossorigin>
+  <link rel="preconnect" href={FONT_ORIGIN} crossorigin />
+  {fontPreloads.map(href => <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />)}
+  <Fragment set:html={subsetStyles ? `<style data-font-subsets>${subsetStyles}</style>` : ''} />
   <link rel="icon" href="/avatar.png">
   <link rel="alternate" type="application/atom+xml" title={SITE.title} href="/atom.xml">
   <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)}>

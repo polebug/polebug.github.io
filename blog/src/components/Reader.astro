@@ -380,7 +380,7 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   .running .back { display: inline-grid; place-items: center; width: 28px; height: 28px; margin: -8px 10px -8px -2px; vertical-align: middle; border: 1px solid var(--line); border-radius: 50%; color: var(--muted); }
   .running .back:hover { color: var(--accent); border-color: var(--accent); }
   .running .back svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .motto-sm { font: 400 12px/1 "Noto Serif SC", serif; letter-spacing: 2px; color: var(--faint); }
+  .motto-sm { font: 400 12px/1 var(--serif); letter-spacing: 2px; color: var(--faint); }
 
   /* The flow is set in columns the height of the window, running off to the right; a window shows
      two of them, and --p slides the flow one window (two columns and a gap) at a time. The box
@@ -420,7 +420,7 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   .toc li > :hover { color: var(--accent); background: var(--paper-2); }
   .toc li > [aria-current] { color: var(--ink); background: var(--paper-2); box-shadow: 3px 0 0 var(--accent) inset; }
   .toc li time { display: block; font: 700 11px/1 "Lato", sans-serif; letter-spacing: 1.2px; color: var(--faint); margin-bottom: 5px; }
-  .toc li span { display: block; font: 400 15px/1.5 "Noto Serif SC", serif; }
+  .toc li span { display: block; font: 400 15px/1.5 var(--serif); }
   .toc li.depth-2 > button { padding-left: 44px; }
   .toc li.depth-3 > button { padding-left: 60px; }
   .toc li.depth-3 span, .toc li.depth-4 span { font-size: 14px; color: var(--muted); }

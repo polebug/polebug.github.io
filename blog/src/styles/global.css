@@ -45,6 +45,8 @@ body {
   font-synthesis: none;
   -webkit-font-smoothing: antialiased;
 }
+/* Keep one Chinese font download while allowing headings to render bold. */
+h1, h2, h3, h4, h5, h6 { font-synthesis: weight; }
 a { color: inherit; text-decoration: none; }
 a:hover { color: var(--accent); }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
@@ -67,8 +69,8 @@ main { flex: 1; width: var(--measure); max-width: calc(100% - 48px); margin: 40p
 /* As wide as the header (the journal on the blog index) */
 main.wide { width: 1440px; max-width: calc(100% - 96px); margin-top: 0; padding-bottom: 48px; }
 
-.page-title { font: 400 42px/1.2 "Lato", "Noto Serif SC", sans-serif; letter-spacing: -.6px; margin: 0 0 12px; }
-.motto { font-family: "Noto Serif SC", serif; font-weight: 400; font-size: 13px; letter-spacing: 2px; color: var(--muted); margin: 0 0 56px; }
+.page-title { font: 700 42px/1.2 var(--serif); letter-spacing: -.6px; margin: 0 0 12px; }
+.motto { font-family: var(--serif); font-weight: 400; font-size: 13px; letter-spacing: 2px; color: var(--muted); margin: 0 0 56px; }
 
 .draft-badge { display: inline-block; vertical-align: 3px; margin-left: 10px; padding: 0 8px; font-size: 12px; line-height: 20px; font-weight: 400; border: 1px solid var(--accent); color: var(--accent); border-radius: 10px; }
 
@@ -85,7 +87,7 @@ main.wide { width: 1440px; max-width: calc(100% - 96px); margin-top: 0; padding-
 .drawer-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line) transparent; padding: 20px 28px 32px; }
 
 /* Archive */
-.archive-year { font: 400 26px/1.2 "Lato", sans-serif; color: var(--ink); margin: 48px 0 18px; }
+.archive-year { font: 700 26px/1.2 "Lato", sans-serif; color: var(--ink); margin: 48px 0 18px; }
 .archive-year:first-of-type { margin-top: 0; }
 .archive-list { list-style: none; margin: 0; padding: 0; }
 .archive-list li { display: flex; gap: 24px; padding: 10px 0; align-items: baseline; }

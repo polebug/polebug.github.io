@@ -53,6 +53,50 @@ To publish a post's images unchanged, use `npm run upload -- --post <slug> --ori
 This preserves the original image files, including their resolution and metadata; later uploads remember this choice for those images. Browser-compatible PNG, JPEG, WebP, GIF and AVIF files are supported.
 On a new computer without the original files, the preview falls back to the uploaded copies.
 
+## Blog fonts
+
+Article cover titles and body copy share the same font family and regular weight.
+Content headings use browser-synthesized bold; Latin text uses Lato 400/700.
+The Chinese font uses a stable shared set of common characters and runtime UI labels plus a supplement
+for each rendered public page. `blog/font-common.txt` keeps the shared set stable
+when posts change. The original Fontsource shards remain as a fallback for newly
+added characters, new routes, and drafts; a stale subset never hides new text.
+
+`blog/lib/fonts.mjs` generates content-hashed WOFF2 URLs on `img.polebug.com/fonts/`.
+Font objects use `public, max-age=31536000, immutable`. Old objects stay available
+to cached pages. `blog/fonts.json` records uploaded assets and
+`blog/font-subsets.json` records page coverage. Builds validate the upload records;
+CI needs neither Python nor R2 credentials and never regenerates fonts.
+
+To refresh subsets after editing posts or upgrading fonts:
+
+```sh
+python3 -m venv /tmp/polebug-font-tools
+/tmp/polebug-font-tools/bin/pip install -r tools/fonts/requirements.txt
+FONT_PYTHON=/tmp/polebug-font-tools/bin/python npm run fonts:prepare
+/tmp/polebug-font-tools/bin/python tools/fonts/test_subsets.py
+node --test blog/lib/fonts.test.mjs
+npm run fonts:upload
+npm run build
+```
+
+Preparation builds public pages, extracts their rendered text (excluding scripts
+and styles), and writes local subsets to ignored `blog/.font-cache/`. It reuses the
+installed Fontsource glyphs and checks their horizontal metrics. The tests check
+coverage, outlines, metrics, runtime UI glyphs, non-overlapping ranges, and page
+font size reductions. Supplement ranges are removed from fallback faces to avoid
+duplicate downloads. Some symbols may still require compatibility fallback faces.
+Local dev can preview pending subsets without uploading. Upload verifies every
+font before updating the published manifests; commit both manifests with the site
+changes. New content still works without regeneration, using original fallback
+shards for uncovered characters. Use `npm run fonts:prepare -- --refresh-common`
+only when intentionally replacing the shared set, since doing so invalidates that cache.
+
+The public media bucket permits anonymous GET/HEAD CORS for fonts (configuration:
+`tools/font-cors.json`). This does not grant uploads or private-bucket access.
+If the bucket is recreated, apply that file using `wrangler r2 bucket cors set`;
+inspect and preserve any existing rules before changing them.
+
 ## Comments
 
 Native comments run on Cloudflare Workers + D1 at `comments.polebug.com`. Readers can sign in with GitHub or post as guests; comments publish immediately, and guest verification is remembered for 24 hours in the same browser. The owner manages comments inside the blog comment panel. Existing article comments were imported from GitHub; the original issues remain available.

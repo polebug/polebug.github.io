@@ -2,12 +2,12 @@
 .prose { font-size: 16px; line-height: 1.85; color: var(--body); overflow-wrap: break-word; }
 .prose > :first-child { margin-top: 0; }
 .prose p, .prose ul, .prose ol, .prose blockquote, .prose table, .prose pre { margin: 0 0 1.35em; }
-.prose h1, .prose h2, .prose h3, .prose h4 { color: var(--ink); font-weight: 600; line-height: 1.45; margin: 2.1em 0 .8em; }
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 { color: var(--ink); font-weight: 700; line-height: 1.45; margin: 2.1em 0 .8em; }
 .prose h1 { font-size: 21px; }
 .prose h2 { font-size: 20px; }
 .prose h3 { font-size: 18px; }
 .prose h4 { font-size: 16px; }
-.prose h1, .prose h2, .prose h3, .prose h4 { break-after: avoid; }
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 { break-after: avoid; }
 .prose strong { color: var(--ink); font-weight: 600; }
 .prose a { color: var(--ink); border-bottom: 1px solid var(--accent-soft); padding-bottom: 2px; }
 .prose a:hover { color: var(--accent); }

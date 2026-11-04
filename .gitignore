@@ -39,3 +39,7 @@ stats/.dev.vars
 comments/.wrangler/
 comments/.dev.vars
 comments/.data/
+
+# Generated public font subsets and build analysis
+blog/.font-cache/
+tools/fonts/__pycache__/
