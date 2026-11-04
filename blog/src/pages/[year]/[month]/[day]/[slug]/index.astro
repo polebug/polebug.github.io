@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import Base from '../../../../../layouts/Base.astro';
 import Reader from '../../../../../components/Reader.astro';
 import Comments from '../../../../../components/Comments.astro';
+import { commentDocument } from '../../../../../lib/comment-document';
 import { getPosts, stamp, type Post } from '../../../../../lib/posts';
 import '../../../../../styles/prose.css';
 
@@ -31,10 +32,6 @@ const minutes = Math.max(1, Math.round(cjk / 400 + words / 200));
 const talk = post.data.comments && !post.draft;
 ---
 <Base title={post.data.title} description={post.excerpt} wide>
-  {talk && <Fragment slot="head">
-    <link rel="preconnect" href="https://utteranc.es" crossorigin />
-    <link rel="preconnect" href="https://api.github.com" crossorigin />
-  </Fragment>}
   <Reader headings={headings} label={post.data.title} back={post.url}>
     <header class="post-cover" slot="cover">
       <time datetime={post.data.date.toISOString()}>{stamp(post.data.date)}</time>
@@ -72,8 +69,7 @@ const talk = post.data.comments && !post.draft;
         <button type="button" class="drawer-close" aria-label="Close">×</button>
       </header>
       <div class="drawer-body">
-        <p class="loading">Loading comments…</p>
-        <Comments url={post.url} />
+        <Comments documentId={commentDocument(post.id)} />
       </div>
     </dialog>
   )}
@@ -81,85 +77,7 @@ const talk = post.data.comments && !post.draft;
 
 <script>
   const talk = document.querySelector<HTMLDialogElement>('dialog.talk');
-  const host = talk?.querySelector<HTMLElement>('.comments');
-  if (talk && host) {
-    // Preload the complete widget while the article is being read. The upstream client creates
-    // a lazy iframe; inside a closed dialog that otherwise waits until the first click to load.
-    const prepareFrame = () => {
-      const frame = host.querySelector<HTMLIFrameElement>('iframe.utterances-frame');
-      if (!frame) return;
-      frame.loading = 'eager';
-      frameObserver.disconnect();
-    };
-    const frameObserver = new MutationObserver(prepareFrame);
-    frameObserver.observe(host, { childList: true, subtree: true });
-    let mounted = false;
-    const mount = () => {
-      if (mounted) return;
-      mounted = true;
-      const s = document.createElement('script');
-      s.src = 'https://utteranc.es/client.js';
-      s.crossOrigin = 'anonymous';
-      s.async = true;
-      s.setAttribute('repo', host.dataset.repo!);
-      if (host.dataset.issueNumber) s.setAttribute('issue-number', host.dataset.issueNumber);
-      else s.setAttribute('issue-term', host.dataset.issueTerm!);
-      s.setAttribute('theme', document.documentElement.dataset.theme === 'light' ? 'github-light' : 'github-dark');
-      host.appendChild(s);
-    };
-    mount();
-
-    // The comment box sits at the foot of the thread, so the drawer opens scrolled to it, and
-    // follows the frame as utterances resizes it, until the reader scrolls on their own. The
-    // "loading" line goes only after the widget reports that its content is ready.
-    const body = talk.querySelector<HTMLElement>('.drawer-body')!;
-    const loading = talk.querySelector<HTMLElement>('.loading')!;
-    let follow = false;
-    const toBox = () => body.scrollTo({ top: body.scrollHeight });
-    const settle = () => {
-      if (follow && talk.open) toBox();
-    };
-    // Validate both sender and origin: a visible iframe alone doesn't mean comments loaded.
-    addEventListener('message', (event) => {
-      const frame = host.querySelector<HTMLIFrameElement>('iframe.utterances-frame');
-      if (event.origin !== 'https://utteranc.es' || !frame || event.source !== frame.contentWindow) return;
-      if (event.data?.type === 'resize' && Number(event.data.height) > 0) {
-        loading.hidden = true;
-        settle();
-      }
-    });
-    new ResizeObserver(settle).observe(host);
-    for (const ev of ['wheel', 'touchmove', 'keydown'] as const) body.addEventListener(ev, () => { follow = false; }, { passive: true });
-    document.querySelector('.rail .talk-open')?.addEventListener('click', () => {
-      talk.showModal();
-      mount();
-      follow = true;
-      settle();
-      toBox();
-    });
-
-    // The comment count on the cover, from the issue (or, for a post without one yet, a search).
-    const count = document.querySelector<HTMLElement>('.comment-count');
-    (async () => {
-      try {
-        const repo = host.dataset.repo;
-        let n: number;
-        if (host.dataset.issueNumber) {
-          const r = await fetch(`https://api.github.com/repos/${repo}/issues/${host.dataset.issueNumber}`);
-          if (!r.ok) throw new Error(r.statusText);
-          n = (await r.json()).comments;
-        } else {
-          const q = encodeURIComponent(`repo:${repo} in:title "${host.dataset.issueTerm}"`);
-          const r = await fetch(`https://api.github.com/search/issues?q=${q}`);
-          if (!r.ok) throw new Error(r.statusText);
-          n = (await r.json()).items?.[0]?.comments ?? 0;
-        }
-        if (count) count.textContent = String(n);
-      } catch {
-        count?.parentElement?.remove();
-      }
-    })();
-  }
+  document.querySelector('.rail .talk-open')?.addEventListener('click', () => talk?.showModal());
 </script>
 
 <style>
@@ -172,8 +90,6 @@ const talk = post.data.comments && !post.draft;
   .meta [data-stat], .comment-count { font-variant-numeric: tabular-nums; }
 
   .talk { width: min(560px, 100%); }
-  .loading { margin: 0 0 16px; font: 400 13px/1.6 "Lato", sans-serif; letter-spacing: .5px; color: var(--faint); }
-  .talk :global(.utterances) { max-width: none; margin: 0; }
 
   @media (max-width: 700px) {
     .post-cover h1 { font-size: 22px; overflow-wrap: anywhere; }

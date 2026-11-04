@@ -1,0 +1,19 @@
+name = "polebug-comments"
+main = "src/index.js"
+compatibility_date = "2026-10-26"
+workers_dev = false
+routes = [{ pattern = "comments.polebug.com", custom_domain = true }]
+
+[vars]
+ENVIRONMENT = "production"
+BLOG_ORIGIN = "https://blog.polebug.com"
+API_ORIGIN = "https://comments.polebug.com"
+ADMIN_GITHUB_ID = "8676289"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "polebug-comments"
+database_id = "73205a91-3c81-43ce-af3e-27962cdab6ca"
+
+[triggers]
+crons = ["31 3 * * *"]

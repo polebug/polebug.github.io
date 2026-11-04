@@ -34,3 +34,8 @@ Thumbs.db
 # Visitor counter: local database and dev secrets
 stats/.wrangler/
 stats/.dev.vars
+
+# Native comments: local D1 state, migration exports, and credentials
+comments/.wrangler/
+comments/.dev.vars
+comments/.data/

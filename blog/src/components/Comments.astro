@@ -1,16 +1,76 @@
 ---
-import { createHash } from 'node:crypto';
-import { SITE } from '../site';
-import issues from '../../comments.json';
-
-// utterances: comments are GitHub issues in this repo, posted through the utterances GitHub App,
-// so readers grant no access to their own repositories. This is only the host element with the
-// issue's coordinates; the post page preloads utterances into it while the article is being read.
-// Posts from the old sites reuse their Gitalk issue (labelled md5(pathname), see tools/comments-map.mjs);
-// other posts get an issue titled with their path on the first comment.
-const { url } = Astro.props as { url: string };
-const id = createHash('md5').update(encodeURI(url)).digest('hex');
-const known = (issues as Record<string, { issue: number }>)[id];
-const attrs = known ? { 'issue-number': String(known.issue) } : { 'issue-term': url };
+interface Props { documentId: string }
+const { documentId } = Astro.props;
+const api = import.meta.env.PUBLIC_COMMENTS_API || (import.meta.env.DEV ? `http://${Astro.url.hostname}:8788` : 'https://comments.polebug.com');
 ---
-<section class="comments" aria-label="Comments" data-repo={SITE.comments.repo} {...Object.fromEntries(Object.entries(attrs).map(([k, v]) => [`data-${k}`, v]))}></section>
+<section class="comments native-comments" aria-label="文章评论" data-document={documentId} data-api={api}>
+  <div class="comment-tabs">
+    <button type="button" class="show-public selected">评论 <span class="native-count"></span></button>
+    <button type="button" class="show-admin" hidden>管理评论</button>
+  </div>
+  <div class="public-panel">
+    <p class="feed-status" role="status">正在读取评论…</p>
+    <button type="button" class="feed-retry" hidden>重新加载</button>
+    <ol class="comment-list"></ol>
+    <button type="button" class="load-more" hidden>更多评论</button>
+    <form class="comment-form">
+      <div class="identity-row">
+        <span class="identity">访客评论</span>
+        <a class="github-login" href={`${api}/auth/github?document=${documentId}`} hidden>使用 GitHub 登录</a>
+        <button type="button" class="logout" hidden>退出</button>
+      </div>
+      <label class="guest-name">昵称 <input name="name" maxlength="40" autocomplete="nickname" placeholder="你希望被怎样称呼" /></label>
+      <p class="reply-to" hidden><span></span> <button type="button" class="cancel-reply">取消回复</button></p>
+      <label class="comment-label">写下你的想法<textarea name="body" rows="4" maxlength="6000" required placeholder="聊聊你的感受，或留一个问题…"></textarea></label>
+      <div class="human-check"></div>
+      <p class="guest-notice">访客昵称未经验证，评论审核后公开显示。</p>
+      <div class="form-bottom"><small>支持换行 · 最多 6000 字符</small><button type="submit" class="submit-comment">发送评论</button></div>
+      <p class="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+  <div class="admin-panel" hidden>
+    <label>查看 <select class="moderation-filter"><option value="pending">待审核</option><option value="published">已发布</option><option value="hidden">已隐藏</option><option value="deleted">已删除</option></select></label>
+    <p class="admin-status" role="status"></p>
+    <ol class="admin-list"></ol>
+    <button type="button" class="admin-more" hidden>更多评论</button>
+  </div>
+</section>
+<script>
+  import '../scripts/comments';
+</script>
+<style>
+  .native-comments { font: 400 14px/1.7 var(--serif); color: var(--body); }
+  .native-comments :global([hidden]) { display: none !important; }
+  .native-comments :global(button), .native-comments :global(input), .native-comments :global(textarea), .native-comments :global(select) { font: inherit; }
+  .native-comments :global(button) { cursor: pointer; background: transparent; color: var(--muted); border: 1px solid var(--line); border-radius: 7px; padding: 6px 12px; }
+  .native-comments :global(button:hover), .github-login:hover { color: var(--accent); border-color: var(--accent); }
+  .native-comments :global(button:disabled) { opacity: .5; cursor: wait; }
+  .comment-tabs { display: flex; gap: 8px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+  .comment-tabs .selected { color: var(--ink); border-color: var(--muted); }
+  .comment-list, .admin-list { list-style: none; padding: 0; margin: 0; }
+  .native-comments :global(.comment-item) { padding: 22px 0; border-bottom: 1px solid var(--line); }
+  .native-comments :global(.comment-byline) { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; color: var(--ink); }
+  .native-comments :global(.comment-badge), .native-comments :global(time), .native-comments :global(.parent-label) { font-size: 12px; color: var(--muted); }
+  .native-comments :global(.comment-badge) { border: 1px solid var(--line); padding: 0 5px; border-radius: 4px; }
+  .native-comments :global(.comment-body) { margin: 10px 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .native-comments :global(.comment-actions) { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 12px; }
+  .native-comments :global(.comment-actions button) { padding: 3px 9px; }
+  .native-comments :global(.comment-source) { color: var(--muted); }
+  .comment-form { margin-top: 28px; padding-top: 4px; }
+  .identity-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+  .identity { color: var(--ink); }
+  .github-login { color: var(--accent); border-bottom: 1px solid var(--accent-soft); }
+  .native-comments :global(input), .native-comments :global(textarea), .native-comments :global(select) { background: var(--paper); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+  .guest-name, .comment-label { display: block; }
+  .guest-name input { width: 100%; margin: 6px 0 14px; }
+  .comment-label textarea { display: block; width: 100%; resize: vertical; min-height: 130px; margin-top: 8px; }
+  .human-check { margin-top: 12px; min-width: 0; }
+  .guest-notice, .form-bottom small { font-size: 12px; color: var(--muted); }
+  .form-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 14px; }
+  .form-bottom .submit-comment { color: var(--paper); background: var(--ink); border-color: var(--ink); padding: 8px 18px; }
+  .feed-status, .form-status, .admin-status { color: var(--muted); margin: 14px 0; }
+  .reply-to { padding: 8px 12px; border-left: 2px solid var(--accent); color: var(--muted); }
+  .admin-panel { padding-top: 20px; }
+  .load-more, .admin-more { margin: 18px 0; }
+  @media(max-width:700px) { .comment-label textarea, .guest-name input { font-size: 16px; } }
+</style>

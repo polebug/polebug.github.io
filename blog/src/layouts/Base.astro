@@ -65,16 +65,13 @@ const year = new Date().getFullYear();
     </nav>
   </header>
   <script>
-    // The header's theme toggle: flips the scheme on <html>, remembers it, and tells the comments
-    // frame so it follows.
+    // The header's theme toggle: native comments inherit the same CSS palette.
     document.querySelector('.theme-toggle')?.addEventListener('click', () => {
       const light = document.documentElement.dataset.theme !== 'light';
       document.documentElement.dataset.theme = light ? 'light' : 'dark';
       const domain = location.hostname.endsWith('polebug.com') ? '; domain=polebug.com' : '';
       document.cookie = `theme=${light ? 'light' : 'dark'}; path=/; max-age=31536000; samesite=lax${domain}`;
       try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch {}
-      document.querySelector<HTMLIFrameElement>('iframe.utterances-frame')?.contentWindow
-        ?.postMessage({ type: 'set-theme', theme: light ? 'github-light' : 'github-dark' }, 'https://utteranc.es');
     });
   </script>
   <main class:list={[{ wide }]}>

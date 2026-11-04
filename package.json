@@ -12,7 +12,12 @@
     "media": "node tools/media.mjs",
     "upload": "node tools/media.mjs --upload",
     "check": "node tools/check.mjs",
-    "comments-map": "node tools/comments-map.mjs"
+    "comments-map": "node tools/comments-map.mjs",
+    "comments:register": "node comments/tools/register-documents.mjs",
+    "comments:import": "node comments/tools/import-github.mjs",
+    "comments:test": "node --test comments/test/*.test.mjs",
+    "comments:dev": "npx --yes wrangler@4.152.0 dev --config comments/wrangler.toml --port 8788",
+    "comments:sync": "node comments/tools/import-github.mjs --documents-only"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.1156.0",

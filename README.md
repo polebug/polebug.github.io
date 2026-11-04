@@ -41,8 +41,10 @@ To publish:
 1. Move the folder from `blog/drafts/` to `blog/posts/`.
 2. `npm run upload` — compresses images to WebP and videos to H.264 MP4 (+ poster), uploads them to R2,
    backs up the originals in a private bucket, updates `blog/media.json`, and prints R2 usage.
-3. `npm run check` — builds the site the way production does and verifies every image, video and link loads.
-4. Commit and push. GitHub Actions builds and deploys in a minute or two.
+3. `npm run comments:register` — register stable IDs for new articles; commit `blog/comment-documents.json`.
+4. `npm run check` — builds the site the way production does and verifies every image, video and link loads.
+5. `npm run comments:sync`, then `npx --yes wrangler@4.152.0 d1 execute polebug-comments --remote --config comments/wrangler.toml --file comments/.data/documents.sql` — sync article metadata and text revisions.
+6. Commit and push. GitHub Actions builds and deploys in a minute or two.
 
 A post that references a file which was never uploaded fails the build, so nothing goes live half-broken.
 
@@ -53,10 +55,9 @@ On a new computer without the original files, the preview falls back to the uplo
 
 ## Comments
 
-[utterances](https://utteranc.es), storing comments as issues in this repository. Readers sign in through
-the utterances GitHub App, which gets no access to their own repositories. Posts from the old Hexo site keep
-their old Gitalk issues: `npm run comments-map` writes `blog/comments.json` from the issues' labels
-(`md5(pathname)`); a post without an entry gets a new issue, titled with its path, on its first comment.
+Native comments run on Cloudflare Workers + D1 at `comments.polebug.com`. Readers can sign in with GitHub or submit guest comments for moderation. The owner manages comments inside the blog comment panel. Existing article comments were imported from GitHub; the original issues remain available.
+
+See [comments/README.md](comments/README.md) for database design, future text annotations, deployment, moderation and backups. Article UUIDs survive URL changes: move the existing registry entry when renaming a slug.
 
 ## License
 
