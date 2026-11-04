@@ -19,7 +19,6 @@
 .prose hr { border: 0; height: 1px; background: var(--line); margin: 2.6em 0; }
 .prose img, .prose video { max-width: 100%; height: auto; border-radius: 6px; vertical-align: middle; break-inside: avoid; }
 @media (min-width: 861px) {
-  .reader:not([data-mode="scroll"]) .prose { --reader-media-height: max(120px, calc(100dvh - 104px - 28px - 160px)); }
   /* In the pages, nothing taller than a column: pictures are capped and code wraps instead of scrolling. */
   .reader:not([data-mode="scroll"]) .prose img, .reader:not([data-mode="scroll"]) .prose video { max-height: calc(100dvh - 104px - 28px - 160px); width: auto; max-width: 100%; }
   .reader:not([data-mode="scroll"]) .prose pre { overflow: visible; white-space: pre-wrap; overflow-wrap: anywhere; }

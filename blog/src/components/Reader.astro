@@ -202,11 +202,8 @@ const { posts, headings, start = 0, label, back } = Astro.props;
     if (reader.dataset.mode !== expected) setMode(mode, keep);
     else layout(keep);
   });
-  // Managed media already reserve their final boxes. Loading pixels must not reset the reader.
-  // Only un-sized external images need the fallback remeasure.
-  for (const img of flow.querySelectorAll('img')) {
-    if (!img.style.aspectRatio) img.addEventListener('load', () => layout(onScreen()), { once: true });
-  }
+  // Images settling into their sizes change the pagination; keep the place.
+  for (const img of flow.querySelectorAll('img')) img.addEventListener('load', () => layout(onScreen()), { once: true });
 
   // A video plays only while it's in view: paging (or scrolling) it out of the window pauses it,
   // and starting one pauses any other, so two never play over each other.
