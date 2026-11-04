@@ -63,7 +63,10 @@ const { posts, headings, start = 0, label, back } = Astro.props;
     var r = document.querySelector('.reader');
     if (!r) return;
     r.classList.add('ready');
-    try { if (localStorage.getItem('reader-mode') === 'scroll') r.dataset.mode = 'scroll'; } catch (e) {}
+    var mobile = matchMedia('(max-width: 860px)').matches;
+    var mode = 'page';
+    try { if (localStorage.getItem('reader-mode') === 'scroll') mode = 'scroll'; } catch (e) {}
+    r.dataset.mode = mobile ? 'scroll' : mode;
     // Tie each "Continue reading" to the last block of its summary, so a column break can't part
     // them and the fade (see .tail in BlogIndex) sits just above the link. Here, not in the module
     // below, so the first paint already has the fade and the final columns.
@@ -110,6 +113,9 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   let current = 0;
   let count = 1;
 
+  // Keep this breakpoint in sync with the mobile layout below. Phones use document scrolling;
+  // a desktop reading preference must never put them back into the paginated container.
+  const mobile = matchMedia('(max-width: 860px)');
   const paged = () => reader.dataset.mode !== 'scroll';
   // One window of the flow is its own width (two columns) plus one column gap.
   const step = () => flow.clientWidth + parseFloat(getComputedStyle(flow).columnGap);
@@ -143,7 +149,7 @@ const { posts, headings, start = 0, label, back } = Astro.props;
     const left = edge();
     const found = marks.find((e) => {
       const b = e.getBoundingClientRect();
-      return paged() ? b.left >= left - 1 : b.bottom > r.top + 1;
+      return paged() ? b.left >= left - 1 : b.bottom > (mobile.matches ? 0 : r.top) + 1;
     }) ?? null;
     flow.style.transition = '';
     return found;
@@ -151,7 +157,9 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   const goTo = (el: HTMLElement | null, mark = false) => {
     if (!el) return;
     if (paged()) layout(el);
-    else {
+    else if (mobile.matches) {
+      window.scrollTo({ top: window.scrollY + el.getBoundingClientRect().top - 24, behavior: 'instant' });
+    } else {
       // 40px of headroom, so the landing wash isn't cut at the top.
       pages.scrollTop = el.offsetTop - 40;
       // Once more after paint: images above it may still be settling into their sizes.
@@ -166,11 +174,12 @@ const { posts, headings, start = 0, label, back } = Astro.props;
     }
   };
   const setMode = (mode: 'page' | 'scroll', keep: HTMLElement | null) => {
-    reader.dataset.mode = mode;
-    const toScroll = mode === 'page';
+    reader.dataset.mode = mobile.matches ? 'scroll' : mode;
+    const toScroll = paged();
     modeButton.title = modeButton.ariaLabel = toScroll ? 'Switch to scrolling' : 'Switch to pages';
-    try { localStorage.setItem('reader-mode', mode); } catch {}
-    goTo(keep);
+    pages.scrollTop = 0;
+    if (paged()) layout(keep);
+    else goTo(keep);
   };
 
   let mode: 'page' | 'scroll' = 'page';
@@ -183,10 +192,16 @@ const { posts, headings, start = 0, label, back } = Astro.props;
     sessionStorage.removeItem('reader-back');
     if (from) returnedTo = entries.find((e) => e.querySelector<HTMLAnchorElement>('h2 a')?.pathname === from);
   } catch {}
-  setMode(mode, returnedTo ?? marks[Number(reader.dataset.start) || 0] ?? null);
+  const start = Number(reader.dataset.start) || 0;
+  setMode(mode, returnedTo ?? (start > 0 ? marks[start] : null) ?? null);
   if (returnedTo) goTo(returnedTo, true);
   document.fonts?.ready.then(() => layout(onScreen()));
-  addEventListener('resize', () => layout(onScreen()));
+  addEventListener('resize', () => {
+    const keep = onScreen();
+    const expected = mobile.matches ? 'scroll' : mode;
+    if (reader.dataset.mode !== expected) setMode(mode, keep);
+    else layout(keep);
+  });
   // Images settling into their sizes change the pagination; keep the place.
   for (const img of flow.querySelectorAll('img')) img.addEventListener('load', () => layout(onScreen()), { once: true });
 
@@ -195,7 +210,7 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   const media = [...flow.querySelectorAll<HTMLMediaElement>('video, audio')];
   const inView = new IntersectionObserver((seen) => {
     for (const s of seen) if (!s.isIntersecting) (s.target as HTMLMediaElement).pause();
-  }, { root: pages });
+  });
   for (const m of media) {
     inView.observe(m);
     m.addEventListener('play', () => { for (const o of media) if (o !== m) o.pause(); });
@@ -257,7 +272,13 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   document.querySelector<HTMLAnchorElement>('.reader-head .back')?.addEventListener('click', (e) => {
     try { sessionStorage.setItem('reader-back', (e.currentTarget as HTMLAnchorElement).dataset.post!); } catch {}
   });
-  modeButton.addEventListener('click', () => setMode(paged() ? 'scroll' : 'page', onScreen()));
+  modeButton.addEventListener('click', () => {
+    if (mobile.matches) return;
+    const keep = onScreen();
+    mode = paged() ? 'scroll' : 'page';
+    try { localStorage.setItem('reader-mode', mode); } catch {}
+    setMode(mode, keep);
+  });
 
   // The catalogue: the index's posts, or a post's section headings. Each item has its target in
   // the flow (an entry, or a heading by id); the one in view is marked, and picking one opens the
@@ -362,15 +383,27 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   .reader:not(.ready) .flow { height: auto; column-fill: balance; transform: none; }
 
   @media (max-width: 1100px) { .reader { padding: 28px 44px 20px; --gap: 56px; } }
-  @media (max-width: 860px) { .flow { columns: 1; } }
-  @media (max-width: 700px) {
-    .reading { flex-direction: column-reverse; gap: 12px; height: calc(100dvh - 82px - 20px); min-height: 0; }
+  /* On narrow screens the document is the only scroll container, even before JS runs. */
+  @media (max-width: 860px) {
+    .reading { flex-direction: column-reverse; gap: 12px; height: auto; min-height: 0; }
     .rail { align-self: stretch; flex-direction: row; justify-content: flex-end; gap: 10px; }
+    .rail .mode, .reader .reader-foot { display: none; }
+    .reader .pages, .reader[data-mode="scroll"] .pages, .reader:not(.ready) .pages {
+      flex: none; overflow: visible; margin: 0; padding: 0;
+    }
+    .reader .flow, .reader[data-mode="scroll"] .flow, .reader:not(.ready) .flow {
+      height: auto; width: 100%; columns: auto; transform: none; transition: none;
+    }
+    .reader .cover, .reader[data-mode="scroll"] .cover, .reader:not(.ready) .cover {
+      height: auto; min-height: 0; break-after: auto; padding: 24px 0 36px;
+    }
+  }
+  @media (max-width: 700px) {
     .rail :global(button) { width: 36px; height: 36px; }
     .rail :global(svg) { width: 17px; height: 17px; }
-    .reader { padding: 22px 22px 16px; border-radius: 12px; --gap: 40px; }
+    .reader { padding: 22px 18px 28px; border-radius: 12px; --gap: 40px; }
     .reader-head { margin-bottom: 20px; }
-    .reader-foot button { padding: 5px 11px; }
+    .motto-sm { font-size: 10px; letter-spacing: 1px; }
     .toc li > * { padding: 10px 20px; }
     .toc li.depth-2 > button { padding-left: 32px; }
     .toc li.depth-3 > button { padding-left: 44px; }

@@ -18,10 +18,12 @@
 .prose blockquote p { margin: .4em 0; }
 .prose hr { border: 0; height: 1px; background: var(--line); margin: 2.6em 0; }
 .prose img, .prose video { max-width: 100%; height: auto; border-radius: 6px; vertical-align: middle; break-inside: avoid; }
-/* In the pages, nothing taller than a column: pictures are capped and code wraps instead of scrolling. */
-.reader:not([data-mode="scroll"]) .prose img, .reader:not([data-mode="scroll"]) .prose video { max-height: calc(100dvh - 104px - 28px - 160px); width: auto; max-width: 100%; }
-.reader:not([data-mode="scroll"]) .prose pre { overflow: visible; white-space: pre-wrap; overflow-wrap: anywhere; }
-.reader:not([data-mode="scroll"]) .prose table { display: table; overflow: visible; }
+@media (min-width: 861px) {
+  /* In the pages, nothing taller than a column: pictures are capped and code wraps instead of scrolling. */
+  .reader:not([data-mode="scroll"]) .prose img, .reader:not([data-mode="scroll"]) .prose video { max-height: calc(100dvh - 104px - 28px - 160px); width: auto; max-width: 100%; }
+  .reader:not([data-mode="scroll"]) .prose pre { overflow: visible; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .reader:not([data-mode="scroll"]) .prose table { display: table; overflow: visible; }
+}
 .prose video { background: #000; width: 100%; height: auto; }
 /* Images and videos standing on their own line (not inside a paragraph or a layout div) */
 .prose > img, .prose > video { display: block; margin: 1.6em auto; }
@@ -53,7 +55,3 @@
 .post-nav a { display: block; max-width: 48%; }
 .post-nav small { display: block; font-size: 12px; color: var(--faint); letter-spacing: 1px; margin-bottom: 4px; }
 .post-nav .next { text-align: right; margin-left: auto; }
-
-@media (max-width: 700px) {
-  .reader:not([data-mode="scroll"]) .prose img, .reader:not([data-mode="scroll"]) .prose video { max-height: calc(100dvh - 82px - 20px - 130px); }
-}

@@ -159,6 +159,8 @@ const talk = post.data.comments && !post.draft;
   .talk :global(.utterances) { max-width: none; margin: 0; }
 
   @media (max-width: 700px) {
-    .post-cover h1 { font-size: 22px; }
+    .post-cover h1 { font-size: 22px; overflow-wrap: anywhere; }
+    .meta { font-size: 12px; line-height: 1.5; letter-spacing: .3px; }
+    .meta > span + span::before { margin: 0 7px; }
   }
 </style>
