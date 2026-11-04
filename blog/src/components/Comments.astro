@@ -22,14 +22,14 @@ const api = import.meta.env.PUBLIC_COMMENTS_API || (import.meta.env.DEV ? `http:
       <label class="guest-name">昵称 <input name="name" maxlength="40" autocomplete="nickname" placeholder="你希望被怎样称呼" /></label>
       <p class="reply-to" hidden><span></span> <button type="button" class="cancel-reply">取消回复</button></p>
       <label class="comment-label">写下你的想法<textarea name="body" rows="4" maxlength="6000" required placeholder="聊聊你的感受，或留一个问题…"></textarea></label>
-      <div class="human-check"></div>
-      <p class="guest-notice">访客昵称未经验证，评论审核后公开显示。</p>
+      <div class="human-check" hidden></div>
+      <p class="guest-notice">评论发送后直接公开，访客昵称未经身份认证。</p>
       <div class="form-bottom"><small>支持换行 · 最多 6000 字符</small><button type="submit" class="submit-comment">发送评论</button></div>
       <p class="form-status" role="status" aria-live="polite"></p>
     </form>
   </div>
   <div class="admin-panel" hidden>
-    <label>查看 <select class="moderation-filter"><option value="pending">待审核</option><option value="published">已发布</option><option value="hidden">已隐藏</option><option value="deleted">已删除</option></select></label>
+    <label>查看 <select class="moderation-filter"><option value="published">已发布</option><option value="hidden">已隐藏</option><option value="deleted">已删除</option></select></label>
     <p class="admin-status" role="status"></p>
     <ol class="admin-list"></ol>
     <button type="button" class="admin-more" hidden>更多评论</button>

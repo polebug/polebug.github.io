@@ -55,7 +55,7 @@ On a new computer without the original files, the preview falls back to the uplo
 
 ## Comments
 
-Native comments run on Cloudflare Workers + D1 at `comments.polebug.com`. Readers can sign in with GitHub or submit guest comments for moderation. The owner manages comments inside the blog comment panel. Existing article comments were imported from GitHub; the original issues remain available.
+Native comments run on Cloudflare Workers + D1 at `comments.polebug.com`. Readers can sign in with GitHub or post as guests; comments publish immediately, and guest verification is remembered for 24 hours in the same browser. The owner manages comments inside the blog comment panel. Existing article comments were imported from GitHub; the original issues remain available.
 
 See [comments/README.md](comments/README.md) for database design, future text annotations, deployment, moderation and backups. Article UUIDs survive URL changes: move the existing registry entry when renaming a slug.
 

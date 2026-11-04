@@ -1,10 +1,10 @@
 # Polebug Comments
 
-博客原生评论服务：Cloudflare Worker + 独立 D1 数据库 `polebug-comments`，API 域名 `comments.polebug.com`。不依赖 GitHub Issues 读取或第三方评论 iframe。GitHub 只参与登录；访客经 Turnstile 验证后提交待审核评论。界面跟随博客主题，评论正文第一版以纯文本安全显示，保留换行（历史 Markdown 原文保留，可通过「原评论」查看原格式）。
+博客原生评论服务：Cloudflare Worker + 独立 D1 数据库 `polebug-comments`，API 域名 `comments.polebug.com`。不依赖 GitHub Issues 读取或第三方评论 iframe。GitHub 只参与登录；访客首次发送时经 Turnstile 验证后直接发布评论，同一浏览器会话保留 24 小时验证结果。界面跟随博客主题，评论正文第一版以纯文本安全显示，保留换行（历史 Markdown 原文保留，可通过「原评论」查看原格式）。
 
 ## 管理和身份
 
-在文章评论面板选择「使用 GitHub 登录」。GitHub 数字 ID `8676289`（polebug）可看到「管理评论」，查看全站待审核、已发布、已隐藏、已删除评论，并发布、隐藏或软删除。读者可以回复及删除自己的评论。访客昵称没有身份验证，界面明确标记；GitHub 用户按稳定数字 ID 识别，不按昵称授权。普通 GitHub 评论直接发布，访客评论审核后公开。
+在文章评论面板选择「使用 GitHub 登录」。GitHub 数字 ID `8676289`（polebug）可看到「管理评论」，查看全站已发布、已隐藏和已删除评论，并发布、隐藏或软删除。读者可以回复及删除自己的评论。访客昵称没有身份验证，界面明确标记；GitHub 用户按稳定数字 ID 识别，不按昵称授权。GitHub 和访客评论均直接发布，博主可事后隐藏或删除。
 
 公开接口不返回待审核/隐藏内容。软删除保留审计与回复关系；曾公开的评论只显示删除占位。软删除不是数据彻底清除，管理员仍可查看/恢复正文。彻底清除个人数据需维护者单独执行数据库清理及备份保留策略。
 
@@ -44,7 +44,7 @@ npm run comments:test
 
 本地使用忽略的 `comments/.dev.vars`，设置 ENVIRONMENT=development、BLOG_ORIGIN=http://127.0.0.1:4321、API_ORIGIN=http://127.0.0.1:8788 和本地 RATE_SALT。不要把生产密钥复制进代码。没有 Turnstile 配置时访客写入关闭，不能用开发开关绕过线上验证。GitHub 登录需要与环境对应的 OAuth 回调地址。
 
-测试使用 Node 22 内置 SQLite 运行真实 schema，覆盖权限、CSRF、访客待审核/Turnstile 响应、OAuth state、限流、幂等、分页、跨文章外键和 Unicode 锚点重定位。
+测试使用 Node 22 内置 SQLite 运行真实 schema，覆盖权限、CSRF、访客直接发布、24 小时会话验证/Turnstile 响应、OAuth state、限流、幂等、分页、跨文章外键和 Unicode 锚点重定位。
 
 ## 发布新文章或修改正文
 
@@ -67,7 +67,7 @@ npx --yes wrangler@4.152.0 d1 migrations apply polebug-comments --remote --confi
 npx --yes wrangler@4.152.0 deploy --config comments/wrangler.toml
 ```
 
-Worker secrets：GITHUB_CLIENT_ID、GITHUB_CLIENT_SECRET、TURNSTILE_SITE_KEY、TURNSTILE_SECRET_KEY、RATE_SALT。使用 Wrangler secret put/bulk 从安全输入设置，禁止提交。OAuth 应用名 Polebug Comments，回调 `https://comments.polebug.com/auth/github/callback`，不申请仓库、邮箱 scope。Turnstile 只允许 blog.polebug.com，服务端校验 action=comment 和 hostname。
+Worker secrets：GITHUB_CLIENT_ID、GITHUB_CLIENT_SECRET、TURNSTILE_SITE_KEY、TURNSTILE_SECRET_KEY、RATE_SALT。使用 Wrangler secret put/bulk 从安全输入设置，禁止提交。OAuth 应用名 Polebug Comments，回调 `https://comments.polebug.com/auth/github/callback`，不申请仓库、邮箱 scope。Turnstile 只允许 blog.polebug.com，服务端校验 action=comment 和 hostname。Turnstile 仅在点击发送且验证已过期时加载，使用 interaction-only 显示模式；关闭自动重试与过期刷新。通过后将 human_verified_until 写入当前会话，24 小时内复用，普通发帖不延长有效期。Turnstile token 本身仍是一次性的，不能重复消费；退出登录、会话失效或更换浏览器需要重新验证。
 
 会话使用 Secure/HttpOnly/SameSite=Lax 的 host-only cookie；生产写入校验 Origin，已登录用户还校验 CSRF。请求大小上限 20KB、正文 6000 字符，按 IP/用户限流。数据库不存 GitHub OAuth access token、邮箱、原始 IP；session 令牌仅存哈希。每日 cron 清理过期会话、登录状态和限流计数。API `no-store` 避免用户状态/私有内容进入共享缓存。
 

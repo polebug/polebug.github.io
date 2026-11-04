@@ -36,7 +36,7 @@ async function body(req) {
 async function session(req, env) {
   const raw = readCookie(req, cookieName(env));
   if (!raw || raw.length > 200) return null;
-  const user = await one(env, `SELECT u.*, s.csrf, s.token_hash, i.subject FROM sessions s
+  const user = await one(env, `SELECT u.*, s.csrf, s.token_hash, s.human_verified_until, i.subject FROM sessions s
     JOIN users u ON u.id = s.user_id LEFT JOIN identities i ON i.user_id = u.id AND i.provider = 'github'
     WHERE s.token_hash = ? AND s.expires_at > ?`, await digest(raw), Date.now());
   if (!user || user.blocked) return null;
@@ -71,6 +71,8 @@ async function human(req, env, value) {
   const data = await r.json();
   if (!r.ok || !data.success || data.action !== 'comment' || data.hostname !== new URL(env.BLOG_ORIGIN).hostname) fail(400, '人机校验已过期或失败，请重新验证。');
 }
+const needsVerification = user => user?.kind !== 'github' && !(user?.human_verified_until > Date.now());
+const verification = user => ({verificationRequired:needsVerification(user),humanVerifiedUntil:user?.human_verified_until || 0});
 const viewUser = u => u ? { id: u.id, name: u.display_name, kind: u.kind, admin: !!u.admin } : null;
 function viewComment(c, user, admin = false) {
   const visibleBody = c.status === 'published' || admin || c.author_id === user?.id;
@@ -134,25 +136,30 @@ async function createComment(req, env) {
     const old = await one(env, 'SELECT * FROM comments WHERE author_id=? AND request_key=?', user.id, data.requestId);
     if (old) {
       if (old.body !== text || old.thread_id !== thread.id || old.parent_id !== parentId) fail(409, '请求编号已被使用。');
-      return json({ id: old.id, status: old.status, user: viewUser(user), csrf: user.csrf });
+      return json({ id: old.id, status: old.status, user: viewUser(user), csrf: user.csrf, ...verification(user) });
     }
   }
   await limit(req, env, user);
-  if (!user || user.kind !== 'github') await human(req, env, data.turnstileToken);
   const name = user?.display_name || (typeof data.name === 'string' ? data.name.trim() : '');
   if (!name || name.length > 40 || /[\x00-\x1f<>]/.test(name)) fail(400, '请填写 1–40 字的昵称。');
+  let verifiedUntil = user?.human_verified_until || 0;
+  if (needsVerification(user)) {
+    await human(req, env, data.turnstileToken);
+    verifiedUntil = Date.now() + DAY;
+  }
   const uid = user?.id || `guest:${uuid()}`;
-  const status = user?.kind === 'github' ? 'published' : 'pending';
+  const status = 'published';
   const created = now(), id = uuid(), raw = user ? null : token(), csrf = user?.csrf || token();
   const batch = [];
   if (!user) {
     batch.push(stmt(env, "INSERT INTO users(id,kind,display_name,created_at) VALUES(?,'guest',?,?)", uid,name,created));
-    batch.push(stmt(env, 'INSERT INTO sessions(token_hash,user_id,csrf,expires_at) VALUES(?,?,?,?)',await digest(raw),uid,csrf,Date.now()+30*DAY));
+    batch.push(stmt(env, 'INSERT INTO sessions(token_hash,user_id,csrf,expires_at,human_verified_until) VALUES(?,?,?,?,?)',await digest(raw),uid,csrf,Date.now()+30*DAY,verifiedUntil));
   }
+  if (user && verifiedUntil !== user.human_verified_until) batch.push(stmt(env, 'UPDATE sessions SET human_verified_until=? WHERE token_hash=?',verifiedUntil,user.token_hash));
   batch.push(stmt(env, `INSERT INTO comments(id,thread_id,parent_id,author_id,author_name,body,status,request_key,created_at,updated_at,published_at)
     VALUES(?,?,?,?,?,?,?,?,?,?,?)`,id,thread.id,parentId,uid,name,text,status,data.requestId,created,created,status==='published'?created:null));
   await env.DB.batch(batch);
-  return json({id,status,user:viewUser(user || {id:uid,display_name:name,kind:'guest'}),csrf},201,
+  return json({id,status,user:viewUser(user || {id:uid,display_name:name,kind:'guest'}),csrf,...verification({...user,human_verified_until:verifiedUntil})},201,
     raw ? {'Set-Cookie':cookie(cookieName(env),raw,30*86400,env)} : {});
 }
 async function changeComment(req, env, id, adminAction) {
@@ -174,7 +181,7 @@ async function changeComment(req, env, id, adminAction) {
 async function adminFeed(url, req, env) {
   const user = await session(req,env);
   if (!user?.admin) fail(403,'需要博主权限。');
-  const status = url.searchParams.get('status') || 'pending';
+  const status = url.searchParams.get('status') || 'published';
   if (!['pending','published','hidden','deleted'].includes(status)) fail(400,'状态不正确。');
   const [at,id]=readCursor(url.searchParams.get('cursor'));
   const rows = await many(env,`SELECT c.*,u.kind,i.subject,? AS admin_subject,t.document_id,d.title AS document_title
@@ -232,7 +239,7 @@ export default {
       else if (url.pathname==='/health' && req.method==='GET') { await one(env,'SELECT 1 AS ok'); response=json({ok:true}); }
       else if (url.pathname==='/v1/session' && req.method==='GET') {
         const user=await session(req,env);
-        response=json({user:viewUser(user),csrf:user?.csrf || null,githubEnabled:!!(env.GITHUB_CLIENT_ID&&env.GITHUB_CLIENT_SECRET),turnstileSiteKey:env.TURNSTILE_SITE_KEY || null});
+        response=json({user:viewUser(user),csrf:user?.csrf || null,githubEnabled:!!(env.GITHUB_CLIENT_ID&&env.GITHUB_CLIENT_SECRET),turnstileSiteKey:env.TURNSTILE_SITE_KEY || null,...verification(user)});
       }
       else if (url.pathname==='/v1/comments' && req.method==='GET') response=await feed(url,req,env);
       else if (url.pathname==='/v1/comments' && req.method==='POST') response=await createComment(req,env);

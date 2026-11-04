@@ -1,9 +1,9 @@
 export {};
 interface User { id: string; name: string; kind: string; admin: boolean }
 interface Comment { id: string; parentId: string | null; body: string; author: {name: string; kind: string; owner: boolean}; createdAt: string; status: string; mine: boolean; sourceUrl?: string; title?: string }
-interface Session { user: User | null; csrf: string | null; githubEnabled: boolean; turnstileSiteKey: string | null }
+interface Session { user: User | null; csrf: string | null; githubEnabled: boolean; turnstileSiteKey: string | null; verificationRequired: boolean; humanVerifiedUntil: number }
 interface Feed { comments: Comment[]; total: number; nextCursor: string | null; writable: boolean }
-interface Turnstile { render(el: HTMLElement, options: Record<string,unknown>): string; reset(id: string): void }
+interface Turnstile { render(el: HTMLElement, options: Record<string,unknown>): string; remove(id: string): void }
 declare global { interface Window { turnstile?: Turnstile } }
 const root = document.querySelector<HTMLElement>('.native-comments');
 if (root) init(root);
@@ -15,9 +15,9 @@ function init(root: HTMLElement) {
   const name = form.elements.namedItem('name') as HTMLInputElement;
   const submit = el<HTMLButtonElement>('.submit-comment');
   const formStatus = el('.form-status'), feedStatus = el('.feed-status');
-  let auth: Session = {user:null,csrf:null,githubEnabled:false,turnstileSiteKey:null};
+  let auth: Session = {user:null,csrf:null,githubEnabled:false,turnstileSiteKey:null,verificationRequired:true,humanVerifiedUntil:0};
   let nextCursor: string | null = null, adminCursor: string | null = null, parentId: string | null = null;
-  let widget: string | undefined, challenge = '', challengeLoad: Promise<void> | null = null;
+  let widget: string | undefined, challengeLoad: Promise<void> | null = null;
   let sending = false, writable = false;
   let requestId = crypto.randomUUID();
   const comments = new Map<string,Comment>();
@@ -40,7 +40,7 @@ function init(root: HTMLElement) {
     el('.logout').hidden=!auth.user;
     el('.guest-name').hidden=!!auth.user;
     el('.guest-notice').hidden=auth.user?.kind==='github';
-    el('.human-check').hidden=auth.user?.kind==='github';
+    if(!auth.verificationRequired)clearChallenge();
     el('.show-admin').hidden=!auth.user?.admin;
   }
   let sessionLoaded=false;
@@ -89,36 +89,58 @@ function init(root: HTMLElement) {
     } catch(e){feedStatus.textContent=errorText(e);el('.feed-retry').hidden=false;}
     finally{el<HTMLButtonElement>('.load-more').disabled=false;}
   }
-  async function ensureChallenge() {
-    await ensureSession();
-    if(auth.user?.kind==='github'||widget!==undefined)return;
-    if(!auth.turnstileSiteKey){formStatus.textContent='访客评论暂不可用，请使用 GitHub 登录。';return;}
+  function clearChallenge() {
+    if(widget!==undefined)window.turnstile?.remove(widget);
+    widget=undefined;el('.human-check').hidden=true;
+  }
+  async function verifyGuest():Promise<string> {
+    if(!auth.verificationRequired)return '';
+    if(!auth.turnstileSiteKey)throw new Error('访客评论暂不可用，请使用 GitHub 登录。');
+    formStatus.textContent='正在验证，完成后自动发送…';
     if(!challengeLoad)challengeLoad=new Promise<void>((resolve,reject)=>{
       if(window.turnstile){resolve();return;}
       const script=document.createElement('script');script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';script.async=true;
-      script.onload=()=>resolve();script.onerror=()=>{script.remove();challengeLoad=null;reject(new Error('人机校验未能加载，请重试或使用 GitHub 登录。'));};document.head.append(script);
+      const failed=()=>{clearTimeout(timer);script.remove();challengeLoad=null;reject(new Error('人机校验未能加载，请重试或使用 GitHub 登录。'));};
+      const timer=setTimeout(failed,15000);
+      script.onload=()=>{clearTimeout(timer);resolve();};script.onerror=failed;document.head.append(script);
     });
     await challengeLoad;
-    if(widget!==undefined)return;
-    widget=window.turnstile!.render(el('.human-check'),{sitekey:auth.turnstileSiteKey,action:'comment',size:'flexible',theme:'auto',callback:(value:string)=>{challenge=value;},'expired-callback':()=>{challenge='';},'error-callback':()=>{challenge='';formStatus.textContent='人机校验未完成，请重试或使用 GitHub 登录。';}});
+    clearChallenge();el('.human-check').hidden=false;
+    return new Promise<string>((resolve,reject)=>{
+      let settled=false;
+      const finish=(value:string,error?:string)=>{if(settled)return;settled=true;clearTimeout(timer);error?reject(new Error(error)):resolve(value);};
+      const timer=setTimeout(()=>finish('','验证超时，请重新发送或使用 GitHub 登录。'),90000);
+      try {
+        widget=window.turnstile!.render(el('.human-check'),{
+          sitekey:auth.turnstileSiteKey,action:'comment',size:'flexible',theme:'auto',appearance:'interaction-only',
+          retry:'never','refresh-expired':'manual','refresh-timeout':'manual',
+          callback:(value:string)=>finish(value),
+          'expired-callback':()=>finish('','验证已过期，请重新发送。'),
+          'timeout-callback':()=>finish('','验证超时，请重新发送。'),
+          'error-callback':()=>finish('','人机校验未完成，请重试或使用 GitHub 登录。'),
+        });
+      } catch { finish('','人机校验未能加载，请重新发送。'); }
+    });
   }
-  input.addEventListener('focus',()=>{ensureChallenge().catch(e=>{formStatus.textContent=errorText(e);});});
   el('.cancel-reply').addEventListener('click',()=>{parentId=null;requestId=crypto.randomUUID();el('.reply-to').hidden=true;});
   form.addEventListener('submit',async event=>{
     event.preventDefault();if(sending||!writable)return;
-    sending=true;submit.disabled=true;formStatus.textContent='';
+    sending=true;submit.disabled=true;input.disabled=true;name.disabled=true;formStatus.textContent='';
     try{
       await ensureSession();
-      if(auth.user?.kind!=='github'){await ensureChallenge();if(!challenge)throw new Error('请先完成人机校验，再发送评论。');}
-      const data=await request<{status:string;user:User;csrf:string}>('/v1/comments',{method:'POST',body:JSON.stringify({documentId,body:input.value,name:name.value,parentId,requestId,turnstileToken:challenge})});
-      auth.user=data.user;auth.csrf=data.csrf;showSession();input.value='';parentId=null;el('.reply-to').hidden=true;requestId=crypto.randomUUID();
+      await loadSession();
+      if(!auth.user && !name.value.trim())throw new Error('请先填写昵称。');
+      const challenge=await verifyGuest();
+      formStatus.textContent='正在发送…';
+      const data=await request<{status:string;user:User;csrf:string;verificationRequired:boolean;humanVerifiedUntil:number}>('/v1/comments',{method:'POST',body:JSON.stringify({documentId,body:input.value,name:name.value,parentId,requestId,turnstileToken:challenge})});
+      auth.user=data.user;auth.csrf=data.csrf;auth.verificationRequired=data.verificationRequired;auth.humanVerifiedUntil=data.humanVerifiedUntil;showSession();input.value='';parentId=null;el('.reply-to').hidden=true;requestId=crypto.randomUUID();
       try{sessionStorage.removeItem(draftKey);}catch{}
-      formStatus.textContent=data.status==='pending'?'已收到，审核后会公开显示。':'评论已发布。';
+      formStatus.textContent='评论已发布。';
       await loadFeed();
     }catch(e){formStatus.textContent=errorText(e);}
-    finally{sending=false;submit.disabled=!writable;challenge='';if(widget!==undefined)window.turnstile?.reset(widget);}
+    finally{sending=false;submit.disabled=!writable;input.disabled=false;name.disabled=false;clearChallenge();}
   });
-  el('.logout').addEventListener('click',async()=>{try{await request('/v1/logout',{method:'POST'});auth.user=null;auth.csrf=null;showSession();el('.admin-list').replaceChildren();el('.public-panel').hidden=false;el('.admin-panel').hidden=true;await loadFeed();}catch(e){formStatus.textContent=errorText(e);}});
+  el('.logout').addEventListener('click',async()=>{try{await request('/v1/logout',{method:'POST'});auth.user=null;auth.csrf=null;auth.verificationRequired=true;auth.humanVerifiedUntil=0;clearChallenge();showSession();el('.admin-list').replaceChildren();el('.public-panel').hidden=false;el('.admin-panel').hidden=true;await loadFeed();}catch(e){formStatus.textContent=errorText(e);}});
   el('.feed-retry').addEventListener('click',()=>{loadFeed();if(!sessionLoaded)loadSession().catch(e=>{formStatus.textContent=errorText(e);});});
   el('.load-more').addEventListener('click',()=>{loadFeed(true);});
   async function loadAdmin(more=false){
