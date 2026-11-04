@@ -94,6 +94,20 @@ function serveLocalMedia(req, res, next) {
   fs.createReadStream(local).pipe(res);
 }
 
+// Reserve the final image/video box even before a lazy resource has intrinsic dimensions.
+// width:auto + height:auto can collapse to 0x0 in fragmented CSS columns despite HTML attributes.
+export function reserveMediaSpace(p, width, height) {
+  if (!(width > 0 && height > 0)) return;
+  const w = Number(p.width) || width;
+  p.width = w;
+  p.height = Math.round(w * height / width);
+  const original = String(p.style || '');
+  const authoredWidth = original.match(/(?:^|;)\s*width\s*:\s*([^;]+)/i)?.[1].trim();
+  const preferred = authoredWidth && /^(?:[\d.]+(?:px|%|vw|rem|em)|(?:min|max|clamp|calc)\()/i.test(authoredWidth) ? authoredWidth : `${w}px`;
+  const rest = original.replace(/(?:^|;)\s*(?:width|height|aspect-ratio)\s*:[^;]*/gi, '');
+  p.style = `${rest};width:min(${preferred}, 100%, calc(var(--reader-media-height, 100000px) * ${width / height}));height:auto;aspect-ratio:${width} / ${height};object-fit:contain;`;
+}
+
 export function createMediaPlugins({ dev, base = process.env.MEDIA_BASE_URL || DEFAULT_MEDIA_BASE }) {
   let manifest = readManifest();
   const missing = new Set();
@@ -112,7 +126,7 @@ export function createMediaPlugins({ dev, base = process.env.MEDIA_BASE_URL || D
       }
       if (fs.existsSync(local)) {
         const group = post.draft ? 'drafts' : 'posts';
-        return { src: `${LOCAL_PREFIX}${group}/${encodeURIComponent(post.slug)}/${encodeURIComponent(file)}` };
+        return { src: `${LOCAL_PREFIX}${group}/${encodeURIComponent(post.slug)}/${encodeURIComponent(file)}`, width: done?.width, height: done?.height };
       }
     }
     const entry = manifest[`${post.slug}/${file}`];
@@ -136,7 +150,15 @@ export function createMediaPlugins({ dev, base = process.env.MEDIA_BASE_URL || D
       if (!post) return;
       visit(tree, 'image', (node) => {
         const file = postRelativeFile(node.url);
-        if (file && mediaKind(file)) node.url = resolve(post, node.url, file).src;
+        if (file && mediaKind(file)) {
+          const resolved = resolve(post, node.url, file);
+          node.url = resolved.src;
+          node.data ??= {};
+          const properties = node.data.hProperties ??= {};
+          reserveMediaSpace(properties, resolved.width, resolved.height);
+          properties.loading ??= 'lazy';
+          properties.decoding ??= 'async';
+        }
       });
     };
   }
@@ -155,12 +177,7 @@ export function createMediaPlugins({ dev, base = process.env.MEDIA_BASE_URL || D
           if (!file) return;
           const r = resolve(post, p.src, file);
           p.src = r.src;
-          if (r.width && r.height) {
-            // Keep the width the post asked for and give it the image's real proportions.
-            const w = Number(p.width) || r.width;
-            p.width = w;
-            p.height = Math.round((w * r.height) / r.width);
-          }
+          reserveMediaSpace(p, r.width, r.height);
           p.loading ??= 'lazy';
           p.decoding ??= 'async';
           if (r.missing) p.dataMissing = '';
@@ -185,12 +202,7 @@ export function createMediaPlugins({ dev, base = process.env.MEDIA_BASE_URL || D
               if (el.tagName === 'source') el.properties.type = 'video/mp4';
               if (r.poster) p.poster ??= r.poster;
             }
-            // Real proportions, so the player has the right shape before the video loads.
-            if (r.width && r.height) {
-              const w = Number(p.width) || r.width;
-              p.width = w;
-              p.height = Math.round((w * r.height) / r.width);
-            }
+            reserveMediaSpace(p, r.width, r.height);
           }
           if (p.poster) {
             const file = postRelativeFile(p.poster);
@@ -203,7 +215,10 @@ export function createMediaPlugins({ dev, base = process.env.MEDIA_BASE_URL || D
           p.playsInline = true;
           // A frame for the quality button (see Reader.astro); a span, since the video may sit in a <p>.
           if (p.dataQualities && parent && parent.properties?.className?.[0] !== 'vq') {
-            parent.children[index] = { type: 'element', tagName: 'span', properties: { className: ['vq'] }, children: [node] };
+            // Size the frame too: fit-content otherwise starts at the video's 300px fallback
+            // and grows when metadata arrives, even if the video itself has an aspect ratio.
+            parent.children[index] = { type: 'element', tagName: 'span', properties: { className: ['vq'], style: p.style }, children: [node] };
+            p.style = `${p.style || ''};width:100%;`;
           }
         }
       });
