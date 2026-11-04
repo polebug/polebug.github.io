@@ -15,6 +15,7 @@ function init(root: HTMLElement) {
   const name = form.elements.namedItem('name') as HTMLInputElement;
   const submit = el<HTMLButtonElement>('.submit-comment');
   const formStatus = el('.form-status'), feedStatus = el('.feed-status');
+  const composerHome = el('.composer-home');
   let auth: Session = {user:null,csrf:null,githubEnabled:false,turnstileSiteKey:null,verificationRequired:true,humanVerifiedUntil:0};
   let nextCursor: string | null = null, adminCursor: string | null = null, parentId: string | null = null;
   let widget: string | undefined, challengeLoad: Promise<void> | null = null;
@@ -22,8 +23,43 @@ function init(root: HTMLElement) {
   let requestId = crypto.randomUUID();
   const comments = new Map<string,Comment>();
   const draftKey = `comment-draft:${documentId}`;
+  const replyDraftKey = `${draftKey}:reply`;
   try { input.value = sessionStorage.getItem(draftKey) || ''; } catch {}
-  input.addEventListener('input',()=>{requestId=crypto.randomUUID();try{sessionStorage.setItem(draftKey,input.value);}catch{}});
+  function feedback(message='',tone='') { formStatus.textContent=message;formStatus.dataset.tone=tone; }
+  function updateComposer() {
+    submit.disabled=sending||!writable||!input.value.trim();
+    el('.submit-label').textContent=sending?'发送中…':parentId?'发送回复':'发送评论';
+    form.setAttribute('aria-busy',String(sending));
+    el<HTMLButtonElement>('.logout').disabled=sending;
+    el<HTMLAnchorElement>('.github-login').setAttribute('aria-disabled',String(sending));
+    const count=el('.character-count');count.hidden=input.value.length<5400;
+    count.textContent=`${input.value.length} / 6000`;
+    el('.keyboard-hint').hidden=!count.hidden;
+    // The drawer may be closed when data arrives; resize again when it opens.
+    if(input.getClientRects().length){input.style.height='auto';input.style.height=`${Math.min(280,input.scrollHeight)}px`;}
+  }
+  function setReply(c:Pick<Comment,'id'|'author'|'body'>|null,save=true) {
+    parentId=c?.id??null;requestId=crypto.randomUUID();
+    el('.reply-to').hidden=!c;
+    el('.reply-name').textContent=c?`回复 ${c.author.name}`:'';
+    el('.reply-excerpt').textContent=c?.body.replace(/\s+/g,' ').slice(0,180)??'';
+    input.placeholder=c?`回复 ${c.author.name}…`:'聊聊你的想法…';
+    const target=c?Array.from(el('.comment-list').children).find(node=>(node as HTMLElement).dataset.commentId===c.id):null;
+    (target??composerHome).append(form);
+    if(save)try{if(c)sessionStorage.setItem(replyDraftKey,JSON.stringify({id:c.id,author:c.author,body:c.body.slice(0,180)}));else sessionStorage.removeItem(replyDraftKey);}catch{}
+    feedback();updateComposer();
+  }
+  // OAuth navigation or a refresh must not silently turn a reply draft into a new thread.
+  try {
+    const draft=JSON.parse(sessionStorage.getItem(replyDraftKey)||'null');
+    if(draft&&typeof draft.id==='string'&&typeof draft.author?.name==='string'&&typeof draft.body==='string')setReply(draft,false);
+  } catch {}
+  input.addEventListener('input',()=>{requestId=crypto.randomUUID();feedback();updateComposer();try{sessionStorage.setItem(draftKey,input.value);}catch{}});
+  name.addEventListener('input',()=>{requestId=crypto.randomUUID();feedback();});
+  input.addEventListener('keydown',event=>{if(!event.isComposing&&(event.metaKey||event.ctrlKey)&&event.key==='Enter'){event.preventDefault();if(!submit.disabled)form.requestSubmit();}});
+  el('.github-login').addEventListener('click',event=>{if(sending)event.preventDefault();});
+  new ResizeObserver(()=>{if(input.getClientRects().length)updateComposer();}).observe(form);
+  updateComposer();
   async function request<T>(path:string, options:RequestInit = {}):Promise<T> {
     const headers = new Headers(options.headers);
     if (options.body) headers.set('Content-Type','application/json');
@@ -35,7 +71,9 @@ function init(root: HTMLElement) {
   }
   const errorText=(e:unknown)=>e instanceof Error && e.name==='Error' ? e.message : '连接超时或网络不可用，请稍后重试。';
   function showSession() {
-    el('.identity').textContent=auth.user ? `${auth.user.name}${auth.user.kind==='guest'?' · 访客':''}` : '访客评论';
+    el('.identity').textContent=auth.user ? `${auth.user.name}${auth.user.kind==='guest'?' · 访客':''}` : '访客';
+    el('.identity').hidden=!auth.user;
+    el('.identity-avatar').textContent=Array.from(auth.user?.name||'访')[0].toUpperCase();
     el('.github-login').hidden=!auth.githubEnabled || auth.user?.kind==='github';
     el('.logout').hidden=!auth.user;
     el('.guest-name').hidden=!!auth.user;
@@ -45,25 +83,26 @@ function init(root: HTMLElement) {
   }
   let sessionLoaded=false;
   async function loadSession(){auth=await request<Session>('/v1/session');sessionLoaded=true;showSession();}
-  const sessionReady=loadSession().catch(e=>{formStatus.textContent=errorText(e);});
+  const sessionReady=loadSession().catch(e=>{feedback(errorText(e),'error');});
   async function ensureSession(){await sessionReady;if(!sessionLoaded)await loadSession();}
   function action(label:string,run:()=>Promise<void>|void) {
     const b=document.createElement('button');b.type='button';b.textContent=label;
-    b.addEventListener('click',async()=>{b.disabled=true;try{await run();}catch(e){formStatus.textContent=errorText(e);el('.admin-status').textContent=errorText(e);}finally{b.disabled=false;}});
+    b.addEventListener('click',async()=>{if(sending)return;b.disabled=true;try{await run();}catch(e){feedback(errorText(e),'error');el('.admin-status').textContent=errorText(e);}finally{b.disabled=false;}});
     return b;
   }
   function render(c:Comment,admin=false) {
-    const li=document.createElement('li');li.className='comment-item';
+    const li=document.createElement('li');li.className='comment-item';li.dataset.commentId=c.id;
+    const avatar=document.createElement('span');avatar.className=`comment-avatar${c.author.owner?' owner':''}`;avatar.textContent=Array.from(c.author.name)[0]?.toUpperCase()||'访';avatar.setAttribute('aria-hidden','true');li.append(avatar);
     const by=document.createElement('div');by.className='comment-byline';
     const author=document.createElement('strong');author.textContent=c.author.name;
-    const badge=document.createElement('span');badge.className='comment-badge';badge.textContent=c.author.owner?'博主':c.author.kind==='guest'?'访客':c.author.kind==='github'?'GitHub':'历史评论';
+    const badge=document.createElement('span');badge.className=`comment-badge${c.author.owner?' owner':''}`;badge.textContent=c.author.owner?'博主':c.author.kind==='guest'?'访客':c.author.kind==='github'?'GitHub':'历史评论';
     const time=document.createElement('time');time.dateTime=c.createdAt;time.textContent=new Date(c.createdAt).toLocaleString('zh-CN',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
-    by.append(author,badge,time);li.append(by);
+    by.append(author,badge);li.append(by,time);
     if(c.title){const title=document.createElement('p');title.textContent=c.title;title.className='parent-label';li.append(title);}
     if(c.parentId){const reply=document.createElement('p');reply.className='parent-label';reply.textContent=comments.has(c.parentId)?`回复 ${comments.get(c.parentId)!.author.name}`:'回复较早的评论';li.append(reply);}
     const content=document.createElement('p');content.className='comment-body';content.textContent=c.status==='deleted'&&!admin?'这条评论已删除。':c.body;li.append(content);
     const actions=document.createElement('div');actions.className='comment-actions';
-    if(!admin&&c.status==='published'&&writable)actions.append(action('回复',()=>{parentId=c.id;requestId=crypto.randomUUID();el('.reply-to').hidden=false;el('.reply-to span').textContent=`回复 ${c.author.name}`;input.focus();}));
+    if(!admin&&c.status==='published'&&writable)actions.append(action('回复',()=>{if(sending)return;setReply(c);input.focus({preventScroll:true});form.scrollIntoView({block:'nearest'});}));
     if(!admin&&c.mine&&c.status!=='deleted')actions.append(action('删除',async()=>{await request(`/v1/comments/${c.id}`,{method:'DELETE'});await loadFeed();}));
     if(admin){
       if(c.status!=='published')actions.append(action('发布',async()=>{await moderate(c,'published');}));
@@ -77,10 +116,11 @@ function init(root: HTMLElement) {
     el('.feed-retry').hidden=true;el<HTMLButtonElement>('.load-more').disabled=true;
     try {
       const data=await request<Feed>(`/v1/comments?document=${encodeURIComponent(documentId)}${more&&nextCursor?`&cursor=${encodeURIComponent(nextCursor)}`:''}`);
-      writable=data.writable;submit.disabled=!writable;
-      if(!more){el('.comment-list').replaceChildren();comments.clear();}
+      writable=data.writable;updateComposer();
+      if(!more){composerHome.append(form);el('.comment-list').replaceChildren();comments.clear();}
       for(const c of data.comments)comments.set(c.id,c);
       for(const c of data.comments)el('.comment-list').append(render(c));
+      if(parentId){const target=Array.from(el('.comment-list').children).find(node=>(node as HTMLElement).dataset.commentId===parentId);target?.append(form);}
       nextCursor=data.nextCursor;el('.load-more').hidden=!nextCursor;
       el('.native-count').textContent=String(data.total);
       document.querySelectorAll('.comment-count').forEach(node=>node.textContent=String(data.total));
@@ -96,7 +136,7 @@ function init(root: HTMLElement) {
   async function verifyGuest():Promise<string> {
     if(!auth.verificationRequired)return '';
     if(!auth.turnstileSiteKey)throw new Error('访客评论暂不可用，请使用 GitHub 登录。');
-    formStatus.textContent='正在验证，完成后自动发送…';
+    feedback('正在验证，完成后自动发送…');
     if(!challengeLoad)challengeLoad=new Promise<void>((resolve,reject)=>{
       if(window.turnstile){resolve();return;}
       const script=document.createElement('script');script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';script.async=true;
@@ -122,25 +162,34 @@ function init(root: HTMLElement) {
       } catch { finish('','人机校验未能加载，请重新发送。'); }
     });
   }
-  el('.cancel-reply').addEventListener('click',()=>{parentId=null;requestId=crypto.randomUUID();el('.reply-to').hidden=true;});
+  el('.cancel-reply').addEventListener('click',()=>{if(sending)return;setReply(null);input.focus({preventScroll:true});form.scrollIntoView({block:'nearest'});});
   form.addEventListener('submit',async event=>{
-    event.preventDefault();if(sending||!writable)return;
-    sending=true;submit.disabled=true;input.disabled=true;name.disabled=true;formStatus.textContent='';
+    event.preventDefault();if(sending||!writable||!input.value.trim())return;
+    if(sessionLoaded&&!auth.user&&!name.value.trim()){feedback('先填一个昵称吧。','error');name.focus();return;}
+    sending=true;updateComposer();input.disabled=true;name.disabled=true;el<HTMLButtonElement>('.cancel-reply').disabled=true;feedback();
     try{
       await ensureSession();
       await loadSession();
       if(!auth.user && !name.value.trim())throw new Error('请先填写昵称。');
       const challenge=await verifyGuest();
-      formStatus.textContent='正在发送…';
-      const data=await request<{status:string;user:User;csrf:string;verificationRequired:boolean;humanVerifiedUntil:number}>('/v1/comments',{method:'POST',body:JSON.stringify({documentId,body:input.value,name:name.value,parentId,requestId,turnstileToken:challenge})});
-      auth.user=data.user;auth.csrf=data.csrf;auth.verificationRequired=data.verificationRequired;auth.humanVerifiedUntil=data.humanVerifiedUntil;showSession();input.value='';parentId=null;el('.reply-to').hidden=true;requestId=crypto.randomUUID();
+      feedback('正在发送…');
+      const data=await request<{id:string;status:string;user:User;csrf:string;verificationRequired:boolean;humanVerifiedUntil:number}>('/v1/comments',{method:'POST',body:JSON.stringify({documentId,body:input.value,name:name.value,parentId,requestId,turnstileToken:challenge})});
+      auth.user=data.user;auth.csrf=data.csrf;auth.verificationRequired=data.verificationRequired;auth.humanVerifiedUntil=data.humanVerifiedUntil;showSession();input.value='';setReply(null);
       try{sessionStorage.removeItem(draftKey);}catch{}
-      formStatus.textContent='评论已发布。';
       await loadFeed();
-    }catch(e){formStatus.textContent=errorText(e);}
-    finally{sending=false;submit.disabled=!writable;input.disabled=false;name.disabled=false;clearChallenge();}
+      feedback('✓ 已发布，谢谢你的分享。','success');
+      formStatus.focus({preventScroll:true});formStatus.scrollIntoView({block:'nearest'});
+      const posted=Array.from(el('.comment-list').children).find(node=>(node as HTMLElement).dataset.commentId===data.id);
+      posted?.classList.add('just-posted');
+    }catch(e){feedback(errorText(e),'error');}
+    finally{sending=false;input.disabled=false;name.disabled=false;el<HTMLButtonElement>('.cancel-reply').disabled=false;clearChallenge();updateComposer();if(!auth.user&&!name.value.trim())name.focus();}
   });
-  el('.logout').addEventListener('click',async()=>{try{await request('/v1/logout',{method:'POST'});auth.user=null;auth.csrf=null;auth.verificationRequired=true;auth.humanVerifiedUntil=0;clearChallenge();showSession();el('.admin-list').replaceChildren();el('.public-panel').hidden=false;el('.admin-panel').hidden=true;await loadFeed();}catch(e){formStatus.textContent=errorText(e);}});
+  function showPanel(admin:boolean) {
+    el('.public-panel').hidden=admin;el('.admin-panel').hidden=!admin;
+    el('.show-admin').classList.toggle('selected',admin);el('.show-public').classList.toggle('selected',!admin);
+    el('.show-admin').setAttribute('aria-pressed',String(admin));el('.show-public').setAttribute('aria-pressed',String(!admin));
+  }
+  el('.logout').addEventListener('click',async()=>{if(sending)return;try{await request('/v1/logout',{method:'POST'});auth.user=null;auth.csrf=null;auth.verificationRequired=true;auth.humanVerifiedUntil=0;clearChallenge();showSession();feedback();el('.admin-list').replaceChildren();showPanel(false);await loadFeed();}catch(e){feedback(errorText(e),'error');}});
   el('.feed-retry').addEventListener('click',()=>{loadFeed();if(!sessionLoaded)loadSession().catch(e=>{formStatus.textContent=errorText(e);});});
   el('.load-more').addEventListener('click',()=>{loadFeed(true);});
   async function loadAdmin(more=false){
@@ -154,8 +203,8 @@ function init(root: HTMLElement) {
     }catch(e){el('.admin-status').textContent=errorText(e);}
   }
   async function moderate(c:Comment,status:string){await request(`/v1/admin/comments/${c.id}`,{method:'PATCH',body:JSON.stringify({status})});await loadAdmin();await loadFeed();}
-  el('.show-admin').addEventListener('click',()=>{el('.public-panel').hidden=true;el('.admin-panel').hidden=false;el('.show-admin').classList.add('selected');el('.show-public').classList.remove('selected');loadAdmin();});
-  el('.show-public').addEventListener('click',()=>{el('.public-panel').hidden=false;el('.admin-panel').hidden=true;el('.show-admin').classList.remove('selected');el('.show-public').classList.add('selected');});
+  el('.show-admin').addEventListener('click',()=>{showPanel(true);loadAdmin();});
+  el('.show-public').addEventListener('click',()=>{showPanel(false);});
   el('.moderation-filter').addEventListener('change',()=>{loadAdmin();});el('.admin-more').addEventListener('click',()=>{loadAdmin(true);});
   // A single direct API request warms the list; opening/closing the drawer never rebuilds it.
   loadFeed();
