@@ -53,6 +53,10 @@ To publish a post's images unchanged, use `npm run upload -- --post <slug> --ori
 This preserves the original image files, including their resolution and metadata; later uploads remember this choice for those images. Browser-compatible PNG, JPEG, WebP, GIF and AVIF files are supported.
 On a new computer without the original files, the preview falls back to the uploaded copies.
 
+The Archive writing calendar is generated from published posts' `date` fields in Beijing time.
+Publishing a new post lights up its date on the next build; drafts and code-only edits do not count.
+Use the year selector to browse past years, and click a lit day to jump to its articles.
+
 ## Blog fonts
 
 Article cover titles and body copy share the same font family and regular weight.

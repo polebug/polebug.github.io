@@ -87,8 +87,8 @@ main.wide { width: 1440px; max-width: calc(100% - 96px); margin-top: 0; padding-
 .drawer-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line) transparent; padding: 20px 28px 32px; }
 
 /* Archive */
-.archive-year { font: 700 26px/1.2 "Lato", sans-serif; color: var(--ink); margin: 48px 0 18px; }
-.archive-year:first-of-type { margin-top: 0; }
+.archive-group + .archive-group { margin-top: 48px; }
+.archive-year { font: 700 26px/1.2 "Lato", sans-serif; color: var(--ink); margin: 0 0 18px; }
 .archive-list { list-style: none; margin: 0; padding: 0; }
 .archive-list li { display: flex; gap: 24px; padding: 10px 0; align-items: baseline; }
 .archive-list time { flex: none; width: 52px; font-size: 13px; color: var(--faint); letter-spacing: 1px; }

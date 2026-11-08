@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import ActivityCalendar from './ActivityCalendar.astro';
 import type { Post } from '../lib/posts';
 
 // Posts grouped by year. /archives/, /archives/2025/ and /archives/2025/07/ all use this.
@@ -9,12 +10,13 @@ const years = [...new Set(posts.map((p) => p.ymd.year))];
 <Base nav="archive" title={heading === 'Archive' ? 'Archive' : `Archive · ${heading}`}>
   <h1 class="page-title">{heading}</h1>
   <p class="motto">{posts.length} posts</p>
+  <ActivityCalendar />
   {years.map((year) => (
-    <section>
+    <section class="archive-group">
       <h2 class="archive-year">{year}</h2>
       <ul class="archive-list">
-        {posts.filter((p) => p.ymd.year === year).map((p) => (
-          <li>
+        {posts.filter((p) => p.ymd.year === year).map((p, index, group) => (
+          <li id={index === 0 || group[index - 1].ymd.month !== p.ymd.month || group[index - 1].ymd.day !== p.ymd.day ? `archive-date-${p.ymd.year}-${p.ymd.month}-${p.ymd.day}` : undefined}>
             <time datetime={p.data.date.toISOString()}>{p.ymd.month}-{p.ymd.day}</time>
             <a href={p.url}>{p.data.title}</a>
             {p.draft && <span class="draft-badge">Draft</span>}
@@ -24,3 +26,8 @@ const years = [...new Set(posts.map((p) => p.ymd.year))];
     </section>
   ))}
 </Base>
+
+<style>
+  .archive-list li { scroll-margin-top: 28px; }
+  .archive-list li:target { background: var(--paper-2); box-shadow: -10px 0 0 var(--paper-2), 10px 0 0 var(--paper-2); border-radius: 3px; }
+</style>
