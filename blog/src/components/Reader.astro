@@ -116,20 +116,43 @@ const { posts, headings, start = 0, label, back } = Astro.props;
   let paginationReady = false;
   // Use real dimensions from the media manifest, not whether an image has downloaded yet.
   // Save author styles so scroll mode (including mobile) keeps its original sizing.
-  const sizedMedia = [...flow.querySelectorAll<HTMLImageElement | HTMLVideoElement>('img[width][height], video[width][height]')]
-    .map(element => ({ element, width: Number(element.getAttribute('width')), height: Number(element.getAttribute('height')), styleWidth: element.style.width, styleHeight: element.style.height }))
-    .filter(item => item.width > 0 && item.height > 0);
+  const sizedMedia = [...flow.querySelectorAll<HTMLImageElement | HTMLVideoElement>('img, video[width][height]')]
+    .map(element => ({ element, width: Number(element.getAttribute('width')), height: Number(element.getAttribute('height')), styleWidth: element.style.width, styleHeight: element.style.height }));
   const sizePageMedia = () => {
     const columnWidth = (flow.clientWidth - parseFloat(getComputedStyle(flow).columnGap)) / 2;
     for (const item of sizedMedia) {
-      const { element, width, height } = item;
+      const { element } = item;
       if (!paged()) {
         element.style.width = item.styleWidth;
         element.style.height = item.styleHeight;
         continue;
       }
+      const width = item.width || (element instanceof HTMLImageElement ? element.naturalWidth : 0);
+      const height = item.height || (element instanceof HTMLImageElement ? element.naturalHeight : 0);
+      if (!(width > 0 && height > 0)) continue;
       const ratio = width / height;
-      const maxHeight = Math.min(flow.clientHeight, parseFloat(getComputedStyle(element).maxHeight) || Infinity);
+      let maxHeight = Math.min(flow.clientHeight, parseFloat(getComputedStyle(element).maxHeight) || Infinity);
+      const figure = element.parentElement;
+      if (figure?.classList.contains('media-figure')) {
+        const caption = figure.querySelector('figcaption');
+        const captionSpace = caption ? caption.getBoundingClientRect().height + parseFloat(getComputedStyle(caption).marginBottom) : 0;
+        const spacing = captionSpace + parseFloat(getComputedStyle(figure).marginBottom) + 2;
+        maxHeight = Math.min(maxHeight, flow.clientHeight - spacing);
+        // Keep an image readable, but use a mostly empty current column rather than
+        // moving a full-height photo and its short introduction to the next one.
+        const previous = figure.previousElementSibling;
+        const previousRects = previous ? [...previous.getClientRects()] : [];
+        const last = previousRects.at(-1);
+        if (last) {
+          const available = flow.getBoundingClientRect().bottom - last.bottom
+            - Math.max(0, parseFloat(getComputedStyle(previous!).marginBottom)) - spacing;
+          const fullHeight = Math.min(height, columnWidth / ratio, maxHeight);
+          if (available >= fullHeight * 0.45 && available >= flow.clientHeight * 0.35) {
+            maxHeight = Math.min(maxHeight, available);
+          }
+        }
+      }
+      maxHeight = Math.max(1, maxHeight);
       element.style.width = `${Math.min(width, columnWidth, maxHeight * ratio)}px`;
       // Let the original max-width and the containing block constrain the width first.
       // Explicit pixel height then stays identical before and after decoding the image.
@@ -252,7 +275,7 @@ const { posts, headings, start = 0, label, back } = Astro.props;
     else layout(keep);
   });
   // Only unmeasured external images need another layout. Known media already has its final box.
-  const measured = new Set(sizedMedia.map(item => item.element));
+  const measured = new Set(sizedMedia.filter(item => item.width > 0 && item.height > 0).map(item => item.element));
   for (const img of flow.querySelectorAll('img')) if (!measured.has(img)) img.addEventListener('load', () => layout(onScreen()), { once: true });
 
   // A video plays only while it's in view: paging (or scrolling) it out of the window pauses it,

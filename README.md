@@ -27,6 +27,12 @@ npm run new my-post "Title"      # creates blog/drafts/my-post/index.md
 npm run dev                      # blog http://localhost:4321 (drafts included), home http://localhost:8000
 ```
 
+Local video previews automatically read dimensions and cache a cover frame. HDR (HLG/PQ)
+covers on macOS use AVFoundation's native SDR conversion and the first playback frame
+(requires Xcode Command Line Tools). Other platforms use FFmpeg with zscale and tonemap;
+set `FFMPEG_PATH` if that binary is not on PATH.
+An explicit `poster="cover.jpg"` keeps the cover you choose.
+
 Put images and videos next to `index.md` and reference them by file name, in Markdown or HTML:
 
 ```html

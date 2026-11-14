@@ -18,6 +18,9 @@
 .prose blockquote p { margin: .4em 0; }
 .prose hr { border: 0; height: 1px; background: var(--line); margin: 2.6em 0; }
 .prose img, .prose video { max-width: 100%; height: auto; border-radius: 6px; vertical-align: middle; break-inside: avoid; }
+.prose .media-figure { margin: 0 0 1.35em; break-inside: avoid; }
+.prose .media-figure > img { display: block; margin: 0 auto; }
+.prose .media-figure > figcaption { margin: 0 0 .65em; }
 @media (min-width: 861px) {
   /* In the pages, nothing taller than a column: pictures are capped and code wraps instead of scrolling. */
   .reader:not([data-mode="scroll"]) .prose img, .reader:not([data-mode="scroll"]) .prose video { max-height: calc(100dvh - 104px - 28px - 160px); width: auto; max-width: 100%; }
